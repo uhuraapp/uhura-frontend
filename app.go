@@ -10,13 +10,22 @@ import (
 
 func main() {
   m := martini.Classic()
+  m.Use(render.Renderer())
 
   m.Get("/", func() string {
     return "Hello world!"
   })
 
-  m.Patch("/channel/:id/fetcher", func(params martini.Params, r render.Render) {
+  m.Patch("/channels/:id/fetcher", func(r render.Render, params martini.Params) {
     core.FetchChanell(params["id"])
+    r.JSON(202, map[string]interface{}{"message": "Processing"})
+  })
+
+  m.Post("/channels", func(r render.Render, req *http.Request, params martini.Params) {
+    req.ParseForm()
+    var url = req.Form.Get("url")
+
+    core.AddFeed(url)
     r.JSON(202, map[string]interface{}{"message": "Processing"})
   })
 

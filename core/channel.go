@@ -6,5 +6,6 @@ type Channel struct {
   ImageUrl      string
   Copyright     string
   LastBuildDate string
-  Url           string
+  Url           string `sql:"not null;unique"`
+  Id            int
 }

@@ -1,25 +1,15 @@
 package core
 
 import (
+  "crypto/md5"
+  "encoding/hex"
   "fmt"
-  "github.com/jinzhu/gorm"
   rss "github.com/jteeuwen/go-pkg-rss"
-  pq "github.com/lib/pq"
+  "io"
   "os"
+  "strconv"
   "time"
 )
-
-var database gorm.DB
-
-const MaxOutstanding = 10
-
-var c chan int
-
-func configDatabase() {
-  databaseUrl, _ := pq.ParseURL(os.Getenv("DATABASE_URL"))
-  database, _ = gorm.Open("postgres", databaseUrl)
-  database.LogMode(true)
-}
 
 func FetchAllChannell() {
   configDatabase()
@@ -32,11 +22,15 @@ func FetchAllChannell() {
   }
 }
 
-func FetchChanell(id string) {
+func FetchChanell(idString string) {
   configDatabase()
   var channel Channel
 
-  database.Where("id = ?", id).First(&channel)
+  id, _ := strconv.Atoi(idString)
+
+  database.First(&channel, id)
+  fmt.Println("ID:", id)
+  fmt.Println("channel:", channel)
   go pollFeed(channel.Url, 5)
 }
 
@@ -57,30 +51,26 @@ func channelFetchHandler(feed *rss.Feed, channels []*rss.Channel) {
 
     database.Where("url = ?", feed.Url).First(&channel)
 
-    database.Model(channel).Updates(
-      Channel{
-        Title:         channelData.Title,
-        Description:   channelData.Description,
-        ImageUrl:      channelData.Image.Url,
-        Copyright:     channelData.Copyright,
-        LastBuildDate: channelData.LastBuildDate,
-      })
+    database.Table("channels").Where(channel.Id).Updates(map[string]interface{}{
+      "title":           channelData.Title,
+      "description":     channelData.Description,
+      "image_url":       channelData.Image.Url,
+      "copyright":       channelData.Copyright,
+      "last_build_date": channelData.LastBuildDate,
+    })
   }
 }
 
 func itemFetchHandler(feed *rss.Feed, ch *rss.Channel, items []*rss.Item) {
   var channel Channel
-
   database.Where("url = ?", feed.Url).First(&channel)
 
-  fmt.Println(channel.Title)
-  //for _, item := range items {
-  //h := md5.New()
-  //io.WriteString(h, item.Key())
-  //fmt.Printf("#%x\n", h.Sum(nil))
-  //fmt.Printf("Title: %s\n", item.Title)
-  //fmt.Printf("       %s\n", item.Enclosures[0].Url)
-  //fmt.Printf("       %s\n", item.Description)
-  //fmt.Println(" ")
-  //}
+  for _, itemdata := range items {
+    h := md5.New()
+    io.WriteString(h, itemdata.Enclosures[0].Url)
+    key := hex.EncodeToString(h.Sum(nil))
+
+    var item Item
+    database.Where(Item{Key: key}).Attrs(Item{Title: itemdata.Title, SourceUrl: itemdata.Enclosures[0].Url, Description: item.Description, ChannelId: channel.Id}).FirstOrCreate(&item)
+  }
 }
