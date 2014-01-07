@@ -1,20 +1,24 @@
 package main
 
 import (
-  "fmt"
+  "github.com/codegangsta/martini"
+  "github.com/codegangsta/martini-contrib/render"
   "net/http"
   "os"
+  "uhura/core"
 )
 
 func main() {
-  http.HandleFunc("/", hello)
-  fmt.Println("listening...")
-  err := http.ListenAndServe(":"+os.Getenv("PORT"), nil)
-  if err != nil {
-    panic(err)
-  }
-}
+  m := martini.Classic()
 
-func hello(res http.ResponseWriter, req *http.Request) {
-  fmt.Fprintln(res, "hello, heroku")
+  m.Get("/", func() string {
+    return "Hello world!"
+  })
+
+  m.Patch("/channel/:id/fetcher", func(params martini.Params, r render.Render) {
+    core.FetchChanell(params["id"])
+    r.JSON(202, map[string]interface{}{"message": "Processing"})
+  })
+
+  http.ListenAndServe(":"+os.Getenv("PORT"), m)
 }
