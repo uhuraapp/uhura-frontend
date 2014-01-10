@@ -15,4 +15,6 @@ func configDatabase() {
 
   database.AutoMigrate(Channel{})
   database.AutoMigrate(Item{})
+  database.AutoMigrate(User{})
+  database.AutoMigrate(UserChannel{})
 }

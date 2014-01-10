@@ -1,0 +1,21 @@
+#channels img{
+  width: 20px;
+  margin: 0 15px 0 0
+}
+
+#channels i{
+  margin: 0 15px 0 0
+}
+
+#channels a:hover{
+  background: #333
+}
+
+#channels li a:hover{
+  background: #080808;
+  cursor: default;
+}
+
+#channels li.action a{
+  text-align: center;
+}
