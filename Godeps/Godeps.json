@@ -3,6 +3,11 @@
 	"GoVersion": "go1.1.2",
 	"Deps": [
 		{
+			"ImportPath": "code.google.com/p/goauth2/oauth",
+			"Comment": "weekly-35",
+			"Rev": "e062946df3f2de47313e40eea045a2f6130e92f3"
+		},
+		{
 			"ImportPath": "github.com/codegangsta/inject",
 			"Rev": "37512bbe41b4cc579cdd706742efc7bf34f94b06"
 		},
@@ -16,12 +21,24 @@
 			"Rev": "b7a8366f58e39977dfd52d6109ed08d768bba94a"
 		},
 		{
-			"ImportPath": "github.com/jinzhu/gorm",
-			"Rev": "71e7b37bdfd69432e00565a7483a3788fdc20eb7"
+			"ImportPath": "github.com/dukex/go-pkg-rss",
+			"Rev": "6307f403b8acd59acfa49d3c3878e7af234e89b1"
 		},
 		{
-			"ImportPath": "github.com/jteeuwen/go-pkg-rss",
-			"Rev": "269db380a38d96d568c0e51fa3d4534ddb3c1023"
+			"ImportPath": "github.com/gorilla/context",
+			"Rev": "708054d61e5a2918b9f4e9700000ee611dcf03f5"
+		},
+		{
+			"ImportPath": "github.com/gorilla/securecookie",
+			"Rev": "155134204c034796bcd7a72c1e1b53ba005735c6"
+		},
+		{
+			"ImportPath": "github.com/gorilla/sessions",
+			"Rev": "1ace0650f7b7ebbf58eb835609698352efeb9cc9"
+		},
+		{
+			"ImportPath": "github.com/jinzhu/gorm",
+			"Rev": "71e7b37bdfd69432e00565a7483a3788fdc20eb7"
 		},
 		{
 			"ImportPath": "github.com/jteeuwen/go-pkg-xmlx",

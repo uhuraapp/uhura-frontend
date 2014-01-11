@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" media="screen" href="/~d/styles/rss2enclosuresfull.xsl"?>
+<?xml-stylesheet type="text/css" media="screen" href="http://feeds.podbr.com/~d/styles/itemcontent.css"?>
+<rss xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:media="http://search.yahoo.com/mrss/" xmlns:feedburner="http://rssnamespace.org/feedburner/ext/1.0" version="2.0">
+
+<channel>
+	<title>Café Brasil Podcast</title>
+	<link>http://podcast.lucianopires.com.br</link>
+	<description>Programa Café Brasil, que trata de comportamento, cidadania, política e cultura brasileiras, misturando o melhor da Música Popular Brasileira com reflexões do apresentador, o escritor e palestrante Luciano Pires. Eleito em 2008 e 2009 como o Melhor Podcast de Entretenimento e Variedades no Prêmio Podcast Brasil</description>
+	<pubDate>Wed, 08 Jan 2014 00:43:08 +0000</pubDate>
+	<generator>http://wordpress.org/?v=2.7.1</generator>
+	<language>pt-br</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+		<!-- podcast_generator="podPress/8.8" -->
+		<copyright>©Luciano Pires &amp; Café Brasil Editorial Ltda </copyright>
+		<managingEditor>contato@podbr.com (Luciano Pires &amp; Café Brasil Editorial Ltda)</managingEditor>
+		<webMaster>contato@podbr.com(Luciano Pires &amp; Café Brasil Editorial Ltda)</webMaster>
+		<category />
+		<ttl>1440</ttl>
+		<itunes:keywords>rádio, radio, brasil, brazil, luciano pires, mpb, provocação, provocacao, intelectual, cérebro, cerebro,</itunes:keywords>
+		<itunes:subtitle>Aqui tem seleção primorosa da MPB e reflexões não-trivias –e muitas vezes polêmicas– do apresentador, escritor e palestrante Luciano Pires. É assim que o Café Brasil trata de comportamento, cidadania, política e cultura brasileiras, em edições semanais. E</itunes:subtitle>
+		<itunes:summary>Aqui tem seleção primorosa da MPB e reflexões não-trivias –e muitas vezes polêmicas– do apresentador, escritor e palestrante Luciano Pires. É assim que o Café Brasil trata de comportamento, cidadania, política e cultura brasileiras, em edições semanais. Eleito por duas vezes o Melhor Podcast de Entretenimento e Variedades no Prêmio Podcast Brasil e frequentador dos destaques do iTunes.
+Podcast Café Brasil: valorizando a liberdade de expressão e semeando a autonomia de pensamento.</itunes:summary>
+		<itunes:author>Luciano Pires &amp; Café Brasil Editorial Ltda</itunes:author>
+		<itunes:category text="Society &amp; Culture" />
+		<itunes:owner>
+			<itunes:name>Luciano Pires &amp; Café Brasil Editorial Ltda</itunes:name>
+			<itunes:email>contato@podbr.com</itunes:email>
+		</itunes:owner>
+		<itunes:block>No</itunes:block>
+		<itunes:explicit>no</itunes:explicit>
+		<itunes:image href="http://podcast.lucianopires.com.br/data/images/feed/cafe_brasil_itunes.jpg" />
+		<image>
+			<url>http://podcast.lucianopires.com.br/data/images/feed/cafe_brasil_rss.jpg</url>
+			<title>Café Brasil Podcast</title>
+			<link>http://podcast.lucianopires.com.br</link>
+			<width>144</width>
+			<height>144</height>
+		</image>
+		<atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="self" type="application/rss+xml" href="http://feeds.podbr.com/CafeBrasil" /><feedburner:info uri="cafebrasil" /><atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="hub" href="http://pubsubhubbub.appspot.com/" /><media:copyright>©Luciano Pires &amp; Café Brasil Editorial Ltda</media:copyright><media:thumbnail url="http://podcast.lucianopires.com.br/data/images/feed/cafe_brasil_itunes.jpg" /><media:keywords>rádio, radio, brasil, brazil, luciano pires, mpb, provocação, provocacao, intelectual, cérebro, cerebro,</media:keywords><media:category scheme="http://www.itunes.com/dtds/podcast-1.0.dtd">Society &amp; Culture</media:category><feedburner:feedFlare href="http://add.my.yahoo.com/rss?url=http%3A%2F%2Ffeeds.podbr.com%2FCafeBrasil" src="http://us.i1.yimg.com/us.yimg.com/i/us/my/addtomyyahoo4.gif">Subscribe with My Yahoo!</feedburner:feedFlare><feedburner:feedFlare href="http://www.newsgator.com/ngs/subscriber/subext.aspx?url=http%3A%2F%2Ffeeds.podbr.com%2FCafeBrasil" src="http://www.newsgator.com/images/ngsub1.gif">Subscribe with NewsGator</feedburner:feedFlare><feedburner:feedFlare href="http://www.netvibes.com/subscribe.php?url=http%3A%2F%2Ffeeds.podbr.com%2FCafeBrasil" src="http://www.netvibes.com/img/add2netvibes.gif">Subscribe with Netvibes</feedburner:feedFlare><feedburner:feedFlare href="http://fusion.google.com/add?feedurl=http%3A%2F%2Ffeeds.podbr.com%2FCafeBrasil" src="http://buttons.googlesyndication.com/fusion/add.gif">Subscribe with Google</feedburner:feedFlare><feedburner:feedFlare href="http://www.pageflakes.com/subscribe.aspx?url=http%3A%2F%2Ffeeds.podbr.com%2FCafeBrasil" src="http://www.pageflakes.com/ImageFile.ashx?instanceId=Static_4&amp;fileName=ATP_blu_91x17.gif">Subscribe with Pageflakes</feedburner:feedFlare><feedburner:feedFlare href="http://www.plusmo.com/add?url=http%3A%2F%2Ffeeds.podbr.com%2FCafeBrasil" src="http://plusmo.com/res/graphics/fbplusmo.gif">Subscribe with Plusmo</feedburner:feedFlare><feedburner:feedFlare href="http://my.feedlounge.com/external/subscribe?url=http%3A%2F%2Ffeeds.podbr.com%2FCafeBrasil" src="http://static.feedlounge.com/buttons/subscribe_0.gif">Subscribe with FeedLounge</feedburner:feedFlare><feedburner:feedFlare href="http://www.thefreedictionary.com/_/hp/AddRSS.aspx?http%3A%2F%2Ffeeds.podbr.com%2FCafeBrasil" src="http://img.tfd.com/hp/addToTheFreeDictionary.gif">Subscribe with The Free Dictionary</feedburner:feedFlare><feedburner:feedFlare href="http://www.bitty.com/manual/?contenttype=rssfeed&amp;contentvalue=http%3A%2F%2Ffeeds.podbr.com%2FCafeBrasil" src="http://www.bitty.com/img/bittychicklet_91x17.gif">Subscribe with Bitty Browser</feedburner:feedFlare><feedburner:feedFlare href="http://www.newsalloy.com/?rss=http%3A%2F%2Ffeeds.podbr.com%2FCafeBrasil" src="http://www.newsalloy.com/subrss3.gif">Subscribe with NewsAlloy</feedburner:feedFlare><feedburner:feedFlare href="http://www.live.com/?add=http%3A%2F%2Ffeeds.podbr.com%2FCafeBrasil" src="http://tkfiles.storage.msn.com/x1piYkpqHC_35nIp1gLE68-wvzLZO8iXl_JMledmJQXP-XTBOLfmQv4zhj4MhcWEJh_GtoBIiAl1Mjh-ndp9k47If7hTaFno0mxW9_i3p_5qQw">Subscribe with Live.com</feedburner:feedFlare><feedburner:feedFlare href="http://odeo.com/listen/subscribe?feed=http%3A%2F%2Ffeeds.podbr.com%2FCafeBrasil" src="http://odeo.com/img/badge-channel-black.gif">Subscribe with ODEO</feedburner:feedFlare><feedburner:feedFlare href="http://www.podnova.com/add.srf?url=http%3A%2F%2Ffeeds.podbr.com%2FCafeBrasil" src="http://www.podnova.com/img_chicklet_podnova.gif">Subscribe with Podnova</feedburner:feedFlare><feedburner:feedFlare href="http://mix.excite.eu/add?feedurl=http%3A%2F%2Ffeeds.podbr.com%2FCafeBrasil" src="http://image.excite.co.uk/mix/addtomix.gif">Subscribe with Excite MIX</feedburner:feedFlare><feedburner:feedFlare href="http://www.yourminis.com/subscribe.aspx?u=http%3A%2F%2Ffeeds.podbr.com%2FCafeBrasil" src="http://www.yourminis.com/images/addtoyourminisbadge.gif">Subscribe with Yourminis.com</feedburner:feedFlare><feedburner:feedFlare href="http://download.attensa.com/app/get_attensa.html?feedurl=http%3A%2F%2Ffeeds.podbr.com%2FCafeBrasil" src="http://www.attensa.com/blogs/attensa/WindowsLiveWriter/BadgeredintoBadges_10C02/attensa_feed_button5.gif">Subscribe with Attensa for Outlook</feedburner:feedFlare><feedburner:feedFlare href="http://www.webwag.com/wwgthis.php?url=http%3A%2F%2Ffeeds.podbr.com%2FCafeBrasil" src="http://www.webwag.com/images/wwgthis.gif">Subscribe with Webwag</feedburner:feedFlare><feedburner:feedFlare href="http://hub.netomat.net/account/account.autoSubscribe.jspa?urls=http%3A%2F%2Ffeeds.podbr.com%2FCafeBrasil" src="http://www.netomat.net/blogger/images/icon_netomat_feedbutton.gif">Subscribe with netomat Hub</feedburner:feedFlare><feedburner:feedFlare href="http://www.dailyrotation.com/index.php?feed=http%3A%2F%2Ffeeds.podbr.com%2FCafeBrasil" src="http://www.dailyrotation.com/rss-dr2.gif">Subscribe with Daily Rotation</feedburner:feedFlare><feedburner:feedFlare href="http://www.podcastready.com/oneclick_bookmark.php?url=http%3A%2F%2Ffeeds.podbr.com%2FCafeBrasil" src="http://www.podcastready.com/images/podcastready_button.gif">Subscribe with Podcast Ready</feedburner:feedFlare><feedburner:feedFlare href="http://www.flurry.com/pushRssFeed.do?r=fb&amp;url=http%3A%2F%2Ffeeds.podbr.com%2FCafeBrasil" src="http://www.flurry.com/images/flurry_rss_logo2.gif">Subscribe with Flurry</feedburner:feedFlare><item>
+		<title>384 - Mises Brasil</title>
+		<link>http://feeds.podbr.com/~r/CafeBrasil/~3/t_1oe_3dUKA/</link>
+		<comments>http://podcast.lucianopires.com.br/2014/01/07/384-mises-brasil/#comments</comments>
+		<pubDate>Tue, 07 Jan 2014 19:10:00 +0000</pubDate>
+		<dc:creator>PodCasting Brasil</dc:creator>
+
+		<category><![CDATA[Café Brasil Podcast]]></category>
+
+		<guid isPermaLink="false">http://podcast.lucianopires.com.br/?p=2563</guid>
+		<description><![CDATA[No primeiro programa de 2014 vamos reproduzir a entrevista que Luciano Pires deu para o Bruno Gershagen do Podcast Mises Brasil. Nesta conversa, Luciano explica por qual razão tem utilizado a abordagem das ideias do liberalismo para tratar de assuntos políticos e econômicos, diz como tem sido a repercussão nas palestras do uso dessa perspectiva, [...]]]></description>
+			<content:encoded><![CDATA[<p class="MsoNormal"><a href="http://podcast.lucianopires.com.br/media/2014/01/img-384.jpg"><img class="alignright size-full wp-image-2564" style="margin: 10px; float:right;" title="img-384" src="http://podcast.lucianopires.com.br/media/2014/01/img-384.jpg" alt="img-384" /></a>No primeiro programa de 2014 vamos reproduzir a entrevista que Luciano Pires deu para o Bruno Gershagen do Podcast Mises Brasil. Nesta conversa, Luciano explica por qual razão tem utilizado a abordagem das ideias do liberalismo para tratar de assuntos políticos e econômicos, diz como tem sido a repercussão nas palestras do uso dessa perspectiva, e, de acordo com a sua experiência no mundo corporativo, conta qual é a visão de empreendedores, executivos e funcionários sobre o capitalismo, livre mercado e a questão das liberdades. Na trilha sonora? O Lobo Mau, claro! Direção e apresentação de Luciano Pires.</p>
+<div>Apresentação de Luciano Pires. O texto desse programa, com poesias e letras das músicas pode ser encontrado no <strong><a href="http://www.portalcafebrasil.com.br" target="_blank">PORTAL CAFÉ BRASIL</a></strong>, publicado em <a href="http://www.podcastcafebrasil.com.br" target="_blank">http://www.podcastcafebrasil.com.br</a></div>
+<img src="http://feeds.feedburner.com/~r/CafeBrasil/~4/t_1oe_3dUKA" height="1" width="1"/>]]></content:encoded>
+			<wfw:commentRss>http://podcast.lucianopires.com.br/2014/01/07/384-mises-brasil/feed/</wfw:commentRss>
+
+<itunes:duration>34:52</itunes:duration>
+		<itunes:subtitle>No primeiro programa de 2014 vamos reproduzir a entrevista que Luciano Pires deu para o Bruno Gershagen do Podcast Mises Brasil. Nesta conversa, Luciano explica ...</itunes:subtitle>
+		<itunes:summary>No primeiro programa de 2014 vamos reproduzir a entrevista que Luciano Pires deu para o Bruno Gershagen do Podcast Mises Brasil. Nesta conversa, Luciano explica por qual razão tem utilizado a abordagem das ideias do liberalismo para tratar de assuntos políticos e econômicos, diz como tem sido a repercussão nas palestras do uso dessa perspectiva, e, de acordo com a sua experiência no mundo corporativo, conta qual é a visão de empreendedores, executivos e funcionários sobre o capitalismo, livre mercado e a questão das liberdades. Na trilha sonora? O Lobo Mau, claro! Direção e apresentação de Luciano Pires.
+
+Apresentação de Luciano Pires. O texto desse programa, com poesias e letras das músicas pode ser encontrado no PORTAL CAFÉ BRASIL, publicado em http://www.podcastcafebrasil.com.br</itunes:summary>
+		<itunes:keywords>Café,Brasil,Podcast</itunes:keywords>
+		<itunes:author>Luciano Pires  Café Brasil Editorial Ltda</itunes:author>
+		<itunes:explicit>no</itunes:explicit>
+		<itunes:block>No</itunes:block>
+	<media:content url="http://feeds.podbr.com/~r/CafeBrasil/~5/SFOUKlbp61w/cafe_brasil_384_mises_brasil.mp3" fileSize="36045466" type="audio/mpeg" /><feedburner:origLink>http://podcast.lucianopires.com.br/2014/01/07/384-mises-brasil/</feedburner:origLink><enclosure url="http://feeds.podbr.com/~r/CafeBrasil/~5/SFOUKlbp61w/cafe_brasil_384_mises_brasil.mp3" length="36045466" type="audio/mpeg" /><feedburner:origEnclosureLink>http://podcast.lucianopires.com.br/wp/podpress_trac/feed/2563/0/cafe_brasil_384_mises_brasil.mp3</feedburner:origEnclosureLink></item>
+</channel>

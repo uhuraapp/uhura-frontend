@@ -88,6 +88,23 @@ func Test_CData(t *testing.T) {
 	}
 }
 
+func Test_FeedburnerAttrs(t *testing.T){
+	content, _ := ioutil.ReadFile("testdata/feedBurner.rss")
+	feed := New(1, true, chanHandler, itemHandler)
+	feed.FetchBytes("http://example.com", content, nil)
+
+	item := feed.Channels[0].Items[0]
+	expectedEnclosure := "http://podcast.lucianopires.com.br/wp/podpress_trac/feed/2563/0/cafe_brasil_384_mises_brasil.mp3"
+	if item.Enclosures[0].Url != expectedEnclosure {
+		t.Errorf("Expected Enclosure Url to be %s but found %s", expectedEnclosure, item.Enclosures[0].Url)
+	}
+
+	expectedLink := "http://podcast.lucianopires.com.br/2014/01/07/384-mises-brasil/"
+	if item.Links[0].Href != expectedLink {
+		t.Errorf("Expected Link Href to be %s but found %s", expectedLink, item.Links[0].Href)
+	}
+}
+
 func chanHandler(feed *Feed, newchannels []*Channel) {
 	println(len(newchannels), "new channel(s) in", feed.Url)
 }
