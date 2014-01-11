@@ -2,13 +2,13 @@ package main
 
 import (
   "code.google.com/p/goauth2/oauth"
-  "encoding/json"
   "github.com/codegangsta/martini"
   "github.com/codegangsta/martini-contrib/render"
   "github.com/gorilla/sessions"
   "net/http"
   "os"
   "uhura/core"
+  "html/template"
 )
 
 var config oauth.Config
@@ -32,6 +32,11 @@ func main() {
 
   m.Use(render.Renderer(render.Options{
     Layout: "layout",
+    Funcs: []template.FuncMap{
+      {
+        "UserViewedHelper": core.UserViewedHelper,
+      },
+    },
   }))
 
   m.Use(martini.Static("assets"))
@@ -43,15 +48,15 @@ func main() {
     r.HTML(200, "home", data)
   })
 
-  m.Get("/dashboard", func(r render.Render, w http.ResponseWriter, req *http.Request) {
-    session, _ := store.Get(req, "session")
-    userId, ok := session.Values["user_id"].(string)
-    if ok {
-      user := core.GetUser(userId)
-      chanell := core.GetChannelByUser(user)
-      r.HTML(200, "dashboard", map[string]interface{}{"current_user": &user, "channels": chanell})
+  m.Get("/dashboard", func(r render.Render, w http.ResponseWriter, request *http.Request) {
+    user, err := core.CurrentUser(request)
+    if err {
+      http.Redirect(w, request, "/authorize", http.StatusFound)
     } else {
-      http.Redirect(w, req, "/authorize", http.StatusFound)
+      channels := core.GetChannelByUser(user)
+      items := core.GetUserItems(user, channels)
+
+      r.HTML(200, "dashboard", map[string]interface{}{"current_user": &user, "channels": channels, "items": items})
     }
   })
 
@@ -63,27 +68,21 @@ func main() {
     http.Redirect(w, r, url, http.StatusFound)
   })
 
-  m.Get("/auth/callback", func(w http.ResponseWriter, r *http.Request) {
-    var tempUser core.TempUser
-    code := r.FormValue("code")
+  m.Get("/auth/callback", func(responseWriter http.ResponseWriter, request *http.Request) {
+    code := request.FormValue("code")
     t := &oauth.Transport{Config: config}
     t.Exchange(code)
-    resp, _ := t.Client().Get(profileInfoURL)
-    defer resp.Body.Close()
+    responseAuth, _ := t.Client().Get(profileInfoURL)
+    defer responseAuth.Body.Close()
 
-    decoder := json.NewDecoder(resp.Body)
-    err := decoder.Decode(&tempUser)
-    if err != nil {
-      panic(err)
+    _, err := core.CreateAndLoginUser(request, responseWriter, responseAuth)
+
+    if err {
+      // TODO: set flash
+      http.Redirect(responseWriter, request, "/", http.StatusMovedPermanently)
+    } else {
+      http.Redirect(responseWriter, request, "/dashboard", http.StatusMovedPermanently)
     }
-
-    user := core.CreateUser(tempUser)
-
-    session, _ := store.Get(r, "session")
-    session.Values["user_id"] = user.IdString()
-
-    session.Save(r, w)
-    http.Redirect(w, r, "/dashboard", http.StatusMovedPermanently)
   })
 
   // API
@@ -93,11 +92,28 @@ func main() {
     r.JSON(202, map[string]interface{}{"message": "Processing"})
   })
 
-  m.Post("/api/channels", func(r render.Render, req *http.Request, params martini.Params) {
-    req.ParseForm()
-    var url = req.Form.Get("url")
+  m.Post("/api/channels", func(r render.Render, request *http.Request, params martini.Params) {
+    request.ParseForm()
+    var url = request.Form.Get("url")
 
-    core.AddFeed(url)
+    user, err := core.CurrentUser(request)
+
+    if err {
+      r.Error(503)
+    } else {
+      core.AddFeed(url, user.Id)
+      r.JSON(202, map[string]interface{}{"message": "Processing"})
+    }
+  })
+
+  m.Post("/api/items/:key/watched", func(r render.Render, request *http.Request, params martini.Params){
+    user, err := core.CurrentUser(request)
+    if err {
+      r.Error(503)
+      return
+    }
+
+    core.UserWatched(user.Id, params["key"])
     r.JSON(202, map[string]interface{}{"message": "Processing"})
   })
 

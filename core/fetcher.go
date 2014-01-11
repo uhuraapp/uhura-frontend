@@ -4,7 +4,7 @@ import (
   "crypto/md5"
   "encoding/hex"
   "fmt"
-  rss "github.com/jteeuwen/go-pkg-rss"
+  rss "github.com/dukex/go-pkg-rss"
   "io"
   "os"
   "strconv"
@@ -61,16 +61,22 @@ func channelFetchHandler(feed *rss.Feed, channels []*rss.Channel) {
   }
 }
 
+const itemForm = "Mon, 02 Jan 2006 15:04:05 -0700"
+
 func itemFetchHandler(feed *rss.Feed, ch *rss.Channel, items []*rss.Item) {
   var channel Channel
   database.Where("url = ?", feed.Url).First(&channel)
 
   for _, itemdata := range items {
+
+    fmt.Println(itemdata.Enclosures[0])
     h := md5.New()
     io.WriteString(h, itemdata.Enclosures[0].Url)
     key := hex.EncodeToString(h.Sum(nil))
 
+    publishedAt, _ := time.Parse(itemForm, itemdata.PubDate)
+
     var item Item
-    database.Where(Item{Key: key}).Attrs(Item{Title: itemdata.Title, SourceUrl: itemdata.Enclosures[0].Url, Description: item.Description, ChannelId: channel.Id}).FirstOrCreate(&item)
+    database.Where(Item{Key: key}).Assign(Item{Title: itemdata.Title, SourceUrl: itemdata.Enclosures[0].Url, Description: item.Description, ChannelId: channel.Id, PublishedAt: publishedAt}).FirstOrCreate(&item)
   }
 }

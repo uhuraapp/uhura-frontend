@@ -1,3 +1,23 @@
+#dashboard {
+  width: 1080px;
+  margin: 0 auto;
+}
+
+#channels {
+  width: 200px;
+  float: left;
+}
+
+ul {
+  padding: 0
+}
+
+#items {
+  float: left;
+  width: 830px;
+  margin: 0 0 0 50px;
+}
+
 #channels img{
   width: 20px;
   margin: 0 15px 0 0

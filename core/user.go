@@ -1,6 +1,13 @@
 package core
 
-import "strconv"
+import (
+  "encoding/json"
+  "github.com/gorilla/sessions"
+  "net/http"
+  "strconv"
+)
+
+var store = sessions.NewCookieStore([]byte("something-very-secret"))
 
 type TempUser struct {
   Id         string
@@ -29,7 +36,7 @@ func (u *User) IdString() string {
   return strconv.Itoa(u.Id)
 }
 
-func CreateUser(tempUser TempUser) *User {
+func createUser(tempUser TempUser) *User {
   configDatabase()
 
   var user User
@@ -39,7 +46,7 @@ func CreateUser(tempUser TempUser) *User {
   return &user
 }
 
-func GetUser(userId string) *User {
+func getUser(userId string) *User {
   configDatabase()
 
   var user User
@@ -48,4 +55,31 @@ func GetUser(userId string) *User {
   database.First(&user, id)
 
   return &user
+}
+
+func CurrentUser(request *http.Request) (*User, bool) {
+  session, _ := store.Get(request, "session")
+  userId, ok := session.Values["user_id"].(string)
+  if ok {
+    return getUser(userId), false
+  } else {
+    return nil, true
+  }
+}
+
+func CreateAndLoginUser(request *http.Request, responseWriter http.ResponseWriter, responseAuth *http.Response) (*User, bool) {
+  var tempUser TempUser
+  decoder := json.NewDecoder(responseAuth.Body)
+  err := decoder.Decode(&tempUser)
+  if err != nil {
+    panic(err)
+  }
+
+  user := createUser(tempUser)
+
+  session, _ := store.Get(request, "session")
+  session.Values["user_id"] = user.IdString()
+
+  session.Save(request, responseWriter)
+  return user, false
 }
