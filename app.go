@@ -4,7 +4,6 @@ import (
   "code.google.com/p/goauth2/oauth"
   "github.com/codegangsta/martini"
   "github.com/codegangsta/martini-contrib/render"
-  "github.com/gorilla/sessions"
   "net/http"
   "os"
   "uhura/core"
@@ -12,8 +11,6 @@ import (
 )
 
 var config oauth.Config
-
-var store = sessions.NewCookieStore([]byte("something-very-secret"))
 
 const profileInfoURL = "https://www.googleapis.com/oauth2/v1/userinfo?alt=json"
 

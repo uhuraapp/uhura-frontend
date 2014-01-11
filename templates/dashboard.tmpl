@@ -36,8 +36,7 @@
 <td> {{ .ChannelTitle }}</td>
 <td> {{ .PublishedAt }}</td>
 <td>
-<audio src="{{ .SourceUrl }}" controls preload="auto" autobuffer>
-</audio>
+  <audio src="{{ .SourceUrl }}" controls preload="auto" autobuffer></audio>
 
   <form action="/api/items/{{ .Key }}/watched" method="post">
     <button type="submit">watched!</button>
