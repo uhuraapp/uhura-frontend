@@ -31,7 +31,13 @@ type UserItemsResult struct {
   PublishedAt  time.Time
 }
 
-func GetUserItems(user *User, channels *[]Channel) *[]UserItemsResult {
+type Counter struct {
+  size        int
+  currentPage int
+  channel     string
+}
+
+func GetUserItems(user *User, channels *[]Channel, channel string, pageParams string) (*[]UserItemsResult, *Counter) {
   configDatabase()
 
   var channelsIds []int
@@ -39,10 +45,27 @@ func GetUserItems(user *User, channels *[]Channel) *[]UserItemsResult {
     channelsIds = append(channelsIds, channel.Id)
   }
 
-  var itemsResult []UserItemsResult
-  database.Table("items").Select("user_items.viewed, channels.title as channel_title, items.key, items.source_url, items.title, items.description, items.id, items.published_at").Where("channel_id in (?)", channelsIds).Joins("left join user_items on user_items.item_id = items.id and user_items.user_id = " + strconv.Itoa(user.Id) + " left join channels on channels.id = items.channel_id").Order("user_items.viewed DESC, published_at DESC").Limit("5").Scan(&itemsResult)
+  if channel != "" {
+    channelInt, _ := strconv.Atoi(channel)
+    channelsIds = []int{channelInt}
+  }
 
-  return &itemsResult
+  limit := 10
+  page, err := strconv.Atoi(pageParams)
+  if err != nil {
+    page = 1
+  }
+  offset := (page * limit) - limit
+
+  var itemsResult []UserItemsResult
+  database.Table("items").Select("user_items.viewed, channels.title as channel_title, items.key, items.source_url, items.title, items.description, items.id, items.published_at").Where("channel_id in (?)", channelsIds).Joins("left join user_items on user_items.item_id = items.id and user_items.user_id = " + strconv.Itoa(user.Id) + " left join channels on channels.id = items.channel_id").Order("user_items.viewed DESC, published_at DESC").Offset(offset).Limit("10").Scan(&itemsResult)
+
+  var total int
+  database.Table("items").Where("channel_id in (?)", channelsIds).Count(&total)
+
+  counter := Counter{size: *&total, currentPage: page, channel: channel}
+
+  return &itemsResult, &counter
 }
 
 func UserWatched(userId int, key string) {

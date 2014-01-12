@@ -32,6 +32,7 @@ func main() {
     Funcs: []template.FuncMap{
       {
         "UserViewedHelper": core.UserViewedHelper,
+        "Pagination": core.Pagination,
       },
     },
   }))
@@ -46,18 +47,17 @@ func main() {
   })
 
   m.Get("/dashboard", func(r render.Render, w http.ResponseWriter, request *http.Request) {
+    page := request.FormValue("page")
+    channel := request.FormValue("channel")
     user, err := core.CurrentUser(request)
     if err {
       http.Redirect(w, request, "/authorize", http.StatusFound)
     } else {
       channels := core.GetChannelByUser(user)
-      items := core.GetUserItems(user, channels)
+      items, counter := core.GetUserItems(user, channels, channel, page)
 
-      r.HTML(200, "dashboard", map[string]interface{}{"current_user": &user, "channels": channels, "items": items})
+      r.HTML(200, "dashboard", map[string]interface{}{"current_user": &user, "channels": channels, "items": items, "counter": counter})
     }
-  })
-
-  m.Get("/dashboard/podcasts/:id", func(r render.Render, w http.ResponseWriter, req *http.Request) {
   })
 
   m.Get("/authorize", func(w http.ResponseWriter, r *http.Request) {

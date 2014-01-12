@@ -39,3 +39,24 @@ ul {
 #channels li.action a{
   text-align: center;
 }
+
+#pagination {
+  background: #CCC;
+  overflow: hidden;
+  list-style: none;
+}
+
+#pagination li{
+  float: left;
+  width: 30px;
+  text-align: center;
+  margin: 5px 0;
+}
+
+#pagination li.current_page a:hover{
+  text-decoration: none
+}
+#pagination li.current_page a{
+  color: black;
+  cursor: default;
+}
