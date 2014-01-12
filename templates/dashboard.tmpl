@@ -36,7 +36,7 @@
 <td> {{ .ChannelTitle }}</td>
 <td> {{ .PublishedAt }}</td>
 <td>
-  <audio src="{{ .SourceUrl }}" controls preload="auto" autobuffer></audio>
+  <audio src="{{ .SourceUrl }}" preload="none"></audio>
 
   <form action="/api/items/{{ .Key }}/watched" method="post">
     <button type="submit">watched!</button>
@@ -51,5 +51,9 @@
 </div>
 </div>
 
-
+<script>
+ audiojs.events.ready(function() {
+    var as = audiojs.createAll();
+  });
+</script>
 
