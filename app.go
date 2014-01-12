@@ -16,9 +16,9 @@ const profileInfoURL = "https://www.googleapis.com/oauth2/v1/userinfo?alt=json"
 
 func main() {
   config := &oauth.Config{
-    ClientId:     "933623108791-imtedbq5d1vgfhotj15gq6493jl22j4m.apps.googleusercontent.com",
-    ClientSecret: "HjKW82HOb1jT-XyWgPFc9jW8",
-    RedirectURL:  "http://127.0.0.1:3002/auth/callback",
+    ClientId:    os.Getenv("GOOGLE_CLIENT_ID"),
+    ClientSecret: os.Getenv("GOOGLE_CLIENT_SECRET"),
+    RedirectURL:  os.Getenv("GOOGLE_CALLBACK_URL"),
     Scope:        "https://www.googleapis.com/auth/userinfo.profile",
     AuthURL:      "https://accounts.google.com/o/oauth2/auth",
     TokenURL:     "https://accounts.google.com/o/oauth2/token",
