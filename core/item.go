@@ -40,7 +40,7 @@ func GetUserItems(user *User, channels *[]Channel) *[]UserItemsResult {
   }
 
   var itemsResult []UserItemsResult
-  database.Table("items").Select("user_items.viewed, channels.title as channel_title, items.key, items.source_url, items.title, items.description, items.id, items.published_at").Where("channel_id in (?)", channelsIds).Joins("left join user_items on user_items.item_id = items.id and user_items.user_id = " + strconv.Itoa(user.Id) + " left join channels on channels.id = items.channel_id").Order("title, user_items.viewed DESC, published_at DESC").Scan(&itemsResult)
+  database.Table("items").Select("user_items.viewed, channels.title as channel_title, items.key, items.source_url, items.title, items.description, items.id, items.published_at").Where("channel_id in (?)", channelsIds).Joins("left join user_items on user_items.item_id = items.id and user_items.user_id = " + strconv.Itoa(user.Id) + " left join channels on channels.id = items.channel_id").Order("user_items.viewed DESC, published_at DESC").Limit("5").Scan(&itemsResult)
 
   return &itemsResult
 }
