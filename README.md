@@ -1,6 +1,7 @@
 # Uhura
 Hailing Frequencies Are Open!
 
+![Screenshot](http://i.imgur.com/hcSZffy.png)
 
 ## Development
 
