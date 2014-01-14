@@ -37,7 +37,7 @@ type Counter struct {
   channel     string
 }
 
-func GetUserItems(user *User, channels *[]Channel, channel string, pageParams string) (*[]UserItemsResult, *Counter) {
+func GetUserItems(user *User, channels *[]ChannelResult, channel string, pageParams string) (*[]UserItemsResult, *Counter) {
   configDatabase()
 
   var channelsIds []int

@@ -16,11 +16,32 @@ type UserChannel struct {
   ChannelId int
 }
 
-func GetChannelByUser(user *User) *[]Channel {
+
+type ChannelResult struct {
+  Title         string
+  Description   string
+  ImageUrl      string
+  Url           string
+  Id            int
+  ToView int
+}
+
+func GetChannelByUser(user *User) *[]ChannelResult {
   configDatabase()
 
-  var channels []Channel
-  database.Table("user_channels").Select("channels.title, channels.description, channels.image_url, channels.copyright, channels.last_build_date, channels.url, channels.id").Where("user_id = ?", user.Id).Joins("left join channels on channels.id = user_channels.channel_id").Scan(&channels)
+  var channels []ChannelResult
+  database.Table("user_channels").Select("channels.title, channels.description, channels.image_url, channels.url, channels.id").Where("user_id = ?", user.Id).Joins("left join channels on channels.id = user_channels.channel_id").Scan(&channels)
+
+  for i, channel := range channels {
+    var watched int
+    var itemsIds []int64
+    database.Table("items").Where("channel_id = ?", channel.Id).Pluck("id", &itemsIds)
+    database.Table("user_items").Where("user_id = ? and item_id in (?) and viewed = true", user.Id, itemsIds).Count(&watched)
+
+    toView := len(itemsIds) - watched
+    channel.ToView = toView
+    channels[i] = channel
+  }
 
   return &channels
 }

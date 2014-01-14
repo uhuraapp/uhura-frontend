@@ -23,16 +23,27 @@ ul, ol{
   overflow: hidden;
 }
 
-#channels li a, #channels img{
-  float: left;
+#channels .to_view{
+  background: #EEE;
+  border-radius: 50px;
   display: block;
+  float: right;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 12px;
 }
 
-#channels li a {
-  width: 205px;
+#channels li a{
+  float: left;
+  display: block;
+  width: 215px;
   white-space: nowrap;
 	overflow: hidden;
   text-overflow: ellipsis;
+  float: left;
 }
 
 #channels img{
@@ -43,12 +54,8 @@ ul, ol{
 }
 
 #channels a:hover{
-  background: #333
-}
-
-#channels li a:hover{
-  background: #080808;
-  cursor: default;
+  background: #f7f7f7;
+  text-decoration: none;
 }
 
 #channels li.action a{

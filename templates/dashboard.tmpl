@@ -7,10 +7,13 @@
       </a></li>
       {{range .channels}}
       <li>
-      <img alt="" src="{{.ImageUrl}}" />
       <a href="/dashboard?channel={{.Id}}">
+      <img alt="" src="{{.ImageUrl}}" />
         {{.Title}}
       </a>
+      <span class="to_view">
+        {{.ToView}}
+      </span>
       </li>
       {{end}}
     </ul>
