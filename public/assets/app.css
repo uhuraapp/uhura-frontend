@@ -74,6 +74,16 @@ ul, ol{
 
 #items h3{
   margin-left: 10px;
+  overflow: hidden;
+}
+
+#items h3 span{
+ float: left;
+}
+
+#items h3 form{
+  float: left;
+  margin-left: 10px
 }
 
 #episodes{

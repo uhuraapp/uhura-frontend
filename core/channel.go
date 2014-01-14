@@ -1,5 +1,7 @@
 package core
 
+import "strconv"
+
 type Channel struct {
   Title         string
   Description   string
@@ -44,4 +46,11 @@ func GetChannelByUser(user *User) *[]ChannelResult {
   }
 
   return &channels
+}
+
+func GetChannel(channelParams string) Channel {
+  channelId, _ := strconv.Atoi(channelParams)
+  var channel Channel
+  database.First(&channel, channelId)
+  return channel
 }

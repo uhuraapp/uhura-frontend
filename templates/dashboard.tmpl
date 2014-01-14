@@ -6,28 +6,36 @@
         All Channels
       </a></li>
       {{range .channels}}
-      <li>
-      <a href="/dashboard?channel={{.Id}}">
-      <img alt="" src="{{.ImageUrl}}" />
-        {{.Title}}
-      </a>
-      <span class="to_view">
-        {{.ToView}}
-      </span>
-      </li>
+        <li>
+          <a href="/dashboard/channels/{{.Id}}">
+            <img alt="" src="{{.ImageUrl}}" />
+            {{.Title}}
+          </a>
+          <span class="to_view">
+            {{.ToView}}
+          </span>
+        </li>
       {{end}}
     </ul>
 
     <form class="form-inline" role="form" action="/api/channels" method="post">
       <div class="form-group">
         <label class="sr-only" for="exampleInputEmail2">Podcasts Address</label>
-        <input type="text" placeholder="RSS Url" class="form-control" name="url">
+        <input type="text" placeholder="Feed Url" class="form-control" name="url">
       </div>
       <button type="submit" class="btn btn-default">Add</button>
     </form>
   </div>
   <div id="items">
-    <h3> Episodes </h3>
+    <h3>
+      <span>Episodes {{with .channel}} from {{.Title}}{{end}}</span>
+      {{with .channel}}
+        <form class="form-inline" role="form" action="/api/channels" method="post">
+          <input type="hidden" value="{{.Url}}" name="url">
+          <button type="submit" class="btn btn-default">Subscribe</button>
+        </form>
+      {{end}}
+    </h3>
     <ol id="episodes">
       {{range .items}}
       <li>
@@ -48,6 +56,9 @@
     </ol>
 
     {{ .counter | Pagination  }}
+    {{with .channel}}
+      <small>{{.Copyright}}</small>
+    {{end}}
   </div>
 
 </div>

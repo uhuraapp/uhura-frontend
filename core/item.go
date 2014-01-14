@@ -41,6 +41,7 @@ func GetUserItems(user *User, channels *[]ChannelResult, channel string, pagePar
   configDatabase()
 
   var channelsIds []int
+  channelsIds = append(channelsIds, 0)
   for _, channel := range *channels {
     channelsIds = append(channelsIds, channel.Id)
   }

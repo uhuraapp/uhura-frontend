@@ -4,10 +4,10 @@ import (
   "code.google.com/p/goauth2/oauth"
   "github.com/codegangsta/martini"
   "github.com/codegangsta/martini-contrib/render"
+  "html/template"
   "net/http"
   "os"
   "uhura/core"
-  "html/template"
 )
 
 var config oauth.Config
@@ -16,7 +16,7 @@ const profileInfoURL = "https://www.googleapis.com/oauth2/v1/userinfo?alt=json"
 
 func main() {
   config := &oauth.Config{
-    ClientId:    os.Getenv("GOOGLE_CLIENT_ID"),
+    ClientId:     os.Getenv("GOOGLE_CLIENT_ID"),
     ClientSecret: os.Getenv("GOOGLE_CLIENT_SECRET"),
     RedirectURL:  os.Getenv("GOOGLE_CALLBACK_URL"),
     Scope:        "https://www.googleapis.com/auth/userinfo.profile",
@@ -32,7 +32,7 @@ func main() {
     Funcs: []template.FuncMap{
       {
         "UserViewedHelper": core.UserViewedHelper,
-        "Pagination": core.Pagination,
+        "Pagination":       core.Pagination,
       },
     },
   }))
@@ -57,6 +57,21 @@ func main() {
       items, counter := core.GetUserItems(user, channels, channel, page)
 
       r.HTML(200, "dashboard", map[string]interface{}{"current_user": &user, "channels": channels, "items": items, "counter": counter})
+    }
+  })
+
+  m.Get("/dashboard/channels/:id", func(r render.Render, w http.ResponseWriter, params martini.Params, request *http.Request) {
+    page := request.FormValue("page")
+    channelParams := params["id"]
+    user, err := core.CurrentUser(request)
+    if err {
+      http.Redirect(w, request, "/authorize", http.StatusFound)
+    } else {
+      channels := core.GetChannelByUser(user)
+      channel := core.GetChannel(channelParams)
+      items, counter := core.GetUserItems(user, channels, channelParams, page)
+
+      r.HTML(200, "dashboard", map[string]interface{}{"current_user": &user, "channels": channels, "items": items, "counter": counter, "channel": channel})
     }
   })
 
@@ -89,7 +104,7 @@ func main() {
     r.JSON(202, map[string]interface{}{"message": "Processing"})
   })
 
-  m.Post("/api/channels", func(r render.Render, request *http.Request, params martini.Params) {
+  m.Post("/api/channels", func(responseWriter http.ResponseWriter, r render.Render, request *http.Request, params martini.Params) {
     request.ParseForm()
     var url = request.Form.Get("url")
 
@@ -99,11 +114,12 @@ func main() {
       r.Error(503)
     } else {
       core.AddFeed(url, user.Id)
-      r.JSON(202, map[string]interface{}{"message": "Processing"})
+      // r.JSON(202, map[string]interface{}{"message": "Processing"})
+      http.Redirect(responseWriter, request, "/dashboard", http.StatusMovedPermanently)
     }
   })
 
-  m.Post("/api/items/:key/watched", func(r render.Render, request *http.Request, params martini.Params){
+  m.Post("/api/items/:key/watched", func(responseWriter http.ResponseWriter, r render.Render, request *http.Request, params martini.Params) {
     user, err := core.CurrentUser(request)
     if err {
       r.Error(503)
@@ -111,7 +127,8 @@ func main() {
     }
 
     core.UserWatched(user.Id, params["key"])
-    r.JSON(202, map[string]interface{}{"message": "Processing"})
+    // r.JSON(202, map[string]interface{}{"message": "Processing"})
+    http.Redirect(responseWriter, request, "/dashboard", http.StatusMovedPermanently)
   })
 
   http.ListenAndServe(":"+os.Getenv("PORT"), m)
