@@ -1,7 +1,7 @@
 # Uhura
 Hailing Frequencies Are Open!
 
-![Screenshot](http://i.imgur.com/hcSZffy.png)
+![Screenshot](http://uhura.herokuapp.com/assets/uhura-home.png)
 
 ## Development
 
