@@ -93,7 +93,8 @@ func main() {
       // TODO: set flash
       http.Redirect(responseWriter, request, "/", http.StatusMovedPermanently)
     } else {
-      http.Redirect(responseWriter, request, "/dashboard", http.StatusMovedPermanently)
+      returnTo := core.GetReturnTo(request)
+      http.Redirect(responseWriter, request, returnTo, http.StatusMovedPermanently)
     }
   })
 

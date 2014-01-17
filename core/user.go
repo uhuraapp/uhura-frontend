@@ -67,6 +67,21 @@ func CurrentUser(request *http.Request) (*User, bool) {
   }
 }
 
+func SetReturnTo(request *http.Request, responseWriter http.ResponseWriter, url string) {
+  session, _ := store.Get(request, "session")
+  session.Values["return_to"] = url
+  session.Save(request, responseWriter)
+}
+
+func GetReturnTo(request *http.Request) string {
+  session, _ := store.Get(request, "session")
+  url, ok := session.Values["return_to"].(string)
+  if !ok {
+    url = "/dashboard"
+  }
+  return url
+}
+
 func CreateAndLoginUser(request *http.Request, responseWriter http.ResponseWriter, responseAuth *http.Response) (*User, bool) {
   var tempUser TempUser
   decoder := json.NewDecoder(responseAuth.Body)
