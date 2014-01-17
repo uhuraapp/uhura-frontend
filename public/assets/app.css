@@ -16,6 +16,12 @@ ul, ol{
   margin-bottom: 50px;
 }
 
+#home .see-channels{
+  display: block;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
 #home img{
   width: 960px;
   margin: 0 auto;
