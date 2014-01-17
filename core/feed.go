@@ -2,7 +2,7 @@ package core
 
 import "strconv"
 
-func AddFeed(feed_url string, userId int) {
+func AddFeed(feed_url string, userId int) Channel {
   configDatabase()
 
   var channel Channel
@@ -11,4 +11,5 @@ func AddFeed(feed_url string, userId int) {
   go database.Where(UserChannel{ChannelId: channel.Id, UserId: userId}).FirstOrCreate(&userChannel)
 
   FetchChanell(strconv.Itoa(channel.Id))
+  return channel
 }

@@ -7,6 +7,7 @@ import (
   "html/template"
   "net/http"
   "os"
+  "strconv"
   "uhura/core"
 )
 
@@ -114,9 +115,9 @@ func main() {
     if err {
       r.Error(503)
     } else {
-      core.AddFeed(url, user.Id)
+      channel := core.AddFeed(url, user.Id)
       // r.JSON(202, map[string]interface{}{"message": "Processing"})
-      http.Redirect(responseWriter, request, "/dashboard", http.StatusMovedPermanently)
+      http.Redirect(responseWriter, request, "/dashboard/channels/"+strconv.Itoa(channel.Id), http.StatusMovedPermanently)
     }
   })
 
