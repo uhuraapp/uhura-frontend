@@ -18,14 +18,19 @@ type UserChannel struct {
   ChannelId int
 }
 
-
 type ChannelResult struct {
-  Title         string
-  Description   string
-  ImageUrl      string
-  Url           string
-  Id            int
-  ToView int
+  Title       string
+  Description string
+  ImageUrl    string
+  Url         string
+  Id          int
+  ToView      int
+}
+
+func AllChannels(user *User) []Channel {
+  var channels []Channel
+  database.Find(&channels)
+  return channels
 }
 
 func GetChannelByUser(user *User) *[]ChannelResult {

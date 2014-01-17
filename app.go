@@ -47,6 +47,17 @@ func main() {
     r.HTML(200, "home", data)
   })
 
+  m.Get("/channels", func(r render.Render, w http.ResponseWriter, request *http.Request) {
+    user, err := core.CurrentUser(request)
+    if err {
+      core.SetReturnTo(request, w, "/channels")
+      http.Redirect(w, request, "/authorize", http.StatusFound)
+    } else {
+      channels := core.AllChannels(user)
+      r.HTML(200, "channels", map[string]interface{}{"current_user": &user, "channels": channels})
+    }
+  })
+
   m.Get("/dashboard", func(r render.Render, w http.ResponseWriter, request *http.Request) {
     page := request.FormValue("page")
     channel := request.FormValue("channel")

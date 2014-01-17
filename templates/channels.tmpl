@@ -1,0 +1,29 @@
+<div id="channels_page">
+  <h3>Channels</h3>
+  <ul>
+    {{range .channels}}
+    <li>
+    <a href="/dashboard/channels/{{.Id}}">
+      <img alt="" src="{{.ImageUrl}}" />
+      <h4>{{.Title}}</h4>
+    </a>
+    <form class="subscribe form-inline" role="form" action="/api/channels" method="post">
+      <input type="hidden" value="{{.Url}}" name="url">
+      <button type="submit" class="btn btn-success btn-sm">Subscribe!</button>
+    </form>
+
+    </li>
+    {{end}}
+    <li>
+
+  <form class="form-inline" id="new_podcast" role="form" action="/api/channels" method="post">
+    <div class="form-group">
+      <label> Add New Podcast </label>
+      <input type="url" placeholder="Podcast Url" class="form-control" name="url" />
+    </div>
+    <button type="submit" class="btn btn-success">Add</button>
+  </form>
+  <li>
+  </ul>
+</div>
+
