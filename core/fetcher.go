@@ -24,11 +24,14 @@ func FetchAllChannell() {
 
 func FetchChanell(idString string) {
   configDatabase()
-  var channel Channel
+  var channel struct {
+    Id  int
+    Url string
+  }
 
   id, _ := strconv.Atoi(idString)
 
-  database.First(&channel, id)
+  database.Table("channels").First(&channel, id)
   fmt.Println("ID:", id)
   fmt.Println("channel:", channel)
   go pollFeed(channel.Url, 5)
@@ -47,9 +50,11 @@ func pollFeed(uri string, timeout int) {
 
 func channelFetchHandler(feed *rss.Feed, channels []*rss.Channel) {
   for _, channelData := range channels {
-    var channel Channel
+    var channel struct {
+      Id int
+    }
 
-    database.Where("url = ?", feed.Url).First(&channel)
+    database.Table("channels").Where("url = ?", feed.Url).First(&channel)
 
     database.Table("channels").Where(channel.Id).Updates(map[string]interface{}{
       "title":           channelData.Title,
@@ -68,15 +73,15 @@ func itemFetchHandler(feed *rss.Feed, ch *rss.Channel, items []*rss.Item) {
   database.Where("url = ?", feed.Url).First(&channel)
 
   for _, itemdata := range items {
+    if len(itemdata.Enclosures) > 0 {
+      h := md5.New()
+      io.WriteString(h, itemdata.Enclosures[0].Url)
+      key := hex.EncodeToString(h.Sum(nil))
 
-    fmt.Println(itemdata.Enclosures[0])
-    h := md5.New()
-    io.WriteString(h, itemdata.Enclosures[0].Url)
-    key := hex.EncodeToString(h.Sum(nil))
+      publishedAt, _ := time.Parse(itemForm, itemdata.PubDate)
 
-    publishedAt, _ := time.Parse(itemForm, itemdata.PubDate)
-
-    var item Item
-    database.Where(Item{Key: key}).Assign(Item{Title: itemdata.Title, SourceUrl: itemdata.Enclosures[0].Url, Description: item.Description, ChannelId: channel.Id, PublishedAt: publishedAt}).FirstOrCreate(&item)
+      var item Item
+      database.Where(Item{Key: key}).Assign(Item{Title: itemdata.Title, SourceUrl: itemdata.Enclosures[0].Url, Description: item.Description, ChannelId: channel.Id, PublishedAt: publishedAt}).FirstOrCreate(&item)
+    }
   }
 }
