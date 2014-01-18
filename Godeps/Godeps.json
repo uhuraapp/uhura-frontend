@@ -22,7 +22,7 @@
 		},
 		{
 			"ImportPath": "github.com/dukex/go-pkg-rss",
-			"Rev": "6307f403b8acd59acfa49d3c3878e7af234e89b1"
+			"Rev": "7349cd63aec8821f13fa3f83a40a782feddd90ea"
 		},
 		{
 			"ImportPath": "github.com/gorilla/context",
