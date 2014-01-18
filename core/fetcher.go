@@ -4,11 +4,14 @@ import (
   "crypto/md5"
   "encoding/hex"
   "fmt"
-  rss "github.com/dukex/go-pkg-rss"
+  rss "github.com/jteeuwen/go-pkg-rss"
   "io"
   "os"
   "strconv"
   "time"
+
+  charset "code.google.com/p/go-charset/charset"
+  _ "code.google.com/p/go-charset/data"
 )
 
 func FetchAllChannell() {
@@ -32,15 +35,13 @@ func FetchChanell(idString string) {
   id, _ := strconv.Atoi(idString)
 
   database.Table("channels").First(&channel, id)
-  fmt.Println("ID:", id)
-  fmt.Println("channel:", channel)
   go pollFeed(channel.Url, 5)
 }
 
 func pollFeed(uri string, timeout int) {
   feed := rss.New(timeout, true, channelFetchHandler, itemFetchHandler)
 
-  if err := feed.Fetch(uri, nil); err != nil {
+  if err := feed.Fetch(uri, charset.NewReader); err != nil {
     fmt.Fprintf(os.Stderr, "[e] %s: %s", uri, err)
     return
   }
