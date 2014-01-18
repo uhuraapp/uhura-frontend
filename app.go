@@ -112,9 +112,9 @@ func main() {
 
   // API
 
-  m.Patch("/api/channels/:id/fetcher", func(r render.Render, params martini.Params) {
+  m.Post("/api/channels/:id/fetcher", func(responseWriter http.ResponseWriter, request *http.Request, params martini.Params) {
     core.FetchChanell(params["id"])
-    r.JSON(202, map[string]interface{}{"message": "Processing"})
+    http.Redirect(responseWriter, request, "/dashboard/channels/"+params["id"], http.StatusMovedPermanently)
   })
 
   m.Post("/api/channels", func(responseWriter http.ResponseWriter, r render.Render, request *http.Request, params martini.Params) {
