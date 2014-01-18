@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+ <rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0" xml:lang="pt-PT" >
+	 <channel>
+	  <title>Jornal da Tarde</title>
+	  <link>http://www.rtp.pt/play/p35/jornal-da-tarde</link> 
+	  <description>Podcast dos conteúdos da RTP1</description> 
+	  <itunes:author>Rádio e Televisão de Portugal - RTP1</itunes:author> 
+	<itunes:summary>Jornal da Tarde
+ Assim que a tarde começa nós já temos para si as notícias do dia
+O Jornal da Tarde é o líder de audiências no seu horário.Todos os dias, às 13 horas, a sua hora de almoço é completada com a atualização das notícias que marcam a atualidade nacional e mundial, desde a política, a economia, a sociedade e sem esquecer o desporto.Reportagens no local, entrevistas em direto e sempre a isenção e o respeito pela verdade que marcam a informação na RTP.</itunes:summary> 
+	  <itunes:keywords>RTP ,Rádio e Televisão de Portugal - RTP1, Informação - Diária, Jornal da Tarde</itunes:keywords> 
+	  <language>pt</language> 
+	  <copyright>© RTP</copyright> 
+	  <webMaster>multimedia@rtp.pt (RTP)</webMaster> 
+	  <itunes:owner>
+	  <itunes:name></itunes:name> 
+	  <itunes:email>multimedia@rtp.pt</itunes:email> 
+	  </itunes:owner>
+	  <itunes:category text="News &amp; Politics"></itunes:category>
+	  <itunes:image href="http://img0.rtp.pt/EPG/imagens/1098_JORNAL_DA_TARDE.jpg" />
+	  <image>
+		<url>http://img0.rtp.pt/EPG/imagens/1098_JORNAL_DA_TARDE.jpg</url>
+		<title>Jornal da Tarde</title>
+		<link>http://www.rtp.pt/play/p35/jornal-da-tarde</link>
+		<width>160</width>
+		<height>120</height>
+	  </image>
+	  <lastBuildDate>Mon, 13 Jan 2014 1:49:25 +0000</lastBuildDate>
+	<item>
+	    <title>2014-01-03 Jornal da Tarde</title>
+	    <itunes:subtitle/>
+	    <itunes:summary></itunes:summary>
+	    <itunes:image href="http://img0.rtp.pt/multimedia/screenshots/jornaltarde/jtarde_2_20140103.jpg" />
+	    <description> </description>
+	    <pubDate>Fri, 03 Jan 2014 12:00:00 +0000</pubDate>	    
+	    <enclosure url="http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_2_20140103.mp4" length="135883661" type="video/mp4"/>
+	    <guid isPermaLink="true" >http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_2_20140103.mp4</guid>
+	    <itunes:duration>00:15:45</itunes:duration>	    
+	</item>	<item>
+	    <title>2014-01-03 Jornal da Tarde</title>
+	    <itunes:subtitle/>
+	    <itunes:summary></itunes:summary>
+	    <itunes:image href="http://img0.rtp.pt/multimedia/screenshots/jornaltarde/jtarde_1_20140103.jpg" />
+	    <description> </description>
+	    <pubDate>Fri, 03 Jan 2014 12:00:00 +0000</pubDate>	    
+	    <enclosure url="http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_1_20140103.mp4" length="453449705" type="video/mp4"/>
+	    <guid isPermaLink="true" >http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_1_20140103.mp4</guid>
+	    <itunes:duration>00:52:29</itunes:duration>	    
+	</item>	<item>
+	    <title>2014-01-02 Jornal da Tarde</title>
+	    <itunes:subtitle/>
+	    <itunes:summary></itunes:summary>
+	    <itunes:image href="http://img0.rtp.pt/multimedia/screenshots/jornaltarde/jtarde_2_20140102.jpg" />
+	    <description> </description>
+	    <pubDate>Thu, 02 Jan 2014 12:00:00 +0000</pubDate>	    
+	    <enclosure url="http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_2_20140102.mp4" length="152221170" type="video/mp4"/>
+	    <guid isPermaLink="true" >http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_2_20140102.mp4</guid>
+	    <itunes:duration>00:17:38</itunes:duration>	    
+	</item>	<item>
+	    <title>2014-01-02 Jornal da Tarde</title>
+	    <itunes:subtitle/>
+	    <itunes:summary></itunes:summary>
+	    <itunes:image href="http://img0.rtp.pt/multimedia/screenshots/jornaltarde/jtarde_1_20140102.jpg" />
+	    <description> </description>
+	    <pubDate>Thu, 02 Jan 2014 12:00:00 +0000</pubDate>	    
+	    <enclosure url="http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_1_20140102.mp4" length="447558917" type="video/mp4"/>
+	    <guid isPermaLink="true" >http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_1_20140102.mp4</guid>
+	    <itunes:duration>00:51:50</itunes:duration>	    
+	</item>	<item>
+	    <title>2014-01-01 Jornal da Tarde</title>
+	    <itunes:subtitle/>
+	    <itunes:summary></itunes:summary>
+	    <itunes:image href="http://img0.rtp.pt/multimedia/screenshots/jornaltarde/jtarde_2_20140101.jpg" />
+	    <description> Jornal da Tarde
+ Assim que a tarde começa nós já temos para si as notícias do dia
+O Jornal da Tarde é o líder de audiências no seu horário.Todos os dias, às 13 horas, a sua hora de almoço é completada com a atualização das notícias que marcam a atualidade nacional e mundial, desde a política, a economia, a sociedade e sem esquecer o desporto.Reportagens no local, entrevistas em direto e sempre a isenção e o respeito pela verdade que marcam a informação na RTP.</description>
+	    <pubDate>Wed, 01 Jan 2014 12:00:00 +0000</pubDate>	    
+	    <enclosure url="http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_2_20140101.mp4" length="91286478" type="video/mp4"/>
+	    <guid isPermaLink="true" >http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_2_20140101.mp4</guid>
+	    <itunes:duration>00:10:36</itunes:duration>	    
+	</item>	<item>
+	    <title>2014-01-01 Jornal da Tarde</title>
+	    <itunes:subtitle/>
+	    <itunes:summary></itunes:summary>
+	    <itunes:image href="http://img0.rtp.pt/multimedia/screenshots/jornaltarde/jtarde_1_20140101.jpg" />
+	    <description> Jornal da Tarde
+ Assim que a tarde começa nós já temos para si as notícias do dia
+O Jornal da Tarde é o líder de audiências no seu horário.Todos os dias, às 13 horas, a sua hora de almoço é completada com a atualização das notícias que marcam a atualidade nacional e mundial, desde a política, a economia, a sociedade e sem esquecer o desporto.Reportagens no local, entrevistas em direto e sempre a isenção e o respeito pela verdade que marcam a informação na RTP.</description>
+	    <pubDate>Wed, 01 Jan 2014 12:00:00 +0000</pubDate>	    
+	    <enclosure url="http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_1_20140101.mp4" length="475831477" type="video/mp4"/>
+	    <guid isPermaLink="true" >http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_1_20140101.mp4</guid>
+	    <itunes:duration>00:55:08</itunes:duration>	    
+	</item>	<item>
+	    <title>2013-12-31 Jornal da Tarde</title>
+	    <itunes:subtitle/>
+	    <itunes:summary></itunes:summary>
+	    <itunes:image href="http://img0.rtp.pt/multimedia/screenshots/jornaltarde/jtarde_2_20131231.jpg" />
+	    <description> Jornal da Tarde
+ Assim que a tarde começa nós já temos para si as notícias do dia
+O Jornal da Tarde é o líder de audiências no seu horário.Todos os dias, às 13 horas, a sua hora de almoço é completada com a atualização das notícias que marcam a atualidade nacional e mundial, desde a política, a economia, a sociedade e sem esquecer o desporto.Reportagens no local, entrevistas em direto e sempre a isenção e o respeito pela verdade que marcam a informação na RTP.</description>
+	    <pubDate>Tue, 31 Dec 2013 12:00:00 +0000</pubDate>	    
+	    <enclosure url="http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_2_20131231.mp4" length="137562166" type="video/mp4"/>
+	    <guid isPermaLink="true" >http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_2_20131231.mp4</guid>
+	    <itunes:duration>00:16:01</itunes:duration>	    
+	</item>	<item>
+	    <title>2013-12-31 Jornal da Tarde</title>
+	    <itunes:subtitle/>
+	    <itunes:summary></itunes:summary>
+	    <itunes:image href="http://img0.rtp.pt/multimedia/screenshots/jornaltarde/jtarde_1_20131231.jpg" />
+	    <description> Jornal da Tarde
+ Assim que a tarde começa nós já temos para si as notícias do dia
+O Jornal da Tarde é o líder de audiências no seu horário.Todos os dias, às 13 horas, a sua hora de almoço é completada com a atualização das notícias que marcam a atualidade nacional e mundial, desde a política, a economia, a sociedade e sem esquecer o desporto.Reportagens no local, entrevistas em direto e sempre a isenção e o respeito pela verdade que marcam a informação na RTP.</description>
+	    <pubDate>Tue, 31 Dec 2013 12:00:00 +0000</pubDate>	    
+	    <enclosure url="http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_1_20131231.mp4" length="457669085" type="video/mp4"/>
+	    <guid isPermaLink="true" >http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_1_20131231.mp4</guid>
+	    <itunes:duration>00:52:59</itunes:duration>	    
+	</item>	<item>
+	    <title>2013-12-30 Jornal da Tarde</title>
+	    <itunes:subtitle/>
+	    <itunes:summary></itunes:summary>
+	    <itunes:image href="http://img0.rtp.pt/multimedia/screenshots/jornaltarde/jtarde_2_20131230.jpg" />
+	    <description> Jornal da Tarde
+ Assim que a tarde começa nós já temos para si as notícias do dia
+O Jornal da Tarde é o líder de audiências no seu horário.Todos os dias, às 13 horas, a sua hora de almoço é completada com a atualização das notícias que marcam a atualidade nacional e mundial, desde a política, a economia, a sociedade e sem esquecer o desporto.Reportagens no local, entrevistas em direto e sempre a isenção e o respeito pela verdade que marcam a informação na RTP.</description>
+	    <pubDate>Mon, 30 Dec 2013 12:00:00 +0000</pubDate>	    
+	    <enclosure url="http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_2_20131230.mp4" length="131297152" type="video/mp4"/>
+	    <guid isPermaLink="true" >http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_2_20131230.mp4</guid>
+	    <itunes:duration>00:15:14</itunes:duration>	    
+	</item>	<item>
+	    <title>2013-12-30 Jornal da Tarde</title>
+	    <itunes:subtitle/>
+	    <itunes:summary></itunes:summary>
+	    <itunes:image href="http://img0.rtp.pt/multimedia/screenshots/jornaltarde/jtarde_1_20131230.jpg" />
+	    <description> Jornal da Tarde
+ Assim que a tarde começa nós já temos para si as notícias do dia
+O Jornal da Tarde é o líder de audiências no seu horário.Todos os dias, às 13 horas, a sua hora de almoço é completada com a atualização das notícias que marcam a atualidade nacional e mundial, desde a política, a economia, a sociedade e sem esquecer o desporto.Reportagens no local, entrevistas em direto e sempre a isenção e o respeito pela verdade que marcam a informação na RTP.</description>
+	    <pubDate>Mon, 30 Dec 2013 12:00:00 +0000</pubDate>	    
+	    <enclosure url="http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_1_20131230.mp4" length="450731043" type="video/mp4"/>
+	    <guid isPermaLink="true" >http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_1_20131230.mp4</guid>
+	    <itunes:duration>00:52:11</itunes:duration>	    
+	</item>	<item>
+	    <title>2013-12-29 Jornal da Tarde</title>
+	    <itunes:subtitle/>
+	    <itunes:summary></itunes:summary>
+	    <itunes:image href="http://img0.rtp.pt/multimedia/screenshots/jornaltarde/jtarde_2_20131229.jpg" />
+	    <description> Jornal da Tarde
+ Assim que a tarde começa nós já temos para si as notícias do dia
+O Jornal da Tarde é o líder de audiências no seu horário.Todos os dias, às 13 horas, a sua hora de almoço é completada com a atualização das notícias que marcam a atualidade nacional e mundial, desde a política, a economia, a sociedade e sem esquecer o desporto.Reportagens no local, entrevistas em direto e sempre a isenção e o respeito pela verdade que marcam a informação na RTP.</description>
+	    <pubDate>Sun, 29 Dec 2013 12:00:00 +0000</pubDate>	    
+	    <enclosure url="http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_2_20131229.mp4" length="29463920" type="video/mp4"/>
+	    <guid isPermaLink="true" >http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_2_20131229.mp4</guid>
+	    <itunes:duration>00:03:25</itunes:duration>	    
+	</item>	<item>
+	    <title>2013-12-29 Jornal da Tarde</title>
+	    <itunes:subtitle/>
+	    <itunes:summary></itunes:summary>
+	    <itunes:image href="http://img0.rtp.pt/multimedia/screenshots/jornaltarde/jtarde_1_20131229.jpg" />
+	    <description> Jornal da Tarde
+ Assim que a tarde começa nós já temos para si as notícias do dia
+O Jornal da Tarde é o líder de audiências no seu horário.Todos os dias, às 13 horas, a sua hora de almoço é completada com a atualização das notícias que marcam a atualidade nacional e mundial, desde a política, a economia, a sociedade e sem esquecer o desporto.Reportagens no local, entrevistas em direto e sempre a isenção e o respeito pela verdade que marcam a informação na RTP.</description>
+	    <pubDate>Sun, 29 Dec 2013 12:00:00 +0000</pubDate>	    
+	    <enclosure url="http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_1_20131229.mp4" length="419789340" type="video/mp4"/>
+	    <guid isPermaLink="true" >http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_1_20131229.mp4</guid>
+	    <itunes:duration>00:48:37</itunes:duration>	    
+	</item>	<item>
+	    <title>2013-12-28 Jornal da Tarde</title>
+	    <itunes:subtitle/>
+	    <itunes:summary></itunes:summary>
+	    <itunes:image href="http://img0.rtp.pt/multimedia/screenshots/jornaltarde/jtarde_2_20131228.jpg" />
+	    <description> Jornal da Tarde
+ Assim que a tarde começa nós já temos para si as notícias do dia
+O Jornal da Tarde é o líder de audiências no seu horário.Todos os dias, às 13 horas, a sua hora de almoço é completada com a atualização das notícias que marcam a atualidade nacional e mundial, desde a política, a economia, a sociedade e sem esquecer o desporto.Reportagens no local, entrevistas em direto e sempre a isenção e o respeito pela verdade que marcam a informação na RTP.</description>
+	    <pubDate>Sat, 28 Dec 2013 12:00:00 +0000</pubDate>	    
+	    <enclosure url="http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_2_20131228.mp4" length="106445992" type="video/mp4"/>
+	    <guid isPermaLink="true" >http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_2_20131228.mp4</guid>
+	    <itunes:duration>00:12:22</itunes:duration>	    
+	</item>	<item>
+	    <title>2013-12-28 Jornal da Tarde</title>
+	    <itunes:subtitle/>
+	    <itunes:summary></itunes:summary>
+	    <itunes:image href="http://img0.rtp.pt/multimedia/screenshots/jornaltarde/jtarde_1_20131228.jpg" />
+	    <description> Jornal da Tarde
+ Assim que a tarde começa nós já temos para si as notícias do dia
+O Jornal da Tarde é o líder de audiências no seu horário.Todos os dias, às 13 horas, a sua hora de almoço é completada com a atualização das notícias que marcam a atualidade nacional e mundial, desde a política, a economia, a sociedade e sem esquecer o desporto.Reportagens no local, entrevistas em direto e sempre a isenção e o respeito pela verdade que marcam a informação na RTP.</description>
+	    <pubDate>Sat, 28 Dec 2013 12:00:00 +0000</pubDate>	    
+	    <enclosure url="http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_1_20131228.mp4" length="459562479" type="video/mp4"/>
+	    <guid isPermaLink="true" >http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_1_20131228.mp4</guid>
+	    <itunes:duration>00:53:13</itunes:duration>	    
+	</item>	<item>
+	    <title>2013-12-27 Jornal da Tarde</title>
+	    <itunes:subtitle/>
+	    <itunes:summary></itunes:summary>
+	    <itunes:image href="http://img0.rtp.pt/multimedia/screenshots/jornaltarde/jtarde_2_20131227.jpg" />
+	    <description> Jornal da Tarde
+ Assim que a tarde começa nós já temos para si as notícias do dia
+O Jornal da Tarde é o líder de audiências no seu horário.Todos os dias, às 13 horas, a sua hora de almoço é completada com a atualização das notícias que marcam a atualidade nacional e mundial, desde a política, a economia, a sociedade e sem esquecer o desporto.Reportagens no local, entrevistas em direto e sempre a isenção e o respeito pela verdade que marcam a informação na RTP.</description>
+	    <pubDate>Fri, 27 Dec 2013 12:00:00 +0000</pubDate>	    
+	    <enclosure url="http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_2_20131227.mp4" length="150149569" type="video/mp4"/>
+	    <guid isPermaLink="true" >http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_2_20131227.mp4</guid>
+	    <itunes:duration>00:17:27</itunes:duration>	    
+	</item>	<item>
+	    <title>2013-12-27 Jornal da Tarde</title>
+	    <itunes:subtitle/>
+	    <itunes:summary></itunes:summary>
+	    <itunes:image href="http://img0.rtp.pt/multimedia/screenshots/jornaltarde/jtarde_1_20131227.jpg" />
+	    <description> Jornal da Tarde
+ Assim que a tarde começa nós já temos para si as notícias do dia
+O Jornal da Tarde é o líder de audiências no seu horário.Todos os dias, às 13 horas, a sua hora de almoço é completada com a atualização das notícias que marcam a atualidade nacional e mundial, desde a política, a economia, a sociedade e sem esquecer o desporto.Reportagens no local, entrevistas em direto e sempre a isenção e o respeito pela verdade que marcam a informação na RTP.</description>
+	    <pubDate>Fri, 27 Dec 2013 12:00:00 +0000</pubDate>	    
+	    <enclosure url="http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_1_20131227.mp4" length="429584699" type="video/mp4"/>
+	    <guid isPermaLink="true" >http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_1_20131227.mp4</guid>
+	    <itunes:duration>00:49:45</itunes:duration>	    
+	</item>	<item>
+	    <title>2013-12-26 Jornal da Tarde</title>
+	    <itunes:subtitle/>
+	    <itunes:summary></itunes:summary>
+	    <itunes:image href="http://img0.rtp.pt/multimedia/screenshots/jornaltarde/jtarde_2_20131226.jpg" />
+	    <description> Jornal da Tarde
+ Assim que a tarde começa nós já temos para si as notícias do dia
+O Jornal da Tarde é o líder de audiências no seu horário.Todos os dias, às 13 horas, a sua hora de almoço é completada com a atualização das notícias que marcam a atualidade nacional e mundial, desde a política, a economia, a sociedade e sem esquecer o desporto.Reportagens no local, entrevistas em direto e sempre a isenção e o respeito pela verdade que marcam a informação na RTP.</description>
+	    <pubDate>Thu, 26 Dec 2013 12:00:00 +0000</pubDate>	    
+	    <enclosure url="http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_2_20131226.mp4" length="141293835" type="video/mp4"/>
+	    <guid isPermaLink="true" >http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_2_20131226.mp4</guid>
+	    <itunes:duration>00:16:24</itunes:duration>	    
+	</item>	<item>
+	    <title>2013-12-26 Jornal da Tarde</title>
+	    <itunes:subtitle/>
+	    <itunes:summary></itunes:summary>
+	    <itunes:image href="http://img0.rtp.pt/multimedia/screenshots/jornaltarde/jtarde_1_20131226.jpg" />
+	    <description> Jornal da Tarde
+ Assim que a tarde começa nós já temos para si as notícias do dia
+O Jornal da Tarde é o líder de audiências no seu horário.Todos os dias, às 13 horas, a sua hora de almoço é completada com a atualização das notícias que marcam a atualidade nacional e mundial, desde a política, a economia, a sociedade e sem esquecer o desporto.Reportagens no local, entrevistas em direto e sempre a isenção e o respeito pela verdade que marcam a informação na RTP.</description>
+	    <pubDate>Thu, 26 Dec 2013 12:00:00 +0000</pubDate>	    
+	    <enclosure url="http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_1_20131226.mp4" length="449601495" type="video/mp4"/>
+	    <guid isPermaLink="true" >http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_1_20131226.mp4</guid>
+	    <itunes:duration>00:52:03</itunes:duration>	    
+	</item>	<item>
+	    <title>2013-12-25 Jornal da Tarde</title>
+	    <itunes:subtitle/>
+	    <itunes:summary></itunes:summary>
+	    <itunes:image href="http://img0.rtp.pt/multimedia/screenshots/jornaltarde/jtarde_2_20131225.jpg" />
+	    <description> Jornal da Tarde
+ Assim que a tarde começa nós já temos para si as notícias do dia
+O Jornal da Tarde é o líder de audiências no seu horário.Todos os dias, às 13 horas, a sua hora de almoço é completada com a atualização das notícias que marcam a atualidade nacional e mundial, desde a política, a economia, a sociedade e sem esquecer o desporto.Reportagens no local, entrevistas em direto e sempre a isenção e o respeito pela verdade que marcam a informação na RTP.</description>
+	    <pubDate>Wed, 25 Dec 2013 12:00:00 +0000</pubDate>	    
+	    <enclosure url="http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_2_20131225.mp4" length="43638663" type="video/mp4"/>
+	    <guid isPermaLink="true" >http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_2_20131225.mp4</guid>
+	    <itunes:duration>00:05:05</itunes:duration>	    
+	</item>	<item>
+	    <title>2013-12-25 Jornal da Tarde</title>
+	    <itunes:subtitle/>
+	    <itunes:summary></itunes:summary>
+	    <itunes:image href="http://img0.rtp.pt/multimedia/screenshots/jornaltarde/jtarde_1_20131225.jpg" />
+	    <description> Jornal da Tarde
+ Assim que a tarde começa nós já temos para si as notícias do dia
+O Jornal da Tarde é o líder de audiências no seu horário.Todos os dias, às 13 horas, a sua hora de almoço é completada com a atualização das notícias que marcam a atualidade nacional e mundial, desde a política, a economia, a sociedade e sem esquecer o desporto.Reportagens no local, entrevistas em direto e sempre a isenção e o respeito pela verdade que marcam a informação na RTP.</description>
+	    <pubDate>Wed, 25 Dec 2013 12:00:00 +0000</pubDate>	    
+	    <enclosure url="http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_1_20131225.mp4" length="392065022" type="video/mp4"/>
+	    <guid isPermaLink="true" >http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_1_20131225.mp4</guid>
+	    <itunes:duration>00:45:25</itunes:duration>	    
+	</item>	<item>
+	    <title>2013-12-24 Jornal da Tarde</title>
+	    <itunes:subtitle/>
+	    <itunes:summary></itunes:summary>
+	    <itunes:image href="http://img0.rtp.pt/multimedia/screenshots/jornaltarde/jtarde_2_20131224.jpg" />
+	    <description> Jornal da Tarde
+ Assim que a tarde começa nós já temos para si as notícias do dia
+O Jornal da Tarde é o líder de audiências no seu horário.Todos os dias, às 13 horas, a sua hora de almoço é completada com a atualização das notícias que marcam a atualidade nacional e mundial, desde a política, a economia, a sociedade e sem esquecer o desporto.Reportagens no local, entrevistas em direto e sempre a isenção e o respeito pela verdade que marcam a informação na RTP.</description>
+	    <pubDate>Tue, 24 Dec 2013 12:00:00 +0000</pubDate>	    
+	    <enclosure url="http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_2_20131224.mp4" length="135687848" type="video/mp4"/>
+	    <guid isPermaLink="true" >http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_2_20131224.mp4</guid>
+	    <itunes:duration>00:15:43</itunes:duration>	    
+	</item>	<item>
+	    <title>2013-12-24 Jornal da Tarde</title>
+	    <itunes:subtitle/>
+	    <itunes:summary></itunes:summary>
+	    <itunes:image href="http://img0.rtp.pt/multimedia/screenshots/jornaltarde/jtarde_1_20131224.jpg" />
+	    <description> Jornal da Tarde
+ Assim que a tarde começa nós já temos para si as notícias do dia
+O Jornal da Tarde é o líder de audiências no seu horário.Todos os dias, às 13 horas, a sua hora de almoço é completada com a atualização das notícias que marcam a atualidade nacional e mundial, desde a política, a economia, a sociedade e sem esquecer o desporto.Reportagens no local, entrevistas em direto e sempre a isenção e o respeito pela verdade que marcam a informação na RTP.</description>
+	    <pubDate>Tue, 24 Dec 2013 12:00:00 +0000</pubDate>	    
+	    <enclosure url="http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_1_20131224.mp4" length="448818459" type="video/mp4"/>
+	    <guid isPermaLink="true" >http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_1_20131224.mp4</guid>
+	    <itunes:duration>00:51:57</itunes:duration>	    
+	</item>	<item>
+	    <title>2013-12-23 Jornal da Tarde</title>
+	    <itunes:subtitle/>
+	    <itunes:summary></itunes:summary>
+	    <itunes:image href="http://img0.rtp.pt/multimedia/screenshots/jornaltarde/jtarde_2_20131223.jpg" />
+	    <description> Jornal da Tarde
+ Assim que a tarde começa nós já temos para si as notícias do dia
+O Jornal da Tarde é o líder de audiências no seu horário.Todos os dias, às 13 horas, a sua hora de almoço é completada com a atualização das notícias que marcam a atualidade nacional e mundial, desde a política, a economia, a sociedade e sem esquecer o desporto.Reportagens no local, entrevistas em direto e sempre a isenção e o respeito pela verdade que marcam a informação na RTP.</description>
+	    <pubDate>Mon, 23 Dec 2013 12:00:00 +0000</pubDate>	    
+	    <enclosure url="http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_2_20131223.mp4" length="98924554" type="video/mp4"/>
+	    <guid isPermaLink="true" >http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_2_20131223.mp4</guid>
+	    <itunes:duration>00:11:28</itunes:duration>	    
+	</item>	<item>
+	    <title>2013-12-23 Jornal da Tarde</title>
+	    <itunes:subtitle/>
+	    <itunes:summary></itunes:summary>
+	    <itunes:image href="http://img0.rtp.pt/multimedia/screenshots/jornaltarde/jtarde_1_20131223.jpg" />
+	    <description> Jornal da Tarde
+ Assim que a tarde começa nós já temos para si as notícias do dia
+O Jornal da Tarde é o líder de audiências no seu horário.Todos os dias, às 13 horas, a sua hora de almoço é completada com a atualização das notícias que marcam a atualidade nacional e mundial, desde a política, a economia, a sociedade e sem esquecer o desporto.Reportagens no local, entrevistas em direto e sempre a isenção e o respeito pela verdade que marcam a informação na RTP.</description>
+	    <pubDate>Mon, 23 Dec 2013 12:00:00 +0000</pubDate>	    
+	    <enclosure url="http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_1_20131223.mp4" length="448670662" type="video/mp4"/>
+	    <guid isPermaLink="true" >http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_1_20131223.mp4</guid>
+	    <itunes:duration>00:51:58</itunes:duration>	    
+	</item>	<item>
+	    <title>2013-12-22 Jornal da Tarde</title>
+	    <itunes:subtitle/>
+	    <itunes:summary></itunes:summary>
+	    <itunes:image href="http://img0.rtp.pt/multimedia/screenshots/jornaltarde/jtarde_2_20131222.jpg" />
+	    <description> Jornal da Tarde
+ Assim que a tarde começa nós já temos para si as notícias do dia
+O Jornal da Tarde é o líder de audiências no seu horário.Todos os dias, às 13 horas, a sua hora de almoço é completada com a atualização das notícias que marcam a atualidade nacional e mundial, desde a política, a economia, a sociedade e sem esquecer o desporto.Reportagens no local, entrevistas em direto e sempre a isenção e o respeito pela verdade que marcam a informação na RTP.</description>
+	    <pubDate>Sun, 22 Dec 2013 12:00:00 +0000</pubDate>	    
+	    <enclosure url="http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_2_20131222.mp4" length="113188046" type="video/mp4"/>
+	    <guid isPermaLink="true" >http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_2_20131222.mp4</guid>
+	    <itunes:duration>00:13:11</itunes:duration>	    
+	</item>	<item>
+	    <title>2013-12-22 Jornal da Tarde</title>
+	    <itunes:subtitle/>
+	    <itunes:summary></itunes:summary>
+	    <itunes:image href="http://img0.rtp.pt/multimedia/screenshots/jornaltarde/jtarde_1_20131222.jpg" />
+	    <description> Jornal da Tarde
+ Assim que a tarde começa nós já temos para si as notícias do dia
+O Jornal da Tarde é o líder de audiências no seu horário.Todos os dias, às 13 horas, a sua hora de almoço é completada com a atualização das notícias que marcam a atualidade nacional e mundial, desde a política, a economia, a sociedade e sem esquecer o desporto.Reportagens no local, entrevistas em direto e sempre a isenção e o respeito pela verdade que marcam a informação na RTP.</description>
+	    <pubDate>Sun, 22 Dec 2013 12:00:00 +0000</pubDate>	    
+	    <enclosure url="http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_1_20131222.mp4" length="441801093" type="video/mp4"/>
+	    <guid isPermaLink="true" >http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_1_20131222.mp4</guid>
+	    <itunes:duration>00:51:10</itunes:duration>	    
+	</item>	<item>
+	    <title>2013-12-21 Jornal da Tarde</title>
+	    <itunes:subtitle/>
+	    <itunes:summary></itunes:summary>
+	    <itunes:image href="http://img0.rtp.pt/multimedia/screenshots/jornaltarde/jtarde_2_20131221.jpg" />
+	    <description> Jornal da Tarde
+ Assim que a tarde começa nós já temos para si as notícias do dia
+O Jornal da Tarde é o líder de audiências no seu horário.Todos os dias, às 13 horas, a sua hora de almoço é completada com a atualização das notícias que marcam a atualidade nacional e mundial, desde a política, a economia, a sociedade e sem esquecer o desporto.Reportagens no local, entrevistas em direto e sempre a isenção e o respeito pela verdade que marcam a informação na RTP.</description>
+	    <pubDate>Sat, 21 Dec 2013 12:00:00 +0000</pubDate>	    
+	    <enclosure url="http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_2_20131221.mp4" length="93522975" type="video/mp4"/>
+	    <guid isPermaLink="true" >http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_2_20131221.mp4</guid>
+	    <itunes:duration>00:10:54</itunes:duration>	    
+	</item>	<item>
+	    <title>2013-12-21 Jornal da Tarde</title>
+	    <itunes:subtitle/>
+	    <itunes:summary></itunes:summary>
+	    <itunes:image href="http://img0.rtp.pt/multimedia/screenshots/jornaltarde/jtarde_1_20131221.jpg" />
+	    <description> Jornal da Tarde
+ Assim que a tarde começa nós já temos para si as notícias do dia
+O Jornal da Tarde é o líder de audiências no seu horário.Todos os dias, às 13 horas, a sua hora de almoço é completada com a atualização das notícias que marcam a atualidade nacional e mundial, desde a política, a economia, a sociedade e sem esquecer o desporto.Reportagens no local, entrevistas em direto e sempre a isenção e o respeito pela verdade que marcam a informação na RTP.</description>
+	    <pubDate>Sat, 21 Dec 2013 12:00:00 +0000</pubDate>	    
+	    <enclosure url="http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_1_20131221.mp4" length="464813572" type="video/mp4"/>
+	    <guid isPermaLink="true" >http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_1_20131221.mp4</guid>
+	    <itunes:duration>00:53:49</itunes:duration>	    
+	</item>	<item>
+	    <title>2013-12-20 Jornal da Tarde</title>
+	    <itunes:subtitle/>
+	    <itunes:summary></itunes:summary>
+	    <itunes:image href="http://img0.rtp.pt/multimedia/screenshots/jornaltarde/jtarde_2_20131220.jpg" />
+	    <description> Jornal da Tarde
+ Assim que a tarde começa nós já temos para si as notícias do dia
+O Jornal da Tarde é o líder de audiências no seu horário.Todos os dias, às 13 horas, a sua hora de almoço é completada com a atualização das notícias que marcam a atualidade nacional e mundial, desde a política, a economia, a sociedade e sem esquecer o desporto.Reportagens no local, entrevistas em direto e sempre a isenção e o respeito pela verdade que marcam a informação na RTP.</description>
+	    <pubDate>Fri, 20 Dec 2013 12:00:00 +0000</pubDate>	    
+	    <enclosure url="http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_2_20131220.mp4" length="141267357" type="video/mp4"/>
+	    <guid isPermaLink="true" >http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_2_20131220.mp4</guid>
+	    <itunes:duration>00:16:23</itunes:duration>	    
+	</item>	<item>
+	    <title>2013-12-20 Jornal da Tarde</title>
+	    <itunes:subtitle/>
+	    <itunes:summary></itunes:summary>
+	    <itunes:image href="http://img0.rtp.pt/multimedia/screenshots/jornaltarde/jtarde_1_20131220.jpg" />
+	    <description> Jornal da Tarde
+ Assim que a tarde começa nós já temos para si as notícias do dia
+O Jornal da Tarde é o líder de audiências no seu horário.Todos os dias, às 13 horas, a sua hora de almoço é completada com a atualização das notícias que marcam a atualidade nacional e mundial, desde a política, a economia, a sociedade e sem esquecer o desporto.Reportagens no local, entrevistas em direto e sempre a isenção e o respeito pela verdade que marcam a informação na RTP.</description>
+	    <pubDate>Fri, 20 Dec 2013 12:00:00 +0000</pubDate>	    
+	    <enclosure url="http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_1_20131220.mp4" length="439794040" type="video/mp4"/>
+	    <guid isPermaLink="true" >http://rsspod.rtp.pt/videocasts/512x384/jornaltarde/jtarde_1_20131220.mp4</guid>
+	    <itunes:duration>00:50:56</itunes:duration>	    
+	</item></channel>
+</rss>

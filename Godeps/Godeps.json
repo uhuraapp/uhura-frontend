@@ -3,6 +3,16 @@
 	"GoVersion": "go1.1.2",
 	"Deps": [
 		{
+			"ImportPath": "code.google.com/p/go-charset/charset",
+			"Comment": "null-32",
+			"Rev": "ebbeafdc430eb6c7e44e9a730a38eaff4c56ba3a"
+		},
+		{
+			"ImportPath": "code.google.com/p/go-charset/data",
+			"Comment": "null-32",
+			"Rev": "ebbeafdc430eb6c7e44e9a730a38eaff4c56ba3a"
+		},
+		{
 			"ImportPath": "code.google.com/p/goauth2/oauth",
 			"Comment": "weekly-35",
 			"Rev": "e062946df3f2de47313e40eea045a2f6130e92f3"
@@ -22,7 +32,11 @@
 		},
 		{
 			"ImportPath": "github.com/dukex/go-pkg-rss",
-			"Rev": "7349cd63aec8821f13fa3f83a40a782feddd90ea"
+			"Rev": "5459d03bcf8a4dbdc56efc9282b2342dacf7f62a"
+		},
+		{
+			"ImportPath": "github.com/dukex/go-pkg-xmlx",
+			"Rev": "cd97f0340fc1253aaa7e2782698855cab95c47f3"
 		},
 		{
 			"ImportPath": "github.com/gorilla/context",
@@ -39,10 +53,6 @@
 		{
 			"ImportPath": "github.com/jinzhu/gorm",
 			"Rev": "71e7b37bdfd69432e00565a7483a3788fdc20eb7"
-		},
-		{
-			"ImportPath": "github.com/jteeuwen/go-pkg-xmlx",
-			"Rev": "3623786eeb421657b11acad4aa1a9b89683c031f"
 		},
 		{
 			"ImportPath": "github.com/lib/pq",

@@ -20,6 +20,20 @@ func TestLoadLocal(t *testing.T) {
 	}
 }
 
+func TestLoadLocalISO(t *testing.T) {
+	doc := New()
+
+	if err := doc.LoadFile("testiso.xml", nil); err != nil {
+		t.Error(err.Error())
+		return
+	}
+
+	if len(doc.Root.Children) == 0 {
+		t.Errorf("Root node has no children.")
+		return
+	}
+}
+
 func TestWildcard(t *testing.T) {
 	doc := New()
 

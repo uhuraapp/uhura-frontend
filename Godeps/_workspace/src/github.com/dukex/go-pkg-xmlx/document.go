@@ -37,6 +37,9 @@ import (
 	"net/http"
 	"os"
 	"strings"
+
+	gocharset "code.google.com/p/go-charset/charset"
+	_ "code.google.com/p/go-charset/data"
 )
 
 // This signature represents a character encoding conversion routine.
@@ -96,7 +99,12 @@ func (this *Document) SelectNodesRecursive(namespace, name string) []*Node {
 func (this *Document) LoadStream(r io.Reader, charset CharsetFunc) (err error) {
 	xp := xml.NewDecoder(r)
 	xp.Entity = this.Entity
-	xp.CharsetReader = charset
+
+	if charset == nil {
+		xp.CharsetReader = gocharset.NewReader
+	} else {
+		xp.CharsetReader = charset
+	}
 
 	this.Root = NewNode(NT_ROOT)
 	ct := this.Root
