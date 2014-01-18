@@ -79,7 +79,9 @@ func itemFetchHandler(feed *rss.Feed, ch *rss.Channel, items []*rss.Item) {
       publishedAt, _ := time.Parse(itemForm, itemdata.PubDate)
 
       var item Item
-      database.Where(Item{Key: key}).Assign(Item{Title: itemdata.Title, SourceUrl: itemdata.Enclosures[0].Url, Description: item.Description, ChannelId: channel.Id, PublishedAt: publishedAt}).FirstOrCreate(&item)
+      var duration string
+
+      database.Where(Item{Key: key}).Assign(Item{Title: itemdata.Title, SourceUrl: itemdata.Enclosures[0].Url, Description: itemdata.Description, ChannelId: channel.Id, PublishedAt: publishedAt, Duration: duration}).FirstOrCreate(&item)
     }
   }
 }

@@ -11,6 +11,7 @@ type Item struct {
   ChannelId   int
   Id          int
   PublishedAt time.Time `sql:"not null"`
+  Duration    string
 }
 
 type UserItem struct {
