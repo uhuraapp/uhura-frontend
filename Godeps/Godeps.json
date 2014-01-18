@@ -31,14 +31,6 @@
 			"Rev": "b7a8366f58e39977dfd52d6109ed08d768bba94a"
 		},
 		{
-			"ImportPath": "github.com/dukex/go-pkg-rss",
-			"Rev": "5459d03bcf8a4dbdc56efc9282b2342dacf7f62a"
-		},
-		{
-			"ImportPath": "github.com/dukex/go-pkg-xmlx",
-			"Rev": "cd97f0340fc1253aaa7e2782698855cab95c47f3"
-		},
-		{
 			"ImportPath": "github.com/gorilla/context",
 			"Rev": "708054d61e5a2918b9f4e9700000ee611dcf03f5"
 		},
@@ -53,6 +45,14 @@
 		{
 			"ImportPath": "github.com/jinzhu/gorm",
 			"Rev": "71e7b37bdfd69432e00565a7483a3788fdc20eb7"
+		},
+		{
+			"ImportPath": "github.com/jteeuwen/go-pkg-rss",
+			"Rev": "269db380a38d96d568c0e51fa3d4534ddb3c1023"
+		},
+		{
+			"ImportPath": "github.com/jteeuwen/go-pkg-xmlx",
+			"Rev": "3623786eeb421657b11acad4aa1a9b89683c031f"
 		},
 		{
 			"ImportPath": "github.com/lib/pq",
