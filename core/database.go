@@ -8,10 +8,10 @@ import (
 
 var database gorm.DB
 
-func configDatabase() {
+func init() {
   databaseUrl, _ := pq.ParseURL(os.Getenv("DATABASE_URL"))
   database, _ = gorm.Open("postgres", databaseUrl)
-  database.LogMode(true)
+  database.LogMode(false)
 
   database.AutoMigrate(Channel{})
   database.AutoMigrate(Item{})

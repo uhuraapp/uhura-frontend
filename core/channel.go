@@ -34,8 +34,6 @@ func AllChannels(user *User) []Channel {
 }
 
 func GetChannelByUser(user *User) *[]ChannelResult {
-  configDatabase()
-
   var channels []ChannelResult
   database.Table("user_channels").Select("channels.title, channels.description, channels.image_url, channels.url, channels.id").Where("user_id = ?", user.Id).Joins("left join channels on channels.id = user_channels.channel_id").Scan(&channels)
 

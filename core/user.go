@@ -37,8 +37,6 @@ func (u *User) IdString() string {
 }
 
 func createUser(tempUser TempUser) *User {
-  configDatabase()
-
   var user User
 
   database.Where(User{GoogleId: tempUser.Id}).Attrs(User{Name: tempUser.Name, GivenName: tempUser.GivenName, FamilyName: tempUser.FamilyName, Link: tempUser.Link, Picture: tempUser.Picture, Gender: tempUser.Gender, Locale: tempUser.Locale}).FirstOrCreate(&user)
@@ -47,8 +45,6 @@ func createUser(tempUser TempUser) *User {
 }
 
 func getUser(userId string) *User {
-  configDatabase()
-
   var user User
   id, _ := strconv.Atoi(userId)
 

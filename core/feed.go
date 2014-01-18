@@ -3,8 +3,6 @@ package core
 import "strconv"
 
 func AddFeed(feed_url string, userId int) Channel {
-  configDatabase()
-
   var channel Channel
   var userChannel UserChannel
   database.Where(Channel{Url: feed_url}).FirstOrCreate(&channel)

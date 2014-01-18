@@ -15,8 +15,6 @@ import (
 )
 
 func FetchAllChannell() {
-  configDatabase()
-
   var channels []Channel
   database.Find(&channels)
 
@@ -26,7 +24,6 @@ func FetchAllChannell() {
 }
 
 func FetchChanell(idString string) {
-  configDatabase()
   var channel struct {
     Id  int
     Url string

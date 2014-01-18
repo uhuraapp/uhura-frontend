@@ -38,7 +38,6 @@ type Counter struct {
 }
 
 func GetUserItems(user *User, channels *[]ChannelResult, channel string, pageParams string) (*[]UserItemsResult, *Counter) {
-  configDatabase()
 
   var channelsIds []int
   channelsIds = append(channelsIds, 0)
@@ -70,8 +69,6 @@ func GetUserItems(user *User, channels *[]ChannelResult, channel string, pagePar
 }
 
 func UserWatched(userId int, key string) {
-  configDatabase()
-
   var item Item
   var userItem UserItem
   database.Where(Item{Key: key}).First(&item)
