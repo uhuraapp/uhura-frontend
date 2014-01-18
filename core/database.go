@@ -11,7 +11,7 @@ var database gorm.DB
 func init() {
   databaseUrl, _ := pq.ParseURL(os.Getenv("DATABASE_URL"))
   database, _ = gorm.Open("postgres", databaseUrl)
-  database.LogMode(false)
+  database.LogMode(os.Getenv("DEBUG") == "true")
 
   database.AutoMigrate(Channel{})
   database.AutoMigrate(Item{})
