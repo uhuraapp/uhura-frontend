@@ -8,6 +8,7 @@ install:
 	go get code.google.com/p/goauth2/oauth
 	go get github.com/codegangsta/martini
 	go get github.com/codegangsta/martini-contrib/render
+	go get
 
 set_env:
 	export GOOGLE_CLIENT_ID="933623108791-imtedbq5d1vgfhotj15gq6493jl22j4m.apps.googleusercontent.com"
