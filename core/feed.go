@@ -1,13 +1,16 @@
 package core
 
-import "strconv"
+var ChannelChan = make(chan int)
 
-func AddFeed(feed_url string, userId int) Channel {
-  var channel Channel
-  var userChannel UserChannel
-  database.Where(Channel{Url: feed_url}).FirstOrCreate(&channel)
-  go database.Where(UserChannel{ChannelId: channel.Id, UserId: userId}).FirstOrCreate(&userChannel)
+func AddFeed(feed_url string, userId int) ChannelResult {
+	var channel Channel
+	var userChannel UserChannel
+	database.FirstOrCreate(&channel, map[string]interface{}{"url": feed_url})
+	go database.Where(UserChannel{ChannelId: channel.Id, UserId: userId}).FirstOrCreate(&userChannel)
 
-  FetchChanell(strconv.Itoa(channel.Id))
-  return channel
+	FetchChanell(channel)
+	<-ChannelChan
+	var result ChannelResult
+	database.Table("channels").First(&result, channel.Id)
+	return result
 }
