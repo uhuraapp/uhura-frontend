@@ -33,8 +33,8 @@ type ChannelResult struct {
 	Id          int    `json:"id"`
 	Uri         string `json:"uri"`
 	ToView      int    `json:"to_view"`
-
-	Copyright string `json:"copyright"`
+	Subscribed  bool   `json:"subscribed"`
+	Copyright   string `json:"copyright"`
 }
 
 func (cr *ChannelResult) GetUri() string {

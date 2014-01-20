@@ -89,29 +89,6 @@ func main() {
 		}
 	})
 
-	m.Get("/authorize", func(w http.ResponseWriter, r *http.Request) {
-		url := config.AuthCodeURL("")
-		http.Redirect(w, r, url, http.StatusFound)
-	})
-
-	m.Get("/auth/callback", func(responseWriter http.ResponseWriter, request *http.Request) {
-		code := request.FormValue("code")
-		t := &oauth.Transport{Config: config}
-		t.Exchange(code)
-		responseAuth, _ := t.Client().Get(profileInfoURL)
-		defer responseAuth.Body.Close()
-
-		_, err := core.CreateAndLoginUser(request, responseWriter, responseAuth)
-
-		if err {
-			// TODO: set flash
-			http.Redirect(responseWriter, request, "/", http.StatusMovedPermanently)
-		} else {
-			returnTo := core.GetReturnTo(request)
-			http.Redirect(responseWriter, request, returnTo, http.StatusMovedPermanently)
-		}
-	})
-
 	// API
 
 	m.Post("/api/channels/:id/fetcher", func(responseWriter http.ResponseWriter, request *http.Request, params martini.Params) {
@@ -181,6 +158,40 @@ func main() {
 			return
 		}
 		r.JSON(200, &user)
+	})
+
+	m.Post("/api/users/save_state", func(r render.Render, request *http.Request) {
+		user, err := core.CurrentUser(request)
+		if err {
+			r.Error(403)
+			return
+		}
+		r.JSON(200, &user)
+	})
+
+	// API - Auth
+	m.Get("/api/authorize", func(w http.ResponseWriter, r *http.Request) {
+		url := config.AuthCodeURL("")
+		http.Redirect(w, r, url, http.StatusFound)
+	})
+
+	m.Get("/auth/callback", func(responseWriter http.ResponseWriter, request *http.Request, r render.Render) string {
+		code := request.FormValue("code")
+		t := &oauth.Transport{Config: config}
+		t.Exchange(code)
+		responseAuth, _ := t.Client().Get(profileInfoURL)
+		defer responseAuth.Body.Close()
+
+		_, err := core.CreateAndLoginUser(request, responseWriter, responseAuth)
+
+		if err {
+			// TODO: set flash
+			// http.Redirect(responseWriter, request, "/", http.StatusMovedPermanently)
+		} else {
+			// returnTo := core.GetReturnTo(request)
+		}
+
+		return "<script>window.close();</script>"
 	})
 
 	fmt.Println("Starting server on", os.Getenv("PORT"))

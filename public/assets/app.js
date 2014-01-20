@@ -49,11 +49,12 @@ Uhura.ChannelsController = Ember.ArrayController.extend({
         $.ajax({
           url: "/api/channels/" + id + "/subscribe",
           success: function(data){
-            debugger
-          }});
+            alert("Channel subscribed");
+          }
+        });
       }
 
-      var user = window.auth.withLoggedUser(subscribeFn);
+      window.auth.withLoggedUser(subscribeFn);
     },
     newChannel: function() {
       var _this = this,
@@ -77,18 +78,29 @@ Uhura.Auth = (function() {
   function Auth() {
   }
 
+  Auth.prototype.authorize_url = function(){
+    return window.location.protocol + "//" + window.location.host + "/api/authorize"
+  }
+
   Auth.prototype.login = function(success) {
-    $.ajax({
-      url: "/api/users/saveState",
-      data: {fn: success}
-    }).done(function(){
-      window.location = "/api/authorize";
-    });
+    var loginWindow = window.open(this.authorize_url(),'login','height=500,width=800');
+    window.focus();
+    loginWindow.focus();
+    var checkLogin = function(){
+      try {
+        if(loginWindow.closed) {
+          clearInterval(timer);
+          success();
+        }
+      } catch(e){
+      }
+    }
+
+    var timer = window.setInterval(checkLogin, 500);
   };
 
   Auth.prototype.withLoggedUser = function(success) {
     var _this = this;
-
     $.ajax({
       url: "/api/users/current_user",
       statusCode: {
