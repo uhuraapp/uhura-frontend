@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Uhura</title>
+
+  <link href='http://fonts.googleapis.com/css?family=Exo+2:400,200,400italic,800' rel='stylesheet' type='text/css'>
+  <link href="/assets/reset.css" rel="stylesheet">
+  <link href="/assets/app.css" rel="stylesheet">
+  <link rel="stylesheet" href="http://cdn.oesmith.co.uk/morris-0.4.3.min.css">
+  <script type="text/javascript" src="/assets/audio.min.js"></script>
+
+
+  <!-- emberjs -->
+  <script src="/assets/vendor/jquery-1.10.2.min.js"></script>
+  <script src="/assets/vendor/handlebars-1.0.0.js"></script>
+  <script src="/assets/vendor/ember.js"></script>
+  <script src="/assets/vendor/ember-data.js"></script>
+  <!-- -->
+
+  <script src="/assets/app.js"></script>
+
+</head>
+<body>
+  <script type="text/x-handlebars" data-template-name="application">
+    <header>
+      <div class="container">
+        <h1>{{#link-to 'index'}}Uhura{{/link-to}}</h1>
+        <h2>Podcast Manager</h2>
+      </div>
+    </header>
+
+    <div class="container">
+      {{outlet}}
+    </div>
+
+    <footer>
+      Created <span class="heart">♥</span> by <a href="https://github.com/dukex">Duke Khaos</a> with awesome <a href="https://github.com/dukex/uhura/graphs/contributors">Contributors</a>
+    </footer>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="index">
+    <div class="container" id="home">
+      <div class="action">
+        {{#link-to 'channels' classNames="btn btn-info btn-lg"}}
+        Enter Now
+        {{/link-to}}
+
+        {{#link-to 'channels' classNames="see-channels"}}
+        See Podcasts
+        {{/link-to}}
+      </div>
+      <img src="/assets/uhura-home.png"  alt=""/>
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="channels">
+    <div id="channels_page">
+      <h3 class="title">Channels</h3>
+      <ul>
+        {{#each}}
+        <li>
+          {{#link-to 'channel' uri}}
+            <img {{bindAttr src=image_url}} />
+            <h4>{{title}}</h4>
+          {{/link-to}}
+          {{#if subscribed}}
+            Subscribe
+          {{else}}
+            <button class="subscribe" {{action 'subscribeChannel' id}}>Subscribe!</button>
+          {{/if}}
+        </li>
+        {{/each}}
+        <li id="new_podcast">
+          <label> Add New Podcast </label>
+          {{input type="url" id="new-channel" placeholder="Podcast URL"
+          value=url action="newChannel" class="form-control"}}
+        </li>
+      </ul>
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="channel">
+    <div id="channel_page" class="clearfix">
+      <h2>{{title}}</h2>
+      <aside>
+        <img {{bindAttr src=image_url}} />
+        <div id="description">
+          {{description}}
+        </div>
+        <p>{{copyright}}
+      </aside>
+      <div id="episodes">
+      </div>
+    </div>
+  </script>
+</body>
+</html>
