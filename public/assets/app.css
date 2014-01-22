@@ -433,10 +433,13 @@ ul li#new_podcast {
 
 #channel_page aside img{
   max-width: 250px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 #channel_page #episodes {
   border: 1px solid red;
   width: 800px;
   float: right;
+  background: #FFF;
 }

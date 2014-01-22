@@ -99,19 +99,21 @@ Uhura.Auth = (function() {
     var timer = window.setInterval(checkLogin, 500);
   };
 
+
   Auth.prototype.withLoggedUser = function(success) {
     var _this = this;
-    $.ajax({
-      url: "/api/users/current_user",
-      statusCode: {
-        200: function(){
-          success();
-        },
-        403: function(){
-          _this.login(success);
-        }
-      }
-    });
+    _this.login(success);
+    //$.ajax({
+    //  url: "/api/users/current_user",
+    //  statusCode: {
+    //    200: function(){
+    //      success();
+    //    },
+    //    403: function(){
+     //     _this.login(success);
+    //    }
+    //  }
+    //});
   };
 
   return Auth;
@@ -120,7 +122,6 @@ Uhura.Auth = (function() {
 window.auth = new Uhura.Auth();
 
 $( document ).ajaxError(function( event, request, settings ) {
-  console.log("Event:", event);
-  console.log("Request:", request);
-  console.log("Settings:", settings);
+  console.log("URL:", settings.type, settings.url);
+  console.log("Status:", request.status);
 });

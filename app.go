@@ -157,16 +157,6 @@ func main() {
 		r.JSON(200, &user)
 	})
 
-	m.Post("/api/users/save_state", func(r render.Render, request *http.Request) {
-		user, err := core.CurrentUser(request)
-		if err {
-			r.Error(403)
-			return
-		}
-
-		r.JSON(200, &user)
-	})
-
 	// API - Auth
 	m.Get("/api/authorize", func(w http.ResponseWriter, r *http.Request) {
 		url := config.AuthCodeURL("")
