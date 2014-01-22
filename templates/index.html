@@ -98,9 +98,11 @@
         <p>{{copyright}}
       </aside>
       <div id="episodes">
+        <ol>
         {{#each episode in episodes}}
-          {{title}}
+          <li>{{episode.title}}</li>
         {{/each}}
+        </ol>
       </div>
     </div>
   </script>
