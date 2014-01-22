@@ -1,4 +1,4 @@
-/* global Ember, DS */
+/* global Ember, DS, $, console, alert */
 
 var Uhura = Ember.Application.create({
   LOG_TRANSITIONS: true
@@ -25,7 +25,7 @@ Uhura.ChannelsRoute = Ember.Route.extend({
 
 Uhura.ChannelRoute = Ember.Route.extend({
   model: function (params) {
-    'use strict'
+    'use strict';
     return this.store.find('channel', params.uri);
   }
 });
@@ -45,54 +45,62 @@ Uhura.Channel = DS.Model.extend({
 
 Uhura.Episode = DS.Model.extend({
   title: DS.attr('string')
-})
-
-
+});
 
 // controller
 
 Uhura.ChannelsController = Ember.ArrayController.extend({
   actions: {
     subscribeChannel: function(idParams) {
-      var _this = this,
-      id = idParams,
-      subscribeFn = function(url){
+      'use strict';
+      var id = idParams,
+      subscribeFn = function(){
         $.ajax({
-          url: "/api/channels/" + id + "/subscribe",
-          success: function(data){
-            alert("Channel subscribed");
+          url: '/api/channels/' + id + '/subscribe',
+          success: function(data) {
+            console.log(data);
+            alert('Channel subscribed');
           }
         });
-      }
+      };
 
       window.auth.withLoggedUser(subscribeFn);
     },
     newChannel: function() {
-      var _this = this,
-      newChannelFn = function(){
+      'use strict';
+      var _this = this;
+      var newChannelFn = function(){
         var url = _this.get('url'),
         subscribe = _this.store.createRecord('channel', {
           url: url
         });
         subscribe.save();
-      }
+      };
 
-      var user = window.auth.withLoggedUser(newChannelFn);
+      window.auth.withLoggedUser(newChannelFn);
     }
   }
-})
+});
+
+// view
+
+Uhura.PlayerView = Ember.View.extend({
+  templateName: 'player'
+});
 
 
 // auth
 
 Uhura.Auth = (function() {
+  'use strict';
+
   function Auth() {
-    this.logged = false
+    this.logged = false;
   }
 
   Auth.prototype.authorize_url = function(){
-    return window.location.protocol + "//" + window.location.host + "/api/authorize"
-  }
+    return window.location.protocol + '//' + window.location.host + '/api/authorize';
+  };
 
   Auth.prototype.login = function(callback) {
     var loginWindow = window.open(this.authorize_url(),'login','height=500,width=800');
@@ -107,7 +115,7 @@ Uhura.Auth = (function() {
         }
       } catch(e){
       }
-    }
+    };
 
     var timer = window.setInterval(checkLogin, 500);
   };
@@ -115,7 +123,7 @@ Uhura.Auth = (function() {
 
   Auth.prototype.withLoggedUser = function(callback) {
     if(this.logged){
-      callback()
+      callback();
     } else {
       this.login(callback);
     }
@@ -138,7 +146,8 @@ Uhura.Auth = (function() {
 window.auth = new Uhura.Auth();
 
 $( document ).ajaxError(function( event, request, settings ) {
-  console.log("URL:", settings.type, settings.url);
-  console.log("Status:", request.status);
-  window.auth.logged = false
+  'use strict';
+  console.log('URL:', settings.type, settings.url);
+  console.log('Status:', request.status);
+  window.auth.logged = false;
 });

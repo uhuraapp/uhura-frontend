@@ -22,6 +22,11 @@
 
 </head>
 <body>
+ <script type="text/x-handlebars" data-template-name="player">
+    Play
+  </script>
+
+
   <script type="text/x-handlebars" data-template-name="application">
     <header>
       <div class="container">
@@ -33,6 +38,8 @@
     <div class="container">
       {{outlet}}
     </div>
+
+    {{view Uhura.PlayerView}}
 
     <footer>
       Created <span class="heart">♥</span> by <a href="https://github.com/dukex">Duke Khaos</a> with awesome <a href="https://github.com/dukex/uhura/graphs/contributors">Contributors</a>
