@@ -88,7 +88,7 @@ func main() {
 	m.Post("/api/items/:key/watched", func(responseWriter http.ResponseWriter, r render.Render, request *http.Request, params martini.Params) {
 		user, err := core.CurrentUser(request)
 		if err {
-			r.Error(503)
+			r.Error(403)
 			return
 		}
 
@@ -137,7 +137,7 @@ func main() {
 	m.Get("/api/channels/:id/subscribe", func(r render.Render, request *http.Request, params martini.Params) {
 		user, err := core.CurrentUser(request)
 		if err {
-			r.Error(503)
+			r.Error(403)
 			return
 		}
 
@@ -153,6 +153,7 @@ func main() {
 			r.Error(403)
 			return
 		}
+
 		r.JSON(200, &user)
 	})
 
@@ -162,6 +163,7 @@ func main() {
 			r.Error(403)
 			return
 		}
+
 		r.JSON(200, &user)
 	})
 
