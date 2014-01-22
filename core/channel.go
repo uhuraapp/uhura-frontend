@@ -48,14 +48,23 @@ func (cr *ChannelResult) GetUri() string {
 	return uri
 }
 
-func AllChannels() []ChannelResult {
+func AllChannels(userId int) []ChannelResult {
 	var channels []ChannelResult
-	database.Table("channels").Order("title").Where("title IS NOT NULL").Where("title <> ''").Find(&channels)
+
+	query := database.Table("channels").Order("title").Where("title IS NOT NULL").Where("title <> ''")
+
+	if userId > 0 {
+		query = query.Joins("FULL OUTER JOIN user_channels ON user_channels.channel_id=channels.id AND user_channels.user_id=" + strconv.Itoa(userId)).Select("channels.uri, channels.image_url, channels.title, channels.id, CAST(user_channels.user_id AS BOOLEAN) AS subscribed ")
+	}
+
+	query.Find(&channels)
+
 	for _, c := range channels {
 		if c.Uri == "" {
 			c.Uri = c.GetUri()
 		}
 	}
+
 	return channels
 }
 
