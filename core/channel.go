@@ -26,15 +26,16 @@ type UserChannel struct {
 }
 
 type ChannelResult struct {
-	Title       string `json:"title"`
-	Description string `json:"description"`
-	ImageUrl    string `json:"image_url"`
-	Url         string `json:"url"`
-	Id          int    `json:"id"`
-	Uri         string `json:"uri"`
-	ToView      int    `json:"to_view"`
-	Subscribed  bool   `json:"subscribed"`
-	Copyright   string `json:"copyright"`
+	Title       string  `json:"title"`
+	Description string  `json:"description"`
+	ImageUrl    string  `json:"image_url"`
+	Url         string  `json:"url"`
+	Id          int     `json:"id"`
+	Uri         string  `json:"uri"`
+	ToView      int     `json:"to_view"`
+	Subscribed  bool    `json:"subscribed"`
+	Copyright   string  `json:"copyright"`
+	Episodes    []int64 `json:"episodes"`
 }
 
 func (cr *ChannelResult) GetUri() string {
@@ -86,10 +87,14 @@ func GetChannelByUser(user *User) *[]ChannelResult {
 	return &channels
 }
 
-func GetChannel(channelUri string) ChannelResult {
-	var channel ChannelResult
+func GetChannel(channelUri string) (channel ChannelResult, episodes []ItemResult) {
+	var episodesCount []int64
+
 	database.Table("channels").Where("uri = ?", channelUri).First(&channel)
-	return channel
+	database.Table("items").Where("channel_id = ?", channel.Id).Pluck("id", &episodesCount).Scan(&episodes)
+	channel.Episodes = episodesCount
+
+	return
 }
 
 func SubscribeChannel(userId int, channelId string) ChannelResult {

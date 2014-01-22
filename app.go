@@ -71,7 +71,7 @@ func main() {
 			http.Redirect(w, request, "/authorize", http.StatusFound)
 		} else {
 			channels := core.GetChannelByUser(user)
-			channel := core.GetChannel(channelParams)
+			channel, _ := core.GetChannel(channelParams)
 			items, counter := core.GetUserItems(user, channels, channelParams, page)
 
 			r.HTML(200, "dashboard", map[string]interface{}{"current_user": &user, "channels": channels, "items": items, "counter": counter, "channel": channel})
@@ -130,8 +130,8 @@ func main() {
 	})
 
 	m.Get("/api/channels/:uri", func(r render.Render, params martini.Params) {
-		channel := core.GetChannel(params["uri"])
-		r.JSON(200, map[string]interface{}{"channel": channel})
+		channel, episodes := core.GetChannel(params["uri"])
+		r.JSON(200, map[string]interface{}{"channel": channel, "episodes": episodes})
 	})
 
 	m.Get("/api/channels/:id/subscribe", func(r render.Render, request *http.Request, params martini.Params) {
