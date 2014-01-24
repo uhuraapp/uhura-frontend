@@ -44,20 +44,26 @@ func createUser(tempUser TempUser) *User {
 	return &user
 }
 
-func getUser(userId string) *User {
+func getUser(userId string) (*User, bool) {
 	var user User
+
 	id, _ := strconv.Atoi(userId)
+
+	if id == 0 {
+		return nil, true
+	}
 
 	database.First(&user, id)
 
-	return &user
+	return &user, false
 }
 
 func CurrentUser(request *http.Request) (*User, bool) {
 	session, _ := store.Get(request, "session")
 	userId, ok := session.Values["user_id"].(string)
 	if ok {
-		return getUser(userId), false
+		user, err := getUser(userId)
+		return user, err
 	} else {
 		return nil, true
 	}
