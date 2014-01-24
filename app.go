@@ -52,7 +52,8 @@ func main() {
 	// API
 
 	m.Post("/api/channels/:id/fetcher", func(responseWriter http.ResponseWriter, request *http.Request, params martini.Params) {
-		//		core.FetchChanell(channel)
+		channel := core.GetChannelByChannel(params["id"])
+		core.FetchChanell(channel)
 		//	http.Redirect(responseWriter, request, "/dashboard/channels/"+params["id"], http.StatusMovedPermanently)
 	})
 

@@ -98,6 +98,12 @@ func GetChannel(channelUri string) (channel ChannelResult, episodes []ItemResult
 	return
 }
 
+func GetChannelByChannel(channelId string) (channel Channel) {
+	channelIdInt, _ := strconv.Atoi(channelId)
+	database.Table("channels").First(&channel, channelIdInt)
+	return
+}
+
 func SubscribeChannel(userId int, channelId string) (channel ChannelResult) {
 	var userChannel UserChannel
 
