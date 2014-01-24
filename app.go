@@ -49,35 +49,6 @@ func main() {
 		return indexTemplate
 	})
 
-	m.Get("/dashboard", func(r render.Render, w http.ResponseWriter, request *http.Request) {
-		page := request.FormValue("page")
-		channel := request.FormValue("channel")
-		user, err := core.CurrentUser(request)
-		if err {
-			http.Redirect(w, request, "/authorize", http.StatusFound)
-		} else {
-			channels := core.GetChannelByUser(user)
-			items, counter := core.GetUserItems(user, channels, channel, page)
-
-			r.HTML(200, "dashboard", map[string]interface{}{"current_user": &user, "channels": channels, "items": items, "counter": counter})
-		}
-	})
-
-	m.Get("/dashboard/channels/:id", func(r render.Render, w http.ResponseWriter, params martini.Params, request *http.Request) {
-		page := request.FormValue("page")
-		channelParams := params["id"]
-		user, err := core.CurrentUser(request)
-		if err {
-			http.Redirect(w, request, "/authorize", http.StatusFound)
-		} else {
-			channels := core.GetChannelByUser(user)
-			channel, _ := core.GetChannel(channelParams)
-			items, counter := core.GetUserItems(user, channels, channelParams, page)
-
-			r.HTML(200, "dashboard", map[string]interface{}{"current_user": &user, "channels": channels, "items": items, "counter": counter, "channel": channel})
-		}
-	})
-
 	// API
 
 	m.Post("/api/channels/:id/fetcher", func(responseWriter http.ResponseWriter, request *http.Request, params martini.Params) {
@@ -112,7 +83,6 @@ func main() {
 	})
 
 	m.Post("/api/channels", func(responseWriter http.ResponseWriter, r render.Render, request *http.Request, params martini.Params) {
-		request.ParseForm()
 		user, err := core.CurrentUser(request)
 		if err {
 			r.Error(403)
@@ -183,5 +153,8 @@ func main() {
 	})
 
 	fmt.Println("Starting server on", os.Getenv("PORT"))
-	http.ListenAndServe(":"+os.Getenv("PORT"), m)
+	err := http.ListenAndServe(":"+os.Getenv("PORT"), m)
+	if err != nil {
+		panic(err)
+	}
 }
