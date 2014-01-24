@@ -6,6 +6,13 @@ import (
 	xmlx "github.com/jteeuwen/go-pkg-xmlx"
 )
 
+type Extension struct {
+	Name      string
+	Value     string
+	Attrs     map[string]string
+	Childrens map[string][]Extension
+}
+
 var days = map[string]int{
 	"Monday":    1,
 	"Tuesday":   2,
@@ -174,9 +181,62 @@ func (this *Feed) readRss2(doc *xmlx.Document) (err error) {
 				}
 			}
 
+			tl = item.SelectNodes(ns, ns)
+			i.Extensions = make(map[string]map[string][]Extension)
+			for _, lv := range tl {
+				getExtensions(&i.Extensions, lv)
+			}
+
 			ch.Items = append(ch.Items, i)
 		}
+
+		x := node.SelectNodes(ns, ns)
+		ch.Extensions = make(map[string]map[string][]Extension)
+		for _, v := range x {
+			if v.Name.Space != "" {
+				getExtensions(&ch.Extensions, v)
+			}
+		}
+
 	}
 	this.Channels = foundChannels
 	return
+}
+
+func getExtensions(extensionsX *map[string]map[string][]Extension, node *xmlx.Node) {
+	extentions := *extensionsX
+
+	if node.Name.Space != "" {
+		extensione, noErrors := getExtension(node)
+		if noErrors {
+			if len(extentions[node.Name.Space]) == 0 {
+				extentions[node.Name.Space] = make(map[string][]Extension, 0)
+			}
+			if len(extentions[node.Name.Space][node.Name.Local]) == 0 {
+				extentions[node.Name.Space][node.Name.Local] = make([]Extension, 0)
+			}
+			extentions[node.Name.Space][node.Name.Local] = append(extentions[node.Name.Space][node.Name.Local], extensione)
+		}
+	}
+}
+
+func getExtension(node *xmlx.Node) (Extension, bool) {
+	var extension Extension
+	if node.Name.Space != "" {
+		extension = Extension{Name: node.Name.Local, Value: node.GetValue()}
+		extension.Attrs = make(map[string]string)
+		extension.Childrens = make(map[string][]Extension, 0)
+		for _, x := range node.Attributes {
+			extension.Attrs[x.Name.Local] = x.Value
+		}
+		for _, y := range node.Children {
+			children, ok := getExtension(y)
+			if ok {
+				extension.Childrens[y.Name.Local] = append(extension.Childrens[y.Name.Local], children)
+			}
+		}
+		return extension, true
+	} else {
+		return extension, false
+	}
 }

@@ -1,4 +1,4 @@
-{
+ {
 	"ImportPath": "uhura",
 	"GoVersion": "go1.1.2",
 	"Deps": [
@@ -23,12 +23,17 @@
 		},
 		{
 			"ImportPath": "github.com/codegangsta/martini",
-			"Rev": "477c92e34289f065d09427934c00e66c725579f4"
+			"Comment": "v0.1-63-g890a2a5",
+			"Rev": "890a2a52d2e59b007758538f9b845fa0ed7daccb"
 		},
 		{
 			"ImportPath": "github.com/codegangsta/martini-contrib/render",
 			"Comment": "v0.1-42-gb7a8366",
 			"Rev": "b7a8366f58e39977dfd52d6109ed08d768bba94a"
+		},
+		{
+			"ImportPath": "github.com/fiam/gounidecode/unidecode",
+			"Rev": "311ebb7422d3ff70cc1d064c5a297520ff5f304a"
 		},
 		{
 			"ImportPath": "github.com/gorilla/context",
@@ -48,7 +53,7 @@
 		},
 		{
 			"ImportPath": "github.com/jteeuwen/go-pkg-rss",
-			"Rev": "269db380a38d96d568c0e51fa3d4534ddb3c1023"
+			"Rev": "937de70c03b3af6f78338755794385c6f74f7df1"
 		},
 		{
 			"ImportPath": "github.com/jteeuwen/go-pkg-xmlx",

@@ -6,11 +6,11 @@ import (
 	"fmt"
 	"github.com/codegangsta/martini"
 	"github.com/codegangsta/martini-contrib/render"
+	"github.com/dukex/uhura/core"
 	"html/template"
 	"io/ioutil"
 	"net/http"
 	"os"
-	"uhura/core"
 )
 
 var config oauth.Config

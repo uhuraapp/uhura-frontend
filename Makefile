@@ -1,14 +1,6 @@
 install:
 	go get github.com/kr/godep
-	go get code.google.com/p/go-charset/charset
-	go get github.com/jteeuwen/go-pkg-rss
-	go get code.google.com/p/go-charset/data
-	go get github.com/jinzhu/gorm
-	go get github.com/lib/pq
-	go get code.google.com/p/goauth2/oauth
-	go get github.com/codegangsta/martini
-	go get github.com/codegangsta/martini-contrib/render
-	go get
+	godep restore
 
 set_env:
 	export GOOGLE_CLIENT_ID="933623108791-imtedbq5d1vgfhotj15gq6493jl22j4m.apps.googleusercontent.com"

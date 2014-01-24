@@ -21,6 +21,7 @@ type Channel struct {
 	Items          []*Item
 	Cloud          Cloud
 	TextInput      Input
+	Extensions     map[string]map[string][]Extension
 
 	// Atom fields
 	Id       string

@@ -23,6 +23,8 @@ type Item struct {
 	Generator    *Generator
 	Contributors []string
 	Content      *Content
+
+	Extensions map[string]map[string][]Extension
 }
 
 func (i *Item) Key() string {

@@ -1,4 +1,4 @@
-# Martini [![Build Status](https://drone.io/github.com/codegangsta/martini/status.png)](https://drone.io/github.com/codegangsta/martini/latest) [![GoDoc](https://godoc.org/github.com/codegangsta/martini?status.png)](http://godoc.org/github.com/codegangsta/martini)
+# Martini  [![wercker status](https://app.wercker.com/status/174bef7e3c999e103cacfe2770102266 "wercker status")](https://app.wercker.com/project/bykey/174bef7e3c999e103cacfe2770102266) [![Codebot](https://codebot.io/badge/github.com/codegangsta/martini.png)](http://codebot.io/doc/pkg/github.com/codegangsta/martini "Codebot") [![GoDoc](https://godoc.org/github.com/codegangsta/martini?status.png)](http://godoc.org/github.com/codegangsta/martini)
 
 Martini is a powerful package for quickly writing modular web applications/services in Golang.
 
@@ -101,7 +101,7 @@ m.Get("/", func() (int, string) {
 #### Service Injection
 Handlers are invoked via reflection. Martini makes use of *Dependency Injection* to resolve dependencies in a Handlers argument list. **This makes Martini completely  compatible with golang's `http.HandlerFunc` interface.** 
 
-If you add an argument to your Handler, Martini will search it's list of services and attempt to resolve the dependency via type assertion:
+If you add an argument to your Handler, Martini will search its list of services and attempt to resolve the dependency via type assertion:
 ~~~ go
 m.Get("/", func(res http.ResponseWriter, req *http.Request) { // res and req are injected by Martini
   res.WriteHeader(200) // HTTP 200
@@ -219,7 +219,7 @@ m.Use(func() {
 })
 ~~~
 
-You can have full control over the middleware stack with the `Handlers` function:
+You can have full control over the middleware stack with the `Handlers` function. This will replace any handlers that have been previously set:
 ~~~ go
 m.Handlers(
   Middleware1,
@@ -258,10 +258,13 @@ m.Use(func(c martini.Context, log *log.Logger){
 Start by looking in the [martini-contrib](http://github.com/codegangsta/martini-contrib) package. If it is not there feel free to put up a Pull Request for one.
 
 * [auth](https://github.com/codegangsta/martini-contrib/tree/master/auth) - Handlers for authentication.
-* [form](https://github.com/codegangsta/martini-contrib/tree/master/form) - Handler for parsing and mapping form fields.
+* [binding](https://github.com/codegangsta/martini-contrib/tree/master/binding) - Handler for mapping/validating a raw request into a structure.
 * [gzip](https://github.com/codegangsta/martini-contrib/tree/master/gzip) - Handler for adding gzip compress to requests
 * [render](https://github.com/codegangsta/martini-contrib/tree/master/render) - Handler that provides a service for easily rendering JSON and HTML templates.
 * [acceptlang](https://github.com/codegangsta/martini-contrib/tree/master/acceptlang) - Handler for parsing the `Accept-Language` HTTP header.
+* [sessions](https://github.com/codegangsta/martini-contrib/tree/master/sessions) - Handler that provides a Session service.
+* [web](https://github.com/codegangsta/martini-contrib/tree/master/web) - web.go Context compatibility.
+* [strip](https://github.com/codegangsta/martini-contrib/tree/master/strip) - URL Prefix stripping.
 
 ### How do I integrate with existing servers?
 
@@ -300,4 +303,7 @@ To have more flexibility over port and host, use the `http.ListenAndServe` funct
 Martini is meant to be kept tiny and clean. Most contributions should end up in the [martini-contrib](http://github.com/codegangsta/martini-contrib) repository. If you do have a contribution for the core of Martini feel free to put up a Pull Request.
 
 ## About
+
+Inspired by [express](https://github.com/visionmedia/express) and [sinatra](https://github.com/sinatra/sinatra)
+
 Martini is obsessively designed by none other than the [Code Gangsta](http://codegangsta.io/)
