@@ -13,6 +13,10 @@ import (
 	_ "code.google.com/p/go-charset/data"
 )
 
+const (
+	itunesExt = "http://www.itunes.com/dtds/podcast-1.0.dtd"
+)
+
 func FetchAllChannell() {
 	var channels []Channel
 	database.Find(&channels)
@@ -42,13 +46,19 @@ func channelFetchHandler(feed *rss.Feed, channels []*rss.Channel) {
 		var channel struct {
 			Id int
 		}
+		var imageUrl string
+		if itunesImage := channelData.Extensions[itunesExt]["image"]; itunesImage != nil {
+			imageUrl = itunesImage[0].Attrs["href"]
+		} else {
+			imageUrl = channelData.Image.Url
+		}
 
 		database.Table("channels").Where("url = ?", feed.Url).First(&channel)
 
 		database.Table("channels").Where(channel.Id).Updates(map[string]interface{}{
 			"title":           channelData.Title,
 			"description":     channelData.Description,
-			"image_url":       channelData.Image.Url,
+			"image_url":       imageUrl,
 			"copyright":       channelData.Copyright,
 			"last_build_date": channelData.LastBuildDate,
 		})
