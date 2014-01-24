@@ -6,13 +6,45 @@ Hailing Frequencies Are Open!
 
 ## Development
 
+``` bash
+$ go version
+go version go1.2
 ```
+
+``` bash
 $ export DATABASE_URL="postgres://root@localhost/uhura?sslmode=disable"
 $ cd $GOPATH/src
 $ git clone git@github.com:dukex/uhura.git github.com/dukex/uhura
 $ cd github.com/dukex/uhura
-$ make install
-$ make serve # set env and up server
+$ make dev
+```
+
+Det env
+
+``` bash
+export GOOGLE_CLIENT_ID="933623108791-imtedbq5d1vgfhotj15gq6493jl22j4m.apps.googleusercontent.com"
+export GOOGLE_CLIENT_SECRET="HjKW82HOb1jT-XyWgPFc9jW8"
+export GOOGLE_CALLBACK_URL="http://127.0.0.1:3002/auth/callback"
+export PORT=3002
+export DEBUG=true
+```
+
+``` bash
+$ go run app.go
 ```
 
 open [127.0.0.1:3002](http://127.0.0.1:3002)
+
+
+### Test
+
+```
+$ go test ./..
+```
+
+or
+
+```
+$ make coverage
+```
+
