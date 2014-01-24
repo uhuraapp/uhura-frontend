@@ -1,7 +1,6 @@
 package core
 
 import (
-	// "fmt"
 	. "github.com/fiam/gounidecode/unidecode"
 	"regexp"
 	"strconv"
@@ -44,7 +43,7 @@ func (cr *ChannelResult) GetUri() string {
 	uri = re.ReplaceAllString(uri, "")
 	uri = strings.ToLower(uri)
 	uri = strings.Replace(uri, "podcast", "", -1)
-	go database.Table("channels").Where(cr.Id).Update("Uri", uri)
+	database.Table("channels").Where(cr.Id).Update("Uri", uri)
 
 	return uri
 }
@@ -60,45 +59,46 @@ func AllChannels(userId int) []ChannelResult {
 
 	query.Find(&channels)
 
-	for _, c := range channels {
+	for i, c := range channels {
 		if c.Uri == "" {
 			c.Uri = c.GetUri()
+			channels[i] = c
 		}
 	}
 
 	return channels
 }
 
-func GetChannelByUser(user *User) *[]ChannelResult {
-	var channels []ChannelResult
-	database.Table("user_channels").Select("channels.title, channels.description, channels.image_url, channels.url, channels.id").Where("user_id = ?", user.Id).Joins("inner join channels on channels.id = user_channels.channel_id").Scan(&channels)
+// func GetChannelByUser(user *User) *[]ChannelResult {
+// 	var channels []ChannelResult
+// 	database.Table("user_channels").Select("channels.title, channels.description, channels.image_url, channels.url, channels.id").Where("user_id = ?", user.Id).Joins("inner join channels on channels.id = user_channels.channel_id").Scan(&channels)
 
-	for i, channel := range channels {
-		var watched int
-		var itemsIds []int64
-		database.Table("items").Where("channel_id = ?", channel.Id).Pluck("id", &itemsIds)
-		database.Table("user_items").Where("user_id = ? and item_id in (?) and viewed = true", user.Id, itemsIds).Count(&watched)
+// 	for i, channel := range channels {
+// 		var watched int
+// 		var itemsIds []int64
+// 		database.Table("items").Where("channel_id = ?", channel.Id).Pluck("id", &itemsIds)
+// 		database.Table("user_items").Where("user_id = ? and item_id in (?) and viewed = true", user.Id, itemsIds).Count(&watched)
 
-		toView := len(itemsIds) - watched
-		channel.ToView = toView
-		channels[i] = channel
-	}
+// 		toView := len(itemsIds) - watched
+// 		channel.ToView = toView
+// 		channels[i] = channel
+// 	}
 
-	return &channels
-}
+// 	return &channels
+// }
 
 func GetChannel(channelUri string) (channel ChannelResult, episodes []ItemResult) {
-	var episodesCount []int64
+	var episodesIds []int64
 
 	database.Table("channels").Where("uri = ?", channelUri).First(&channel)
-	database.Table("items").Where("channel_id = ?", channel.Id).Pluck("id", &episodesCount).Scan(&episodes)
-	channel.Episodes = episodesCount
+	database.Table("items").Where("channel_id = ?", channel.Id).Find(&episodes).Pluck("id", &episodesIds)
+
+	channel.Episodes = episodesIds
 
 	return
 }
 
-func SubscribeChannel(userId int, channelId string) ChannelResult {
-	var channel ChannelResult
+func SubscribeChannel(userId int, channelId string) (channel ChannelResult) {
 	var userChannel UserChannel
 
 	channelIdInt, _ := strconv.Atoi(channelId)
