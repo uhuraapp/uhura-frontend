@@ -30,6 +30,7 @@ type User struct {
 	Gender     string
 	Locale     string
 	GoogleId   string
+	Email      string
 }
 
 func (u *User) IdString() string {
