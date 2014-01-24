@@ -1,6 +1,6 @@
- {
-	"ImportPath": "uhura",
-	"GoVersion": "go1.1.2",
+{
+	"ImportPath": "github.com/dukex/uhura",
+	"GoVersion": "go1.2",
 	"Deps": [
 		{
 			"ImportPath": "code.google.com/p/go-charset/charset",
@@ -14,8 +14,8 @@
 		},
 		{
 			"ImportPath": "code.google.com/p/goauth2/oauth",
-			"Comment": "weekly-35",
-			"Rev": "e062946df3f2de47313e40eea045a2f6130e92f3"
+			"Comment": "weekly-40",
+			"Rev": "5877582f0cb070bc21b199dab5e7d18fb546444a"
 		},
 		{
 			"ImportPath": "github.com/codegangsta/inject",
