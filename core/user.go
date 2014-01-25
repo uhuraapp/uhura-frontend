@@ -32,7 +32,12 @@ type User struct {
 	Locale      string
 	GoogleId    string
 	Email       string
+	WelcomeMail bool
 	CreatedAt   time.Time
+}
+
+func (u *User) AfterCreate() {
+	WelcomeMail(u)
 }
 
 func (u *User) IdString() string {
