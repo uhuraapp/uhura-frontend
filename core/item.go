@@ -15,10 +15,11 @@ type Item struct {
 }
 
 type UserItem struct {
-	Id     int
-	UserId int
-	ItemId int
-	Viewed bool
+	Id        int
+	UserId    int
+	ItemId    int
+	Viewed    bool
+	CreatedAt time.Time
 }
 
 type UserItemsResult struct {
