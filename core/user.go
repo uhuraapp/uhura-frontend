@@ -18,19 +18,20 @@ type TempUser struct {
 	Picture    string
 	Gender     string
 	Locale     string
+	Email      string
 }
 
 type User struct {
-	Id         int
-	Name       string
-	GivenName  string
-	FamilyName string
-	Link       string
-	Picture    string
-	Gender     string
-	Locale     string
-	GoogleId   string
-	Email      string
+	Id          int
+	Name        string
+	GivenName   string
+	FamilyName  string
+	Link        string
+	Picture     string
+	Gender      string
+	Locale      string
+	GoogleId    string
+	Email       string
 }
 
 func (u *User) IdString() string {
@@ -40,7 +41,7 @@ func (u *User) IdString() string {
 func createUser(tempUser TempUser) *User {
 	var user User
 
-	database.Where(User{GoogleId: tempUser.Id}).Attrs(User{Name: tempUser.Name, GivenName: tempUser.GivenName, FamilyName: tempUser.FamilyName, Link: tempUser.Link, Picture: tempUser.Picture, Gender: tempUser.Gender, Locale: tempUser.Locale}).FirstOrCreate(&user)
+	database.Where(User{GoogleId: tempUser.Id}).Assign(User{Name: tempUser.Name, GivenName: tempUser.GivenName, FamilyName: tempUser.FamilyName, Link: tempUser.Link, Picture: tempUser.Picture, Gender: tempUser.Gender, Locale: tempUser.Locale, Email: tempUser.Email}).FirstOrCreate(&user)
 
 	return &user
 }

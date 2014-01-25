@@ -22,7 +22,7 @@ func main() {
 		ClientId:     os.Getenv("GOOGLE_CLIENT_ID"),
 		ClientSecret: os.Getenv("GOOGLE_CLIENT_SECRET"),
 		RedirectURL:  os.Getenv("GOOGLE_CALLBACK_URL"),
-		Scope:        "https://www.googleapis.com/auth/userinfo.profile",
+		Scope:        "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
 		AuthURL:      "https://accounts.google.com/o/oauth2/auth",
 		TokenURL:     "https://accounts.google.com/o/oauth2/token",
 		TokenCache:   oauth.CacheFile("cache.json"),
