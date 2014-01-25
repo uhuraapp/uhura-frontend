@@ -25,7 +25,7 @@ func render(name string, data interface{}) []byte {
 }
 
 func WelcomeMail(user *User) {
-	coop.After(2*time.Minute, func() {
+	coop.After(32*time.Minute, func() {
 		e := email.NewEmail()
 		e.From = FROM
 		e.To = []string{user.Email}
