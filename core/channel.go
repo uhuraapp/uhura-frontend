@@ -25,16 +25,16 @@ type UserChannel struct {
 }
 
 type ChannelResult struct {
-	Title       string  `json:"title"`
-	Description string  `json:"description"`
-	ImageUrl    string  `json:"image_url"`
-	Url         string  `json:"url"`
-	Id          int     `json:"id"`
-	Uri         string  `json:"uri"`
-	ToView      int     `json:"to_view"`
-	Subscribed  bool    `json:"subscribed"`
-	Copyright   string  `json:"copyright"`
-	Episodes    []int64 `json:"episodes"`
+	Title       string      `json:"title"`
+	Description string      `json:"description"`
+	ImageUrl    string      `json:"image_url"`
+	Url         string      `json:"url"`
+	Id          int         `json:"id"`
+	Uri         string      `json:"uri"`
+	ToView      int         `json:"to_view"`
+	Subscribed  interface{} `json:"subscribed"`
+	Copyright   string      `json:"copyright"`
+	Episodes    []int64     `json:"episodes"`
 }
 
 func (cr *ChannelResult) GetUri() string {
