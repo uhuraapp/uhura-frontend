@@ -5,6 +5,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type Channel struct {
@@ -22,6 +23,8 @@ type UserChannel struct {
 	Id        int
 	UserId    int
 	ChannelId int
+	CreatedAt time.Time
+	UpdatedAt time.Time
 }
 
 type ChannelResult struct {

@@ -33,8 +33,9 @@ type UserItemsResult struct {
 }
 
 type ItemResult struct {
-	Id    int    `json:"id"`
-	Title string `json:"title"`
+	Id          int    `json:"id"`
+	Title       string `json:"title"`
+	Description string `json:"description"`
 }
 
 type Counter struct {

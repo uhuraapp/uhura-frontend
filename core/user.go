@@ -32,6 +32,7 @@ type User struct {
 	Locale      string
 	GoogleId    string
 	Email       string
+	CreatedAt   time.Time
 }
 
 func (u *User) IdString() string {
