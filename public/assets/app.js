@@ -1,5 +1,4 @@
-/* global Ember, DS, $, console, alert */
-
+/* global Ember, DS, $, console  */
 var Uhura = Ember.Application.create({
   LOG_TRANSITIONS: true
 });
@@ -33,18 +32,21 @@ Uhura.ChannelRoute = Ember.Route.extend({
 // model
 
 Uhura.Channel = DS.Model.extend({
-  title:       DS.attr('string'),
-  image_url:   DS.attr('string'),
-  url:         DS.attr('string'),
-  uri:         DS.attr('string'),
-  description: DS.attr('string'),
-  copyright:   DS.attr('string'),
-  subscribed:  DS.attr('boolean'),
-  episodes:    DS.hasMany('episode'),
+  title:      DS.attr('string'),
+  image_url:  DS.attr('string', {
+                defaultValue: function(){ 'use strict'; return;  }
+              }),
+  url:        DS.attr('string'),
+  uri:        DS.attr('string'),
+  description:DS.attr('string'),
+  copyright:  DS.attr('string'),
+  subscribed: DS.attr('boolean'),
+  episodes:   DS.hasMany('episode'),
 });
 
 Uhura.Episode = DS.Model.extend({
-  title: DS.attr('string')
+  title: DS.attr('string'),
+  description: DS.attr('string'),
 });
 
 // controller
@@ -53,16 +55,19 @@ Uhura.ChannelsController = Ember.ArrayController.extend({
   actions: {
     subscribeChannel: function(idParams) {
       'use strict';
-      var id = idParams,
-      subscribeFn = function(){
-        $.ajax({
-          url: '/api/channels/' + id + '/subscribe',
-          success: function(data) {
-            console.log(data);
-            alert('Channel subscribed');
-          }
-        });
-      };
+      var id = idParams, _this = this;
+      var successSubscribe = function() {
+                  _this.store.find('channel', idParams).then(function(channel){
+                    channel.set('subscribed', true);
+                  });
+                };
+
+      var subscribeFn = function(){
+            $.ajax({
+              url: '/api/channels/' + id + '/subscribe',
+              success: successSubscribe
+            });
+          };
 
       window.auth.withLoggedUser(subscribeFn);
     },
@@ -74,7 +79,9 @@ Uhura.ChannelsController = Ember.ArrayController.extend({
         subscribe = _this.store.createRecord('channel', {
           url: url
         });
-        subscribe.save();
+        subscribe.save().then(function(c){
+          console.log(c);
+        });
       };
 
       window.auth.withLoggedUser(newChannelFn);
@@ -88,6 +95,9 @@ Uhura.PlayerView = Ember.View.extend({
   templateName: 'player'
 });
 
+Uhura.SubscribeButton = Ember.Component.extend({
+  tagName: 'button'
+});
 
 // auth
 
@@ -103,17 +113,21 @@ Uhura.Auth = (function() {
   };
 
   Auth.prototype.login = function(callback) {
-    var loginWindow = window.open(this.authorize_url(),'login','height=500,width=800');
     window.focus();
+
+    var loginWindow = window.open(this.authorize_url(),'login','height=500,width=800');
+
     loginWindow.focus();
+
     var checkLogin = function(){
       try {
         if(loginWindow.closed) {
           clearInterval(timer);
           callback();
-          this.current_user();
+          window.auth.logged = true;
         }
       } catch(e){
+        console.log(e);
       }
     };
 

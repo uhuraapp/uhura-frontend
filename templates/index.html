@@ -39,22 +39,20 @@
 
 
   <script type="text/x-handlebars" data-template-name="application">
-    <header>
-      <div class="container">
+  <div class="uk-grid" data-uk-grid-margin>
+    <header class="uk-width-1-1">
         <h1>{{#link-to 'index'}}Uhura{{/link-to}}</h1>
         <h2>Podcast Manager</h2>
-      </div>
     </header>
 
-    <div class="container">
-      {{outlet}}
-    </div>
+    {{outlet}}
 
     {{view Uhura.PlayerView}}
 
     <footer>
       Created <span class="heart">♥</span> by <a href="https://github.com/dukex">Duke Khaos</a> with awesome <a href="https://github.com/dukex/uhura/graphs/contributors">Contributors</a>
     </footer>
+    </div>
   </script>
 
   <script type="text/x-handlebars" data-template-name="index">
@@ -73,26 +71,35 @@
   </script>
 
   <script type="text/x-handlebars" data-template-name="channels">
-    <div id="channels_page">
+    <div id="channels_page" class="uk-width-1-1">
       <h3 class="title">Channels</h3>
-      <ul>
+      <ul class="uk-grid">
         {{#each}}
-        <li>
+        <li class="uk-width-medium-1-5">
           {{#link-to 'channel' uri}}
-            <img {{bindAttr src=image_url}} />
+            <div class="img">
+              <img {{bindAttr src=image_url}} />
+            </div>
             <h4>{{title}}</h4>
           {{/link-to}}
+
+
+
           {{#if subscribed}}
-            Subscribe
+            <button class="uk-button uk-button-small uk-button-success subscribe fa fa-check" {{action 'unsubscribeChannel' id}}>Subscribed</button>
           {{else}}
-            <button class="subscribe" {{action 'subscribeChannel' id}}>Subscribe!</button>
+            <button class="uk-button uk-button-small subscribe" {{action 'subscribeChannel' id}}>Subscribe!</button>
           {{/if}}
         </li>
         {{/each}}
-        <li id="new_podcast">
-          <label> Add New Podcast </label>
-          {{input type="url" id="new-channel" placeholder="Podcast URL"
-             value=url action="newChannel" class="form-control"}}
+        <li id="new_podcast" class="uk-width-medium-1-5">
+          <div class="uk-form">
+            <fieldset data-uk-margin class="uk-vertical-align-middle">
+              <label> Add New Podcast </label>
+              {{input type="url" id="new-channel" placeholder="Podcast URL"
+              value=url action="newChannel" class="form-control"}}
+            </fieldset>
+          </div>
         </li>
       </ul>
     </div>
@@ -111,7 +118,10 @@
       <div id="episodes">
         <ol>
         {{#each episode in episodes}}
-          <li>{{episode.title}}</li>
+          <li>
+            <h3>{{episode.title}}</h3>
+            <div class="description">{{{episode.description}}}</div>
+          </li>
         {{/each}}
         </ol>
       </div>
