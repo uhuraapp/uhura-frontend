@@ -153,6 +153,14 @@ func main() {
 		return "<script>window.close();</script>"
 	})
 
+	// API - DEV
+	m.Get("/api/dev/fetchall", func(r render.Render) {
+		if os.Getenv("ENV") == "development" {
+			core.FetchAllChannell()
+		}
+		r.JSON(202, "")
+	})
+
 	fmt.Println("Starting server on", os.Getenv("PORT"))
 	err := http.ListenAndServe(":"+os.Getenv("PORT"), m)
 	if err != nil {
