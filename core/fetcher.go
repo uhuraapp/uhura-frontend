@@ -75,6 +75,9 @@ func itemFetchHandler(feed *rss.Feed, ch *rss.Channel, items []*rss.Item) {
 
 	for _, itemdata := range items {
 		if len(itemdata.Enclosures) > 0 {
+			var duration string
+			var item Item
+
 			h := md5.New()
 			io.WriteString(h, itemdata.Enclosures[0].Url)
 			key := hex.EncodeToString(h.Sum(nil))
@@ -85,9 +88,17 @@ func itemFetchHandler(feed *rss.Feed, ch *rss.Channel, items []*rss.Item) {
 				fmt.Println(err)
 			}
 
+			if i := itemdata.Extensions[itunesExt]; i != nil {
+				if i["summary"] != nil {
+					itemdata.Description = i["summary"][0].Value
+				} else if i["subtitle"] != nil {
+					itemdata.Description = i["subtitle"][0].Value
+				}
 
-			var item Item
-			var duration string
+				if i["duration"] != nil {
+					duration = i["duration"][0].Value
+				}
+			}
 
 			database.Where(Item{Key: key}).Assign(Item{Title: itemdata.Title, SourceUrl: itemdata.Enclosures[0].Url, Description: itemdata.Description, ChannelId: channel.Id, PublishedAt: publishedAt, Duration: duration}).FirstOrCreate(&item)
 		}
