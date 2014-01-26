@@ -13,6 +13,7 @@ Uhura.Router.map(function () {
   'use strict';
   this.resource('channels');
   this.resource('channel', {path: '/channels/:uri'});
+  this.resource('dashboard')
 });
 
 Uhura.ChannelsRoute = Ember.Route.extend({
@@ -29,6 +30,15 @@ Uhura.ChannelRoute = Ember.Route.extend({
   }
 });
 
+Uhura.DashboardRoute = Ember.Route.extend({
+  setupController: function(controller) {
+    this.store.find('subscription').then(function(x){
+      controller.set('subscriptions', x)
+    });
+
+  }
+});
+
 // model
 
 Uhura.Channel = DS.Model.extend({
@@ -42,11 +52,16 @@ Uhura.Channel = DS.Model.extend({
   copyright:  DS.attr('string'),
   subscribed: DS.attr('boolean'),
   episodes:   DS.hasMany('episode'),
+  to_view:    DS.attr()
 });
 
 Uhura.Episode = DS.Model.extend({
   title: DS.attr('string'),
   description: DS.attr('string'),
+});
+
+Uhura.Subscription = DS.Model.extend({
+  channel: DS.belongsTo('channel')
 });
 
 // controller

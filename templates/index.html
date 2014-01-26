@@ -32,7 +32,7 @@
   <script type="text/javascript" src="/assets/audio.min.js"></script>
 </head>
 <body class="uk-container uk-container-center">
- <script type="text/x-handlebars" data-template-name="player">
+  <script type="text/x-handlebars" data-template-name="player">
     Play
   </script>
 
@@ -124,6 +124,16 @@
         </ol>
       </div>
     </div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="dashboard">
+    <ul class="uk-width-medium-1-5">
+    {{#each subscription in subscriptions}}
+      {{#with subscription.channel}}
+      <li>{{title}} ({{to_view}})</li>
+      {{/with}}
+      {{/each}}
+    </ul>
   </script>
 </body>
 </html>
