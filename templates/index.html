@@ -32,26 +32,24 @@
   <script type="text/javascript" src="/assets/audio.min.js"></script>
 </head>
 <body class="uk-container uk-container-center">
-
  <script type="text/x-handlebars" data-template-name="player">
     Play
   </script>
 
-
   <script type="text/x-handlebars" data-template-name="application">
-  <div class="uk-grid" data-uk-grid-margin>
-    <header class="uk-width-1-1">
+    <div class="uk-grid" data-uk-grid-margin>
+      <header class="">
         <h1>{{#link-to 'index'}}Uhura{{/link-to}}</h1>
         <h2>Podcast Manager</h2>
-    </header>
+      </header>
 
-    {{outlet}}
+      {{outlet}}
 
-    {{view Uhura.PlayerView}}
+      {{view Uhura.PlayerView}}
 
-    <footer>
-      Created <span class="heart">♥</span> by <a href="https://github.com/dukex">Duke Khaos</a> with awesome <a href="https://github.com/dukex/uhura/graphs/contributors">Contributors</a>
-    </footer>
+      <footer>
+        Created <span class="heart">♥</span> by <a href="https://github.com/dukex">Duke Khaos</a> with awesome <a href="https://github.com/dukex/uhura/graphs/contributors">Contributors</a>
+      </footer>
     </div>
   </script>
 
@@ -72,7 +70,7 @@
 
   <script type="text/x-handlebars" data-template-name="channels">
     <div id="channels_page" class="uk-width-1-1">
-      <h3 class="title">Channels</h3>
+      <h2 class="title">Channels</h2>
       <ul class="uk-grid">
         {{#each}}
         <li class="uk-width-medium-1-5">
@@ -106,16 +104,16 @@
   </script>
 
   <script type="text/x-handlebars" data-template-name="channel">
-    <div id="channel_page" class="clearfix">
-      <h2>{{title}}</h2>
-      <aside>
+    <div id="channel_page" class="uk-grid" data-uk-grid-margin>
+      <h2 class="uk-width-1-1">{{title}}</h2>
+      <aside class="uk-width-medium-1-5">
         <img {{bindAttr src=image_url}} />
         <div id="description">
           {{description}}
         </div>
-        <p>{{copyright}}
+        <p>{{copyright}}</p>
       </aside>
-      <div id="episodes">
+      <div id="episodes" class="uk-width-medium-4-5" data-uk-grid-margin>
         <ol>
         {{#each episode in episodes}}
           <li>

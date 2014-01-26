@@ -1,12 +1,23 @@
 body{
   background: #eee;
   font-family: 'Exo 2', sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   overflow: visible;
 }
 
 ul, ol{
   padding: 0;
+  list-style: none;
+}
+
+header{
+  display: none
+}
+
+h2{
+  font-weight: 700;
+  font-size: 30px;
+  margin: 0 0 10px 0;
 }
 
 /*
