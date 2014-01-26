@@ -3,7 +3,6 @@ package core
 import (
 	//  "io/ioutil"
 	//"fmt"
-	//"strconv"
 	"strconv"
 
 	"testing"
@@ -115,4 +114,52 @@ func TestFuncSubscribeChannel(t *testing.T) {
 	iTest(t, channel.Id, userChannel.ChannelId)
 	iTest(t, user.Id, userChannel.UserId)
 	sTest(t, channel.Title, rChannel.Title)
+}
+
+func TestSubscriptions(t *testing.T) {
+	cleanDB()
+	channel := Channel{Title: "Fav Channel"}
+	database.Table("channels").Save(&channel)
+
+	user := User{}
+	database.Table("users").Save(&user)
+
+	user_channel := UserChannel{ChannelId: channel.Id, UserId: user.Id}
+	database.Table("user_channels").Save(&user_channel)
+
+	subs, channels := Subscriptions(&user)
+
+	iTest(t, channel.Id, subs[0].ChannelId)
+	iTest(t, channel.Id, channels[0].Id)
+}
+
+func TestSubscriptionsCounters(t *testing.T) {
+	cleanDB()
+	channel := Channel{Title: "Fav Channel"}
+	user := User{}
+
+	database.Table("channels").Save(&channel)
+	database.Table("users").Save(&user)
+
+	user_channel := UserChannel{ChannelId: channel.Id, UserId: user.Id}
+	database.Table("user_channels").Save(&user_channel)
+
+	var item1, item2 Item
+
+	// 7 episodes
+	database.Table("items").Save(&Item{ChannelId: channel.Id, SourceUrl: "1", Key: "1"}).Find(&item1)
+	database.Table("items").Save(&Item{ChannelId: channel.Id, SourceUrl: "2", Key: "2"}).Find(&item2)
+	database.Table("items").Save(&Item{ChannelId: channel.Id, SourceUrl: "3", Key: "3"})
+	database.Table("items").Save(&Item{ChannelId: channel.Id, SourceUrl: "4", Key: "4"})
+	database.Table("items").Save(&Item{ChannelId: channel.Id, SourceUrl: "5", Key: "5"})
+	database.Table("items").Save(&Item{ChannelId: channel.Id, SourceUrl: "6", Key: "6"})
+	database.Table("items").Save(&Item{ChannelId: channel.Id, SourceUrl: "7", Key: "7"})
+
+	// 2 watched
+	database.Table("user_items").Save(&UserItem{ItemId: item1.Id, UserId: user.Id})
+	database.Table("user_items").Save(&UserItem{ItemId: item2.Id, UserId: user.Id})
+
+	_, channels := Subscriptions(&user)
+
+	iTest(t, 5, channels[0].ToView)
 }

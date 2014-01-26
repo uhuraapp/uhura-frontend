@@ -117,6 +117,13 @@ func main() {
 		r.JSON(200, map[string]interface{}{"channel": channel})
 	})
 
+	// API
+	m.Get("/api/subscriptions", func(r render.Render, w http.ResponseWriter, request *http.Request) {
+		user, _ := core.CurrentUser(request)
+		subscribes, channels := core.Subscriptions(user)
+		r.JSON(200, map[string]interface{}{"subscriptions": subscribes, "channels": channels})
+	})
+
 	// API - Users
 	m.Get("/api/users/current_user", func(r render.Render, request *http.Request) {
 		user, err := core.CurrentUser(request)

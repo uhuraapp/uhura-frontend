@@ -72,23 +72,38 @@ func AllChannels(userId int) []ChannelResult {
 	return channels
 }
 
-// func GetChannelByUser(user *User) *[]ChannelResult {
-// 	var channels []ChannelResult
-// 	database.Table("user_channels").Select("channels.title, channels.description, channels.image_url, channels.url, channels.id").Where("user_id = ?", user.Id).Joins("inner join channels on channels.id = user_channels.channel_id").Scan(&channels)
+type UserChannelsEntity struct {
+	Id        int `json:"id"`
+	ChannelId int `json:"channel"`
+}
 
-// 	for i, channel := range channels {
-// 		var watched int
-// 		var itemsIds []int64
-// 		database.Table("items").Where("channel_id = ?", channel.Id).Pluck("id", &itemsIds)
-// 		database.Table("user_items").Where("user_id = ? and item_id in (?) and viewed = true", user.Id, itemsIds).Count(&watched)
+func Subscriptions(user *User) (subscriptions []UserChannelsEntity, channels []ChannelResult) {
+	var channelsIds []int64
 
-// 		toView := len(itemsIds) - watched
-// 		channel.ToView = toView
-// 		channels[i] = channel
-// 	}
+	database.Table("user_channels").Where("user_id = ?", user.Id).Find(&subscriptions).Pluck("channel_id", &channelsIds)
+	database.Table("channels").Where("id IN (?)", channelsIds).Find(&channels)
 
-// 	return &channels
-// }
+	for i, channel := range channels {
+		var items []struct {
+			Id int
+		}
+		var userItems []interface{}
+		var watched []int64
+
+		database.Table("items").Select("DISTINCT items.id").Where("channel_id = ?", channel.Id).Joins("FULL OUTER JOIN user_items ON user_items.item_id=items.id AND user_items.user_id="+strconv.Itoa(user.Id)).Find(&items).Pluck("user_items.id", &userItems)
+
+		for _, j := range userItems {
+			id, ok := j.(int64)
+			if ok {
+				watched = append(watched, id)
+			}
+		}
+		toView := len(items) - len(watched)
+		channel.ToView = toView
+		channels[i] = channel
+	}
+	return
+}
 
 func GetChannel(channelUri string) (channel ChannelResult, episodes []ItemResult) {
 	var episodesIds []int64
