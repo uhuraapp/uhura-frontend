@@ -52,6 +52,10 @@
 			"Rev": "71e7b37bdfd69432e00565a7483a3788fdc20eb7"
 		},
 		{
+			"ImportPath": "github.com/jordan-wright/email",
+			"Rev": "dcd24f3acd808a4ec1c910214415c33ac4d59daf"
+		},
+		{
 			"ImportPath": "github.com/jteeuwen/go-pkg-rss",
 			"Rev": "937de70c03b3af6f78338755794385c6f74f7df1"
 		},
@@ -62,6 +66,10 @@
 		{
 			"ImportPath": "github.com/lib/pq",
 			"Rev": "6c54219055243614d4eaffea55917c15bea2ba2f"
+		},
+		{
+			"ImportPath": "github.com/rakyll/coop",
+			"Rev": "9f25699aa4d3e675cc377aeeb1e3c8cd113d36a6"
 		}
 	]
 }
