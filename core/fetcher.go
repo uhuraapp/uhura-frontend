@@ -7,6 +7,7 @@ import (
 	rss "github.com/jteeuwen/go-pkg-rss"
 	"io"
 	"os"
+	"strings"
 	"time"
 
 	charset "code.google.com/p/go-charset/charset"
@@ -78,7 +79,12 @@ func itemFetchHandler(feed *rss.Feed, ch *rss.Channel, items []*rss.Item) {
 			io.WriteString(h, itemdata.Enclosures[0].Url)
 			key := hex.EncodeToString(h.Sum(nil))
 
-			publishedAt, _ := time.Parse(itemForm, itemdata.PubDate)
+			itemdata.PubDate = strings.Replace(itemdata.PubDate, "GMT", "+0000", -1)
+			publishedAt, err := time.Parse(itemForm, itemdata.PubDate)
+			if err != nil {
+				fmt.Println(err)
+			}
+
 
 			var item Item
 			var duration string
