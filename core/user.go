@@ -5,6 +5,7 @@ import (
 	"github.com/gorilla/sessions"
 	"net/http"
 	"strconv"
+	"time"
 )
 
 var store = sessions.NewCookieStore([]byte("something-very-secret"))
