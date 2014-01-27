@@ -180,6 +180,13 @@ func main() {
 		r.JSON(202, "")
 	})
 
+	// Ember
+	m.Get("/**", func(params martini.Params, responseWriter http.ResponseWriter, request *http.Request) {
+		url := params["_1"]
+
+		http.Redirect(responseWriter, request, "/#/"+url, http.StatusMovedPermanently)
+	})
+
 	fmt.Println("Starting server on", os.Getenv("PORT"))
 	err := http.ListenAndServe(":"+os.Getenv("PORT"), m)
 	if err != nil {
