@@ -101,7 +101,7 @@ func main() {
 	})
 
 	m.Get("/api/channels/:uri", func(r render.Render, params martini.Params) {
-		channel, episodes := core.GetChannel(params["uri"])
+		channel, episodes := core.GetChannel(params["uri"], nil)
 		r.JSON(200, map[string]interface{}{"channel": channel, "episodes": episodes})
 	})
 
@@ -122,6 +122,18 @@ func main() {
 		user, _ := core.CurrentUser(request)
 		subscribes, channels := core.Subscriptions(user)
 		r.JSON(200, map[string]interface{}{"subscriptions": subscribes, "channels": channels})
+	})
+
+	m.Get("/api/subscriptions/:uri/episodes", func(r render.Render, params martini.Params, request *http.Request) {
+		user, err := core.CurrentUser(request)
+		if err {
+			r.Error(403)
+			return
+		}
+
+		channel, episodes := core.GetChannel(params["uri"], user.Id)
+
+		r.JSON(200, map[string]interface{}{"episodes": episodes, "channel": channel})
 	})
 
 	// API - Users

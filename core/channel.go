@@ -105,11 +105,19 @@ func Subscriptions(user *User) (subscriptions []UserChannelsEntity, channels []C
 	return
 }
 
-func GetChannel(channelUri string) (channel ChannelResult, episodes []ItemResult) {
+func GetChannel(channelUri string, userId interface{}) (channel ChannelResult, episodes []ItemResult) {
 	var episodesIds []int64
 
 	database.Table("channels").Where("uri = ?", channelUri).First(&channel)
-	database.Table("items").Where("channel_id = ?", channel.Id).Find(&episodes).Pluck("id", &episodesIds)
+	itemQuery := database.Table("items").Where("channel_id = ?", channel.Id).Pluck("id", &episodesIds)
+
+	userIdInt, ok := userId.(int)
+
+	if ok {
+		itemQuery = itemQuery.Select("items.*, user_items.viewed").Joins("LEFT JOIN user_items on user_items.item_id = items.id and user_items.user_id = " + strconv.Itoa(userIdInt) + "")
+	}
+
+	itemQuery.Find(&episodes)
 
 	channel.Episodes = episodesIds
 
