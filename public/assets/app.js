@@ -13,7 +13,9 @@ Uhura.Router.map(function () {
   'use strict';
   this.resource('channels');
   this.resource('channel', {path: '/channels/:uri'});
-  this.resource('dashboard')
+  this.resource('dashboard', function(){
+    this.resource('dashboard.channel', {path: '/:uri'})
+  })
 });
 
 Uhura.ChannelsRoute = Ember.Route.extend({
@@ -32,12 +34,18 @@ Uhura.ChannelRoute = Ember.Route.extend({
 
 Uhura.DashboardRoute = Ember.Route.extend({
   setupController: function(controller) {
-    this.store.find('subscription').then(function(x){
-      controller.set('subscriptions', x)
+    this.store.find('subscription').then(function(subscriptions){
+      controller.set('subscriptions', subscriptions)
     });
-
   }
 });
+
+
+Uhura.DashboardChannelRoute = Ember.Route.extend({
+  model: function (params) {
+    return jQuery.getJSON("/api/subscriptions/" + params.uri + "/episodes");
+  }
+})
 
 // model
 

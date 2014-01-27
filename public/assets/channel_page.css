@@ -18,7 +18,7 @@
   font-size: 12px
 }
 
-#channel_page h3{
+#episodes h3{
   font-weight: 200;
   font-size: 25px;
   line-height: 1.5;
@@ -26,11 +26,11 @@
   padding: 0;
 }
 
-#channel_page #episodes ol{
+#episodes ol{
   background: #F8F8F8;
 }
 
-#channel_page #episodes li{
+#episodes li{
   overflow: hidden;
   line-height: 1.5;
   overflow: hidden;
@@ -39,15 +39,15 @@
   border-top: 1px solid #ccc;
 }
 
-#channel_page #episodes li:first-child{
+#episodes li:first-child{
   border-top: none;
 }
 
-#channel_page #episodes li:last-child{
+#episodes li:last-child{
   border-bottom: none;
 }
 
-#channel_page .description {
+#episodes .description {
   font-size: 14px;
 }
 /*

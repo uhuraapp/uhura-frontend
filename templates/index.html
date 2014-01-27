@@ -127,13 +127,30 @@
   </script>
 
   <script type="text/x-handlebars" data-template-name="dashboard">
-    <ul class="uk-width-medium-1-5">
+    <ul class="uk-width-medium-1-5" data-uk-grid-margin>
     {{#each subscription in subscriptions}}
       {{#with subscription.channel}}
-      <li>{{title}} ({{to_view}})</li>
+      <li>
+        {{#link-to 'dashboard.channel' uri}}
+          {{title}} ({{to_view}})</li>
+        {{/link-to}}
       {{/with}}
       {{/each}}
     </ul>
+    {{outlet}}
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="dashboard/channel">
+      <div id="episodes" class="uk-width-medium-4-5" data-uk-grid-margin>
+        <ol>
+        {{#each episode in episodes}}
+          <li>
+            <h3>{{episode.title}}</h3>
+            <div class="description">{{{episode.description}}}</div>
+          </li>
+        {{/each}}
+        </ol>
+      </div>
   </script>
 </body>
 </html>
