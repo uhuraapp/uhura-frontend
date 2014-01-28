@@ -17,6 +17,7 @@ type Channel struct {
 	Url           string `sql:"not null;unique"`
 	Id            int
 	Uri           string
+	Featured      bool
 }
 
 type UserChannel struct {
@@ -51,16 +52,20 @@ func (cr *ChannelResult) GetUri() string {
 	return uri
 }
 
-func AllChannels(userId int) []ChannelResult {
+func AllChannels(userId int, onlyFeatured bool) []ChannelResult {
 	var channels []ChannelResult
 
-	query := database.Table("channels").Order("title").Where("title IS NOT NULL").Where("title <> ''")
+	query := database.Table("channels").Where("title IS NOT NULL").Where("title <> ''")
 
 	if userId > 0 {
 		query = query.Joins("FULL OUTER JOIN user_channels ON user_channels.channel_id=channels.id AND user_channels.user_id=" + strconv.Itoa(userId)).Select("channels.uri, channels.image_url, channels.title, channels.id, CAST(user_channels.user_id AS BOOLEAN) AS subscribed ")
 	}
 
-	query.Find(&channels)
+	if onlyFeatured {
+		query = query.Not("featured", "false").Order("random()").Limit(12)
+	}
+
+	query.Order("title").Find(&channels)
 
 	for i, c := range channels {
 		if c.Uri == "" {

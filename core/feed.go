@@ -5,7 +5,7 @@ var ChannelChan = make(chan int)
 func AddFeed(feed_url string, userId int) ChannelResult {
 	var channel Channel
 	var userChannel UserChannel
-	database.FirstOrCreate(&channel, map[string]interface{}{"url": feed_url})
+	database.FirstOrCreate(&channel, map[string]interface{}{"url": feed_url, "featured": true})
 
 	FetchChanell(channel)
 	<-ChannelChan

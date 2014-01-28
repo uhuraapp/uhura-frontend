@@ -79,7 +79,15 @@ func main() {
 		} else {
 			userId = user.Id
 		}
-		channels := core.AllChannels(userId)
+
+		var onlyFeatured bool
+		if featured := request.FormValue("featured"); featured == "" {
+			onlyFeatured = false
+		} else {
+			onlyFeatured = featured == "true"
+		}
+
+		channels := core.AllChannels(userId, onlyFeatured)
 		r.JSON(200, map[string]interface{}{"channels": channels})
 	})
 
