@@ -54,7 +54,7 @@
   </script>
 
   <script type="text/x-handlebars" data-template-name="index">
-    <div class="container" id="home">
+    <div id="home" class="uk-width-1-1">
       <div class="action">
         {{#link-to 'channels' classNames="btn btn-info btn-lg"}}
         Enter Now
@@ -64,7 +64,18 @@
         See Podcasts
         {{/link-to}}
       </div>
-      <img src="/assets/uhura-home.png"  alt=""/>
+
+      <ul id="channels" class="uk-grid">
+        {{#each channel in channels}}
+          <li>
+          {{#link-to 'channel' channel.uri}}
+            <img {{bindAttr src=channel.image_url}} />
+          {{/link-to}}
+          </li>
+        {{/each}}
+      </ul>
+
+
     </div>
   </script>
 

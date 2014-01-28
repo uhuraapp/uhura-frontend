@@ -18,6 +18,15 @@ Uhura.Router.map(function () {
   })
 });
 
+Uhura.IndexRoute = Ember.Route.extend({
+  setupController: function(controller){
+    "use strict"
+    this.store.find('channel', {featured: true}).then(function(channels){
+      controller.set('channels', channels)
+    });
+  }
+})
+
 Uhura.ChannelsRoute = Ember.Route.extend({
   model: function () {
     'use strict';
