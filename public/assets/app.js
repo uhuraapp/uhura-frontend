@@ -75,6 +75,7 @@ Uhura.Channel = DS.Model.extend({
 Uhura.Episode = DS.Model.extend({
   title: DS.attr('string'),
   description: DS.attr('string'),
+  source_url: DS.attr('source_url')
 });
 
 Uhura.Subscription = DS.Model.extend({
@@ -121,14 +122,36 @@ Uhura.ChannelsController = Ember.ArrayController.extend({
   }
 });
 
+Uhura.DashboardChannelController = Ember.ObjectController.extend({
+  actions: {
+    play: function(episode){
+      Uhura.PlayerController.send('play', episode)
+    }
+  }
+});
+
+Uhura.PlayerController = Ember.ObjectController.extend({
+ actions: {
+    play: function(episode){
+      if(this.get('model')){
+        Uhura.PlayerX.stop(this.get('model').id)
+      }
+
+      this.set('model', episode)
+      Uhura.PlayerX.play(episode.id)
+    }
+  }
+}).create();
+
 // view
 
 Uhura.PlayerView = Ember.View.extend({
-  templateName: 'player'
+  templateName: 'player',
+  controller: Uhura.PlayerController
 });
 
 Uhura.SubscribeButton = Ember.Component.extend({
-  tagName: 'button'
+  tagName: 'button',
 });
 
 // auth
@@ -195,5 +218,6 @@ $( document ).ajaxError(function( event, request, settings ) {
   'use strict';
   console.log('URL:', settings.type, settings.url);
   console.log('Status:', request.status);
+  window.auth.withLoggedUser(function(){ window.location.reload() })
   window.auth.logged = false;
 });

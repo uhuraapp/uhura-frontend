@@ -38,6 +38,7 @@ type ItemResult struct {
 	Title       string      `json:"title"`
 	Description string      `json:"description"`
 	Viewed      interface{} `json:"viewed"`
+	SourceUrl   string      `json:"source_url"`
 }
 
 type Counter struct {

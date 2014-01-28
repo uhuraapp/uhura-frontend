@@ -3,6 +3,7 @@ body{
   font-family: 'Exo 2', sans-serif;
   font-weight: 400;
   overflow: visible;
+  padding: 0 0 40px 0;
 }
 
 ul, ol{
@@ -20,6 +21,9 @@ h2{
   margin: 0 0 10px 0;
 }
 
+footer{
+  margin-bottom: 65px
+}
 /*
 
 .heart{

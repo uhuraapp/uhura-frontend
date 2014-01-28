@@ -14,6 +14,8 @@
   <link href="/assets/font-awesome.min.css" rel="stylesheet">
 
   <link href="/assets/main.css" rel="stylesheet">
+  <link href="/assets/player.css" rel="stylesheet">
+
   <link href="/assets/home.css" rel="stylesheet">
   <link href="/assets/audiojs.css" rel="stylesheet">
   <link href="/assets/channels_page.css" rel="stylesheet">
@@ -31,12 +33,19 @@
 
 
   <script src="/assets/app.js"></script>
+  <script src="/assets/player.js"></script>
 
   <script type="text/javascript" src="/assets/audio.min.js"></script>
 </head>
 <body class="uk-container uk-container-center">
+
   <script type="text/x-handlebars" data-template-name="player">
-    Play
+    <div id="player">
+      <button {{action "play"}} class="uk-button uk-button-large">
+        <i class="fa fa-play"></i>
+      </button>
+      {{title}}
+    </div>
   </script>
 
   <script type="text/x-handlebars" data-template-name="application">
@@ -70,11 +79,11 @@
 
       <ul id="channels" class="uk-grid">
         {{#each channel in channels}}
-          <li>
+        <li>
           {{#link-to 'channel' channel.uri}}
-            <img {{bindAttr src=channel.image_url}} />
+          <img {{bindAttr src=channel.image_url}} />
           {{/link-to}}
-          </li>
+        </li>
         {{/each}}
       </ul>
 
@@ -89,18 +98,18 @@
         {{#each}}
         <li class="uk-width-medium-1-5">
           {{#link-to 'channel' uri}}
-            <div class="img">
-              <img {{bindAttr src=image_url}} />
-            </div>
-            <h4>{{title}}</h4>
+          <div class="img">
+            <img {{bindAttr src=image_url}} />
+          </div>
+          <h4>{{title}}</h4>
           {{/link-to}}
 
 
 
           {{#if subscribed}}
-            <button class="uk-button uk-button-small uk-button-success subscribe fa fa-check" {{action 'unsubscribeChannel' id}}>Subscribed</button>
+          <button class="uk-button uk-button-small uk-button-success subscribe fa fa-check" {{action 'unsubscribeChannel' id}}>Subscribed</button>
           {{else}}
-            <button class="uk-button uk-button-small subscribe" {{action 'subscribeChannel' id}}>Subscribe!</button>
+          <button class="uk-button uk-button-small subscribe" {{action 'subscribeChannel' id}}>Subscribe!</button>
           {{/if}}
         </li>
         {{/each}}
@@ -129,12 +138,12 @@
       </aside>
       <div id="episodes" class="uk-width-medium-4-5" data-uk-grid-margin>
         <ol>
-        {{#each episode in episodes}}
+          {{#each episode in episodes}}
           <li>
             <h3>{{episode.title}}</h3>
             <div class="description">{{{episode.description}}}</div>
           </li>
-        {{/each}}
+          {{/each}}
         </ol>
       </div>
     </div>
@@ -142,12 +151,13 @@
 
   <script type="text/x-handlebars" data-template-name="dashboard">
     <ul class="uk-width-medium-1-5" data-uk-grid-margin>
-    {{#each subscription in subscriptions}}
+      {{#each subscription in subscriptions}}
       {{#with subscription.channel}}
       <li>
         {{#link-to 'dashboard.channel' uri}}
-          {{title}} ({{to_view}})</li>
+        {{title}} ({{to_view}})
         {{/link-to}}
+      </li>
       {{/with}}
       {{/each}}
     </ul>
@@ -155,16 +165,19 @@
   </script>
 
   <script type="text/x-handlebars" data-template-name="dashboard/channel">
-      <div id="episodes" class="uk-width-medium-4-5" data-uk-grid-margin>
-        <ol>
+    <div id="episodes" class="uk-width-medium-4-5" data-uk-grid-margin>
+      <ol>
         {{#each episode in episodes}}
-          <li>
-            <h3>{{episode.title}}</h3>
-            <div class="description">{{{episode.description}}}</div>
-          </li>
+        <li class="audio" {{bind-attr data-id=episode.id}} {{bind-attr data-source_url=episode.source_url}}>
+          <h3>
+            <button {{action "play" episode}} class="uk-button uk-button-large"><i class="fa fa-play"></i></button>
+            {{episode.title}}
+          </h3>
+          <div class="description">{{{episode.description}}}</div>
+        </li>
         {{/each}}
-        </ol>
-      </div>
+      </ol>
+    </div>
   </script>
 </body>
 </html>
