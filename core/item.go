@@ -25,6 +25,7 @@ type UserItem struct {
 type UserItemsResult struct {
 	Viewed       interface{}
 	ChannelTitle string
+	ChannelId    int
 	Key          string
 	SourceUrl    string
 	Title        string

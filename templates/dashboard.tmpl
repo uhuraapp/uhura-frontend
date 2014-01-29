@@ -49,9 +49,8 @@
         <em> {{ .ChannelTitle }}</em>
         {{ .Description }}
 
-
         <form action="/api/items/{{ .Key }}/watched" method="post">
-          <button type="submit" class="btn btn-link">Mark as watched!</button>
+          <input type="submit" class="btn btn-success btn-sm" value="Mark as watched!" />
         </form>
       </div>
       <audio src="{{ .SourceUrl }}" preload="none"></audio>

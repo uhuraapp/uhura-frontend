@@ -9,7 +9,7 @@ import (
 )
 
 type Channel struct {
-	Title         string
+	Title         string `sql:"not null;unique"`
 	Description   string
 	ImageUrl      string
 	Copyright     string
