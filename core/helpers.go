@@ -23,7 +23,7 @@ func Pagination(arg interface{}) template.HTML {
 	pages := counter.size / limit
 
 	paginationHtml := "<ul id=\"pagination\">"
-	for i := 1; i < pages; i++ {
+	for i := 1; i <= pages; i++ {
 		if counter.currentPage == i {
 			paginationHtml += "<li class=\"current_page\">"
 		} else {
