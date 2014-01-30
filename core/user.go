@@ -48,7 +48,7 @@ func (u *User) IdString() string {
 func createUser(tempUser TempUser) *User {
 	var user User
 
-	database.Where(User{GoogleId: tempUser.Id}).Assign(User{Name: tempUser.Name, GivenName: tempUser.GivenName, FamilyName: tempUser.FamilyName, Link: tempUser.Link, Picture: tempUser.Picture, Gender: tempUser.Gender, Locale: tempUser.Locale, Email: tempUser.Email}).FirstOrCreate(&user)
+	database.Where(User{GoogleId: tempUser.Id}).Attrs(User{CreatedAt: time.Now()}).Assign(User{Name: tempUser.Name, GivenName: tempUser.GivenName, FamilyName: tempUser.FamilyName, Link: tempUser.Link, Picture: tempUser.Picture, Gender: tempUser.Gender, Locale: tempUser.Locale, Email: tempUser.Email}).FirstOrCreate(&user)
 
 	return &user
 }
