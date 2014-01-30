@@ -12,15 +12,14 @@ Uhura.PlayerX.events.pause = function(){
 
 Uhura.PlayerX.play = function(id){
   if(!Uhura.PlayerX.episodes[id]){
-    var el = $("[data-id="+ id + "]")
-    var audio = el.data(),
-      sound = soundManager.createSound({
-        id: "e" + audio.id,
-        url: [audio.source_url],
-        onplay: Uhura.PlayerX.events.play,
-        onpause: Uhura.PlayerX.events.pause
-      });
-
+    var el = $("[data-id="+ id + "]"),
+        audio = el.data(),
+        sound = soundManager.createSound({
+          id: "e" + audio.id,
+          url: [audio.source_url],
+          onplay: Uhura.PlayerX.events.play,
+          onpause: Uhura.PlayerX.events.pause
+        });
     Uhura.PlayerX.episodes[audio.id] = sound
   }
 

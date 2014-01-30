@@ -69,13 +69,14 @@ Uhura.Channel = DS.Model.extend({
   copyright:  DS.attr('string'),
   subscribed: DS.attr('boolean'),
   episodes:   DS.hasMany('episode'),
-  to_view:    DS.attr()
+  to_view:    DS.attr("number")
 });
 
 Uhura.Episode = DS.Model.extend({
   title: DS.attr('string'),
   description: DS.attr('string'),
-  source_url: DS.attr('source_url')
+  source_url: DS.attr('string'),
+  playing: DS.attr('boolean')
 });
 
 Uhura.Subscription = DS.Model.extend({

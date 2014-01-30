@@ -42,18 +42,18 @@
 
 
   <script type="text/x-handlebars" data-template-name="player">
-    <a href="#" {{action play_pause}}>
-    {{#if playing}}
-      <i class="fa fa-pause"></i>
-    {{else}}
-      <i class="fa fa-play"></i>
+    {{#if model}}
+    <div id="player">
+      <a href="#" {{action play_pause}}>
+        {{#if playing}}
+          <i class="fa fa-pause"></i>
+        {{else}}
+          <i class="fa fa-play"></i>
+        {{/if}}
+        <span class="title">{{title}}</span>
+      </a>
+    </div>
     {{/if}}
-
-
-    {{#with model}}
-    <span class="title">{{title}}</span>
-    {{/with}}
-    </a>
   </script>
 
   <script type="text/x-handlebars" data-template-name="application">
@@ -66,9 +66,7 @@
           {{/link-to}}
         </hgroup>
 
-        <div id="player">
-          {{view Uhura.PlayerView}}
-        </div>
+        {{view Uhura.PlayerView}}
 
         <nav>
           <ul>
@@ -191,7 +189,13 @@
         {{#each episode in episodes}}
         <li class="audio" {{bind-attr data-id=episode.id}} {{bind-attr data-source_url=episode.source_url}}>
           <h3>
-            <button {{action "play" episode}} class="uk-button uk-button-large"><i class="fa fa-play"></i></button>
+            <button {{action "play" episode}} class="uk-button uk-button-large">
+            {{#if episode.playing}}
+              <i class="fa fa-pause"></i>
+            {{else}}
+              <i class="fa fa-play"></i>
+            {{/if}}
+              </button>
             {{episode.title}}
           </h3>
           <div class="description">{{{episode.description}}}</div>
