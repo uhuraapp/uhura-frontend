@@ -161,7 +161,7 @@ func main() {
 		http.Redirect(w, r, url, http.StatusFound)
 	})
 
-	m.Get("/auth/callback", func(responseWriter http.ResponseWriter, request *http.Request) {
+	m.Get("/auth/callback", func(responseWriter http.ResponseWriter, request *http.Request) string {
 		code := request.FormValue("code")
 		t := &oauth.Transport{Config: config}
 		t.Exchange(code)
