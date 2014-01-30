@@ -37,57 +37,78 @@
 
   <script type="text/javascript" src="/assets/audio.min.js"></script>
 </head>
-<body class="uk-container uk-container-center">
+<body>
+
+
 
   <script type="text/x-handlebars" data-template-name="player">
-    <div id="player">
-      <button {{action "play"}} class="uk-button uk-button-large">
-        <i class="fa fa-play"></i>
-      </button>
-      {{title}}
-    </div>
+    <a href="#" {{action play_pause}}>
+    {{#if playing}}
+      <i class="fa fa-pause"></i>
+    {{else}}
+      <i class="fa fa-play"></i>
+    {{/if}}
+
+
+    {{#with model}}
+    <span class="title">{{title}}</span>
+    {{/with}}
+    </a>
   </script>
 
   <script type="text/x-handlebars" data-template-name="application">
-    <div class="uk-grid" data-uk-grid-margin>
-      <header class="">
-        <h1>{{#link-to 'index'}}Uhura{{/link-to}}</h1>
-        <h2>Podcast Manager</h2>
-      </header>
+    <header>
+      <div class="uk-container uk-container-center">
+        <hgroup>
+          {{#link-to 'index'}}
+            <h1>Uhura</h1>
+            <h2>Podcast Manager</h2>
+          {{/link-to}}
+        </hgroup>
 
-      {{outlet}}
+        <div id="player">
+          {{view Uhura.PlayerView}}
+        </div>
 
-      {{view Uhura.PlayerView}}
-
-      <footer>
-        Created <span class="heart">♥</span> by <a href="https://github.com/dukex">Duke Khaos</a> with awesome <a href="https://github.com/dukex/uhura/graphs/contributors">Contributors</a>
-      </footer>
+        <nav>
+          <ul>
+            <li>
+              {{#link-to "channels"}}
+                Discovery New Podcasts
+              {{/link-to}}
+            </li>
+            <li>
+              {{#link-to "dashboard"}}
+                Dashboard
+              {{/link-to}}
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <div id="content" class="uk-container uk-container-center">
+      <div class="uk-grid" data-uk-grid-margin>
+        {{outlet}}
+      </div>
     </div>
+    <footer>
+      Created <span class="heart">♥</span> by <a href="https://github.com/dukex">Duke Khaos</a> with awesome <a href="https://github.com/dukex/uhura/graphs/contributors">Contributors</a>
+      </footer>
   </script>
 
   <script type="text/x-handlebars" data-template-name="index">
     <div id="home" class="uk-width-1-1">
-      <div class="action">
-        {{#link-to 'channels' classNames="btn btn-info btn-lg"}}
-        Enter Now
-        {{/link-to}}
-
-        {{#link-to 'channels' classNames="see-channels"}}
-        See Podcasts
-        {{/link-to}}
-      </div>
-
-      <ul id="channels" class="uk-grid">
+      <ul id="channels">
         {{#each channel in channels}}
         <li>
           {{#link-to 'channel' channel.uri}}
+          <div>
           <img {{bindAttr src=channel.image_url}} />
+          </div>
           {{/link-to}}
         </li>
         {{/each}}
       </ul>
-
-
     </div>
   </script>
 

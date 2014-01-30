@@ -1,7 +1,7 @@
 #home #channels{
   overflow: hidden;
+  width: 70%;
   margin: 0 auto;
-  width: 66.4%;
 }
 
 #home #channels li{
@@ -13,6 +13,11 @@
   display: block;
   overflow: hidden;
   width: 100%;
+}
+
+#home #channels a:hover div{
+  box-shadow: 1px 1px 1px #333;
+  padding: 5px;
 }
 
 #home #channels img{
