@@ -131,14 +131,17 @@ Uhura.DashboardChannelController = Ember.ObjectController.extend({
 });
 
 Uhura.PlayerController = Ember.ObjectController.extend({
+ content: [],
  actions: {
     play: function(episode){
       if(this.get('model')){
         Uhura.PlayerX.stop(this.get('model').id)
       }
-
       this.set('model', episode)
       Uhura.PlayerX.play(episode.id)
+    },
+    play_pause: function(){
+      Uhura.PlayerX.playPause(this.get('model').id, this.get('playing'))
     }
   }
 }).create();
@@ -147,7 +150,7 @@ Uhura.PlayerController = Ember.ObjectController.extend({
 
 Uhura.PlayerView = Ember.View.extend({
   templateName: 'player',
-  controller: Uhura.PlayerController
+  controller: Uhura.PlayerController,
 });
 
 Uhura.SubscribeButton = Ember.Component.extend({
