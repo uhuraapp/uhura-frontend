@@ -218,10 +218,26 @@ Uhura.Auth = (function() {
 
 window.auth = new Uhura.Auth();
 
-$( document ).ajaxError(function( event, request, settings ) {
+$(document).ajaxError(function( event, request, settings ) {
   'use strict';
   console.log('URL:', settings.type, settings.url);
   console.log('Status:', request.status);
   window.auth.withLoggedUser(function(){ window.location.reload() })
   window.auth.logged = false;
+
 });
+
+$(document).ready(function(){
+  $(document).on( "click", "#episodes h3", function(e) {
+    var target = $(e.currentTarget),
+        descriptionIsDisplayed = target.next('.description').is(':visible')
+
+    $(".description").hide()
+    $("#episodes li h3 i").removeClass("fa-chevron-up").addClass("fa-chevron-down")
+
+    if(!descriptionIsDisplayed){
+      target.next(".description").show()
+      target.find("i").removeClass("fa-chevron-down").addClass("fa-chevron-up")
+    }
+  });
+})

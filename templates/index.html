@@ -85,9 +85,9 @@
       </div>
     </header>
     <div id="content" class="uk-container uk-container-center">
-      <div class="uk-grid" data-uk-grid-margin>
+
         {{outlet}}
-      </div>
+
     </div>
     <footer>
       Created <span class="heart">♥</span> by <a href="https://github.com/dukex">Duke Khaos</a> with awesome <a href="https://github.com/dukex/uhura/graphs/contributors">Contributors</a>
@@ -146,7 +146,7 @@
   </script>
 
   <script type="text/x-handlebars" data-template-name="channel">
-    <div id="channel_page" class="uk-grid" data-uk-grid-margin>
+    <div id="channel_page" class="uk-grid">
       <h2 class="uk-width-1-1">{{title}}</h2>
       <aside class="uk-width-medium-1-5">
         <img {{bindAttr src=image_url}} />
@@ -155,11 +155,14 @@
         </div>
         <p>{{copyright}}</p>
       </aside>
-      <div id="episodes" class="uk-width-medium-4-5" data-uk-grid-margin>
+      <div id="episodes" class="uk-width-medium-4-5" >
         <ol>
           {{#each episode in episodes}}
           <li>
-            <h3>{{episode.title}}</h3>
+            <h3>
+              <span class="title">{{episode.title}}</span>
+              <i class="fa fa-chevron-down"></i>
+            </h3>
             <div class="description">{{{episode.description}}}</div>
           </li>
           {{/each}}

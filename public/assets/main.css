@@ -109,7 +109,7 @@ header a{
   color: #FFF;
 }
 
-header a:hover h1, header a:hover h2{
+header a:hover, header a:hover h1, header a:hover h2{
   color: #FFF;
   font-weight: 400;
   text-decoration: none;
