@@ -123,26 +123,18 @@ Uhura.ChannelsController = Ember.ArrayController.extend({
   }
 });
 
-Uhura.DashboardChannelController = Ember.ObjectController.extend({
-  actions: {
-    play: function(episode){
-      Uhura.PlayerController.send('play', episode)
-    }
-  }
-});
-
 Uhura.PlayerController = Ember.ObjectController.extend({
  content: [],
  actions: {
     play: function(episode){
-      if(this.get('model')){
-        Uhura.PlayerX.stop(this.get('model').id)
-      }
+      $(".pauseButton").trigger('click');
       this.set('model', episode)
+      this.set('playing', true)
       Uhura.PlayerX.play(episode.id)
     },
-    play_pause: function(){
-      Uhura.PlayerX.playPause(this.get('model').id, this.get('playing'))
+    pause: function(episode){
+      this.set('playing', false)
+      Uhura.PlayerX.pause(episode.id)
     }
   }
 }).create();

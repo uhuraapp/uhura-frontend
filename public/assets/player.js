@@ -10,8 +10,8 @@ Uhura.PlayerX.events.pause = function(){
   Uhura.PlayerController.set("playing", false)
 }
 
-Uhura.PlayerX.play = function(id){
-  if(!Uhura.PlayerX.episodes[id]){
+Uhura.PlayerX.getAudio = function(id){
+ if(!Uhura.PlayerX.episodes[id]){
     var el = $("[data-id="+ id + "]"),
         audio = el.data(),
         sound = soundManager.createSound({
@@ -22,20 +22,22 @@ Uhura.PlayerX.play = function(id){
         });
     Uhura.PlayerX.episodes[audio.id] = sound
   }
-
-  Uhura.PlayerX.episodes[audio.id].play()
+  return Uhura.PlayerX.episodes[id]
 }
 
-Uhura.PlayerX.stop = function(id){
-  soundManager.stopAll()
+Uhura.PlayerX.stop = function(){
+  soundManager.stopAll();
 }
 
-Uhura.PlayerX.playPause = function(id, isPlaying){
-  if(isPlaying){
-    Uhura.PlayerX.episodes[id].pause()
-  } else {
-    Uhura.PlayerX.episodes[id].resume()
-  }
+Uhura.PlayerX.play = function(id){
+  var audio = this.getAudio(id);
+  soundManager.pauseAll();
+  audio.play();
+}
+
+Uhura.PlayerX.pause = function(id){
+  var audio = this.getAudio(id);
+  audio.pause();
 }
 
 soundManager.setup({

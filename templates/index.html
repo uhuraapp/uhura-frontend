@@ -44,14 +44,17 @@
   <script type="text/x-handlebars" data-template-name="player">
     {{#if model}}
     <div id="player">
-      <a href="#" {{action play_pause}}>
-        {{#if playing}}
+      {{#if playing}}
+        <a href="#" {{action pause model}}>
           <i class="fa fa-pause"></i>
-        {{else}}
+          <span class="title">{{title}}</span>
+        </a>
+      {{else}}
+        <a href="#" {{action play model}}>
           <i class="fa fa-play"></i>
-        {{/if}}
-        <span class="title">{{title}}</span>
-      </a>
+          <span class="title">{{title}}</span>
+        </a>
+      {{/if}}
     </div>
     {{/if}}
   </script>
@@ -84,11 +87,11 @@
         </nav>
       </div>
     </header>
+
     <div id="content" class="uk-container uk-container-center">
-
         {{outlet}}
-
     </div>
+
     <footer>
       Created <span class="heart">♥</span> by <a href="https://github.com/dukex">Duke Khaos</a> with awesome <a href="https://github.com/dukex/uhura/graphs/contributors">Contributors</a>
       </footer>
@@ -122,8 +125,6 @@
           </div>
           <h4>{{title}}</h4>
           {{/link-to}}
-
-
 
           {{#if subscribed}}
           <button class="uk-button uk-button-small uk-button-success subscribe fa fa-check" {{action 'unsubscribeChannel' id}}>Subscribed</button>
