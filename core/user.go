@@ -37,10 +37,6 @@ type User struct {
 	CreatedAt   time.Time
 }
 
-func (u *User) AfterCreate() {
-	WelcomeMail(u)
-}
-
 func (u *User) IdString() string {
 	return strconv.Itoa(u.Id)
 }
@@ -49,7 +45,9 @@ func createUser(tempUser TempUser) *User {
 	var user User
 
 	database.Where(User{GoogleId: tempUser.Id}).Attrs(User{CreatedAt: time.Now()}).Assign(User{Name: tempUser.Name, GivenName: tempUser.GivenName, FamilyName: tempUser.FamilyName, Link: tempUser.Link, Picture: tempUser.Picture, Gender: tempUser.Gender, Locale: tempUser.Locale, Email: tempUser.Email}).FirstOrCreate(&user)
-
+	if !user.WelcomeMail {
+		WelcomeMail(&user)
+	}
 	return &user
 }
 
