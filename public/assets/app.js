@@ -158,6 +158,19 @@ Uhura.SubscribeButton = Ember.Component.extend({
   tagName: 'button',
 });
 
+// component
+
+Uhura.PlayPauseButtonComponent = Ember.Component.extend({
+  actions: {
+    play: function(episode){
+      Uhura.PlayerController.send('play', episode)
+    },
+    pause: function(episode) {
+      Uhura.PlayerController.send('pause', episode)
+    }
+  }
+});
+
 // auth
 
 Uhura.Auth = (function() {

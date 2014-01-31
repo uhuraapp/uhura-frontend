@@ -145,6 +145,18 @@
     </div>
   </script>
 
+  <script type="text/x-handlebars" id="components/play-pause-button">
+      {{#if episode.playing}}
+        <button {{action "pause" episode}} class="uk-button uk-button-large pauseButton">
+          <i class="fa fa-pause"></i>
+        </button>
+      {{else}}
+        <button {{action "play" episode}} class="uk-button uk-button-large playButton">
+          <i class="fa fa-play"></i>
+        </button>
+      {{/if}}
+  </script>
+
   <script type="text/x-handlebars" data-template-name="channel">
     <div id="channel_page" class="uk-grid">
       <h2 class="uk-width-1-1">{{title}}</h2>
