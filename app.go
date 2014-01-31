@@ -161,9 +161,15 @@ func main() {
 	})
 
 	// API - Auth
-	m.Get("/api/authorize", func(w http.ResponseWriter, r *http.Request) {
-		url := config.AuthCodeURL("")
-		http.Redirect(w, r, url, http.StatusFound)
+	m.Get("/api/authorize", func(w http.ResponseWriter, request *http.Request) string {
+		_, err := core.CurrentUser(request)
+		if err {
+			url := config.AuthCodeURL("")
+			http.Redirect(w, request, url, http.StatusFound)
+			return ""
+		} else {
+			return "<script>window.close();</script>"
+		}
 	})
 
 	m.Get("/auth/callback", func(responseWriter http.ResponseWriter, request *http.Request) string {
