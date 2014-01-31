@@ -68,7 +68,7 @@ func getUser(userId string) (*User, bool) {
 }
 
 func CurrentUser(request *http.Request) (*User, bool) {
-	session, _ := store.Get(request, "session")
+	session, _ := store.Get(request, "_uhura_session")
 	userId, ok := session.Values["user_id"].(string)
 	if ok {
 		user, err := getUser(userId)
@@ -79,13 +79,13 @@ func CurrentUser(request *http.Request) (*User, bool) {
 }
 
 func SetReturnTo(request *http.Request, responseWriter http.ResponseWriter, url string) {
-	session, _ := store.Get(request, "session")
+	session, _ := store.Get(request, "_uhura_session")
 	session.Values["return_to"] = url
 	session.Save(request, responseWriter)
 }
 
 func GetReturnTo(request *http.Request) string {
-	session, _ := store.Get(request, "session")
+	session, _ := store.Get(request, "_uhura_session")
 	url, ok := session.Values["return_to"].(string)
 	if !ok {
 		url = "/dashboard"
@@ -103,7 +103,7 @@ func CreateAndLoginUser(request *http.Request, responseWriter http.ResponseWrite
 
 	user := createUser(tempUser)
 
-	session, _ := store.Get(request, "session")
+	session, _ := store.Get(request, "_uhura_session")
 	session.Values["user_id"] = user.IdString()
 
 	session.Save(request, responseWriter)
