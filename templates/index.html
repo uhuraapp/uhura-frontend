@@ -170,7 +170,8 @@
       <div id="episodes" class="uk-width-medium-4-5" >
         <ol>
           {{#each episode in episodes}}
-          <li>
+          <li class="audio" {{bind-attr data-id=episode.id}} {{bind-attr data-source_url=episode.source_url}}>
+            {{play-pause-button episode=episode}}
             <h3>
               <span class="title">{{episode.title}}</span>
               <i class="fa fa-chevron-down"></i>
@@ -204,13 +205,7 @@
         {{#each episode in episodes}}
         <li class="audio" {{bind-attr data-id=episode.id}} {{bind-attr data-source_url=episode.source_url}}>
           <h3>
-            <button {{action "play" episode}} class="uk-button uk-button-large">
-            {{#if episode.playing}}
-              <i class="fa fa-pause"></i>
-            {{else}}
-              <i class="fa fa-play"></i>
-            {{/if}}
-              </button>
+            {{play-pause-button episode=episode}}
             {{episode.title}}
           </h3>
           <div class="description">{{{episode.description}}}</div>
