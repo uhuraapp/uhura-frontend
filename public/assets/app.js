@@ -232,11 +232,11 @@ $(document).ready(function(){
     var target = $(e.currentTarget),
         descriptionIsDisplayed = target.next('.description').is(':visible')
 
-    $(".description").hide()
+    $(".description").slideUp()
     $("#episodes li h3 i").removeClass("fa-chevron-up").addClass("fa-chevron-down")
 
     if(!descriptionIsDisplayed){
-      target.next(".description").show()
+      target.next(".description").slideDown()
       target.find("i").removeClass("fa-chevron-down").addClass("fa-chevron-up")
     }
   });
