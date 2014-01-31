@@ -128,7 +128,11 @@ func main() {
 
 	// API
 	m.Get("/api/subscriptions", func(r render.Render, w http.ResponseWriter, request *http.Request) {
-		user, _ := core.CurrentUser(request)
+		user, err := core.CurrentUser(request)
+		if err {
+			r.Error(403)
+			return
+		}
 		subscribes, channels := core.Subscriptions(user)
 		r.JSON(200, map[string]interface{}{"subscriptions": subscribes, "channels": channels})
 	})
