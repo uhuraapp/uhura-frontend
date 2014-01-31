@@ -19,7 +19,7 @@ $ cd github.com/dukex/uhura
 $ make dev
 ```
 
-Det env
+Dev env
 
 ``` bash
 export GOOGLE_CLIENT_ID="933623108791-imtedbq5d1vgfhotj15gq6493jl22j4m.apps.googleusercontent.com"
@@ -27,6 +27,7 @@ export GOOGLE_CLIENT_SECRET="HjKW82HOb1jT-XyWgPFc9jW8"
 export GOOGLE_CALLBACK_URL="http://127.0.0.1:3002/auth/callback"
 export PORT=3002
 export DEBUG=true
+export ENV="development"
 ```
 
 ``` bash
@@ -39,7 +40,7 @@ open [127.0.0.1:3002](http://127.0.0.1:3002)
 ### Test
 
 ```
-$ go test ./..
+$ make test
 ```
 
 or
@@ -47,4 +48,11 @@ or
 ```
 $ make coverage
 ```
+
+## Sending Email
+
+export EMAIL_FROM="you@server.com"
+export SMTP_PASSWORD="yourpassword"
+export SMTP_HOST="server.com"
+export SMTP_SERVER="server.com:587"
 

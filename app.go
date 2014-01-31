@@ -115,6 +115,7 @@ func main() {
 
 	m.Get("/api/channels/:id/subscribe", func(r render.Render, request *http.Request, params martini.Params) {
 		user, err := core.CurrentUser(request)
+
 		if err {
 			r.Error(403)
 			return
