@@ -12,9 +12,22 @@ import (
 )
 
 const (
-	FROM              = "dukekhaos@gmail.com"
 	TemplateEmailPath = "templates/emails"
 )
+
+var (
+	FROM          string
+	SMTP_SERVER   string
+	SMTP_HOST     string
+	SMTP_PASSWORD string
+)
+
+func init() {
+	FROM = os.Getenv("EMAIL_FROM")
+	SMTP_SERVER = os.Getenv("SMTP_SERVER")
+	SMTP_HOST = os.Getenv("SMTP_HOST")
+	SMTP_PASSWORD = os.Getenv("SMTP_PASSWORD")
+}
 
 func render(name string, data interface{}) []byte {
 	content, _ := ioutil.ReadFile(TemplateEmailPath + "/welcome.tmpl")
@@ -25,13 +38,19 @@ func render(name string, data interface{}) []byte {
 }
 
 func WelcomeMail(user *User) {
-	coop.After(32*time.Minute, func() {
-		e := email.NewEmail()
-		e.From = FROM
-		e.To = []string{user.Email}
-		e.Subject = "Welcome to Uhura"
-		e.Text = render("welcome", user)
-		e.Send("smtp.gmail.com:587", smtp.PlainAuth("", FROM, os.Getenv("SMTP_PASSWORD"), "smtp.gmail.com"))
-		database.Model(user).Update("WelcomeMail", true)
+	coop.After(15*time.Minute, func() {
+		err := sendMail([]string{user.Email}, "Welcome to Uhura", render("welcome", user))
+		if err == nil {
+			database.Model(user).Update("WelcomeMail", true)
+		}
 	})
+}
+
+func sendMail(to []string, subject string, body []byte) error {
+	e := email.NewEmail()
+	e.From = FROM
+	e.To = to
+	e.Subject = subject
+	e.Text = body
+	return e.Send(SMTP_SERVER, smtp.PlainAuth("", FROM, SMTP_PASSWORD, SMTP_HOST))
 }
