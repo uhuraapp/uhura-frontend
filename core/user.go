@@ -60,7 +60,9 @@ func getUser(userId string) (*User, bool) {
 		return nil, true
 	}
 
-	database.First(&user, id)
+	if database.First(&user, id).RecordNotFound() {
+		return nil, true
+	}
 
 	return &user, false
 }
