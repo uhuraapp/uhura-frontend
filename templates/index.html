@@ -99,6 +99,9 @@
 
   <script type="text/x-handlebars" data-template-name="index">
     <div id="home" class="uk-width-1-1">
+      {{#link-to 'channels' id="call-to-action"}}
+        Discovery New Podcasts
+      {{/link-to}}
       <ul id="channels">
         {{#each channel in channels}}
         <li>

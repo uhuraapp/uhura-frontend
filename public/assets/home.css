@@ -1,4 +1,34 @@
+#home {
+  position: relative;
+}
+
+#home #call-to-action{
+  top: 35%;
+  left: 35%;
+  position: absolute;
+  z-index: 4;
+  display: block;
+  text-align: center;
+  width: 25%;
+  font-size: 150%;
+  padding: 20px;
+  line-height: 30px;
+  background: #00B5B5;
+  opacity: 1;
+  color: #FFF;
+  border-radius: 3px;
+  border: 1px solid #00B0B0;
+  box-shadow: 0 0 4px #000;
+}
+
+#home #call-to-action:hover{
+  text-decoration: none;
+  background: #00BDBD;
+}
+
 #home #channels{
+  z-index: 1;
+  position: relative;
   overflow: hidden;
   width: 70%;
   margin: 0 auto;
@@ -13,11 +43,16 @@
   display: block;
   overflow: hidden;
   width: 100%;
+  opacity: 0.3;
 }
 
 #home #channels a:hover div{
   box-shadow: 1px 1px 1px #333;
   padding: 5px;
+}
+
+#home #channels a:hover{
+  opacity: 1
 }
 
 #home #channels img{
