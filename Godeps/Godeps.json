@@ -19,17 +19,17 @@
 		},
 		{
 			"ImportPath": "github.com/codegangsta/inject",
-			"Rev": "37512bbe41b4cc579cdd706742efc7bf34f94b06"
+			"Rev": "346a984957aa24276ebc5e7b16b3ac6a50fe8138"
 		},
 		{
 			"ImportPath": "github.com/codegangsta/martini",
-			"Comment": "v0.1-63-g890a2a5",
-			"Rev": "890a2a52d2e59b007758538f9b845fa0ed7daccb"
+			"Comment": "v0.1-72-g9eab46a",
+			"Rev": "9eab46a1e15cdc0c9644b0505ffbd2ca905ab997"
 		},
 		{
 			"ImportPath": "github.com/codegangsta/martini-contrib/render",
-			"Comment": "v0.1-42-gb7a8366",
-			"Rev": "b7a8366f58e39977dfd52d6109ed08d768bba94a"
+			"Comment": "v0.1-123-geb23f49",
+			"Rev": "eb23f4925fb85db43df94d992501513ad9265e6f"
 		},
 		{
 			"ImportPath": "github.com/fiam/gounidecode/unidecode",
@@ -70,6 +70,11 @@
 		{
 			"ImportPath": "github.com/rakyll/coop",
 			"Rev": "9f25699aa4d3e675cc377aeeb1e3c8cd113d36a6"
+		},
+		{
+			"ImportPath": "github.com/rakyll/martini-contrib/cors",
+			"Comment": "v0.1-126-g94f7509",
+			"Rev": "94f7509d03983ce19a1a803b2e707deeb7157976"
 		}
 	]
 }

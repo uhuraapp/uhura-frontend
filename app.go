@@ -7,6 +7,7 @@ import (
 	"github.com/codegangsta/martini"
 	"github.com/codegangsta/martini-contrib/render"
 	"github.com/dukex/uhura/core"
+	"github.com/rakyll/martini-contrib/cors"
 	"html/template"
 	"io/ioutil"
 	"net/http"
@@ -38,6 +39,10 @@ func main() {
 				"Pagination":       core.Pagination,
 			},
 		},
+	}))
+
+	m.Use(cors.Allow(&cors.Opts{
+		AllowOrigins: []string{"http://emberjs.jsbin.com"},
 	}))
 
 	m.Use(martini.Static("assets"))
