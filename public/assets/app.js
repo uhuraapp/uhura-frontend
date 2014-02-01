@@ -61,8 +61,8 @@ Uhura.DashboardChannelRoute = Ember.Route.extend({
 Uhura.Channel = DS.Model.extend({
   title:      DS.attr('string'),
   image_url:  DS.attr('string', {
-                defaultValue: function(){ 'use strict'; return;  }
-              }),
+    defaultValue: function(){ 'use strict'; return "/assets/loading-cover.gif";  }
+  }),
   url:        DS.attr('string'),
   uri:        DS.attr('string'),
   description:DS.attr('string'),
