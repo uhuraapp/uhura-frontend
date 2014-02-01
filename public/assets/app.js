@@ -91,17 +91,17 @@ Uhura.ChannelsController = Ember.ArrayController.extend({
       'use strict';
       var id = idParams, _this = this;
       var successSubscribe = function() {
-                  _this.store.find('channel', idParams).then(function(channel){
-                    channel.set('subscribed', true);
-                  });
-                };
+        _this.store.find('channel', idParams).then(function(channel){
+          channel.set('subscribed', true);
+        });
+      };
 
       var subscribeFn = function(){
-            $.ajax({
-              url: '/api/channels/' + id + '/subscribe',
-              success: successSubscribe
-            });
-          };
+        $.ajax({
+          url: '/api/channels/' + id + '/subscribe',
+          success: successSubscribe
+        });
+      };
 
       window.auth.withLoggedUser(subscribeFn);
     },
@@ -124,18 +124,15 @@ Uhura.ChannelsController = Ember.ArrayController.extend({
 });
 
 Uhura.PlayerController = Ember.ObjectController.extend({
- content: [],
- actions: {
-    play: function(episode){
-      $(".pauseButton").trigger('click');
-      this.set('model', episode)
-      this.set('playing', true)
-      Uhura.PlayerX.play(episode.id)
+  content: [],
+  actions: {
+    play_pause: function(episode){
+      Uhura.PlayerX.play_pause()
     },
-    pause: function(episode){
-      this.set('playing', false)
-      Uhura.PlayerX.pause(episode.id)
-    }
+    // pause: function(episode){
+    //   this.set('playing', false)
+    //   Uhura.PlayerX.pause(episode.id)
+    // }
   }
 }).create();
 
@@ -146,22 +143,27 @@ Uhura.PlayerView = Ember.View.extend({
   controller: Uhura.PlayerController,
 });
 
-Uhura.SubscribeButton = Ember.Component.extend({
-  tagName: 'button',
-});
-
 // component
 
 Uhura.PlayPauseButtonComponent = Ember.Component.extend({
   actions: {
     play: function(episode){
-      Uhura.PlayerController.send('play', episode)
+      $("#episodes [data-playing]").click()
+
+      episode.set('started', true)
+      episode.set('playing', true)
+      Uhura.PlayerX.play(episode)
     },
-    pause: function(episode) {
-      Uhura.PlayerController.send('pause', episode)
+
+    play_pause: function(){
+      Uhura.PlayerX.play_pause()
     }
+    // pause: function(episode) {
+    //   Uhura.PlayerController.send('pause', episode)
+    // }
   }
 });
+
 
 // auth
 
@@ -216,9 +218,9 @@ Uhura.Auth = (function() {
     //    }
     //  }
     //});
-  };
+};
 
-  return Auth;
+return Auth;
 })();
 
 window.auth = new Uhura.Auth();
@@ -235,7 +237,7 @@ $(document).ajaxError(function( event, request, settings ) {
 $(document).ready(function(){
   $(document).on( "click", "#episodes h3", function(e) {
     var target = $(e.currentTarget),
-        descriptionIsDisplayed = target.next('.description').is(':visible')
+    descriptionIsDisplayed = target.next('.description').is(':visible')
 
     $(".description").slideUp()
     $("#episodes li h3 i").removeClass("fa-chevron-up").addClass("fa-chevron-down")

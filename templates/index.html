@@ -39,23 +39,30 @@
 </head>
 <body>
 
-
+  <script type="text/x-handlebars" id="components/play-pause-button">
+     {{#if episode.started}}
+        <button {{action "play_pause" episode}} {{bind-attr data-playing='episode.playing'}} class="uk-button uk-button-large">
+          {{#if episode.playing}}
+            <i class="fa fa-pause"></i>
+          {{else}}
+            <i class="fa fa-play"></i>
+          {{/if}}
+        </button>
+     {{else}}
+        <button {{action "play" episode}} class="uk-button uk-button-large">
+          <i class="fa fa-play"></i>
+        </button>
+      {{/if}}
+  </script>
 
   <script type="text/x-handlebars" data-template-name="player">
     {{#if model}}
-    <div id="player">
-      {{#if playing}}
-        <a href="#" {{action pause model}}>
-          <i class="fa fa-pause"></i>
+      <div id="player">
+        <a href="#" {{action play_pause model}}>
+          {{#if playing}}<i class="fa fa-pause"></i>{{else}}<i class="fa fa-play"></i>{{/if}}
           <span class="title">{{title}}</span>
         </a>
-      {{else}}
-        <a href="#" {{action play model}}>
-          <i class="fa fa-play"></i>
-          <span class="title">{{title}}</span>
-        </a>
-      {{/if}}
-    </div>
+      </div>
     {{/if}}
   </script>
 
@@ -107,7 +114,7 @@
         <li>
           {{#link-to 'channel' channel.uri}}
           <div>
-          <img {{bindAttr src=channel.image_url}} />
+          <img {{bind-attr src=channel.image_url}} />
           </div>
           {{/link-to}}
         </li>
@@ -124,15 +131,17 @@
         <li class="uk-width-medium-1-5">
           {{#link-to 'channel' uri}}
           <div class="img">
-            <img {{bindAttr src=image_url}} />
+            <img {{bind-attr src=image_url}} />
           </div>
           <h4>{{title}}</h4>
           {{/link-to}}
 
           {{#if subscribed}}
-          <button class="uk-button uk-button-small uk-button-success subscribe fa fa-check" {{action 'unsubscribeChannel' id}}>Subscribed</button>
+            <button class="uk-button uk-button-small uk-button-success subscribe fa fa-check" {{action 'unsubscribeChannel' id}}>Subscribed</button>
           {{else}}
-          <button class="uk-button uk-button-small subscribe" {{action 'subscribeChannel' id}}>Subscribe!</button>
+            {{#if uri }}
+              <button class="uk-button uk-button-small subscribe" {{action 'subscribeChannel' id}}>Subscribe!</button>
+            {{/if}}
           {{/if}}
         </li>
         {{/each}}
@@ -149,23 +158,11 @@
     </div>
   </script>
 
-  <script type="text/x-handlebars" id="components/play-pause-button">
-      {{#if episode.playing}}
-        <button {{action "pause" episode}} class="uk-button uk-button-large pauseButton">
-          <i class="fa fa-pause"></i>
-        </button>
-      {{else}}
-        <button {{action "play" episode}} class="uk-button uk-button-large playButton">
-          <i class="fa fa-play"></i>
-        </button>
-      {{/if}}
-  </script>
-
   <script type="text/x-handlebars" data-template-name="channel">
     <div id="channel_page" class="uk-grid">
       <h2 class="uk-width-1-1">{{title}}</h2>
       <aside class="uk-width-medium-1-5">
-        <img {{bindAttr src=image_url}} />
+        <img {{bind-attr src=image_url}} />
         <div id="description">
           {{description}}
         </div>

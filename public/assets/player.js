@@ -3,12 +3,15 @@ Uhura.PlayerX.episodes = {}
 Uhura.PlayerX.events = {}
 
 Uhura.PlayerX.events.play = function(){
-  Uhura.PlayerController.set("playing", true)
 }
 
-Uhura.PlayerX.events.pause = function(){
-  Uhura.PlayerController.set("playing", false)
-}
+// Uhura.PlayerX.events.pause = function(){
+//   Uhura.PlayerController.set("playing", false)
+// }
+
+// Uhura.PlayerX.events.loading = function(){
+//   console.log((this.bytesLoaded * 100)/this.bytesTotal)
+// }
 
 Uhura.PlayerX.getAudio = function(id){
  if(!Uhura.PlayerX.episodes[id]){
@@ -18,27 +21,43 @@ Uhura.PlayerX.getAudio = function(id){
           id: "e" + audio.id,
           url: [audio.source_url],
           onplay: Uhura.PlayerX.events.play,
-          onpause: Uhura.PlayerX.events.pause
+          onpause: Uhura.PlayerX.events.pause,
+          whileloading: Uhura.PlayerX.events.loading
         });
     Uhura.PlayerX.episodes[audio.id] = sound
   }
   return Uhura.PlayerX.episodes[id]
 }
 
-Uhura.PlayerX.stop = function(){
-  soundManager.stopAll();
-}
+// Uhura.PlayerX.stop = function(){
+//   soundManager.stopAll();
+// }
 
-Uhura.PlayerX.play = function(id){
-  var audio = this.getAudio(id);
-  soundManager.pauseAll();
+Uhura.PlayerX.play = function(episode){
+  oldAudio = Uhura.PlayerX.playing
+  if(oldAudio){
+    Uhura.PlayerX.episodes[oldAudio.id].destruct()
+  }
+
+  var audio = this.getAudio(episode.id);
   audio.play();
+  Uhura.PlayerX.playing = episode
+  Uhura.PlayerController.set("model", episode)
+  Uhura.PlayerController.set("playing", true)
 }
 
-Uhura.PlayerX.pause = function(id){
-  var audio = this.getAudio(id);
-  audio.pause();
+Uhura.PlayerX.play_pause = function(){
+  var audio = Uhura.PlayerX.playing,
+      isPlaying = Uhura.PlayerController.get("playing");
+
+  Uhura.PlayerX.episodes[audio.id].togglePause()
+  Uhura.PlayerController.set("playing", !isPlaying)
 }
+
+// Uhura.PlayerX.pause = function(id){
+//   var audio = this.getAudio(id);
+//   audio.pause();
+// }
 
 soundManager.setup({
   url: '/assets/swf',
