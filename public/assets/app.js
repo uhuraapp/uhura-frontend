@@ -148,19 +148,21 @@ Uhura.PlayerView = Ember.View.extend({
 Uhura.PlayPauseButtonComponent = Ember.Component.extend({
   actions: {
     play: function(episode){
-      $("#episodes [data-playing]").click()
+      var __playing = function(episode){
+        return function(){
+          $("#episodes [data-playing]").click()
 
-      episode.set('started', true)
-      episode.set('playing', true)
-      Uhura.PlayerX.play(episode)
+          episode.set('started', true)
+          episode.set('playing', true)
+          Uhura.PlayerX.play(episode)
+        }
+      }
+      window.auth.withLoggedUser(__playing(episode));
     },
 
     play_pause: function(){
       Uhura.PlayerX.play_pause()
     }
-    // pause: function(episode) {
-    //   Uhura.PlayerController.send('pause', episode)
-    // }
   }
 });
 
@@ -219,7 +221,6 @@ Uhura.Auth = (function() {
     //  }
     //});
 };
-
 return Auth;
 })();
 
@@ -231,7 +232,6 @@ $(document).ajaxError(function( event, request, settings ) {
   console.log('Status:', request.status);
   window.auth.withLoggedUser(function(){ window.location.reload() })
   window.auth.logged = false;
-
 });
 
 $(document).ready(function(){

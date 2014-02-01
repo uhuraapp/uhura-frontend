@@ -2,16 +2,20 @@ Uhura.PlayerX = {}
 Uhura.PlayerX.episodes = {}
 Uhura.PlayerX.events = {}
 
-Uhura.PlayerX.events.play = function(){
-}
+//Uhura.PlayerX.events.play = function(){
+//}
 
 // Uhura.PlayerX.events.pause = function(){
 //   Uhura.PlayerController.set("playing", false)
 // }
 
-// Uhura.PlayerX.events.loading = function(){
-//   console.log((this.bytesLoaded * 100)/this.bytesTotal)
-// }
+Uhura.PlayerX.events.loading = function(){
+  var percent = (this.bytesLoaded * 100)/this.bytesTotal,
+      playing = (this.position * 100)/this.duration
+
+  $("header #loader div.loading").css("width", percent+"%")
+  $("header #loader div.playing").css("width", playing+"%")
+}
 
 Uhura.PlayerX.getAudio = function(id){
  if(!Uhura.PlayerX.episodes[id]){
