@@ -230,8 +230,10 @@ $(document).ajaxError(function( event, request, settings ) {
   'use strict';
   console.log('URL:', settings.type, settings.url);
   console.log('Status:', request.status);
-  window.auth.withLoggedUser(function(){ window.location.reload() })
-  window.auth.logged = false;
+  if(request.status == 403){
+    window.auth.logged = false;
+    window.auth.withLoggedUser(function(){ window.location.reload() })
+  }
 });
 
 $(document).ready(function(){
