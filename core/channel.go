@@ -132,7 +132,7 @@ func SubscribeChannel(userId int, channelId string) (channel ChannelResult) {
 	channelIdInt, _ := strconv.Atoi(channelId)
 
 	database.Table("user_channels").Where(UserChannel{ChannelId: channelIdInt, UserId: userId}).FirstOrCreate(&userChannel)
-	database.Table("channels").First(&channel, userChannel.ChannelId)
-
-	return channel
+	channels, _ := AllChannels(userId, false, channelIdInt)
+	channel = channels[0]
+	return
 }
