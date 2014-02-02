@@ -150,13 +150,14 @@
         </li>
         {{/each}}
         <li id="new_podcast" class="uk-width-medium-1-5">
-          <div class="uk-form">
+          <form class="uk-form" {{action "newChannel" on="submit"}}>
             <fieldset data-uk-margin class="uk-vertical-align-middle">
-              <label> Add New Podcast </label>
+              <label for="new-channel"> Add New Podcast </label>
               {{input type="url" id="new-channel" placeholder="Podcast URL"
-              value=url action="newChannel" class="form-control"}}
+              value=url class="form-control"}}
+              <button type="submit" name="submit" class="uk-button uk-button-success">Submit</button>
             </fieldset>
-          </div>
+          </form>
         </li>
       </ul>
     </div>
