@@ -154,6 +154,11 @@ func main() {
 		r.JSON(200, map[string]interface{}{"subscriptions": subscribes, "channels": channels})
 	})
 
+	m.Get("/api/episodes", func(request *http.Request, r render.Render) {
+		ids := request.URL.Query()["ids[]"]
+		episodes := core.GetItems(ids)
+		r.JSON(200, map[string]interface{}{"episodes": episodes})
+	})
 	// m.Get("/api/subscriptions/:uri/episodes", func(r render.Render, params martini.Params, request *http.Request) {
 	// 	user, err := core.CurrentUser(request)
 	// 	if err {
@@ -165,17 +170,6 @@ func main() {
 
 	// 	r.JSON(200, map[string]interface{}{"episodes": episodes, "channel": channel})
 	// })
-
-	// API - Users
-	m.Get("/api/users/current_user", func(r render.Render, request *http.Request) {
-		user, err := core.CurrentUser(request)
-		if err {
-			r.Error(403)
-			return
-		}
-
-		r.JSON(200, &user)
-	})
 
 	// API - Auth
 	m.Get("/api/authorize", func(w http.ResponseWriter, request *http.Request) string {

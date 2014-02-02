@@ -1,7 +1,6 @@
 package core
 
 import "time"
-import "strconv"
 
 type Item struct {
 	Key         string `sql:"unique"`
@@ -39,6 +38,7 @@ type ItemResult struct {
 	Title       string      `json:"title"`
 	Description string      `json:"description"`
 	Viewed      interface{} `json:"viewed"`
+	ChannelId   int         `json:"channel_id"`
 	SourceUrl   string      `json:"source_url"`
 }
 
@@ -48,35 +48,40 @@ type Counter struct {
 	channel     string
 }
 
-func GetUserItems(user *User, channels *[]ChannelResult, channel string, pageParams string) (*[]UserItemsResult, *Counter) {
+// func GetUserItems(user *User, channels *[]ChannelResult, channel string, pageParams string) (*[]UserItemsResult, *Counter) {
 
-	var channelsIds []int
-	channelsIds = append(channelsIds, 0)
-	for _, channel := range *channels {
-		channelsIds = append(channelsIds, channel.Id)
-	}
+// 	var channelsIds []int
+// 	channelsIds = append(channelsIds, 0)
+// 	for _, channel := range *channels {
+// 		channelsIds = append(channelsIds, channel.Id)
+// 	}
 
-	if channel != "" {
-		channelInt, _ := strconv.Atoi(channel)
-		channelsIds = []int{channelInt}
-	}
+// 	if channel != "" {
+// 		channelInt, _ := strconv.Atoi(channel)
+// 		channelsIds = []int{channelInt}
+// 	}
 
-	limit := 10
-	page, err := strconv.Atoi(pageParams)
-	if err != nil {
-		page = 1
-	}
-	offset := (page * limit) - limit
+// 	limit := 10
+// 	page, err := strconv.Atoi(pageParams)
+// 	if err != nil {
+// 		page = 1
+// 	}
+// 	offset := (page * limit) - limit
 
-	var itemsResult []UserItemsResult
-	database.Table("items").Select("user_items.viewed, channels.title as channel_title, items.key, items.source_url, items.title, items.description, items.id, items.published_at").Where("channel_id in (?)", channelsIds).Joins("left join user_items on user_items.item_id = items.id and user_items.user_id = " + strconv.Itoa(user.Id) + " left join channels on channels.id = items.channel_id").Order("user_items.viewed DESC, published_at DESC").Where("channels.title IS NOT NULL").Offset(offset).Limit("10").Scan(&itemsResult)
+// 	var itemsResult []UserItemsResult
+// 	database.Table("items").Select("user_items.viewed, channels.title as channel_title, items.key, items.source_url, items.title, items.description, items.id, items.published_at").Where("channel_id in (?)", channelsIds).Joins("left join user_items on user_items.item_id = items.id and user_items.user_id = " + strconv.Itoa(user.Id) + " left join channels on channels.id = items.channel_id").Order("user_items.viewed DESC, published_at DESC").Where("channels.title IS NOT NULL").Offset(offset).Limit("10").Scan(&itemsResult)
 
-	var total int
-	database.Table("items").Where("channel_id in (?)", channelsIds).Count(&total)
+// 	var total int
+// 	database.Table("items").Where("channel_id in (?)", channelsIds).Count(&total)
 
-	counter := Counter{size: *&total, currentPage: page, channel: channel}
+// 	counter := Counter{size: *&total, currentPage: page, channel: channel}
 
-	return &itemsResult, &counter
+// 	return &itemsResult, &counter
+// }
+
+func GetItems(ids []string) (itemsResult []ItemResult) {
+	database.Table("items").Where("id in (?)", ids).Find(&itemsResult)
+	return
 }
 
 func UserWatched(userId int, key string) {
