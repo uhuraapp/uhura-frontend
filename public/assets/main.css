@@ -201,7 +201,7 @@ header #player, header #player a{
 }
 
 header #player .title{
-  width: 90%;
+  width: 85%;
   font-size: 15px;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -210,7 +210,7 @@ header #player .title{
   line-height: 45px;
   z-index: 3;
   position: relative;
-  margin: 0 0 0 15px;
+  float: right;
 }
 
 header #player a{
