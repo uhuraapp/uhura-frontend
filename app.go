@@ -63,16 +63,15 @@ func main() {
 	// 	//	http.Redirect(responseWriter, request, "/dashboard/channels/"+params["id"], http.StatusMovedPermanently)
 	// })
 
-	m.Post("/api/items/:key/watched", func(responseWriter http.ResponseWriter, r render.Render, request *http.Request, params martini.Params) {
+	m.Post("/api/episodes/:id/listened", func(responseWriter http.ResponseWriter, r render.Render, request *http.Request, params martini.Params) {
 		user, err := core.CurrentUser(request)
 		if err {
 			r.Error(403)
 			return
 		}
 
-		core.UserWatched(user.Id, params["key"])
-		// r.JSON(202, map[string]interface{}{"message": "Processing"})
-		http.Redirect(responseWriter, request, "/dashboard", http.StatusMovedPermanently)
+		episode := core.UserListen(user.Id, params["id"])
+		r.JSON(202, map[string]interface{}{"episode": episode})
 	})
 
 	// -----------------

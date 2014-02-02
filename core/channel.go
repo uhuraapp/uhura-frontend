@@ -86,7 +86,15 @@ func AllChannels(userId int, onlyFeatured bool, channelId int) (channels []Chann
 			channels[i] = c
 		}
 		var episodesIds []int64
-		database.Table("items").Where("channel_id = ?", c.Id).Find(&episodes).Pluck("id", &episodesIds)
+		itemQuery := database.Table("items").Where("channel_id = ?", c.Id)
+		itemQuery.Pluck("id", &episodesIds)
+
+		if userId > 0 {
+			itemQuery = itemQuery.Select("user_items.viewed as viewed, items.*")
+			itemQuery = itemQuery.Joins("left join user_items on user_items.item_id = items.id and user_items.user_id = " + strconv.Itoa(userId) + " left join channels on channels.id = items.channel_id")
+		}
+
+		itemQuery.Order("published_at DESC").Find(&episodes)
 		channels[i].Episodes = episodesIds
 	}
 
