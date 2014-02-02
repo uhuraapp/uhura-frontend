@@ -11,6 +11,8 @@ import (
 	"html/template"
 	"io/ioutil"
 	"net/http"
+	"strconv"
+
 	"os"
 )
 
@@ -32,7 +34,6 @@ func main() {
 	m := martini.Classic()
 
 	m.Use(render.Renderer(render.Options{
-		// Layout: "layout",
 		Funcs: []template.FuncMap{
 			{
 				"UserViewedHelper": core.UserViewedHelper,
@@ -56,11 +57,11 @@ func main() {
 
 	// API
 
-	m.Post("/api/channels/:id/fetcher", func(responseWriter http.ResponseWriter, request *http.Request, params martini.Params) {
-		channel := core.GetChannelByChannel(params["id"])
-		core.FetchChanell(channel)
-		//	http.Redirect(responseWriter, request, "/dashboard/channels/"+params["id"], http.StatusMovedPermanently)
-	})
+	// m.Post("/api/channels/:id/fetcher", func(responseWriter http.ResponseWriter, request *http.Request, params martini.Params) {
+	// 	channel := core.GetChannelByChannel(params["id"])
+	// 	core.FetchChanell(channel)
+	// 	//	http.Redirect(responseWriter, request, "/dashboard/channels/"+params["id"], http.StatusMovedPermanently)
+	// })
 
 	m.Post("/api/items/:key/watched", func(responseWriter http.ResponseWriter, r render.Render, request *http.Request, params martini.Params) {
 		user, err := core.CurrentUser(request)
@@ -92,7 +93,7 @@ func main() {
 			onlyFeatured = featured == "true"
 		}
 
-		channels := core.AllChannels(userId, onlyFeatured)
+		channels, _ := core.AllChannels(userId, onlyFeatured, 0)
 		r.JSON(200, map[string]interface{}{"channels": channels})
 	})
 
@@ -113,9 +114,20 @@ func main() {
 		r.JSON(200, map[string]interface{}{"channel": channel})
 	})
 
-	m.Get("/api/channels/:uri", func(r render.Render, params martini.Params) {
-		channel, episodes := core.GetChannel(params["uri"], nil)
-		r.JSON(200, map[string]interface{}{"channel": channel, "episodes": episodes})
+	m.Get("/api/channels/:id", func(r render.Render, params martini.Params, request *http.Request) {
+		var userId int
+		user, err := core.CurrentUser(request)
+		if err {
+			userId = 0
+		} else {
+			userId = user.Id
+		}
+
+		channelId, _ := strconv.Atoi(params["id"])
+
+		channels, episodes := core.AllChannels(userId, false, channelId)
+
+		r.JSON(200, map[string]interface{}{"channel": channels[0], "episodes": episodes})
 	})
 
 	m.Get("/api/channels/:id/subscribe", func(r render.Render, request *http.Request, params martini.Params) {
@@ -142,17 +154,17 @@ func main() {
 		r.JSON(200, map[string]interface{}{"subscriptions": subscribes, "channels": channels})
 	})
 
-	m.Get("/api/subscriptions/:uri/episodes", func(r render.Render, params martini.Params, request *http.Request) {
-		user, err := core.CurrentUser(request)
-		if err {
-			r.Error(403)
-			return
-		}
+	// m.Get("/api/subscriptions/:uri/episodes", func(r render.Render, params martini.Params, request *http.Request) {
+	// 	user, err := core.CurrentUser(request)
+	// 	if err {
+	// 		r.Error(403)
+	// 		return
+	// 	}
 
-		channel, episodes := core.GetChannel(params["uri"], user.Id)
+	// 	channel, episodes := core.GetChannel(params["uri"], user.Id)
 
-		r.JSON(200, map[string]interface{}{"episodes": episodes, "channel": channel})
-	})
+	// 	r.JSON(200, map[string]interface{}{"episodes": episodes, "channel": channel})
+	// })
 
 	// API - Users
 	m.Get("/api/users/current_user", func(r render.Render, request *http.Request) {

@@ -2,6 +2,7 @@ package core
 
 import (
 	. "github.com/fiam/gounidecode/unidecode"
+	"github.com/jinzhu/gorm"
 	"regexp"
 	"strconv"
 	"strings"
@@ -52,29 +53,44 @@ func (cr *ChannelResult) GetUri() string {
 	return uri
 }
 
-func AllChannels(userId int, onlyFeatured bool) []ChannelResult {
-	var channels []ChannelResult
+func featuredScope(d *gorm.DB) *gorm.DB {
+	return d.Not("featured", "false").Order("random()").Limit(12)
+}
 
-	query := database.Table("channels").Where("title IS NOT NULL").Where("title <> ''")
+func userInfoScope(userId string) func(d *gorm.DB) *gorm.DB {
+	return func(d *gorm.DB) *gorm.DB {
+		return d.Joins("FULL OUTER JOIN user_channels ON user_channels.channel_id=channels.id AND user_channels.user_id=" + userId).Select("channels.*, CAST(user_channels.user_id AS BOOLEAN) AS subscribed ")
+	}
+}
+
+func AllChannels(userId int, onlyFeatured bool, channelId int) (channels []ChannelResult, episodes []ItemResult) {
+	channelQuery := database.Table("channels").Where("title IS NOT NULL").Where("title <> ''")
 
 	if userId > 0 {
-		query = query.Joins("FULL OUTER JOIN user_channels ON user_channels.channel_id=channels.id AND user_channels.user_id=" + strconv.Itoa(userId)).Select("channels.uri, channels.image_url, channels.title, channels.id, CAST(user_channels.user_id AS BOOLEAN) AS subscribed ")
+		channelQuery = channelQuery.Scopes(userInfoScope(strconv.Itoa(userId)))
 	}
 
 	if onlyFeatured {
-		query = query.Not("featured", "false").Order("random()").Limit(12)
+		channelQuery = channelQuery.Scopes(featuredScope)
 	}
 
-	query.Order("title").Find(&channels)
+	if channelId > 0 {
+		channelQuery = channelQuery.Where("channels.id = ?", channelId)
+	}
+
+	channelQuery.Order("title").Find(&channels)
 
 	for i, c := range channels {
 		if c.Uri == "" {
 			c.Uri = c.GetUri()
 			channels[i] = c
 		}
+		var episodesIds []int64
+		database.Table("items").Where("channel_id = ?", c.Id).Find(&episodes).Pluck("id", &episodesIds)
+		channels[i].Episodes = episodesIds
 	}
 
-	return channels
+	return
 }
 
 type UserChannelsEntity struct {
@@ -107,31 +123,6 @@ func Subscriptions(user *User) (subscriptions []UserChannelsEntity, channels []C
 		channel.ToView = toView
 		channels[i] = channel
 	}
-	return
-}
-
-func GetChannel(channelUri string, userId interface{}) (channel ChannelResult, episodes []ItemResult) {
-	var episodesIds []int64
-
-	database.Table("channels").Where("uri = ?", channelUri).First(&channel)
-	itemQuery := database.Table("items").Where("channel_id = ?", channel.Id).Pluck("id", &episodesIds)
-
-	userIdInt, ok := userId.(int)
-
-	if ok {
-		itemQuery = itemQuery.Select("items.*, user_items.viewed").Joins("LEFT JOIN user_items on user_items.item_id = items.id and user_items.user_id = " + strconv.Itoa(userIdInt) + "")
-	}
-
-	itemQuery.Find(&episodes)
-
-	channel.Episodes = episodesIds
-
-	return
-}
-
-func GetChannelByChannel(channelId string) (channel Channel) {
-	channelIdInt, _ := strconv.Atoi(channelId)
-	database.Table("channels").First(&channel, channelIdInt)
 	return
 }
 
