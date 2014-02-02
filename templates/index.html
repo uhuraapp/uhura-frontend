@@ -17,7 +17,7 @@
   <link href="/assets/player.css" rel="stylesheet">
 
   <link href="/assets/home.css" rel="stylesheet">
-  <link href="/assets/audiojs.css" rel="stylesheet">
+  <link href="/assets/dashboard.css" rel="stylesheet">
   <link href="/assets/channels_page.css" rel="stylesheet">
   <link href="/assets/channel_page.css" rel="stylesheet">
 
@@ -116,7 +116,7 @@
       <ul id="channels">
         {{#each channel in channels}}
         <li>
-          {{#link-to 'channel' channel.uri}}
+          {{#link-to 'channel' channel.id}}
           <div>
           <img {{bind-attr src=channel.image_url}} />
           </div>
@@ -133,7 +133,7 @@
       <ul class="uk-grid">
         {{#each}}
         <li class="uk-width-medium-1-5">
-          {{#link-to 'channel' uri}}
+          {{#link-to 'channel' id}}
           <div class="img">
             <img {{bind-attr src=image_url}} />
           </div>
@@ -194,7 +194,7 @@
       {{#each subscription in subscriptions}}
       {{#with subscription.channel}}
       <li>
-        {{#link-to 'dashboard.channel' uri}}
+        {{#link-to 'dashboard.channel' id}}
         {{title}} ({{to_view}})
         {{/link-to}}
       </li>

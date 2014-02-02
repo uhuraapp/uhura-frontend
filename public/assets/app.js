@@ -12,17 +12,17 @@ Uhura.ApplicationAdapter = DS.RESTAdapter.extend({
 Uhura.Router.map(function () {
   'use strict';
   this.resource('channels');
-  this.resource('channel', {path: '/channels/:uri'});
+  this.resource('channel', {path: '/channels/:id'});
   this.resource('dashboard', function(){
-    this.resource('dashboard.channel', {path: '/:uri'})
+    this.resource('dashboard.channel', {path: '/:channel_id'})
   })
 });
 
 Uhura.IndexRoute = Ember.Route.extend({
   setupController: function(controller){
     "use strict"
-    this.store.find('channel', {featured: true}).then(function(channels){
-      controller.set('channels', channels)
+    $.getJSON("/api/channels", {featured: true}).then(function(data){
+      controller.set('channels', data.channels)
     });
   }
 })
@@ -37,7 +37,7 @@ Uhura.ChannelsRoute = Ember.Route.extend({
 Uhura.ChannelRoute = Ember.Route.extend({
   model: function (params) {
     'use strict';
-    return this.store.find('channel', params.uri);
+    return this.store.find('channel', params.id);
   }
 });
 
@@ -52,7 +52,7 @@ Uhura.DashboardRoute = Ember.Route.extend({
 
 Uhura.DashboardChannelRoute = Ember.Route.extend({
   model: function (params) {
-    return jQuery.getJSON("/api/subscriptions/" + params.uri + "/episodes");
+    return jQuery.getJSON("/api/subscriptions/" + params.id + "/episodes");
   }
 })
 
@@ -60,9 +60,7 @@ Uhura.DashboardChannelRoute = Ember.Route.extend({
 
 Uhura.Channel = DS.Model.extend({
   title:      DS.attr('string'),
-  image_url:  DS.attr('string', {
-    defaultValue: function(){ 'use strict'; return "/assets/loading-cover.gif";  }
-  }),
+  image_url:  DS.attr('string'),
   url:        DS.attr('string'),
   uri:        DS.attr('string'),
   description:DS.attr('string'),
@@ -95,7 +93,6 @@ Uhura.ChannelsController = Ember.ArrayController.extend({
           channel.set('subscribed', true);
         });
       };
-
       var subscribeFn = function(){
         $.ajax({
           url: '/api/channels/' + id + '/subscribe',
@@ -129,10 +126,6 @@ Uhura.PlayerController = Ember.ObjectController.extend({
     play_pause: function(episode){
       Uhura.PlayerX.play_pause()
     },
-    // pause: function(episode){
-    //   this.set('playing', false)
-    //   Uhura.PlayerX.pause(episode.id)
-    // }
   }
 }).create();
 
