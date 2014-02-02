@@ -182,7 +182,7 @@
       <div id="episodes" class="uk-width-medium-4-5" >
         <ol>
           {{#each episode in episodes}}
-          <li class="audio" {{bind-attr data-id=episode.id}} {{bind-attr data-source_url=episode.source_url}}>
+          <li class="audio" {{bind-attr data-listened=episode.listened}} {{bind-attr data-id=episode.id}} {{bind-attr data-source_url=episode.source_url}}>
             {{play-pause-button episode=episode}}
             <h3>
               <span class="title">{{episode.title}}</span>

@@ -17,6 +17,14 @@ Uhura.PlayerX.events.loading = function(){
   $("header #loader div.playing").css("width", playing+"%")
 }
 
+
+Uhura.PlayerX.events.onload = function(){
+  this.onPosition(this.duration * 0.9, function(eventPosition) {
+    Uhura.PlayerController.get('model').set('listened', true)
+  });
+}
+
+
 Uhura.PlayerX.getAudio = function(id){
  if(!Uhura.PlayerX.episodes[id]){
     var el = $("[data-id="+ id + "]"),
@@ -26,7 +34,8 @@ Uhura.PlayerX.getAudio = function(id){
           url: [audio.source_url],
           onplay: Uhura.PlayerX.events.play,
           onpause: Uhura.PlayerX.events.pause,
-          whileloading: Uhura.PlayerX.events.loading
+          whileloading: Uhura.PlayerX.events.loading,
+          onload: Uhura.PlayerX.events.onload
         });
     Uhura.PlayerX.episodes[audio.id] = sound
   }

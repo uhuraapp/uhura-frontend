@@ -57,6 +57,10 @@
   border-top: 1px solid #ccc;
 }
 
+#episodes li[data-listened]{
+  opacity: 0.5
+}
+
 #episodes li button {
   float: left;
   margin: 12px 0 0 0

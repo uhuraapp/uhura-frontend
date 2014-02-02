@@ -74,7 +74,13 @@ Uhura.Episode = DS.Model.extend({
   title: DS.attr('string'),
   description: DS.attr('string'),
   source_url: DS.attr('string'),
-  playing: DS.attr('boolean')
+  playing: DS.attr('boolean'),
+  channel: DS.belongsTo('channel'),
+  channel_id: DS.attr(),
+  listened: DS.attr(),
+  listenedChanged: function(){
+    $.post("/api/episodes/" + this.get('id') + "/listened")
+  }.observes('listened')
 });
 
 Uhura.Subscription = DS.Model.extend({
