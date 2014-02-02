@@ -111,7 +111,7 @@ Uhura.ChannelsController = Ember.ArrayController.extend({
           url: url
         });
         subscribe.save().then(function(c){
-          console.log(c);
+          $(".new-channel").val("")
         });
       };
 

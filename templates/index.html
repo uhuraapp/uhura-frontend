@@ -130,6 +130,14 @@
   <script type="text/x-handlebars" data-template-name="channels">
     <div id="channels_page" class="uk-width-1-1">
       <h2 class="title">Podcasts</h2>
+      <form class="uk-form" {{action "newChannel" on="submit"}}>
+        <fieldset data-uk-margin class="uk-vertical-align-middle">
+          {{input type="url" placeholder="Podcast URL"
+          value=url class="form-control new-channel"}}
+          <button type="submit" name="submit" class="uk-button uk-button-success">Add New</button>
+        </fieldset>
+      </form>
+
       <ul class="uk-grid">
         {{#each}}
         <li class="uk-width-medium-1-5">
@@ -144,7 +152,7 @@
             <button class="uk-button uk-button-small uk-button-success subscribe fa fa-check" {{action 'unsubscribeChannel' id}}>Subscribed</button>
           {{else}}
             {{#if uri }}
-              <button class="uk-button uk-button-small subscribe" {{action 'subscribeChannel' id}}>Subscribe!</button>
+              <button class="uk-button uk-button-small uk-button-primary subscribe" {{action 'subscribeChannel' id}}>Subscribe!</button>
             {{/if}}
           {{/if}}
         </li>
@@ -153,7 +161,7 @@
           <form class="uk-form" {{action "newChannel" on="submit"}}>
             <fieldset data-uk-margin class="uk-vertical-align-middle">
               <label for="new-channel"> Add New Podcast </label>
-              {{input type="url" id="new-channel" placeholder="Podcast URL"
+              {{input type="url" id="new-channel" class="form-control new-channel" placeholder="Podcast URL"
               value=url class="form-control"}}
               <button type="submit" name="submit" class="uk-button uk-button-success">Submit</button>
             </fieldset>
