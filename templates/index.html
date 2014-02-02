@@ -168,6 +168,14 @@
       <h2 class="uk-width-1-1">{{title}}</h2>
       <aside class="uk-width-medium-1-5">
         <img {{bind-attr src=image_url}} />
+        {{#if subscribed}}
+        <button class="uk-button uk-button-large uk-button-success subscribe fa fa-check" {{action 'unsubscribeChannel' id}}>Subscribed</button>
+        {{else}}
+
+        <button class="uk-button uk-button-large uk-button-primary subscribe" {{action 'subscribeChannel' id}}>Subscribe!</button>
+
+        {{/if}}
+
         <div id="description">
           {{description}}
         </div>
