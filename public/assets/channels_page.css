@@ -1,3 +1,12 @@
+#channels_page h2,#channels_page h2+form {
+  float: left;
+  margin: 10px 30px 20px 0;
+}
+
+#channels_page ul{
+  clear: both;
+}
+
 #channels_page ul li {
   margin-bottom: 20px;
   position: relative;

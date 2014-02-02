@@ -87,26 +87,33 @@ Uhura.Subscription = DS.Model.extend({
   channel: DS.belongsTo('channel')
 });
 
+// Methods
+
+Uhura.Helpers = {}
+Uhura.Helpers.subscribeChannel = function(controller, id){
+  var successSubscribe = function() {
+    controller.store.find('channel', id).then(function(channel){
+      channel.set('subscribed', true);
+    });
+  };
+
+  var subscribeFn = function(){
+    $.ajax({
+      url: '/api/channels/' + id + '/subscribe',
+      success: successSubscribe
+    });
+  };
+
+  window.auth.withLoggedUser(subscribeFn);
+}
+
 // controller
 
 Uhura.ChannelsController = Ember.ArrayController.extend({
   actions: {
     subscribeChannel: function(idParams) {
       'use strict';
-      var id = idParams, _this = this;
-      var successSubscribe = function() {
-        _this.store.find('channel', idParams).then(function(channel){
-          channel.set('subscribed', true);
-        });
-      };
-      var subscribeFn = function(){
-        $.ajax({
-          url: '/api/channels/' + id + '/subscribe',
-          success: successSubscribe
-        });
-      };
-
-      window.auth.withLoggedUser(subscribeFn);
+      Uhura.Helpers.subscribeChannel(this, idParams)
     },
     newChannel: function() {
       'use strict';
@@ -126,12 +133,21 @@ Uhura.ChannelsController = Ember.ArrayController.extend({
   }
 });
 
+Uhura.ChannelController = Ember.ObjectController.extend({
+  actions: {
+    subscribeChannel: function(id) {
+      'use strict';
+      Uhura.Helpers.subscribeChannel(this, id)
+    }
+  }
+});
+
 Uhura.PlayerController = Ember.ObjectController.extend({
   content: [],
   actions: {
     play_pause: function(episode){
       Uhura.PlayerX.play_pause()
-    },
+    }
   }
 }).create();
 
@@ -149,6 +165,7 @@ Uhura.PlayPauseButtonComponent = Ember.Component.extend({
     play: function(episode){
       var __playing = function(episode){
         return function(){
+          $("#subscribeButton").click()
           $("#episodes [data-playing]").click()
 
           episode.set('started', true)
