@@ -40,19 +40,9 @@
 <body>
 
   <script type="text/x-handlebars" id="components/play-pause-button">
-     {{#if episode.started}}
-        <button {{action "play_pause" episode}} {{bind-attr data-playing='episode.playing'}} class="uk-button uk-button-large">
-          {{#if episode.playing}}
-            <i class="fa fa-pause"></i>
-          {{else}}
-            <i class="fa fa-play"></i>
-          {{/if}}
-        </button>
-     {{else}}
-        <button {{action "play" episode}} class="uk-button uk-button-large">
-          <i class="fa fa-play"></i>
-        </button>
-      {{/if}}
+    <button {{action "play" episode}} class="uk-button uk-button-large">
+      <i class="fa fa-play"></i>
+    </button>
   </script>
 
   <script type="text/x-handlebars" data-template-name="player">
