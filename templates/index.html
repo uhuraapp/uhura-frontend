@@ -1,0 +1,294 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Uhura</title>
+
+  <link href='http://fonts.googleapis.com/css?family=Exo+2:400,200,400italic,800' rel='stylesheet' type='text/css'>
+
+  <!--
+    <link href="/assets/reset.css" rel="stylesheet">
+  -->
+
+  <link href="/assets/uikit.css" rel="stylesheet">
+  <link href="/assets/font-awesome.min.css" rel="stylesheet">
+
+  <link href="/assets/main.css" rel="stylesheet">
+  <link href="/assets/player.css" rel="stylesheet">
+
+  <link href="/assets/home.css" rel="stylesheet">
+  <link href="/assets/dashboard.css" rel="stylesheet">
+  <link href="/assets/channels_page.css" rel="stylesheet">
+  <link href="/assets/channel_page.css" rel="stylesheet">
+
+
+  <!-- emberjs -->
+  <script src="/assets/vendor/jquery-1.10.2.min.js"></script>
+  <script src="/assets/vendor/handlebars-1.0.0.js"></script>
+  <script src="/assets/vendor/ember.js"></script>
+  <script src="/assets/vendor/ember-data.js"></script>
+
+  <!-- -->
+  <script src="/assets/vendor/soundmanager2.js"></script>
+
+
+  <script src="/assets/app.js"></script>
+  <script src="/assets/player.js"></script>
+
+  <script type="text/javascript" src="/assets/audio.min.js"></script>
+</head>
+<body>
+
+  <script type="text/x-handlebars" id="components/play-pause-button">
+    <button {{action "play" episode}} class="uk-button uk-button-large">
+      <i class="fa fa-play"></i>
+    </button>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="player">
+    {{#if model}}
+    <div id="player">
+      <a href="#" {{action play_pause model}}>
+        {{#if playing}}<i class="fa fa-pause"></i>{{else}}<i class="fa fa-play"></i>{{/if}}
+      </a>
+      <div id="loader">
+        <div class="loading"></div>
+        <div class="playing"></div>
+      </div>
+      <span class="title">{{title}}</span>
+    </div>
+    {{/if}}
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="application">
+    <header>
+      <div class="uk-container uk-container-center">
+        <hgroup>
+          {{#link-to 'index'}}
+          <h1>Uhura</h1>
+          <h2>Podcast Manager</h2>
+          {{/link-to}}
+        </hgroup>
+
+        {{view Uhura.PlayerView}}
+
+        <nav>
+          <ul>
+            <li>
+              {{#link-to "channels"}}
+              Discovery New Podcasts
+              {{/link-to}}
+            </li>
+            <li>
+              {{#link-to "dashboard"}}
+              Dashboard
+              {{/link-to}}
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <div id="content" class="uk-container uk-container-center">
+      {{outlet}}
+    </div>
+
+    <footer>
+      Created with <span class="heart">♥</span> by <a href="https://github.com/dukex">Duke Khaos</a> with awesome <a href="https://github.com/dukex/uhura/graphs/contributors">Contributors</a>
+    </footer>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="index">
+    <div id="home" class="uk-width-1-1">
+      {{#link-to 'channels' id="call-to-action"}}
+      Listen Awesome Podcasts
+      {{/link-to}}
+      <ul id="channels">
+        {{#each channel in channels}}
+        <li>
+          {{#link-to 'channel' channel.id}}
+          <div>
+            <img {{bind-attr src=channel.image_url}} />
+          </div>
+          {{/link-to}}
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="channels">
+    <div id="channels_page" class="uk-width-1-1">
+      <h2 class="title">Podcasts</h2>
+      <form class="uk-form" {{action "newChannel" on="submit"}}>
+        <fieldset data-uk-margin class="uk-vertical-align-middle">
+          {{input type="url" placeholder="Podcast URL"
+          value=url class="form-control new-channel"}}
+          <button type="submit" name="submit" class="uk-button uk-button-success">Add New</button>
+        </fieldset>
+      </form>
+
+      <ul class="uk-grid">
+        {{#each}}
+        <li class="uk-width-medium-1-5">
+          {{#link-to 'channel' id}}
+          <div class="img">
+            <img {{bind-attr src=image_url}} />
+          </div>
+          <h4>{{title}}</h4>
+          {{/link-to}}
+
+          {{#if subscribed}}
+          <button class="uk-button uk-button-small uk-button-success subscribe fa fa-check" {{action 'unsubscribeChannel' id}}>Subscribed</button>
+          {{else}}
+          {{#if uri }}
+          <button class="uk-button uk-button-small uk-button-primary subscribe" {{action 'subscribeChannel' id}}>Subscribe!</button>
+          {{/if}}
+          {{/if}}
+        </li>
+        {{/each}}
+        <li id="new_podcast" class="uk-width-medium-1-5">
+          <form class="uk-form" {{action "newChannel" on="submit"}}>
+            <fieldset data-uk-margin class="uk-vertical-align-middle">
+              <label for="new-channel"> Add New Podcast </label>
+              {{input type="url" id="new-channel" class="form-control new-channel" placeholder="Podcast URL"
+              value=url class="form-control"}}
+              <button type="submit" name="submit" class="uk-button uk-button-success">Submit</button>
+            </fieldset>
+          </form>
+        </li>
+      </ul>
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="channel">
+    <div id="channel_page" class="uk-grid">
+      <h2 class="uk-width-1-1">{{title}}</h2>
+      <aside class="uk-width-medium-1-5">
+        <img {{bind-attr src=image_url}} />
+        {{#if subscribed}}
+        <button class="uk-button uk-button-large uk-button-success subscribe fa fa-check" {{action 'unsubscribeChannel' id}}>Subscribed</button>
+        {{else}}
+
+        <button id="subscribeButton" class="uk-button uk-button-large uk-button-primary subscribe" {{action 'subscribeChannel' id}}>Subscribe!</button>
+
+        {{/if}}
+
+        <div id="description">
+          {{description}}
+        </div>
+        <p>{{copyright}}</p>
+      </aside>
+      <div id="episodes" class="uk-width-medium-4-5" >
+        <ol>
+          {{#each episode in episodes}}
+          <li class="audio" {{bind-attr data-listened=episode.listened}} {{bind-attr data-id=episode.id}} {{bind-attr data-source_url=episode.source_url}}>
+            {{play-pause-button episode=episode}}
+            <h3>
+              <span class="title">{{episode.title}}</span>
+              <i class="fa fa-chevron-down"></i>
+            </h3>
+            <div class="description">
+              {{#unless episode.listened}}
+              <button class="uk-button uk-button-success" alt="Mark as Listen!" {{action 'listened' episode}}>
+                Mark as Listened
+              </button>
+              {{/unless}}
+              <div>{{{episode.description}}}</div>
+            </div>
+          </li>
+          {{/each}}
+        </ol>
+      </div>
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="dashboard">
+    <div id="dashboard">
+      <h2>Dashboard</h2>
+      <div class="outter">
+        <div class="inner">
+          <ul id="channels" >
+            {{#each subscription in subscriptions}}
+            {{#with subscription.channel}}
+            <li class="channel">
+              {{#link-to 'dashboard.channel' id}}
+              <img {{bind-attr src=image_url}} />
+              <span class="title">{{title}}</span>
+              <div class="uk-badge uk-badge-notification uk-badge-warning">
+                {{to_view}}
+              </div>
+              {{/link-to}}
+            </li>
+            {{/with}}
+            {{/each}}
+          </ul>
+          <div id="dashboard_content">
+            {{outlet}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="dashboard/index">
+    <div id="episodes">
+      {{subscriptions}}
+      <ol>
+        {{#each subscription in controllers.dashboard.subscriptions}}
+        {{#each episode in subscription.episodes}}
+        <li class="audio" {{bind-attr data-listened=episode.listened}} {{bind-attr data-id=episode.id}} {{bind-attr data-source_url=episode.source_url}}>
+          {{play-pause-button episode=episode}}
+          <h3>
+            <span class="title">{{episode.title}}</span>
+            <i class="fa fa-chevron-down"></i>
+          </h3>
+          <div class="description">
+            {{#unless episode.listened}}
+            <button class="uk-button uk-button-success" alt="Mark as Listen!" {{action 'listened' episode}}>
+              Mark as Listened
+            </button>
+            {{/unless}}
+            <div>{{{episode.description}}}</div>
+          </div>
+        </li>
+        {{/each}}
+        {{/each}}
+      </ol>
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="dashboard/channel">
+  <div id="episodes">
+      <ol>
+        {{#each episode in episodes}}
+          <li class="audio" {{bind-attr data-listened=episode.listened}} {{bind-attr data-id=episode.id}} {{bind-attr data-source_url=episode.source_url}}>
+            {{play-pause-button episode=episode}}
+            <h3>
+              <span class="title">{{episode.title}}</span>
+              <i class="fa fa-chevron-down"></i>
+            </h3>
+            <div class="description">
+              {{#unless episode.listened}}
+              <button class="uk-button uk-button-success" alt="Mark as Listen!" {{action 'listened' episode}}>
+                Mark as Listened
+              </button>
+              {{/unless}}
+              <div>{{{episode.description}}}</div>
+            </div>
+          </li>
+        {{/each}}
+      </ol>
+    </div>
+  </script>
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-47688976-1', 'uhura.herokuapp.com');
+    ga('send', 'pageview');
+    </script>
+</body>
+</html>

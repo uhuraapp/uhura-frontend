@@ -1,6 +1,6 @@
 {
-	"ImportPath": "uhura",
-	"GoVersion": "go1.1.2",
+	"ImportPath": "github.com/dukex/uhura",
+	"GoVersion": "go1.2",
 	"Deps": [
 		{
 			"ImportPath": "code.google.com/p/go-charset/charset",
@@ -14,21 +14,26 @@
 		},
 		{
 			"ImportPath": "code.google.com/p/goauth2/oauth",
-			"Comment": "weekly-35",
-			"Rev": "e062946df3f2de47313e40eea045a2f6130e92f3"
+			"Comment": "weekly-40",
+			"Rev": "5877582f0cb070bc21b199dab5e7d18fb546444a"
 		},
 		{
 			"ImportPath": "github.com/codegangsta/inject",
-			"Rev": "37512bbe41b4cc579cdd706742efc7bf34f94b06"
+			"Rev": "346a984957aa24276ebc5e7b16b3ac6a50fe8138"
 		},
 		{
 			"ImportPath": "github.com/codegangsta/martini",
-			"Rev": "477c92e34289f065d09427934c00e66c725579f4"
+			"Comment": "v0.1-72-g9eab46a",
+			"Rev": "9eab46a1e15cdc0c9644b0505ffbd2ca905ab997"
 		},
 		{
 			"ImportPath": "github.com/codegangsta/martini-contrib/render",
-			"Comment": "v0.1-42-gb7a8366",
-			"Rev": "b7a8366f58e39977dfd52d6109ed08d768bba94a"
+			"Comment": "v0.1-123-geb23f49",
+			"Rev": "eb23f4925fb85db43df94d992501513ad9265e6f"
+		},
+		{
+			"ImportPath": "github.com/fiam/gounidecode/unidecode",
+			"Rev": "311ebb7422d3ff70cc1d064c5a297520ff5f304a"
 		},
 		{
 			"ImportPath": "github.com/gorilla/context",
@@ -47,8 +52,12 @@
 			"Rev": "71e7b37bdfd69432e00565a7483a3788fdc20eb7"
 		},
 		{
+			"ImportPath": "github.com/jordan-wright/email",
+			"Rev": "dcd24f3acd808a4ec1c910214415c33ac4d59daf"
+		},
+		{
 			"ImportPath": "github.com/jteeuwen/go-pkg-rss",
-			"Rev": "269db380a38d96d568c0e51fa3d4534ddb3c1023"
+			"Rev": "937de70c03b3af6f78338755794385c6f74f7df1"
 		},
 		{
 			"ImportPath": "github.com/jteeuwen/go-pkg-xmlx",
@@ -57,6 +66,15 @@
 		{
 			"ImportPath": "github.com/lib/pq",
 			"Rev": "6c54219055243614d4eaffea55917c15bea2ba2f"
+		},
+		{
+			"ImportPath": "github.com/rakyll/coop",
+			"Rev": "9f25699aa4d3e675cc377aeeb1e3c8cd113d36a6"
+		},
+		{
+			"ImportPath": "github.com/rakyll/martini-contrib/cors",
+			"Comment": "v0.1-126-g94f7509",
+			"Rev": "94f7509d03983ce19a1a803b2e707deeb7157976"
 		}
 	]
 }

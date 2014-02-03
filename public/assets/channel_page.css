@@ -1,0 +1,117 @@
+
+
+#channel_page h2{
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+#channel_page aside {
+  line-height: 1.5
+}
+
+#channel_page aside img{
+  margin: 0 auto;
+  text-align: center;
+  margin-bottom: 10px
+}
+
+#channel_page aside button {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+#channel_page aside p {
+  font-size: 12px
+}
+
+#episodes h3{
+  font-weight: 200;
+  font-size: 25px;
+  line-height: 1.5;
+  margin: 0;
+  padding: 15px 0;
+  cursor: pointer;
+  height: 32px;
+  width: 820px;
+  float: right;
+}
+
+#episodes h3 .title{
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  float: left;
+  width: 90%;
+}
+
+#episodes ol{
+  background: #F8F8F8;
+}
+
+#episodes li{
+  overflow: hidden;
+  line-height: 1.5;
+  overflow: hidden;
+  padding: 0 10px;
+  border-bottom: 1px solid #FFF;
+  border-top: 1px solid #ccc;
+}
+
+#episodes li[data-listened]{
+  opacity: 0.5
+}
+
+#episodes li button {
+  float: left;
+  margin: 12px 0 0 0
+}
+
+#episodes li i {
+  float: right;
+  line-height: 1.5;
+  font-weight: 300;
+}
+
+#episodes li:first-child{
+  border-top: none;
+}
+
+#episodes li:last-child{
+  border-bottom: none;
+}
+
+#episodes .description button{
+  margin: 0 0 10px 0;
+}
+
+#episodes .description div{
+  clear: both;
+}
+
+#episodes .description {
+  font-size: 15px;
+  display: none;
+  border-top: 1px solid #ccc;
+  line-height: 1.8;
+  padding: 10px;
+  clear: both;
+}
+/*
+
+
+
+
+#channel_page #episodes input{
+   float: left;
+ }
+#channel_page #episodes .about{
+   float: left;
+   width: 600px;
+   margin: 0 10px;
+ }
+ #channel_page #episodes h4{
+   margin: 0
+ }
+ #channel_page #episodes button{
+   padding: 0;
+}*/

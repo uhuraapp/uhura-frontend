@@ -76,6 +76,61 @@ func Test_RssAuthor(t *testing.T) {
 	}
 }
 
+func Test_ItemExtensions(t *testing.T) {
+	content, _ := ioutil.ReadFile("testdata/extension.rss")
+	feed := New(1, true, chanHandler, itemHandler)
+	feed.FetchBytes("http://example.com", content, nil)
+
+	edgarExtensionxbrlFiling := feed.Channels[0].Items[0].Extensions["http://www.sec.gov/Archives/edgar"]["xbrlFiling"][0].Childrens
+	companyExpected := "Cellular Biomedicine Group, Inc."
+	companyName := edgarExtensionxbrlFiling["companyName"][0]
+	if companyName.Value != companyExpected {
+		t.Errorf("Expected company to be %s but found %s", companyExpected, companyName.Value)
+	}
+
+	files := edgarExtensionxbrlFiling["xbrlFiles"][0].Childrens["xbrlFile"]
+	fileSizeExpected := 10
+	if len(files) != 10 {
+		t.Errorf("Expected files size to be %s but found %s", fileSizeExpected, len(files))
+	}
+
+	file := files[0]
+	fileExpected := "cbmg_10qa.htm"
+	if file.Attrs["file"] != fileExpected {
+		t.Errorf("Expected file to be %s but found %s", fileExpected, len(file.Attrs["file"]))
+	}
+}
+
+func Test_ChannelExtensions(t *testing.T) {
+	content, _ := ioutil.ReadFile("testdata/extension.rss")
+	feed := New(1, true, chanHandler, itemHandler)
+	feed.FetchBytes("http://example.com", content, nil)
+
+	channel := feed.Channels[0]
+	itunesExtentions := channel.Extensions["http://www.itunes.com/dtds/podcast-1.0.dtd"]
+
+	authorExptected := "The Author"
+	ownerEmailExpected := "test@rss.com"
+	categoryExpected := "Politics"
+	imageExptected := "http://golang.org/doc/gopher/project.png"
+
+	if itunesExtentions["author"][0].Value != authorExptected {
+		t.Errorf("Expected author to be %s but found %s", authorExptected, itunesExtentions["author"][0].Value)
+	}
+
+	if itunesExtentions["owner"][0].Childrens["email"][0].Value != ownerEmailExpected {
+		t.Errorf("Expected owner email to be %s but found %s", ownerEmailExpected, itunesExtentions["owner"][0].Childrens["email"][0].Value)
+	}
+
+	if itunesExtentions["category"][0].Attrs["text"] != categoryExpected {
+		t.Errorf("Expected category text to be %s but found %s", categoryExpected, itunesExtentions["category"][0].Attrs["text"])
+	}
+
+	if itunesExtentions["image"][0].Attrs["href"] != imageExptected {
+		t.Errorf("Expected image href to be %s but found %s", imageExptected, itunesExtentions["image"][0].Attrs["href"])
+	}
+}
+
 func Test_CData(t *testing.T) {
 	content, _ := ioutil.ReadFile("testdata/iosBoardGameGeek.rss")
 	feed := New(1, true, chanHandler, itemHandler)

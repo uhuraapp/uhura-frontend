@@ -2,13 +2,18 @@ package main
 
 import (
 	"code.google.com/p/goauth2/oauth"
+	"encoding/json"
+	"fmt"
 	"github.com/codegangsta/martini"
 	"github.com/codegangsta/martini-contrib/render"
+	"github.com/dukex/uhura/core"
+	"github.com/rakyll/martini-contrib/cors"
 	"html/template"
+	"io/ioutil"
 	"net/http"
-	"os"
 	"strconv"
-	"uhura/core"
+
+	"os"
 )
 
 var config oauth.Config
@@ -20,7 +25,7 @@ func main() {
 		ClientId:     os.Getenv("GOOGLE_CLIENT_ID"),
 		ClientSecret: os.Getenv("GOOGLE_CLIENT_SECRET"),
 		RedirectURL:  os.Getenv("GOOGLE_CALLBACK_URL"),
-		Scope:        "https://www.googleapis.com/auth/userinfo.profile",
+		Scope:        "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
 		AuthURL:      "https://accounts.google.com/o/oauth2/auth",
 		TokenURL:     "https://accounts.google.com/o/oauth2/token",
 		TokenCache:   oauth.CacheFile("cache.json"),
@@ -29,71 +34,171 @@ func main() {
 	m := martini.Classic()
 
 	m.Use(render.Renderer(render.Options{
-		Layout: "layout",
 		Funcs: []template.FuncMap{
 			{
 				"UserViewedHelper": core.UserViewedHelper,
 				"Pagination":       core.Pagination,
-				"ToHTML":           core.ToHTML,
 			},
 		},
+	}))
+
+	m.Use(cors.Allow(&cors.Opts{
+		AllowOrigins: []string{"http://emberjs.jsbin.com"},
 	}))
 
 	m.Use(martini.Static("assets"))
 	m.Use(martini.Static("fonts"))
 
-	m.Get("/", func(r render.Render, req *http.Request) {
-		data := make(map[string]interface{})
-
-		r.HTML(200, "home", data)
+	m.Get("/", func(r render.Render, req *http.Request) string {
+		itb, _ := ioutil.ReadFile("./templates/index.html")
+		indexTemplate := string(itb[:])
+		return indexTemplate
 	})
 
-	m.Get("/channels", func(r render.Render, w http.ResponseWriter, request *http.Request) {
+	// API
+
+	// m.Post("/api/channels/:id/fetcher", func(responseWriter http.ResponseWriter, request *http.Request, params martini.Params) {
+	// 	channel := core.GetChannelByChannel(params["id"])
+	// 	core.FetchChanell(channel)
+	// 	//	http.Redirect(responseWriter, request, "/dashboard/channels/"+params["id"], http.StatusMovedPermanently)
+	// })
+
+	m.Post("/api/episodes/:id/listened", func(responseWriter http.ResponseWriter, r render.Render, request *http.Request, params martini.Params) {
 		user, err := core.CurrentUser(request)
 		if err {
-			core.SetReturnTo(request, w, "/channels")
-			http.Redirect(w, request, "/authorize", http.StatusFound)
+			r.Error(403)
+			return
+		}
+
+		episode := core.UserListen(user.Id, params["id"])
+		r.JSON(202, map[string]interface{}{"episode": episode})
+	})
+
+	// -----------------
+	// API
+	m.Get("/api/channels", func(r render.Render, w http.ResponseWriter, request *http.Request) {
+		var userId int
+		user, err := core.CurrentUser(request)
+		if err {
+			userId = 0
 		} else {
-			channels := core.AllChannels(user)
-			r.HTML(200, "channels", map[string]interface{}{"current_user": &user, "channels": channels})
+			userId = user.Id
+		}
+
+		var onlyFeatured bool
+		if featured := request.FormValue("featured"); featured == "" {
+			onlyFeatured = false
+		} else {
+			onlyFeatured = featured == "true"
+		}
+
+		channels, _ := core.AllChannels(userId, onlyFeatured, 0)
+		r.JSON(200, map[string]interface{}{"channels": channels})
+	})
+
+	m.Post("/api/channels", func(responseWriter http.ResponseWriter, r render.Render, request *http.Request, params martini.Params) {
+		user, err := core.CurrentUser(request)
+		if err {
+			r.Error(403)
+			return
+		}
+
+		var channelJson struct {
+			Channel core.Channel `json:"channel"`
+		}
+
+		json.NewDecoder(request.Body).Decode(&channelJson)
+
+		channel := core.AddFeed(channelJson.Channel.Url, user.Id)
+		r.JSON(200, map[string]interface{}{"channel": channel})
+	})
+
+	m.Get("/api/channels/:id", func(r render.Render, params martini.Params, request *http.Request) {
+		var userId int
+		user, err := core.CurrentUser(request)
+		if err {
+			userId = 0
+		} else {
+			userId = user.Id
+		}
+
+		channelId, _ := strconv.Atoi(params["id"])
+
+		channels, episodes := core.AllChannels(userId, false, channelId)
+
+		r.JSON(200, map[string]interface{}{"channel": channels[0], "episodes": episodes})
+	})
+
+	m.Get("/api/channels/:id/subscribe", func(r render.Render, request *http.Request, params martini.Params) {
+		user, err := core.CurrentUser(request)
+
+		if err {
+			r.Error(403)
+			return
+		}
+
+		channel := core.SubscribeChannel(user.Id, params["id"])
+
+		r.JSON(200, map[string]interface{}{"channel": channel})
+	})
+
+	// API
+	m.Get("/api/subscriptions", func(r render.Render, w http.ResponseWriter, request *http.Request) {
+		user, err := core.CurrentUser(request)
+		if err {
+			r.Error(403)
+			return
+		}
+		subscribes, channels := core.Subscriptions(user)
+		r.JSON(200, map[string]interface{}{"subscriptions": subscribes, "channels": channels})
+	})
+
+	m.Get("/api/episodes", func(request *http.Request, r render.Render) {
+		ids := request.URL.Query()["ids[]"]
+		episodes := core.GetItems(ids)
+		r.JSON(200, map[string]interface{}{"episodes": episodes})
+	})
+
+	m.Put("/api/episodes/:id", func(params martini.Params, request *http.Request, r render.Render) {
+		user, err := core.CurrentUser(request)
+		if err {
+			r.Error(403)
+			return
+		}
+
+		idInt, _ := strconv.Atoi(params["id"])
+		episode := core.GetItem(idInt, user.Id)
+
+		r.JSON(200, map[string]interface{}{"episode": episode})
+
+	})
+
+	m.Get("/api/subscriptions/:id/episodes", func(r render.Render, params martini.Params, request *http.Request) {
+		user, err := core.CurrentUser(request)
+		if err {
+			r.Error(403)
+			return
+		}
+
+		idInt, _ := strconv.Atoi(params["id"])
+
+		channels, episodes := core.AllChannels(user.Id, false, idInt)
+		r.JSON(200, map[string]interface{}{"episodes": episodes, "channel": channels[0]})
+	})
+
+	// API - Auth
+	m.Get("/api/authorize", func(w http.ResponseWriter, request *http.Request) string {
+		_, err := core.CurrentUser(request)
+		if err {
+			url := config.AuthCodeURL("")
+			http.Redirect(w, request, url, http.StatusFound)
+			return ""
+		} else {
+			return "<script>window.close();</script>"
 		}
 	})
 
-	m.Get("/dashboard", func(r render.Render, w http.ResponseWriter, request *http.Request) {
-		page := request.FormValue("page")
-		channel := request.FormValue("channel")
-		user, err := core.CurrentUser(request)
-		if err {
-			http.Redirect(w, request, "/authorize", http.StatusFound)
-		} else {
-			channels := core.GetChannelByUser(user)
-			items, counter := core.GetUserItems(user, channels, channel, page)
-
-			r.HTML(200, "dashboard", map[string]interface{}{"current_user": &user, "channels": channels, "items": items, "counter": counter})
-		}
-	})
-
-	m.Get("/dashboard/channels/:id", func(r render.Render, w http.ResponseWriter, params martini.Params, request *http.Request) {
-		page := request.FormValue("page")
-		channelParams := params["id"]
-		user, err := core.CurrentUser(request)
-		if err {
-			http.Redirect(w, request, "/authorize", http.StatusFound)
-		} else {
-			channels := core.GetChannelByUser(user)
-			channel := core.GetChannel(channelParams)
-			items, counter := core.GetUserItems(user, channels, channelParams, page)
-
-			r.HTML(200, "dashboard", map[string]interface{}{"current_user": &user, "channels": channels, "items": items, "counter": counter, "channel": channel})
-		}
-	})
-
-	m.Get("/authorize", func(w http.ResponseWriter, r *http.Request) {
-		url := config.AuthCodeURL("")
-		http.Redirect(w, r, url, http.StatusFound)
-	})
-
-	m.Get("/auth/callback", func(responseWriter http.ResponseWriter, request *http.Request) {
+	m.Get("/auth/callback", func(responseWriter http.ResponseWriter, request *http.Request) string {
 		code := request.FormValue("code")
 		t := &oauth.Transport{Config: config}
 		t.Exchange(code)
@@ -104,46 +209,32 @@ func main() {
 
 		if err {
 			// TODO: set flash
-			http.Redirect(responseWriter, request, "/", http.StatusMovedPermanently)
+			// http.Redirect(responseWriter, request, "/", http.StatusMovedPermanently)
 		} else {
-			returnTo := core.GetReturnTo(request)
-			http.Redirect(responseWriter, request, returnTo, http.StatusMovedPermanently)
-		}
-	})
-
-	// API
-
-	m.Post("/api/channels/:id/fetcher", func(responseWriter http.ResponseWriter, request *http.Request, params martini.Params) {
-		core.FetchChanell(params["id"])
-		http.Redirect(responseWriter, request, "/dashboard/channels/"+params["id"], http.StatusMovedPermanently)
-	})
-
-	m.Post("/api/channels", func(responseWriter http.ResponseWriter, r render.Render, request *http.Request, params martini.Params) {
-		request.ParseForm()
-		var url = request.Form.Get("url")
-
-		user, err := core.CurrentUser(request)
-
-		if err {
-			r.Error(503)
-		} else {
-			channel := core.AddFeed(url, user.Id)
-			// r.JSON(202, map[string]interface{}{"message": "Processing"})
-			http.Redirect(responseWriter, request, "/dashboard/channels/"+strconv.Itoa(channel.Id), http.StatusMovedPermanently)
-		}
-	})
-
-	m.Post("/api/items/:key/watched", func(responseWriter http.ResponseWriter, r render.Render, request *http.Request, params martini.Params) {
-		user, err := core.CurrentUser(request)
-
-		if err {
-			r.Error(503)
-			return
+			// returnTo := core.GetReturnTo(request)
 		}
 
-		item := core.UserWatched(user.Id, params["key"])
-		http.Redirect(responseWriter, request, "/dashboard/channels/"+strconv.Itoa(item.ChannelId), http.StatusMovedPermanently)
+		return "<script>window.close();</script>"
 	})
 
-	http.ListenAndServe(":"+os.Getenv("PORT"), m)
+	// API - DEV
+	m.Get("/api/dev/fetchall", func(r render.Render) {
+		if os.Getenv("ENV") == "development" {
+			core.FetchAllChannell()
+		}
+		r.JSON(202, "")
+	})
+
+	// Ember
+	m.Get("/**", func(params martini.Params, responseWriter http.ResponseWriter, request *http.Request) {
+		url := params["_1"]
+
+		http.Redirect(responseWriter, request, "/#/"+url, http.StatusMovedPermanently)
+	})
+
+	fmt.Println("Starting server on", os.Getenv("PORT"))
+	err := http.ListenAndServe(":"+os.Getenv("PORT"), m)
+	if err != nil {
+		panic(err)
+	}
 }

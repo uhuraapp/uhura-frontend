@@ -1,0 +1,242 @@
+/*
+
+
+*/
+
+body{
+  background: #eee;
+  font-family: 'Exo 2', sans-serif;
+  font-weight: 400;
+  overflow-y: scroll;
+}
+
+ul, ol{
+  padding: 0;
+  list-style: none;
+}
+
+h2{
+  font-weight: 700;
+  font-size: 30px;
+  margin: 0 0 10px 0;
+}
+
+a{
+  color: #00B5B5;
+}
+/*
+
+
+.clearfix:after{
+  content: "";
+  display: block;
+  clear: both;
+}
+
+
+
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+h3.title{
+  font-size: 25px;
+  border-bottom: 1px solid #CCC;
+  margin: 10px 0;
+  padding: 5px 0;
+}
+*/
+
+footer{
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+  background: #FFF;
+  padding: 5px 0;
+  margin-top: 20px;
+  z-index: 5;
+}
+
+footer .heart {
+  font-size: 14px;
+  color: #F1714C;
+}
+
+footer a{
+  text-decoration: none;
+  color: #333;
+  font-weight: 700
+}
+
+
+header{
+  background: #F1714C;
+  z-index: 5;
+  position: fixed;
+  width: 100%;
+  height: 45px;
+  box-shadow: 0 1px 1px #B56D58;
+  top: 0;
+}
+
+header:after{
+  content: " ";
+  display: block;
+  overflow: hidden;
+  clear: both;
+}
+
+header hgroup{
+  background: #3E4651;
+  padding: 0 5px;
+  float: left;
+  box-shadow: 0 2px 3px #333;
+}
+
+header h1{
+  color: #FFF;
+  font-size: 20px;
+  font-family: 'Exo 2', sans-serif;
+  font-weight: 200;
+  line-height: 25px;
+  margin: 0;
+  padding: 0;
+}
+
+header a{
+  text-decoration: none;
+  color: #FFF;
+}
+
+header a:hover, header a:hover h1, header a:hover h2{
+  color: #FFF;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+header h2{
+  color: #FFF;
+  font-family: 'Exo 2', sans-serif;
+  font-weight: 200;
+  font-size: 16px;
+  line-height: 16px;
+  margin: 0;
+  padding: 0 0 5px 0;
+}
+
+header nav {
+  float: right;
+}
+
+header nav ul{
+  margin: 0;
+  padding: 0
+}
+
+header nav li:first-child{
+  border-left: 1px solid #3E4651;
+}
+
+header nav li{
+  float: left;
+  border-right: 1px solid #3E4651;
+  height: 45px;
+}
+
+header nav a{
+  display: block;
+  height: 45px;
+  line-height: 45px;
+  margin: 0;
+  padding: 0 10px;
+  color: #3E4651;
+}
+
+header nav a:hover{
+  background: #3E4651;
+  color: #FFF;
+  text-decoration: none;
+  box-shadow: inset 0 0 3px #B56D58;
+}
+
+header #player{
+  width: 40%;
+  position: absolute;
+  left: 25%;
+  height: 45px;
+  padding: 0 20px;
+}
+
+header #player *::selection{
+  background: none;
+}
+
+header #loader{
+  width: 85%;
+  position: absolute;
+  left: 15%;
+  height: 45px;
+
+}
+
+header #loader div{
+  height: 45px;
+  width: 0px;
+  position: absolute;
+}
+
+header #loader div.loading{
+  background: #885F53;
+  z-index: 1;
+}
+
+header #loader div.playing{
+  background: #B56D58;
+  z-index: 2;
+}
+
+header #player, header #player a{
+  font-size: 25px;
+}
+
+header #player .title{
+  width: 85%;
+  font-size: 15px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  color: #FFF;
+  line-height: 45px;
+  z-index: 3;
+  position: relative;
+  float: right;
+}
+
+header #player a{
+  border-right: 1px solid #B56D58;
+  border-left: 1px solid #B56D58;
+  float: left;
+  width: 60px;
+}
+
+header #player a i{
+  width: 60px;
+  text-align: center;
+}
+
+header #player a .title, header #player a i{
+  line-height: 45px;
+  height: 45px;
+  display: block;
+  float: left;
+}
+
+#content{
+  margin-top: 45px
+}
+
+
+#channel_page, #channels_page, #dashboard  {
+  padding-top: 15px;
+}
