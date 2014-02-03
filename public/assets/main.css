@@ -232,10 +232,13 @@ header #player a .title, header #player a i{
   float: left;
 }
 
+header .uk-container-center{
+  position: relative;
+}
+
 #content{
   margin-top: 45px
 }
-
 
 #channel_page, #channels_page, #dashboard  {
   padding-top: 15px;
