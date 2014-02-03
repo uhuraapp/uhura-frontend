@@ -2,7 +2,6 @@ package core
 
 import (
 	"bytes"
-	"fmt"
 	"github.com/jordan-wright/email"
 	"github.com/rakyll/coop"
 	"html/template"
@@ -45,7 +44,6 @@ func render(name string, data interface{}) []byte {
 func WelcomeMail(user *User) {
 	coop.After(5*time.Second, func() {
 		err := sendMail([]string{user.Email}, "Welcome to Uhura", render("welcome", user))
-		fmt.Println("ERRRRRRR", err)
 		if err == nil {
 			database.Model(user).Update("WelcomeMail", true)
 		}
