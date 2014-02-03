@@ -102,24 +102,30 @@ func AllChannels(userId int, onlyFeatured bool, channelId int) (channels []Chann
 }
 
 type UserChannelsEntity struct {
-	Id        int `json:"id"`
-	ChannelId int `json:"channel"`
+	Id        int     `json:"id"`
+	ChannelId int     `json:"channel"`
+	Episodes  []int64 `json:"episodes"`
 }
 
 func Subscriptions(user *User) (subscriptions []UserChannelsEntity, channels []ChannelResult) {
 	var channelsIds []int64
 
-	database.Table("user_channels").Where("user_id = ?", user.Id).Find(&subscriptions).Pluck("channel_id", &channelsIds)
+	subscriptionsQuery := database.Table("user_channels").Where("user_id = ?", user.Id)
+	subscriptionsQuery.Find(&subscriptions).Pluck("channel_id", &channelsIds)
+
 	database.Table("channels").Where("id IN (?)", channelsIds).Find(&channels)
 
 	for i, channel := range channels {
-		var items []struct {
-			Id int
-		}
 		var userItems []interface{}
 		var watched []int64
+		var items []int64
+		var notListened []int64
 
-		database.Table("items").Select("DISTINCT items.id").Where("channel_id = ?", channel.Id).Joins("FULL OUTER JOIN user_items ON user_items.item_id=items.id AND user_items.user_id="+strconv.Itoa(user.Id)).Find(&items).Pluck("user_items.id", &userItems)
+		itemQuery := database.Table("items").Select("DISTINCT items.id").Where("channel_id = ?", channel.Id)
+		itemQuery = itemQuery.Joins("FULL OUTER JOIN user_items ON user_items.item_id=items.id AND user_items.user_id=" + strconv.Itoa(user.Id))
+		itemQuery.Pluck("items.id", &items)
+		itemQuery.Pluck("user_items.id", &userItems)
+		itemQuery.Where("user_items.user_id IS NULL").Pluck("items.id", &notListened)
 
 		for _, j := range userItems {
 			id, ok := j.(int64)
@@ -127,9 +133,18 @@ func Subscriptions(user *User) (subscriptions []UserChannelsEntity, channels []C
 				watched = append(watched, id)
 			}
 		}
+
 		toView := len(items) - len(watched)
 		channel.ToView = toView
 		channels[i] = channel
+
+		if len(notListened) > 0 {
+			for k, subscription := range subscriptions {
+				if subscription.ChannelId == channel.Id {
+					subscriptions[k].Episodes = append(subscription.Episodes, notListened[0])
+				}
+			}
+		}
 	}
 	return
 }
