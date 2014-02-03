@@ -17,6 +17,19 @@ Uhura.Router.map(function () {
     this.resource('dashboard.channel', {path: '/:channel_id'})
   })
 });
+Uhura.Router.reopen({
+   /**
+    * Tracks pageviews if google analytics is used
+    */
+   didTransition: function(infos) {
+     this._super(infos);
+     if (window.ga === undefined) { return; }
+
+     Ember.run.next(function(){
+      ga('send', 'pageview', window.location.hash.substr(1));
+     });
+   }
+ });
 
 Uhura.IndexRoute = Ember.Route.extend({
   setupController: function(controller){
