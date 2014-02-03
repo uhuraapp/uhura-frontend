@@ -80,6 +80,14 @@
   border-bottom: none;
 }
 
+#episodes .description button{
+  margin: 0 0 10px 0;
+}
+
+#episodes .description div{
+  clear: both;
+}
+
 #episodes .description {
   font-size: 15px;
   display: none;

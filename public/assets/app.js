@@ -84,7 +84,8 @@ Uhura.Episode = DS.Model.extend({
 });
 
 Uhura.Subscription = DS.Model.extend({
-  channel: DS.belongsTo('channel')
+  channel: DS.belongsTo('channel'),
+  episodes: DS.hasMany('episode', {async: true})
 });
 
 // Methods
@@ -141,6 +142,11 @@ Uhura.ChannelController = Ember.ObjectController.extend({
     }
   }
 });
+
+Uhura.DashboardController = Ember.ArrayController.extend({})
+Uhura.DashboardIndexController = Ember.ArrayController.extend({
+   needs: "dashboard"
+})
 
 Uhura.PlayerController = Ember.ObjectController.extend({
   content: [],

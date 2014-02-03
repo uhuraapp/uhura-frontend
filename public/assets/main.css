@@ -237,6 +237,6 @@ header #player a .title, header #player a i{
 }
 
 
-#channel_page, #channels_page  {
+#channel_page, #channels_page, #dashboard  {
   padding-top: 15px;
 }
