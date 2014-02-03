@@ -92,6 +92,7 @@ func AllChannels(userId int, onlyFeatured bool, channelId int) (channels []Chann
 		if userId > 0 {
 			itemQuery = itemQuery.Select("user_items.viewed as viewed, items.*")
 			itemQuery = itemQuery.Joins("left join user_items on user_items.item_id = items.id and user_items.user_id = " + strconv.Itoa(userId) + " left join channels on channels.id = items.channel_id")
+			itemQuery = itemQuery.Order("user_items.viewed DESC")
 		}
 
 		itemQuery.Order("published_at DESC").Find(&episodes)
