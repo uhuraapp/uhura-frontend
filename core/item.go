@@ -86,6 +86,7 @@ func GetItem(id int, userId int) (episodes ItemResult) {
 	if userId > 0 {
 		itemQuery = itemQuery.Select("user_items.viewed as viewed, items.*")
 		itemQuery = itemQuery.Joins("left join user_items on user_items.item_id = items.id and user_items.user_id = " + strconv.Itoa(userId))
+		itemQuery = itemQuery.Order("user_items.viewed DESC")
 	}
 
 	itemQuery.Order("published_at DESC").Find(&episodes)
@@ -94,7 +95,7 @@ func GetItem(id int, userId int) (episodes ItemResult) {
 }
 
 func GetItems(ids []string) (itemsResult []ItemResult) {
-	database.Table("items").Where("id in (?)", ids).Find(&itemsResult)
+	database.Table("items").Where("id in (?)", ids).Order("published_at DESC").Find(&itemsResult)
 	return
 }
 
