@@ -50,8 +50,10 @@ Uhura.DashboardRoute = Ember.Route.extend({
 });
 
 Uhura.DashboardChannelRoute = Ember.Route.extend({
-  model: function (params) {
-    return jQuery.getJSON("/api/subscriptions/" + params.id + "/episodes");
+  setupController: function(controller, model) {
+    jQuery.getJSON("/api/subscriptions/" + model.id + "/episodes").then(function (data) {
+      controller.set('episodes', data.episodes)
+    });
   }
 })
 
@@ -146,10 +148,23 @@ Uhura.ChannelController = Ember.ObjectController.extend({
   }
 });
 
-Uhura.DashboardController = Ember.ArrayController.extend({})
+Uhura.DashboardController = Ember.ArrayController.extend({
+  actions: {
+    listened: function(episode){
+      episode.set('listened', true)
+      $('.audio[data-id=' + episode.id + ']').attr('data-listened', true)
+    }
+  }
+})
+
 Uhura.DashboardIndexController = Ember.ArrayController.extend({
    needs: "dashboard"
 })
+
+Uhura.DashboardChannelController = Ember.ArrayController.extend({
+  content: []
+})
+
 
 Uhura.PlayerController = Ember.ObjectController.extend({
   content: [],
@@ -190,6 +205,7 @@ Uhura.PlayPauseButtonComponent = Ember.Component.extend({
     }
   }
 });
+
 
 
 // auth
@@ -245,8 +261,8 @@ Uhura.Auth = (function() {
     //    }
     //  }
     //});
-};
-return Auth;
+  };
+  return Auth;
 })();
 
 window.auth = new Uhura.Auth();
