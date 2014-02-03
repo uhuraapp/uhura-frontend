@@ -93,7 +93,10 @@ Uhura.Episode = DS.Model.extend({
   channel_id: DS.attr(),
   listened: DS.attr(),
   listenedChanged: function(){
-    $.post("/api/episodes/" + this.get('id') + "/listened")
+    _this = this
+    $.post("/api/episodes/" + this.get('id') + "/listened").then(function() {
+      ga('send', 'event', 'button', 'listened', 'episode', _this.id);
+    })
   }.observes('listened')
 });
 
@@ -109,6 +112,7 @@ Uhura.Helpers.subscribeChannel = function(controller, id){
   var successSubscribe = function() {
     controller.store.find('channel', id).then(function(channel){
       channel.set('subscribed', true);
+      ga('send', 'event', 'button', 'subscribe', 'channel', channel.id);
     });
   };
 

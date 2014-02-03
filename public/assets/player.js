@@ -25,8 +25,6 @@ Uhura.PlayerX.events.onload = function(){
   this.onPosition(this.duration * 0.9, function(eventPosition) {
     Uhura.PlayerController.get('model').set('listened', true)
   });
-
-
 }
 
 
@@ -55,8 +53,11 @@ Uhura.PlayerX.getAudio = function(id){
 Uhura.PlayerX.play = function(episode){
   oldAudio = Uhura.PlayerX.playing
   if(oldAudio){
+    ga('send', 'event', 'button', 'stop', 'episode', oldAudio.id);
     Uhura.PlayerX.episodes[oldAudio.id].destruct()
   }
+
+  ga('send', 'event', 'button', 'play', 'episode', episode.id);
 
   var audio = this.getAudio(episode.id);
   audio.play();
@@ -69,6 +70,7 @@ Uhura.PlayerX.play_pause = function(){
   var audio = Uhura.PlayerX.playing,
       isPlaying = Uhura.PlayerController.get("playing");
 
+  ga('send', 'event', 'button', (isPlaying ? 'pause' : 'resume'), 'episode', audio.id);
   Uhura.PlayerX.episodes[audio.id].togglePause()
   Uhura.PlayerController.set("playing", !isPlaying)
 }
