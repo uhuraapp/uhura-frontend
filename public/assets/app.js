@@ -37,6 +37,9 @@ Uhura.IndexRoute = Ember.Route.extend({
     $.getJSON("/api/channels", {featured: true}).then(function(data){
       controller.set('channels', data.channels)
     });
+  },
+  activate: function(){
+     $(document).attr('title', 'Uhura');
   }
 })
 
@@ -44,6 +47,9 @@ Uhura.ChannelsRoute = Ember.Route.extend({
   model: function () {
     'use strict';
     return this.store.find('channel');
+  },
+  activate: function(){
+     $(document).attr('title', 'Uhura - Poscasts');
   }
 });
 
