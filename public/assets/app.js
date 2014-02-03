@@ -21,13 +21,13 @@ Uhura.Router.reopen({
    /**
     * Tracks pageviews if google analytics is used
     */
-   didTransition: function(infos) {
+    didTransition: function(infos) {
      this._super(infos);
      if (window.ga === undefined) { return; }
 
      Ember.run.next(function(){
       ga('send', 'pageview', window.location.hash.substr(1));
-     });
+    });
    }
  });
 
@@ -175,11 +175,23 @@ Uhura.DashboardController = Ember.ArrayController.extend({
 })
 
 Uhura.DashboardIndexController = Ember.ArrayController.extend({
-   needs: "dashboard"
+ needs: "dashboard",
+ actions: {
+  listened: function(episode){
+    episode.set('listened', true)
+    $('.audio[data-id=' + episode.id + ']').attr('data-listened', true)
+  }
+}
 })
 
 Uhura.DashboardChannelController = Ember.ArrayController.extend({
-  content: []
+  content: [],
+  actions: {
+    listened: function(episode){
+      episode.set('listened', true)
+      $('.audio[data-id=' + episode.id + ']').attr('data-listened', true)
+    }
+  }
 })
 
 
@@ -278,8 +290,8 @@ Uhura.Auth = (function() {
     //    }
     //  }
     //});
-  };
-  return Auth;
+};
+return Auth;
 })();
 
 window.auth = new Uhura.Auth();
