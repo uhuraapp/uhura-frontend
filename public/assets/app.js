@@ -71,6 +71,10 @@ Uhura.DashboardRoute = Ember.Route.extend({
 Uhura.DashboardChannelRoute = Ember.Route.extend({
   setupController: function(controller, model) {
     jQuery.getJSON("/api/subscriptions/" + model.id + "/episodes").then(function (data) {
+      for (var i = data.episodes.length - 1; i >= 0; i--) {
+        episodes = data.episodes[i]
+        data.episodes[i] = Ember.Object.create(episodes)
+      };
       controller.set('episodes', data.episodes)
     });
   }
