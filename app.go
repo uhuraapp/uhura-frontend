@@ -158,6 +158,20 @@ func main() {
 		episodes := core.GetItems(ids)
 		r.JSON(200, map[string]interface{}{"episodes": episodes})
 	})
+
+	m.Put("/api/episodes/:id", func(params martini.Params, request *http.Request, r render.Render) {
+		user, err := core.CurrentUser(request)
+		if err {
+			r.Error(403)
+			return
+		}
+
+		idInt, _ := strconv.Atoi(params["id"])
+		episode := core.GetItem(idInt, user.Id)
+
+		r.JSON(200, map[string]interface{}{"episode": episode})
+
+	})
 	// m.Get("/api/subscriptions/:uri/episodes", func(r render.Render, params martini.Params, request *http.Request) {
 	// 	user, err := core.CurrentUser(request)
 	// 	if err {
