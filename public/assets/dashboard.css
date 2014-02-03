@@ -26,7 +26,7 @@
   width: 25%;
   float: left;
   left: 75%;
-  margin: 0;
+  margin: 0 -1px 0 1px
   z-index: 1;
 }
 
