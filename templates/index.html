@@ -47,16 +47,16 @@
 
   <script type="text/x-handlebars" data-template-name="player">
     {{#if model}}
-      <div id="player">
-        <a href="#" {{action play_pause model}}>
-          {{#if playing}}<i class="fa fa-pause"></i>{{else}}<i class="fa fa-play"></i>{{/if}}
-        </a>
-        <div id="loader">
-          <div class="loading"></div>
-          <div class="playing"></div>
-        </div>
-        <span class="title">{{title}}</span>
+    <div id="player">
+      <a href="#" {{action play_pause model}}>
+        {{#if playing}}<i class="fa fa-pause"></i>{{else}}<i class="fa fa-play"></i>{{/if}}
+      </a>
+      <div id="loader">
+        <div class="loading"></div>
+        <div class="playing"></div>
       </div>
+      <span class="title">{{title}}</span>
+    </div>
     {{/if}}
   </script>
 
@@ -65,8 +65,8 @@
       <div class="uk-container uk-container-center">
         <hgroup>
           {{#link-to 'index'}}
-            <h1>Uhura</h1>
-            <h2>Podcast Manager</h2>
+          <h1>Uhura</h1>
+          <h2>Podcast Manager</h2>
           {{/link-to}}
         </hgroup>
 
@@ -76,12 +76,12 @@
           <ul>
             <li>
               {{#link-to "channels"}}
-                Discovery New Podcasts
+              Discovery New Podcasts
               {{/link-to}}
             </li>
             <li>
               {{#link-to "dashboard"}}
-                Dashboard
+              Dashboard
               {{/link-to}}
             </li>
           </ul>
@@ -90,25 +90,25 @@
     </header>
 
     <div id="content" class="uk-container uk-container-center">
-        {{outlet}}
+      {{outlet}}
     </div>
 
     <footer>
       Created with <span class="heart">♥</span> by <a href="https://github.com/dukex">Duke Khaos</a> with awesome <a href="https://github.com/dukex/uhura/graphs/contributors">Contributors</a>
-      </footer>
+    </footer>
   </script>
 
   <script type="text/x-handlebars" data-template-name="index">
     <div id="home" class="uk-width-1-1">
       {{#link-to 'channels' id="call-to-action"}}
-        Listen Awesome Podcasts
+      Listen Awesome Podcasts
       {{/link-to}}
       <ul id="channels">
         {{#each channel in channels}}
         <li>
           {{#link-to 'channel' channel.id}}
           <div>
-          <img {{bind-attr src=channel.image_url}} />
+            <img {{bind-attr src=channel.image_url}} />
           </div>
           {{/link-to}}
         </li>
@@ -139,11 +139,11 @@
           {{/link-to}}
 
           {{#if subscribed}}
-            <button class="uk-button uk-button-small uk-button-success subscribe fa fa-check" {{action 'unsubscribeChannel' id}}>Subscribed</button>
+          <button class="uk-button uk-button-small uk-button-success subscribe fa fa-check" {{action 'unsubscribeChannel' id}}>Subscribed</button>
           {{else}}
-            {{#if uri }}
-              <button class="uk-button uk-button-small uk-button-primary subscribe" {{action 'subscribeChannel' id}}>Subscribe!</button>
-            {{/if}}
+          {{#if uri }}
+          <button class="uk-button uk-button-small uk-button-primary subscribe" {{action 'subscribeChannel' id}}>Subscribe!</button>
+          {{/if}}
           {{/if}}
         </li>
         {{/each}}
