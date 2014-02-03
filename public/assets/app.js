@@ -49,7 +49,6 @@ Uhura.DashboardRoute = Ember.Route.extend({
   }
 });
 
-
 Uhura.DashboardChannelRoute = Ember.Route.extend({
   model: function (params) {
     return jQuery.getJSON("/api/subscriptions/" + params.id + "/episodes");
@@ -139,6 +138,10 @@ Uhura.ChannelController = Ember.ObjectController.extend({
     subscribeChannel: function(id) {
       'use strict';
       Uhura.Helpers.subscribeChannel(this, id)
+    },
+    listened: function(episode){
+      episode.set('listened', true)
+      $('.audio[data-id=' + episode.id + ']').attr('data-listened', true)
     }
   }
 });
