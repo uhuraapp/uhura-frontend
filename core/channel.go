@@ -114,7 +114,7 @@ func Subscriptions(user *User) (subscriptions []UserChannelsEntity, channels []C
 	subscriptionsQuery := database.Table("user_channels").Where("user_id = ?", user.Id)
 	subscriptionsQuery.Find(&subscriptions).Pluck("channel_id", &channelsIds)
 
-	database.Table("channels").Where("id IN (?)", channelsIds).Find(&channels)
+	database.Table("channels").Where("id IN (?)", channelsIds).Order("title DESC").Find(&channels)
 
 	for i, channel := range channels {
 		var userItems []interface{}
