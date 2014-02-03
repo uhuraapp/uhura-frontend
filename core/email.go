@@ -2,12 +2,14 @@ package core
 
 import (
 	"bytes"
+	"fmt"
 	"github.com/jordan-wright/email"
 	"github.com/rakyll/coop"
 	"html/template"
 	"io/ioutil"
 	"net/smtp"
 	"os"
+	"strconv"
 	"time"
 )
 
@@ -16,10 +18,11 @@ const (
 )
 
 var (
-	FROM          string
-	SMTP_SERVER   string
-	SMTP_HOST     string
-	SMTP_PASSWORD string
+	FROM                string
+	SMTP_SERVER         string
+	SMTP_HOST           string
+	SMTP_PASSWORD       string
+	DELAY_WELCOME_EMAIL time.Duration
 )
 
 func init() {
@@ -27,6 +30,8 @@ func init() {
 	SMTP_SERVER = os.Getenv("SMTP_SERVER")
 	SMTP_HOST = os.Getenv("SMTP_HOST")
 	SMTP_PASSWORD = os.Getenv("SMTP_PASSWORD")
+	delay, _ := strconv.Atoi(os.Getenv("DELAY_WELCOME"))
+	DELAY_WELCOME_EMAIL = time.Duration(delay) * time.Minute
 }
 
 func render(name string, data interface{}) []byte {
@@ -38,8 +43,9 @@ func render(name string, data interface{}) []byte {
 }
 
 func WelcomeMail(user *User) {
-	coop.After(15*time.Minute, func() {
+	coop.After(5*time.Second, func() {
 		err := sendMail([]string{user.Email}, "Welcome to Uhura", render("welcome", user))
+		fmt.Println("ERRRRRRR", err)
 		if err == nil {
 			database.Model(user).Update("WelcomeMail", true)
 		}
