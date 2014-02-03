@@ -2,7 +2,7 @@
 
 Hailing Frequencies Are Open!
 
-![Screenshot](http://uhura.herokuapp.com/assets/uhura-home.png)
+![Screenshot](http://uhura.herokuapp.com/assets/uhura-home-0.2.png)
 
 ## Development
 
