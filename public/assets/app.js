@@ -104,10 +104,7 @@ Uhura.Episode = DS.Model.extend({
   listened: DS.attr(),
   published_at: DS.attr(),
   listenedChanged: function(){
-    _this = this
-    $.post("/api/episodes/" + this.get('id') + "/listened").then(function() {
-      ga('send', 'event', 'button', 'listened', 'episode', _this.id);
-    })
+    Uhura.Helpers.listened(this.get('id'))
   }.observes('listened')
 });
 
@@ -135,6 +132,13 @@ Uhura.Helpers.subscribeChannel = function(controller, id){
   };
 
   window.auth.withLoggedUser(subscribeFn);
+}
+
+Uhura.Helpers.listened = function(episode_id){
+  $.post("/api/episodes/" + episode_id + "/listened").then(function() {
+    ga('send', 'event', 'button', 'listened', 'episode', episode_id);
+    $('.audio[data-id=' + episode_id + ']').attr('data-listened', true)
+  })
 }
 
 // controller
@@ -184,14 +188,7 @@ Uhura.ChannelController = Ember.ObjectController.extend({
   }
 });
 
-Uhura.DashboardController = Ember.ArrayController.extend({
-  actions: {
-    listened: function(episode){
-      episode.set('listened', true)
-      $('.audio[data-id=' + episode.id + ']').attr('data-listened', true)
-    }
-  }
-})
+Uhura.DashboardController = Ember.ArrayController.extend()
 
 Uhura.DashboardIndexController = Ember.ArrayController.extend({
  needs: "dashboard",
@@ -207,8 +204,7 @@ Uhura.DashboardChannelController = Ember.ArrayController.extend({
   content: [],
   actions: {
     listened: function(episode){
-      episode.set('listened', true)
-      $('.audio[data-id=' + episode.id + ']').attr('data-listened', true)
+      Uhura.Helpers.listened(episode.id)
     }
   }
 })
