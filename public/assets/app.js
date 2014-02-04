@@ -163,6 +163,14 @@ Uhura.ChannelsController = Ember.ArrayController.extend({
 });
 
 Uhura.ChannelController = Ember.ObjectController.extend({
+  episodes: (function() {
+    return Ember.ArrayProxy.createWithMixins(Ember.SortableMixin, {
+      sortProperties: ['title'],
+      sortAscending: false,
+      content: this.get('content.episodes')
+    });
+  }).property('content.episodes'),
+
   actions: {
     subscribeChannel: function(id) {
       'use strict';
