@@ -102,6 +102,7 @@ Uhura.Episode = DS.Model.extend({
   channel: DS.belongsTo('channel'),
   channel_id: DS.attr(),
   listened: DS.attr(),
+  published_at: DS.attr(),
   listenedChanged: function(){
     _this = this
     $.post("/api/episodes/" + this.get('id') + "/listened").then(function() {
@@ -165,7 +166,7 @@ Uhura.ChannelsController = Ember.ArrayController.extend({
 Uhura.ChannelController = Ember.ObjectController.extend({
   episodes: (function() {
     return Ember.ArrayProxy.createWithMixins(Ember.SortableMixin, {
-      sortProperties: ['title'],
+      sortProperties: ['published_at'],
       sortAscending: false,
       content: this.get('content.episodes')
     });

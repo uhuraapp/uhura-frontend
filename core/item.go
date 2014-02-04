@@ -41,6 +41,7 @@ type ItemResult struct {
 	Viewed      interface{} `json:"listened"`
 	ChannelId   int         `json:"channel_id"`
 	SourceUrl   string      `json:"source_url"`
+	PublishedAt time.Time   `json:"published_at"`
 }
 
 type Counter struct {
