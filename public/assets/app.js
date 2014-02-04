@@ -183,7 +183,7 @@ Uhura.ChannelController = Ember.ObjectController.extend({
     },
     listened: function(episode){
       episode.set('listened', true)
-      $('.audio[data-id=' + episode.id + ']').attr('data-listened', true)
+      Uhura.Helpers.listened(episode.id)
     }
   }
 });
@@ -191,13 +191,12 @@ Uhura.ChannelController = Ember.ObjectController.extend({
 Uhura.DashboardController = Ember.ArrayController.extend()
 
 Uhura.DashboardIndexController = Ember.ArrayController.extend({
- needs: "dashboard",
- actions: {
-  listened: function(episode){
-    episode.set('listened', true)
-    $('.audio[data-id=' + episode.id + ']').attr('data-listened', true)
+  needs: "dashboard",
+  actions: {
+    listened: function(episode){
+      Uhura.Helpers.listened(episode.id)
+    },
   }
-}
 })
 
 Uhura.DashboardChannelController = Ember.ArrayController.extend({
