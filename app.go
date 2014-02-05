@@ -7,6 +7,7 @@ import (
 	"github.com/codegangsta/martini"
 	"github.com/codegangsta/martini-contrib/render"
 	"github.com/dukex/uhura/core"
+	"github.com/joeguo/sitemap"
 	"github.com/rakyll/martini-contrib/cors"
 	"html/template"
 	"io/ioutil"
@@ -14,6 +15,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 var config oauth.Config
@@ -247,6 +249,29 @@ func main() {
 			core.FetchAllChannell()
 		}
 		r.JSON(202, "")
+	})
+
+	m.Post("/sitemap", func() {
+		channels, _ := core.AllChannels(0, false, 0)
+		var items []*sitemap.Item
+
+		item := sitemap.Item{
+			Loc:        "http://uhurapp.com/",
+			LastMod:    time.Now(),
+			Priority:   1,
+			Changefreq: "daily",
+		}
+
+		items = append(items, &item)
+
+		for _, channel := range channels {
+			items = append(items, &sitemap.Item{
+				Loc:     "http://uhuraapp.com/channel/" + strconv.Itoa(channel.Id),
+				LastMod: channel.UpdatedAt, Priority: 0.5, Changefreq: "weekly",
+			})
+		}
+
+		sitemap.SiteMap("public/assets/sitemap.xml.gz", items)
 	})
 
 	m.Get("/**", emberAppHandler)
