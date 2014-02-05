@@ -1,6 +1,7 @@
 install:
 	go get github.com/kr/godep
 	godep restore
+	go get
 
 dev: install
 	go test
