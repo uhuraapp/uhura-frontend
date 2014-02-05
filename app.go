@@ -21,16 +21,30 @@ var config oauth.Config
 const profileInfoURL = "https://www.googleapis.com/oauth2/v1/userinfo?alt=json"
 
 func emberAppHandler(r render.Render, req *http.Request) string {
-	var baseUrl string
-	if os.Getenv("ENV") == "development" {
-		baseUrl = "http://127.0.0.1:3002"
-	} else {
-		baseUrl = "http://uhuraapp.com"
-	}
+	var indexTemplate string
+	userAgent := strings.ToLower(req.UserAgent())
 
-	itb, _ := ioutil.ReadFile("./templates/index.html")
-	indexTemplate := string(itb[:])
-	indexTemplate = strings.Replace(indexTemplate, "<% URL %>", baseUrl, -1)
+	if strings.Contains(userAgent, "bot") {
+		url := os.Getenv("PRERENDER_SERVER") + "/" + "http://" + req.Host + req.URL.RequestURI()
+		fmt.Println(url)
+
+		res, _ := http.Get(url)
+		defer res.Body.Close()
+
+		body, _ := ioutil.ReadAll(res.Body)
+		indexTemplate = string(body)
+	} else {
+		var baseUrl string
+		if os.Getenv("ENV") == "development" {
+			baseUrl = "http://127.0.0.1:3002"
+		} else {
+			baseUrl = "http://uhuraapp.com"
+		}
+
+		itb, _ := ioutil.ReadFile("./templates/index.html")
+		indexTemplate = string(itb[:])
+		indexTemplate = strings.Replace(indexTemplate, "<% URL %>", baseUrl, -1)
+	}
 
 	return indexTemplate
 }
