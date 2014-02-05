@@ -88,16 +88,22 @@ header:after{
 }
 
 header hgroup{
-  height: 55px;
-  width: 125px;
-  background: #3E4651 url('/assets/logo.png') center  no-repeat;
-  padding: 0 5px;
+
+
   float: left;
   border-radius: 0 0 2px 2px;
 }
 
+header hgroup a{
+  padding: 0 5px;
+  display: block;
+  height: 55px;
+  width: 125px;
+  background: #3E4651 url('/assets/logo.png') center  no-repeat;
+}
+
 header h1,header h2{
-  display: none;
+  text-indent: -50000px;
 }
 
 header h1{
