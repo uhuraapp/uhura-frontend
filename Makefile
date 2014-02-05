@@ -3,7 +3,7 @@ install:
 	godep restore
 
 dev: install
-	go get github.com/mattn/goveralls
+	go test
 
 coverage:
 	go test -coverprofile=coverage.out ./core
