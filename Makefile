@@ -1,9 +1,9 @@
-install:
+deps:
 	go get github.com/kr/godep
 	godep restore
 	go get
 
-dev: install
+test: deps
 	go test
 
 coverage:

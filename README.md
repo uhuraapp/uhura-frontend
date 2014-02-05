@@ -25,7 +25,7 @@ $ export DATABASE_URL="postgres://$USER@localhost/uhura?sslmode=disable"
 $ cd $GOPATH/src
 $ git clone git@github.com:dukex/uhura.git github.com/dukex/uhura
 $ cd github.com/dukex/uhura
-$ make dev
+$ make deps
 ```
 
 Dev env
@@ -60,8 +60,9 @@ $ make coverage
 
 ## Sending Email
 
+``` bash
 export EMAIL_FROM="you@server.com"
 export SMTP_PASSWORD="yourpassword"
 export SMTP_HOST="server.com"
 export SMTP_SERVER="server.com:587"
-
+```
