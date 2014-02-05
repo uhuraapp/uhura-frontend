@@ -11,9 +11,9 @@ import (
 	"html/template"
 	"io/ioutil"
 	"net/http"
-	"strconv"
-
 	"os"
+	"strconv"
+	"strings"
 )
 
 var config oauth.Config
@@ -21,8 +21,17 @@ var config oauth.Config
 const profileInfoURL = "https://www.googleapis.com/oauth2/v1/userinfo?alt=json"
 
 func emberAppHandler(r render.Render, req *http.Request) string {
+	var baseUrl string
+	if os.Getenv("ENV") == "development" {
+		baseUrl = "http://127.0.0.1:3002"
+	} else {
+		baseUrl = "http://uhuraapp.com"
+	}
+
 	itb, _ := ioutil.ReadFile("./templates/index.html")
 	indexTemplate := string(itb[:])
+	indexTemplate = strings.Replace(indexTemplate, "<% URL %>", baseUrl, -1)
+
 	return indexTemplate
 }
 
