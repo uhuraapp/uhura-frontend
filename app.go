@@ -55,8 +55,6 @@ func main() {
 	m.Use(martini.Static("assets"))
 	m.Use(martini.Static("fonts"))
 
-	m.Get("/", emberAppHandler)
-
 	// API
 
 	m.Post("/api/channels/:id/fetcher", func(r render.Render, params martini.Params) {

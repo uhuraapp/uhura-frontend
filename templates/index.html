@@ -38,6 +38,39 @@
   <script type="text/javascript" src="/assets/audio.min.js"></script>
 </head>
 <body>
+  <noscript>
+    <header>
+      <div class="uk-container uk-container-center">
+        <hgroup>
+          <a href="/">
+            <h1>Uhura</h1>
+            <h2>Podcast Manager</h2>
+          </a>
+        </hgroup>
+
+        <nav>
+          <ul>
+            <li>
+              <a href="/channels">
+                Discovery New Podcasts
+              </a>
+            </li>
+            <li>
+              <a href="/dashboard">
+                Dashboard
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <div id="content">
+    </div>
+
+    <footer>
+      Created with <span class="heart">♥</span> by <a href="https://github.com/dukex">Duke Khaos</a> with awesome <a href="https://github.com/dukex/uhura/graphs/contributors">Contributors</a>
+    </footer>
+  </noscript>
 
   <script type="text/x-handlebars" id="components/play-pause-button">
     <button {{action "play" episode}} class="uk-button uk-button-large">
