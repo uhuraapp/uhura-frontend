@@ -57,11 +57,12 @@ func main() {
 
 	// API
 
-	// m.Post("/api/channels/:id/fetcher", func(responseWriter http.ResponseWriter, request *http.Request, params martini.Params) {
-	// 	channel := core.GetChannelByChannel(params["id"])
-	// 	core.FetchChanell(channel)
-	// 	//	http.Redirect(responseWriter, request, "/dashboard/channels/"+params["id"], http.StatusMovedPermanently)
-	// })
+	m.Post("/api/channels/:id/fetcher", func(r render.Render, params martini.Params) {
+		paramsId, _ := strconv.Atoi(params["id"])
+		channel := core.GetChannel(paramsId)
+		core.FetchChanell(channel)
+		r.JSON(202, nil)
+	})
 
 	m.Post("/api/episodes/:id/listened", func(responseWriter http.ResponseWriter, r render.Render, request *http.Request, params martini.Params) {
 		user, err := core.CurrentUser(request)
