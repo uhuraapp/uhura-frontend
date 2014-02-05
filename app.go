@@ -20,6 +20,12 @@ var config oauth.Config
 
 const profileInfoURL = "https://www.googleapis.com/oauth2/v1/userinfo?alt=json"
 
+func emberAppHandler(r render.Render, req *http.Request) string {
+	itb, _ := ioutil.ReadFile("./templates/index.html")
+	indexTemplate := string(itb[:])
+	return indexTemplate
+}
+
 func main() {
 	config := &oauth.Config{
 		ClientId:     os.Getenv("GOOGLE_CLIENT_ID"),
@@ -49,11 +55,7 @@ func main() {
 	m.Use(martini.Static("assets"))
 	m.Use(martini.Static("fonts"))
 
-	m.Get("/", func(r render.Render, req *http.Request) string {
-		itb, _ := ioutil.ReadFile("./templates/index.html")
-		indexTemplate := string(itb[:])
-		return indexTemplate
-	})
+	m.Get("/", emberAppHandler)
 
 	// API
 
@@ -226,12 +228,7 @@ func main() {
 		r.JSON(202, "")
 	})
 
-	// Ember
-	m.Get("/**", func(params martini.Params, responseWriter http.ResponseWriter, request *http.Request) {
-		url := params["_1"]
-
-		http.Redirect(responseWriter, request, "/#/"+url, http.StatusMovedPermanently)
-	})
+	m.Get("/**", emberAppHandler)
 
 	fmt.Println("Starting server on", os.Getenv("PORT"))
 	err := http.ListenAndServe(":"+os.Getenv("PORT"), m)

@@ -18,6 +18,7 @@ Uhura.Router.map(function () {
   })
 });
 Uhura.Router.reopen({
+   location: 'history',
    /**
     * Tracks pageviews if google analytics is used
     */
