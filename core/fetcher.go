@@ -44,9 +44,8 @@ func pollFeed(uri string, timeout int) {
 
 func channelFetchHandler(feed *rss.Feed, channels []*rss.Channel) {
 	for _, channelData := range channels {
-		var channel struct {
-			Id int
-		}
+		var channel Channel
+
 		var imageUrl string
 		if itunesImage := channelData.Extensions[itunesExt]["image"]; itunesImage != nil {
 			imageUrl = itunesImage[0].Attrs["href"]
@@ -56,13 +55,16 @@ func channelFetchHandler(feed *rss.Feed, channels []*rss.Channel) {
 
 		database.Table("channels").Where("url = ?", feed.Url).First(&channel)
 
-		database.Table("channels").Where(channel.Id).Updates(map[string]interface{}{
-			"title":           channelData.Title,
-			"description":     channelData.Description,
-			"image_url":       imageUrl,
-			"copyright":       channelData.Copyright,
-			"last_build_date": channelData.LastBuildDate,
-		})
+		channel.Title = channelData.Title
+		channel.Description = channelData.Description
+		channel.ImageUrl = imageUrl
+		channel.Copyright = channelData.Copyright
+		channel.UpdatedAt = time.Now()
+		charset.CreatedAt = time.Now()
+		channel.LastBuildDate = channelData.LastBuildDate
+
+		database.Save(&channel)
+
 		ChannelChan <- 1
 	}
 }

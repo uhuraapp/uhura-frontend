@@ -42,7 +42,7 @@ type ChannelResult struct {
 	Subscribed  interface{} `json:"subscribed"`
 	Copyright   string      `json:"copyright"`
 	Episodes    []int64     `json:"episodes"`
-	UpdatedAt   time.Time   `json:"update_at"`
+	UpdatedAt   time.Time   `json:"updated_at"`
 }
 
 func (cr *ChannelResult) GetUri() string {
