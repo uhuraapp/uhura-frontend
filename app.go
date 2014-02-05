@@ -256,7 +256,7 @@ func main() {
 		var items []*sitemap.Item
 
 		item := sitemap.Item{
-			Loc:        "http://uhurapp.com/",
+			Loc:        "http://uhuraapp.com/",
 			LastMod:    time.Now(),
 			Priority:   1,
 			Changefreq: "daily",
@@ -265,9 +265,17 @@ func main() {
 		items = append(items, &item)
 
 		for _, channel := range channels {
+			updatedAt := channel.UpdatedAt
+
+			if updatedAt.Year() == 1 {
+				updatedAt = time.Now()
+			}
+
 			items = append(items, &sitemap.Item{
-				Loc:     "http://uhuraapp.com/channel/" + strconv.Itoa(channel.Id),
-				LastMod: channel.UpdatedAt, Priority: 0.5, Changefreq: "weekly",
+				Loc:        "http://uhuraapp.com/channel/" + strconv.Itoa(channel.Id),
+				LastMod:    updatedAt,
+				Priority:   0.5,
+				Changefreq: "weekly",
 			})
 		}
 
