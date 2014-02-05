@@ -18,6 +18,14 @@
 			"Rev": "5877582f0cb070bc21b199dab5e7d18fb546444a"
 		},
 		{
+			"ImportPath": "github.com/ChimeraCoder/anaconda",
+			"Rev": "67397ab30e82e3b80773e4ed77009225c3de33c8"
+		},
+		{
+			"ImportPath": "github.com/ChimeraCoder/tokenbucket",
+			"Rev": "c5a927568de7aad8a58127d80bcd36ca4e71e454"
+		},
+		{
 			"ImportPath": "github.com/codegangsta/inject",
 			"Rev": "346a984957aa24276ebc5e7b16b3ac6a50fe8138"
 		},
@@ -36,6 +44,10 @@
 			"Rev": "311ebb7422d3ff70cc1d064c5a297520ff5f304a"
 		},
 		{
+			"ImportPath": "github.com/garyburd/go-oauth/oauth",
+			"Rev": "025e702af00860fdd5463c717576a08b4fbe8e92"
+		},
+		{
 			"ImportPath": "github.com/gorilla/context",
 			"Rev": "708054d61e5a2918b9f4e9700000ee611dcf03f5"
 		},
@@ -50,6 +62,10 @@
 		{
 			"ImportPath": "github.com/jinzhu/gorm",
 			"Rev": "71e7b37bdfd69432e00565a7483a3788fdc20eb7"
+		},
+		{
+			"ImportPath": "github.com/joeguo/sitemap",
+			"Rev": "785fecae7f8def06cf84825f9c0856534e063384"
 		},
 		{
 			"ImportPath": "github.com/jordan-wright/email",
