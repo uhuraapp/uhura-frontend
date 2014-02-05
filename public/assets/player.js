@@ -22,7 +22,7 @@ Uhura.PlayerX.events.playing = function(){
 }
 
 Uhura.PlayerX.events.onload = function(){
-  this.onPosition(this.duration * 0.01, function(eventPosition) {
+  this.onPosition(this.duration * 0.9, function(eventPosition) {
     var model = Uhura.PlayerController.get('model')
     Uhura.Helpers.listened(model.id)
   });
