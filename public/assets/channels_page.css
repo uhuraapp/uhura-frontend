@@ -10,6 +10,7 @@
 #channels_page ul li {
   margin-bottom: 20px;
   position: relative;
+  height: 230px;
 }
 
 #channels_page ul a{
