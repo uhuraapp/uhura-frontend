@@ -9,10 +9,19 @@ Hailing Frequencies Are Open!
 ``` bash
 $ go version
 go version go1.2
+$ psql --version
+psql (PostgreSQL) 9.1.9
 ```
 
+Create a database
+
+```
+psql -c "CREATE DATABASE uhura" -h localhost -U $USER
+```
+
+
 ``` bash
-$ export DATABASE_URL="postgres://root@localhost/uhura?sslmode=disable"
+$ export DATABASE_URL="postgres://$USER@localhost/uhura?sslmode=disable"
 $ cd $GOPATH/src
 $ git clone git@github.com:dukex/uhura.git github.com/dukex/uhura
 $ cd github.com/dukex/uhura
