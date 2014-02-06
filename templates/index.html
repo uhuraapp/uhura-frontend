@@ -122,7 +122,7 @@
       <h2 class="title">Podcasts</h2>
       <form class="uk-form" {{action "newChannel" on="submit"}}>
         <fieldset data-uk-margin class="uk-vertical-align-middle">
-          {{input type="url" placeholder="Podcast URL"
+          {{input type="url" placeholder="Poscast Feed URL"
           value=url class="form-control new-channel"}}
           <button type="submit" name="submit" class="uk-button uk-button-success">Add New</button>
         </fieldset>
@@ -151,7 +151,7 @@
           <form class="uk-form" {{action "newChannel" on="submit"}}>
             <fieldset data-uk-margin class="uk-vertical-align-middle">
               <label for="new-channel"> Add New Podcast </label>
-              {{input type="url" id="new-channel" class="form-control new-channel" placeholder="Podcast URL"
+              {{input type="url" id="new-channel" class="form-control new-channel" placeholder="Poscast Feed URL"
               value=url class="form-control"}}
               <button type="submit" name="submit" class="uk-button uk-button-success">Submit</button>
             </fieldset>
