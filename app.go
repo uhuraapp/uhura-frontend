@@ -272,7 +272,7 @@ func main() {
 			}
 
 			items = append(items, &sitemap.Item{
-				Loc:        "http://uhuraapp.com/channel/" + strconv.Itoa(channel.Id),
+				Loc:        "http://uhuraapp.com/channels/" + strconv.Itoa(channel.Id),
 				LastMod:    updatedAt,
 				Priority:   0.5,
 				Changefreq: "weekly",
