@@ -185,6 +185,15 @@ func main() {
 		r.JSON(200, map[string]interface{}{"episodes": episodes})
 	})
 
+	m.Get("/api/episodes/:id", func(params martini.Params, request *http.Request, r render.Render) {
+		user, _ := core.CurrentUser(request)
+
+		idInt, _ := strconv.Atoi(params["id"])
+		episode := core.GetItem(idInt, user.Id)
+
+		r.JSON(200, map[string]interface{}{"episode": episode})
+	})
+
 	m.Put("/api/episodes/:id", func(params martini.Params, request *http.Request, r render.Render) {
 		user, err := core.CurrentUser(request)
 		if err {
