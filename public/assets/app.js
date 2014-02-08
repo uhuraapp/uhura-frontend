@@ -43,7 +43,7 @@ Uhura.IndexRoute = Ember.Route.extend({
     });
   },
   activate: function(){
-     $(document).attr('title', 'Uhura');
+     $(document).attr('title', 'Uhura App - Podcasts Manager - Listen your podcasts Here!');
   }
 })
 
@@ -53,7 +53,7 @@ Uhura.ChannelsRoute = Ember.Route.extend({
     return this.store.find('channel');
   },
   activate: function(){
-     $(document).attr('title', 'Uhura - Poscasts');
+     $(document).attr('title','Uhura App - Channels - Podcasts Manager - Listen your podcasts Here!');
   }
 });
 
