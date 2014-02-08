@@ -7,7 +7,6 @@ import (
 	"github.com/codegangsta/martini"
 	"github.com/codegangsta/martini-contrib/render"
 	"github.com/dukex/uhura/core"
-	"github.com/joeguo/sitemap"
 	"github.com/rakyll/martini-contrib/cors"
 	"html/template"
 	"io/ioutil"
@@ -15,7 +14,6 @@ import (
 	"os"
 	"strconv"
 	"strings"
-	"time"
 )
 
 var config oauth.Config
@@ -39,6 +37,9 @@ func emberAppHandler(r render.Render, req *http.Request) string {
 		indexTemplate = string(body)
 	} else {
 		baseUrl := "http://uhuraapp.com"
+		if os.Getenv("ENV") == "development" {
+			baseUrl = "http://127.0.0.1:3002"
+		}
 
 		itb, _ := ioutil.ReadFile("./templates/index.html")
 		indexTemplate = string(itb[:])
@@ -257,35 +258,8 @@ func main() {
 		r.JSON(202, "")
 	})
 
-	m.Post("/sitemap", func() {
-		channels, _ := core.AllChannels(0, false, 0)
-		var items []*sitemap.Item
-
-		item := sitemap.Item{
-			Loc:        "http://uhuraapp.com/",
-			LastMod:    time.Now(),
-			Priority:   1,
-			Changefreq: "daily",
-		}
-
-		items = append(items, &item)
-
-		for _, channel := range channels {
-			updatedAt := channel.UpdatedAt
-
-			if updatedAt.Year() == 1 {
-				updatedAt = time.Now()
-			}
-
-			items = append(items, &sitemap.Item{
-				Loc:        "http://uhuraapp.com/channels/" + strconv.Itoa(channel.Id),
-				LastMod:    updatedAt,
-				Priority:   0.5,
-				Changefreq: "weekly",
-			})
-		}
-
-		sitemap.SiteMap("public/assets/sitemap.xml.gz", items)
+	m.Get("/sitemap.xml", func() string {
+		return core.SiteMap()
 	})
 
 	m.Get("/**", emberAppHandler)
