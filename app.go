@@ -26,6 +26,8 @@ func emberAppHandler(r render.Render, req *http.Request) string {
 	var indexTemplate string
 	userAgent := strings.ToLower(req.UserAgent())
 
+	fmt.Println(userAgent)
+
 	if strings.Contains(userAgent, "bot") || strings.Contains(userAgent, "facebookexternalhit") {
 		url := os.Getenv("PRERENDER_SERVER") + "/" + "http://" + req.Host + req.URL.RequestURI()
 		fmt.Println(url)
