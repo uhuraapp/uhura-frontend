@@ -61,6 +61,7 @@ func channelFetchHandler(feed *rss.Feed, channels []*rss.Channel) {
 		channel.Copyright = channelData.Copyright
 		channel.UpdatedAt = time.Now()
 		channel.CreatedAt = time.Now()
+		channel.Language = channelData.Language
 		channel.LastBuildDate = channelData.LastBuildDate
 
 		database.Save(&channel)

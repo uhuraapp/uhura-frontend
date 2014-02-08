@@ -21,6 +21,7 @@ type Channel struct {
 	Featured      bool
 	CreatedAt     time.Time
 	UpdatedAt     time.Time
+	Language      string
 }
 
 type UserChannel struct {
