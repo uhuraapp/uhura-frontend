@@ -47,9 +47,15 @@ func generateSitemap() string {
 	}
 
 	for _, episode := range episodes {
+		updatedAt := episode.PublishedAt
+
+		if updatedAt.Year() == 1 {
+			updatedAt = time.Now()
+		}
+
 		items = append(items, &sitemap.Item{
 			Loc:        "http://uhuraapp.com/channels/" + strconv.Itoa(episode.ChannelId) + "/" + strconv.Itoa(episode.Id),
-			LastMod:    episode.PublishedAt,
+			LastMod:    updatedAt,
 			Priority:   0.2,
 			Changefreq: "monthly",
 		})
