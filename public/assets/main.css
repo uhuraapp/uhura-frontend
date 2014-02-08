@@ -249,9 +249,17 @@ header .uk-container-center{
 }
 
 #content{
-  margin-top: 45px
+  margin-top: 60px
 }
 
-#channel_page, #channels_page, #dashboard  {
-  padding-top: 15px;
+#loading_page {
+  font-size: 50px;
+text-align: center;
+margin: 100px;
 }
+}
+
+/*
+#channel_page, #channels_page, #dashboard, #loading_page  {
+  padding-top: 15px;
+}*/
