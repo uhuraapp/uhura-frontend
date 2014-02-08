@@ -18,14 +18,6 @@
 			"Rev": "5877582f0cb070bc21b199dab5e7d18fb546444a"
 		},
 		{
-			"ImportPath": "github.com/ChimeraCoder/anaconda",
-			"Rev": "67397ab30e82e3b80773e4ed77009225c3de33c8"
-		},
-		{
-			"ImportPath": "github.com/ChimeraCoder/tokenbucket",
-			"Rev": "c5a927568de7aad8a58127d80bcd36ca4e71e454"
-		},
-		{
 			"ImportPath": "github.com/codegangsta/inject",
 			"Rev": "346a984957aa24276ebc5e7b16b3ac6a50fe8138"
 		},
@@ -40,12 +32,12 @@
 			"Rev": "eb23f4925fb85db43df94d992501513ad9265e6f"
 		},
 		{
-			"ImportPath": "github.com/fiam/gounidecode/unidecode",
-			"Rev": "311ebb7422d3ff70cc1d064c5a297520ff5f304a"
+			"ImportPath": "github.com/dukex/buffer",
+			"Rev": "eb6176c61e1a91dc1158a0bd9152148ce2c612b5"
 		},
 		{
-			"ImportPath": "github.com/garyburd/go-oauth/oauth",
-			"Rev": "025e702af00860fdd5463c717576a08b4fbe8e92"
+			"ImportPath": "github.com/fiam/gounidecode/unidecode",
+			"Rev": "311ebb7422d3ff70cc1d064c5a297520ff5f304a"
 		},
 		{
 			"ImportPath": "github.com/gorilla/context",

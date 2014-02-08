@@ -1,0 +1,24 @@
+{
+    "success" : true,
+    "buffer_count" : 10,
+    "buffer_percentage" : 20,
+    "updates" : [{
+        "id" : "4ecda256512f7ee521000004",
+        "created_at" : 1320703582,
+        "day" : "Saturday 26th November",
+        "due_at" : 1320742680,
+        "due_time" : "11:05 am",
+        "media" : {
+            "link" : "http://google.com",
+            "title" : "Google",
+            "description" : "The google homepage"
+        },
+        "profile_id" : "4eb854340acb04e870000010",
+        "profile_service" : "twitter",
+        "status" : "buffer",
+        "text" : "This is an example update",
+        "text_formatted" : "This is an example update",
+        "user_id" : "4eb9276e0acb04bb81000067",
+        "via" : "api"
+    }]
+}
