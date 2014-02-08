@@ -21,7 +21,7 @@ func NewChannelTweet(chId int) {
 		database.First(&ch, chId)
 
 		text := ch.ShareUrl()
-		text = text + " [new] " + ch.Title
+		text = text + " #podcast " + ch.Title
 		client.CreateUpdate(text, []string{bufferProfile}, map[string]interface{}{})
 	})
 }
