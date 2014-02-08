@@ -43,8 +43,9 @@ Uhura.IndexRoute = Ember.Route.extend({
     });
   },
   activate: function(){
-     $(document).attr('title', 'Uhura App - Podcasts Manager - Listen your podcasts Here!');
-  }
+    var title = 'Uhura App - Podcasts Manager - Listen your podcasts Here!'
+    $(document).attr('title', title);
+    $("[property='og:title']").attr('content', title)  }
 })
 
 Uhura.ChannelsRoute = Ember.Route.extend({
@@ -53,7 +54,9 @@ Uhura.ChannelsRoute = Ember.Route.extend({
     return this.store.find('channel');
   },
   activate: function(){
-     $(document).attr('title','Uhura App - Channels - Podcasts Manager - Listen your podcasts Here!');
+    var title = 'Uhura App - Channels - Podcasts Manager - Listen your podcasts Here!';
+    $(document).attr('title', title);
+    $("[property='og:title']").attr('content', title)
   }
 });
 
@@ -64,7 +67,9 @@ Uhura.ChannelRoute = Ember.Route.extend({
   },
   activate: function(){
     var title = this.modelFor('channel').get('title')
+
     $(document).attr('title', title);
+    $("[property='og:title']").attr('content', title)
   }
 });
 
@@ -72,7 +77,9 @@ Uhura.ChannelEpisodeRoute = Ember.Route.extend({
   activate: function(){
     var title = this.modelFor('channel.episode').get('title'),
         channel_title = this.modelFor('channel').get('title');
+
     $(document).attr('title', title + ' - ' + channel_title + ' - Uhura App');
+    $("[property='og:title']").attr('content', title + ' - ' + channel_title + ' - Uhura App')
   }
 });
 
