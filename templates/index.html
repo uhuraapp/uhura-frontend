@@ -55,7 +55,15 @@
     c.src="//beacon.errorception.com/"+s+".js";c.async=!0;b.parentNode.insertBefore(c,b)};
     _.addEventListener?_.addEventListener("load",b,!1):_.attachEvent("onload",b)})
     (window,document,"script","52f485f0c3e6829e25000021");
-</script>
+    </script>
+
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=257036014466425";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
 </head>
 <body>
   <script type="text/x-handlebars" id="components/play-pause-button">
@@ -115,6 +123,7 @@
     <footer>
       Created with <span class="heart">♥</span> by <a href="https://github.com/dukex">Duke Khaos</a> with awesome <a href="https://github.com/dukex/uhura/graphs/contributors">Contributors</a>, follow us <a rel="nofollow" href="http://twitter.com/UhuraApp">@UhuraApp</a>
     </footer>
+       <div id="fb-root"></div>
   </script>
 
   <script type="text/x-handlebars" data-template-name="index">
@@ -190,7 +199,6 @@
         {{else}}
 
         <button id="subscribeButton" class="uk-button uk-button-large uk-button-primary subscribe" {{action 'subscribeChannel' id}}>Subscribe!</button>
-
         {{/if}}
 
         <div id="description">
@@ -202,19 +210,12 @@
         <ol>
           {{#each episode in episodes}}
           <li class="audio" {{bind-attr data-listened=episode.listened}} {{bind-attr data-id=episode.id}} {{bind-attr data-source_url=episode.source_url}}>
+
             {{play-pause-button episode=episode}}
-            <h3>
-              <span class="title">{{episode.title}}</span>
-              <i class="fa fa-chevron-down"></i>
-            </h3>
-            <div class="description">
-              {{#unless episode.listened}}
-              <button class="uk-button uk-button-success" alt="Mark as Listen!" {{action 'listened' episode}}>
-                Mark as Listened
-              </button>
-              {{/unless}}
-              <div>{{{episode.description}}}</div>
-            </div>
+
+            {{#link-to 'channel.episode' episode.id class="title"}}
+              {{episode.title}}
+            {{/link-to}}
           </li>
           {{/each}}
         </ol>
@@ -223,32 +224,47 @@
     </div>
   </script>
 
-    <script type="text/x-handlebars" data-template-name="loading">
+  <script type="text/x-handlebars" data-template-name="loading">
     <div id="loading_page">
-    Loading.....
+      Loading.....
     </div>
-</script>
+  </script>
 
-    <script type="text/x-handlebars" data-template-name="channel/loading">
+  <script type="text/x-handlebars" data-template-name="channel/loading">
     <div id="loading_page">
-    Loading.....
+      Loading.....
     </div>
-</script>
-    <script type="text/x-handlebars" data-template-name="dashboard/loading">
+  </script>
+  <script type="text/x-handlebars" data-template-name="dashboard/loading">
     <div id="loading_page">
-    Loading.....
+      Loading.....
     </div>
-</script>
+  </script>
 
 
   <script type="text/x-handlebars" data-template-name="channel/episode">
-    <!-- This is the modal -->
-    <div id="my-id" class="uk-modal">
+    <div id="episode_modal" class="uk-modal uk-open" style="display: block;">
       <div class="uk-modal-dialog">
-        <a class="uk-modal-close uk-close"></a>
-        Poooo
+        {{#link-to 'channel' channel_id class="uk-modal-close uk-close"}}{{/link-to}}
+        <h1>{{title}}</h1>
+        <div class="actions">
+          {{play-pause-button episode=this}}
+
+          <a href="https://plus.google.com/share?url={{unbound url}}" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"/></a>
+
+          <a href="https://www.facebook.com/sharer/sharer.php?u={{unbound url}}" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="fbsharebutton" >Share on Facebook</a>
+
+          <iframe allowtransparency="true" frameborder="0" scrolling="no" src="https://platform.twitter.com/widgets/tweet_button.html?count=none&related=UhuraApp&via=UhuraApp&dnt=true"  style="width:60px; height:20px;"></iframe>
+
+          <input type="text" {{bind-attr value=url}} readonly="true" />
+        </div>
+
+        <div id="description">
+          {{description}}
+        </div>
       </div>
     </div>
+
   </script>
 
   <script type="text/x-handlebars" data-template-name="dashboard">

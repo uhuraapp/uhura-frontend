@@ -24,7 +24,7 @@
   font-size: 12px
 }
 
-#episodes h3{
+#episodes a.title{
   font-weight: 200;
   font-size: 25px;
   line-height: 1.5;
@@ -32,17 +32,21 @@
   padding: 15px 0;
   cursor: pointer;
   height: 32px;
-  width: 820px;
-  float: right;
-}
-
-#episodes h3 .title{
+  width: 815px;
+  color: #333;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
   float: left;
-  width: 90%;
+  float: right;
 }
+
+#episodes a.title:hover{
+  text-decoration: none;
+  color: #000;
+  font-style: italic;
+}
+
 
 #episodes ol{
   background: #F8F8F8;
@@ -80,8 +84,12 @@
   border-bottom: none;
 }
 
-#episodes .description button{
-  margin: 0 0 10px 0;
+#episodes .description .action {
+  line-height: 1.5;
+}
+
+#episodes .description .action button{
+  margin: 0 10px 0 0;
 }
 
 #episodes .description div{
@@ -96,6 +104,8 @@
   padding: 10px;
   clear: both;
 }
+
+
 /*
 
 
@@ -115,3 +125,41 @@
  #channel_page #episodes button{
    padding: 0;
 }*/
+
+#episode_modal .actions {
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+#episode_modal .actions div, #episode_modal .actions a, #episode_modal .actions iframe{
+  float: left;
+  margin: 0 5px 0 0;
+}
+
+#episode_modal input{
+  float: right;
+  border: 1px solid #CCC;
+  width: 275px;
+  padding: 5px;
+}
+
+.fbsharebutton{
+  background: #4c69ba;
+  background: -webkit-gradient(linear, center top, center bottom, from(#4c69ba), to(#3b55a0));
+  background: -webkit-linear-gradient(#4c69ba, #3b55a0);
+  border: none;
+  -webkit-border-radius: 2px;
+  color: #fff;
+  cursor: pointer;
+  line-height: 20px;
+  padding: 0;
+  white-space: nowrap;
+  font-size: 11px;
+  display: block;
+  padding: 2px 5px;
+}
+
+.fbsharebutton:hover{
+  color: #F7F7F7;
+  text-decoration: none;
+}

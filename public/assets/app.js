@@ -12,11 +12,14 @@ Uhura.ApplicationAdapter = DS.RESTAdapter.extend({
 Uhura.Router.map(function () {
   'use strict';
   this.resource('channels');
-  this.resource('channel', {path: '/channels/:id'});
+  this.resource('channel', {path: '/channels/:id'}, function(){
+    this.resource('channel.episode', {path: '/:episode_id'})
+  });
   this.resource('dashboard', function(){
     this.resource('dashboard.channel', {path: '/:channel_id'})
   })
 });
+
 Uhura.Router.reopen({
    location: 'history',
    /**
@@ -58,6 +61,18 @@ Uhura.ChannelRoute = Ember.Route.extend({
   model: function (params) {
     'use strict';
     return this.store.find('channel', params.id);
+  },
+  activate: function(){
+    var title = this.modelFor('channel').get('title')
+    $(document).attr('title', title);
+  }
+});
+
+Uhura.ChannelEpisodeRoute = Ember.Route.extend({
+  activate: function(){
+    var title = this.modelFor('channel.episode').get('title'),
+        channel_title = this.modelFor('channel').get('title');
+    $(document).attr('title', title + ' - ' + channel_title + ' - Uhura App');
   }
 });
 
@@ -84,29 +99,32 @@ Uhura.DashboardChannelRoute = Ember.Route.extend({
 // model
 
 Uhura.Channel = DS.Model.extend({
-  title:      DS.attr('string'),
-  image_url:  DS.attr('string'),
-  url:        DS.attr('string'),
-  uri:        DS.attr('string'),
-  description:DS.attr('string'),
-  copyright:  DS.attr('string'),
-  subscribed: DS.attr('boolean'),
+  title:      DS.attr(),
+  image_url:  DS.attr(),
+  url:        DS.attr(),
+  uri:        DS.attr(),
+  description:DS.attr(),
+  copyright:  DS.attr(),
+  subscribed: DS.attr(),
   episodes:   DS.hasMany('episode', {async: true}),
-  to_view:    DS.attr("number")
+  to_view:    DS.attr()
 });
 
 Uhura.Episode = DS.Model.extend({
-  title: DS.attr('string'),
-  description: DS.attr('string'),
-  source_url: DS.attr('string'),
-  playing: DS.attr('boolean'),
-  channel: DS.belongsTo('channel'),
-  channel_id: DS.attr(),
-  listened: DS.attr(),
-  published_at: DS.attr(),
+  title:           DS.attr(),
+  description:     DS.attr(),
+  source_url:      DS.attr(),
+  playing:         DS.attr(),
+  channel:         DS.belongsTo('channel'),
+  channel_id:      DS.attr(),
+  listened:        DS.attr(),
+  published_at:    DS.attr(),
   listenedChanged: function(){
     Uhura.Helpers.listened(this.get('id'))
-  }.observes('listened')
+  }.observes('listened'),
+  url: function(){
+    return "http://uhuraapp.com/channels/" + this.get("channel_id") + "/" + this.get("id")
+  }.property("channel_id", "id")
 });
 
 Uhura.Subscription = DS.Model.extend({
@@ -117,6 +135,7 @@ Uhura.Subscription = DS.Model.extend({
 // Methods
 
 Uhura.Helpers = {}
+
 Uhura.Helpers.subscribeChannel = function(controller, id){
   var successSubscribe = function() {
     controller.store.find('channel', id).then(function(channel){
@@ -209,7 +228,6 @@ Uhura.DashboardChannelController = Ember.ArrayController.extend({
   }
 })
 
-
 Uhura.PlayerController = Ember.ObjectController.extend({
   content: [],
   actions: {
@@ -249,8 +267,6 @@ Uhura.PlayPauseButtonComponent = Ember.Component.extend({
     }
   }
 });
-
-
 
 // auth
 
@@ -305,8 +321,9 @@ Uhura.Auth = (function() {
     //    }
     //  }
     //});
-};
-return Auth;
+  };
+
+  return Auth;
 })();
 
 window.auth = new Uhura.Auth();
