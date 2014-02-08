@@ -4,6 +4,8 @@ import (
 	"github.com/dukex/buffer"
 	"github.com/rakyll/coop"
 	"os"
+	"strconv"
+	"strings"
 	"time"
 )
 
@@ -23,5 +25,30 @@ func NewChannelTweet(chId int) {
 		text := ch.ShareUrl()
 		text = text + " #podcast " + ch.Title
 		client.CreateUpdate(text, []string{bufferProfile}, map[string]interface{}{})
+	})
+}
+
+func NewEpisodeTweet(epId int) {
+	coop.After(1*time.Minute, func() {
+		var episode Item
+		var channel Channel
+		var message string
+
+		database.First(&episode, epId)
+		database.First(&channel, episode.ChannelId)
+
+		language := strings.ToLower(channel.Language)
+
+		message = "http://uhuraapp.com/channels/" + strconv.Itoa(channel.Id) + "/" + strconv.Itoa(epId)
+
+		if strings.Contains(language, "br") && strings.Contains(language, "pt") {
+			message = message + " Novo Episódio: "
+		} else {
+			message = message + " New Episode: "
+		}
+
+		message = message + episode.Title + " - " + channel.Title
+
+		client.CreateUpdate(message, []string{bufferProfile}, map[string]interface{}{"now": true})
 	})
 }

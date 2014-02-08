@@ -50,6 +50,10 @@ type Counter struct {
 	channel     string
 }
 
+func (i *Item) AfterCreate() {
+	NewEpisodeTweet(i.Id)
+}
+
 // func GetUserItems(user *User, channels *[]ChannelResult, channel string, pageParams string) (*[]UserItemsResult, *Counter) {
 
 // 	var channelsIds []int
