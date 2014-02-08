@@ -26,7 +26,7 @@ func emberAppHandler(r render.Render, req *http.Request) string {
 	var indexTemplate string
 	userAgent := strings.ToLower(req.UserAgent())
 
-	if strings.Contains(userAgent, "bot") {
+	if strings.Contains(userAgent, "bot") || strings.Contains(userAgent, "facebookexternalhit") {
 		url := os.Getenv("PRERENDER_SERVER") + "/" + "http://" + req.Host + req.URL.RequestURI()
 		fmt.Println(url)
 
@@ -36,12 +36,7 @@ func emberAppHandler(r render.Render, req *http.Request) string {
 		body, _ := ioutil.ReadAll(res.Body)
 		indexTemplate = string(body)
 	} else {
-		var baseUrl string
-		if os.Getenv("ENV") == "development" {
-			baseUrl = "http://127.0.0.1:3002"
-		} else {
-			baseUrl = "http://uhuraapp.com"
-		}
+		baseUrl := "http://uhuraapp.com"
 
 		itb, _ := ioutil.ReadFile("./templates/index.html")
 		indexTemplate = string(itb[:])
