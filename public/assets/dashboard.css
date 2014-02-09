@@ -127,3 +127,39 @@
   margin: 12px 0 0 15px;
   text-decoration: underline;
 }
+
+#dashboard form{
+  margin: 0 auto;
+  width: 551px;
+}
+
+#dashboard form fieldset{
+  width: 100%
+}
+
+#dashboard form legend{
+  line-height: 1.5;
+  color: #E6B1B1;
+}
+
+#dashboard form label{
+  display: block;
+  font-size: 30px;
+  line-height: 1.5;
+}
+
+#dashboard form input {
+  width: 465px;
+  font-size: 19px;
+  padding: 18px 7px;
+}
+
+#dashboard form  a{
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+  width: 40px;
+  width: 150px;
+  font-size: 14px;
+  text-decoration: underline;
+}

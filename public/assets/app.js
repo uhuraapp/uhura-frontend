@@ -190,6 +190,25 @@ Uhura.Helpers.listened = function(episode_id){
   })
 }
 
+Uhura.Helpers.newChannel = function(controller){
+  var _this = controller;
+  var newChannelFn = function(){
+    var url = _this.get('url'),
+    subscribe = _this.store.createRecord('channel', {
+      url: url
+    });
+    subscribe.save().then(function(c){
+      $(".new-channel").val("")
+    });
+    if (subscriptions = _this.get('subscriptions')) {
+      subscriptions.update()
+      window.location.reload()
+    }
+  };
+
+  window.auth.withLoggedUser(newChannelFn);
+}
+
 // controller
 
 Uhura.ChannelsController = Ember.ArrayController.extend({
@@ -198,20 +217,8 @@ Uhura.ChannelsController = Ember.ArrayController.extend({
       'use strict';
       Uhura.Helpers.subscribeChannel(this, idParams)
     },
-    newChannel: function() {
-      'use strict';
-      var _this = this;
-      var newChannelFn = function(){
-        var url = _this.get('url'),
-        subscribe = _this.store.createRecord('channel', {
-          url: url
-        });
-        subscribe.save().then(function(c){
-          $(".new-channel").val("")
-        });
-      };
-
-      window.auth.withLoggedUser(newChannelFn);
+    newChannel: function(){
+      Uhura.Helpers.newChannel(this)
     }
   }
 });
@@ -243,6 +250,9 @@ Uhura.DashboardController = Ember.ArrayController.extend({
     unsubscribe: function(idParams) {
       'use strict';
       Uhura.Helpers.unsubscribeChannel(this, idParams);
+    },
+    newChannel: function(){
+      Uhura.Helpers.newChannel(this)
     }
   }
 })
