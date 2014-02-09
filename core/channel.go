@@ -174,6 +174,17 @@ func SubscribeChannel(userId int, channelId string) (channel ChannelResult) {
 	return
 }
 
+func UnsubscribeChannel(userId int, channelId string) (channel ChannelResult) {
+	var userChannel UserChannel
+
+	channelIdInt, _ := strconv.Atoi(channelId)
+
+	database.Table("user_channels").Where(UserChannel{ChannelId: channelIdInt, UserId: userId}).Delete(&userChannel)
+	channels, _ := AllChannels(userId, false, channelIdInt)
+	channel = channels[0]
+	return
+}
+
 func GetChannel(channelId int) (channel Channel) {
 	database.First(&channel, channelId)
 	return

@@ -161,6 +161,27 @@ Uhura.Helpers.subscribeChannel = function(controller, id){
   window.auth.withLoggedUser(subscribeFn);
 }
 
+Uhura.Helpers.unsubscribeChannel = function(controller, channel_id, subscription_id){
+  var successUnsubscribe = function(){
+    controller.get('subscriptions').update()
+    controller.get('subscriptions').forEach(function(s){
+      if(s.get('channel').id == channel_id) {
+        s.deleteRecord()
+      }
+    });
+  };
+
+  var unsubscribeFn = function(){
+    $.ajax({
+      url: '/api/channels/' + channel_id + '/subscribe',
+      method: 'DELETE',
+      success: successUnsubscribe
+    });
+  };
+
+  window.auth.withLoggedUser(unsubscribeFn);
+};
+
 Uhura.Helpers.listened = function(episode_id){
   $.post("/api/episodes/" + episode_id + "/listened").then(function() {
     ga('send', 'event', 'button', 'listened', 'episode', episode_id);
@@ -215,7 +236,15 @@ Uhura.ChannelController = Ember.ObjectController.extend({
   }
 });
 
-Uhura.DashboardController = Ember.ArrayController.extend()
+
+Uhura.DashboardController = Ember.ArrayController.extend({
+  actions: {
+    unsubscribe: function(idParams) {
+      'use strict';
+      Uhura.Helpers.unsubscribeChannel(this, idParams);
+    }
+  }
+})
 
 Uhura.DashboardIndexController = Ember.ArrayController.extend({
   needs: "dashboard",

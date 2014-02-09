@@ -36,6 +36,7 @@
   border-right: none;
   border-left: 1px solid #CCC;
   overflow: hidden;
+    position: relative;
 }
 
 #dashboard #channels li:first-of-type{
@@ -59,12 +60,17 @@
   background: #FFF;
 }
 
+#dashboard #channels li:hover button {
+  display: block
+}
+
 #dashboard #channels li img{
   width: 10%;
   border-radius: 3px;
   margin: 0 5px;
   float: left;
 }
+
 #dashboard #channels li .title{
   width: 75%;
   display: block;
@@ -76,10 +82,17 @@
 
 #dashboard #channels li .uk-badge{
   position: absolute;
-  top: 10px;
+  top: 5px;
   right: 10px;
 }
 
+#dashboard #channels li button{
+  position: absolute;
+  z-index: 3;
+  top: 10px;
+  right: 10px;
+  display: none;
+}
 
 #dashboard_content{
   float: left;

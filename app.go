@@ -166,6 +166,19 @@ func main() {
 		r.JSON(200, map[string]interface{}{"channel": channel})
 	})
 
+	m.Delete("/api/channels/:id/subscribe", func(r render.Render, request *http.Request, params martini.Params) {
+		user, err := core.CurrentUser(request)
+
+		if err {
+			r.Error(403)
+			return
+		}
+
+		channel := core.UnsubscribeChannel(user.Id, params["id"])
+
+		r.JSON(200, map[string]interface{}{"channel": channel})
+	})
+
 	// API
 	m.Get("/api/subscriptions", func(r render.Render, w http.ResponseWriter, request *http.Request) {
 		user, err := core.CurrentUser(request)

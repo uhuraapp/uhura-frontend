@@ -230,24 +230,6 @@
     </div>
   </script>
 
-  <script type="text/x-handlebars" data-template-name="loading">
-    <div id="loading_page">
-      Loading.....
-    </div>
-  </script>
-
-  <script type="text/x-handlebars" data-template-name="channel/loading">
-    <div id="loading_page">
-      Loading.....
-    </div>
-  </script>
-  <script type="text/x-handlebars" data-template-name="dashboard/loading">
-    <div id="loading_page">
-      Loading.....
-    </div>
-  </script>
-
-
   <script type="text/x-handlebars" data-template-name="channel/episode">
     <div id="episode_modal" class="uk-modal uk-open" style="display: block;">
       <div class="uk-modal-dialog">
@@ -270,7 +252,6 @@
         </div>
       </div>
     </div>
-
   </script>
 
   <script type="text/x-handlebars" data-template-name="dashboard">
@@ -281,7 +262,7 @@
           <ul id="channels">
             {{#each subscription in subscriptions}}
             {{#with subscription.channel}}
-            <li class="channel">
+            <li class="channel" id="channel-{{unbound id}}">
               {{#link-to 'dashboard.channel' id}}
               <img {{bind-attr src=image_url}} />
               <span class="title">{{title}}</span>
@@ -289,6 +270,7 @@
                 {{to_view}}
               </div>
               {{/link-to}}
+               <button class="unsubscribe uk-button uk-button-small uk-button-danger" {{action 'unsubscribe' id}}>Unsubscribe</button>
             </li>
             {{/with}}
             {{/each}}
@@ -327,8 +309,32 @@
     </div>
   </script>
 
+  <script type="text/x-handlebars" data-template-name="dashboard.index.episode">
+   <div id="episode_modal" class="uk-modal uk-open" style="display: block;">
+      <div class="uk-modal-dialog">
+        {{#link-to 'channel' channel_id class="uk-modal-close uk-close"}}{{/link-to}}
+        <h1>{{title}}</h1>
+        <div class="actions">
+          {{play-pause-button episode=this}}
+
+          <a href="https://plus.google.com/share?url={{unbound url}}" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"/></a>
+
+          <a href="https://www.facebook.com/sharer/sharer.php?u={{unbound url}}" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="fbsharebutton" >Share on Facebook</a>
+
+          <iframe allowtransparency="true" frameborder="0" scrolling="no" src="https://platform.twitter.com/widgets/tweet_button.html?count=none&related=UhuraApp&via=UhuraApp&dnt=true"  style="width:60px; height:20px;"></iframe>
+
+          <input type="text" {{bind-attr value=url}} readonly="true" />
+        </div>
+
+        <div id="description">
+          {{description}}
+        </div>
+      </div>
+    </div>
+  </script>
+
   <script type="text/x-handlebars" data-template-name="dashboard/channel">
-  <div id="episodes">
+    <div id="episodes">
       <ol>
         {{#each episode in episodes}}
           <li class="audio" {{bind-attr data-listened=episode.listened}} {{bind-attr data-id=episode.id}} {{bind-attr data-source_url=episode.source_url}}>
@@ -351,6 +357,21 @@
     </div>
   </script>
 
+  <script type="text/x-handlebars" data-template-name="loading">
+    <div id="loading_page">
+      Loading.....
+    </div>
+  </script>
 
+  <script type="text/x-handlebars" data-template-name="channel/loading">
+    <div id="loading_page">
+      Loading.....
+    </div>
+  </script>
+  <script type="text/x-handlebars" data-template-name="dashboard/loading">
+    <div id="loading_page">
+      Loading.....
+    </div>
+  </script>
 </body>
 </html>
