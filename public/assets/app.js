@@ -370,8 +370,25 @@ $(document).ajaxError(function( event, request, settings ) {
   console.log('URL:', settings.type, settings.url);
   console.log('Status:', request.status);
   if(request.status == 403){
+    var modal = $('<div></div>').addClass('uk-modal uk-open').attr("id", "error-403")
+    var dialog = $('<div></div>').addClass('uk-modal-dialog')
+    var text = $('<h2></h2>').text("Need sign in to continue")
+    var footer = $('<p></p>').html('if this error persist sends a mention to <a rel="nofollow" target="_blank" href="http://twitter.com/UhuraApp">@UhuraApp</a> on twitter')
+    var signLink = $("<button></button>").text("Sign In")
+                        .addClass("uk-button uk-button-large uk-button-success")
+                        .on('click', function(){
+                          window.auth.withLoggedUser(function(){ window.location.reload() })
+                        })
+
+    dialog.append(text)
+    dialog.append(signLink)
+    dialog.append(footer)
+    modal.append(dialog)
+
+    $("#content").html(modal)
+
     window.auth.logged = false;
-    window.auth.withLoggedUser(function(){ window.location.reload() })
+    modal.show()
   }
 });
 

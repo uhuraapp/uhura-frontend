@@ -257,9 +257,26 @@ header .uk-container-center{
 text-align: center;
 margin: 100px;
 }
-}
 
 /*
 #channel_page, #channels_page, #dashboard, #loading_page  {
   padding-top: 15px;
 }*/
+
+
+#error-403 {
+  border: 1px solid red;
+  text-align: center;
+}
+
+#error-403 h2{
+  margin: 0 auto;
+}
+
+#error-403 p{
+  background: #FFD8D8;
+}
+
+#error-403 button{
+  margin: 30px 0 ;
+}
