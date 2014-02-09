@@ -130,7 +130,8 @@ Uhura.Episode = DS.Model.extend({
     Uhura.Helpers.listened(this.get('id'))
   }.observes('listened'),
   url: function(){
-    return "http://uhuraapp.com/channels/" + this.get("channel_id") + "/" + this.get("id")
+    host = window.location.host
+    return "http://"+host+"/channels/" + this.get("channel_id") + "/" + this.get("id")
   }.property("channel_id", "id")
 });
 
