@@ -51,7 +51,12 @@ type Counter struct {
 }
 
 func (i *Item) AfterCreate() {
-	NewEpisodeTweet(i.Id)
+	nowMonth := time.Now().Month()
+	publishedMonth := i.PublishedAt.Month()
+
+	if publishedMonth >= (nowMonth - 1) {
+		NewEpisodeTweet(i.Id)
+	}
 }
 
 // func GetUserItems(user *User, channels *[]ChannelResult, channel string, pageParams string) (*[]UserItemsResult, *Counter) {
