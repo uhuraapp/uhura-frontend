@@ -122,10 +122,12 @@ Uhura.Episode = DS.Model.extend({
   description:     DS.attr(),
   source_url:      DS.attr(),
   playing:         DS.attr(),
-  channel:         DS.belongsTo('channel'),
-  channel_id:      DS.attr(),
   listened:        DS.attr(),
   published_at:    DS.attr(),
+  channel_id:      DS.attr('number'),
+  channel:         function(){
+    return this.store.findById('channel', this.get('channel_id'));
+  }.property("channel_id"),
   listenedChanged: function(){
     Uhura.Helpers.listened(this.get('id'))
   }.observes('listened'),

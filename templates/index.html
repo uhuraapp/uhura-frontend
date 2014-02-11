@@ -196,8 +196,8 @@
   </script>
 
   <script type="text/x-handlebars" data-template-name="channel">
-    <div id="channel_page" class="uk-grid">
-      <h2 class="uk-width-1-1">{{title}}</h2>
+    <div id="channel_page" class="uk-grid" itemscope itemtype="http://schema.org/MusicGroup">
+      <h2 class="uk-width-1-1" itemprop="name">{{title}}</h2>
       <aside class="uk-width-medium-1-5">
         <img {{bind-attr src=image_url}} />
         {{#if subscribed}}
@@ -215,14 +215,18 @@
       <div id="episodes" class="uk-width-medium-4-5" >
         <ol>
           {{#each episode in episodes}}
-          <li class="audio" {{bind-attr data-listened=episode.listened}} {{bind-attr data-id=episode.id}} {{bind-attr data-source_url=episode.source_url}}>
+           <li class="audio" {{bind-attr data-listened=episode.listened}} {{bind-attr data-id=episode.id}} {{bind-attr data-source_url=episode.source_url}} itemscope itemtype="http://schema.org/MusicRecording">
 
-            {{play-pause-button episode=episode}}
+             {{play-pause-button episode=episode}}
 
-            {{#link-to 'channel.episode' episode.id class="title"}}
-              {{episode.title}}
-            {{/link-to}}
-          </li>
+             {{#link-to 'channel.episode' episode.id class="title"}}
+               <span itemprop="name">{{episode.title}}</span>
+             {{/link-to}}
+
+             <meta content="{{unbound episode.url}}" itemprop="audio">
+             <meta content="{{unbound episode.url}}" itemprop="url">
+             <meta content="{{unbound episode.channel.title}}" itemprop="inAlbum">
+           </li>
           {{/each}}
         </ol>
       </div>
@@ -253,7 +257,6 @@
       </div>
     </div>
   </script>
-
   <script type="text/x-handlebars" data-template-name="dashboard">
     <div id="dashboard">
       <h2>Dashboard</h2>
@@ -296,7 +299,6 @@
       {{/if}}
     </div>
   </script>
-
   <script type="text/x-handlebars" data-template-name="dashboard/index">
     <div id="episodes">
       <ol>
@@ -314,8 +316,10 @@
               Mark as Listened
             </button>
             {{/unless}}
-            <a {{bind-attr href=episode.url}}>Share Episode</a>
-            <div>{{{episode.description}}}</div>
+            {{#link-to 'channel.episode' episode.channel_id episode}}
+            Share Episode
+            {{/link-to}}
+            <div style="clear:both">{{{episode.description}}}</div>
           </div>
         </li>
         {{/each}}
@@ -323,7 +327,6 @@
       </ol>
     </div>
   </script>
-
   <script type="text/x-handlebars" data-template-name="dashboard/channel">
     <div id="episodes">
       <ol>
@@ -340,6 +343,9 @@
                 Mark as Listened
               </button>
               {{/unless}}
+              {{#link-to 'channel.episode' episode.channel_id episode}}
+              Share Episode
+              {{/link-to}}
               <div>{{{episode.description}}}</div>
             </div>
           </li>
@@ -353,7 +359,6 @@
       Loading.....
     </div>
   </script>
-
   <script type="text/x-handlebars" data-template-name="channel/loading">
     <div id="loading_page">
       Loading.....
