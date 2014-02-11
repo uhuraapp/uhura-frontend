@@ -108,7 +108,7 @@ func AllChannels(userId int, onlyFeatured bool, channelId int) (channels []Chann
 			itemQuery = itemQuery.Order("user_items.viewed DESC")
 		}
 
-		itemQuery.Order("published_at DESC").Find(&episodes)
+		itemQuery.Order("published_at DESC, id DESC, title DESC").Find(&episodes)
 		channels[i].Episodes = episodesIds
 	}
 

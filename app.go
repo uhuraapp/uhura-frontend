@@ -251,14 +251,7 @@ func main() {
 		responseAuth, _ := t.Client().Get(profileInfoURL)
 		defer responseAuth.Body.Close()
 
-		_, err := core.CreateAndLoginUser(request, responseWriter, responseAuth)
-
-		if err {
-			// TODO: set flash
-			// http.Redirect(responseWriter, request, "/", http.StatusMovedPermanently)
-		} else {
-			// returnTo := core.GetReturnTo(request)
-		}
+		core.CreateAndLoginUser(request, responseWriter, responseAuth)
 
 		return "<script>window.close();</script>"
 	})
