@@ -1,6 +1,8 @@
-# Uhura [![Build Status](https://travis-ci.org/dukex/uhura.png?branch=master)](https://travis-ci.org/dukex/uhura)
+# Uhura App [![Build Status](https://travis-ci.org/dukex/uhura.png?branch=master)](https://travis-ci.org/dukex/uhura)
 
 Hailing Frequencies Are Open!
+
+Uhura works with golang and emberjs
 
 ![Screenshot](http://uhura.herokuapp.com/assets/uhura-home-0.2.png)
 
