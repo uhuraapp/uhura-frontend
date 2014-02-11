@@ -242,11 +242,11 @@
         <div class="actions">
           {{play-pause-button episode=this}}
 
-          <a href="https://plus.google.com/share?url={{unbound url}}" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"/></a>
+          <a href="https://plus.google.com/share" onclick="javascript:window.open(this.href+'?url='+window.location.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"/></a>
 
-          <a href="https://www.facebook.com/sharer/sharer.php?u={{unbound url}}" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="fbsharebutton" >Share on Facebook</a>
+          <a href="https://www.facebook.com/sharer/sharer.php" onclick="javascript:window.open(this.href+'?u='+window.location.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="fbsharebutton">Share on Facebook</a>
 
-          <iframe allowtransparency="true" frameborder="0" scrolling="no" src="https://platform.twitter.com/widgets/tweet_button.html?count=none&related=UhuraApp&via=UhuraApp&dnt=true"  style="width:60px; height:20px;"></iframe>
+          <iframe allowtransparency="true" frameborder="0" scrolling="no" src="https://platform.twitter.com/widgets/tweet_button.html?count=none&related=UhuraApp&via=UhuraApp&dnt=true&text={{unbound title}}"  style="width:60px; height:20px;"></iframe>
 
           <input type="text" {{bind-attr value=url}} readonly="true" />
         </div>
@@ -316,7 +316,7 @@
               Mark as Listened
             </button>
             {{/unless}}
-            {{#link-to 'channel.episode' episode.channel_id episode}}
+            {{#link-to 'channel.episode' episode.channel_id episode.id}}
             Share Episode
             {{/link-to}}
             <div style="clear:both">{{{episode.description}}}</div>
@@ -343,7 +343,7 @@
                 Mark as Listened
               </button>
               {{/unless}}
-              {{#link-to 'channel.episode' episode.channel_id episode}}
+              {{#link-to 'channel.episode' episode.channel_id episode.id}}
               Share Episode
               {{/link-to}}
               <div>{{{episode.description}}}</div>
