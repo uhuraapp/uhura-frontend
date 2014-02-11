@@ -70,7 +70,7 @@ func channelFetchHandler(feed *rss.Feed, channels []*rss.Channel) {
 	}
 }
 
-const itemForm = "Mon, 02 Jan 2006 15:04:05 -0700"
+const itemForm = "Mon, _2 Jan 2006 15:04:05 -0700"
 
 func itemFetchHandler(feed *rss.Feed, ch *rss.Channel, items []*rss.Item) {
 	var channel Channel
@@ -85,10 +85,15 @@ func itemFetchHandler(feed *rss.Feed, ch *rss.Channel, items []*rss.Item) {
 			io.WriteString(h, itemdata.Enclosures[0].Url)
 			key := hex.EncodeToString(h.Sum(nil))
 
-			itemdata.PubDate = strings.Replace(itemdata.PubDate, "GMT", "+0000", -1)
+			itemdata.PubDate = strings.Replace(itemdata.PubDate, "GMT", "-0100", -1)
+			itemdata.PubDate = strings.Replace(itemdata.PubDate, "PST", "-0800", -1)
+			itemdata.PubDate = strings.Replace(itemdata.PubDate, "PDT", "-0700", -1)
+
 			publishedAt, err := time.Parse(itemForm, itemdata.PubDate)
 			if err != nil {
-				fmt.Println(err)
+				// publishedAt = time.Now()
+				fmt.Println("ERR", err)
+				fmt.Println("")
 			}
 
 			if i := itemdata.Extensions[itunesExt]; i != nil {
