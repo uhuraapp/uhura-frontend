@@ -66,15 +66,13 @@ func channelFetchHandler(feed *rss.Feed, channels []*rss.Channel) {
 
 		database.Save(&channel)
 
-		go func(data *rss.Channel, channel Channel) {
-			if itunesCategory := data.Extensions[itunesExt]["category"]; itunesCategory != nil {
-				for _, category := range itunesCategory {
-					var categoryDB Category
-					database.Where(&Category{Name: category.Attrs["text"]}).FirstOrCreate(&categoryDB)
-					database.Save(&ChannelCategories{ChannelId: int64(channel.Id), CategoryId: categoryDB.Id})
-				}
+		if itunesCategory := channelData.Extensions[itunesExt]["category"]; itunesCategory != nil {
+			for _, category := range itunesCategory {
+				var categoryDB Category
+				database.Where(&Category{Name: category.Attrs["text"]}).FirstOrCreate(&categoryDB)
+				database.Save(&ChannelCategories{ChannelId: int64(channel.Id), CategoryId: categoryDB.Id})
 			}
-		}(channelData, channel)
+		}
 
 		ChannelChan <- 1
 	}
