@@ -189,3 +189,8 @@ func GetChannel(channelId int) (channel Channel) {
 	database.First(&channel, channelId)
 	return
 }
+
+func GetChannels(channelsIds []int) (channels []ChannelResult) {
+	database.Table("channels").Where("id IN (?)", channelsIds).Find(&channels)
+	return
+}

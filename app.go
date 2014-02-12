@@ -17,6 +17,7 @@ import (
 )
 
 var config oauth.Config
+var homeChannel []core.ChannelResult
 
 const profileInfoURL = "https://www.googleapis.com/oauth2/v1/userinfo?alt=json"
 
@@ -50,6 +51,15 @@ func emberAppHandler(r render.Render, req *http.Request) string {
 }
 
 func main() {
+	sids := strings.Split(os.Getenv("CHANNELS_HOME"), ",")
+	var ids = make([]int, 0)
+
+	for i, _ := range sids {
+		id, _ := strconv.Atoi(sids[i])
+		ids = append(ids, id)
+	}
+	homeChannel = core.GetChannels(ids)
+
 	config := &oauth.Config{
 		ClientId:     os.Getenv("GOOGLE_CLIENT_ID"),
 		ClientSecret: os.Getenv("GOOGLE_CLIENT_SECRET"),
@@ -101,22 +111,22 @@ func main() {
 	// -----------------
 	// API
 	m.Get("/api/channels", func(r render.Render, w http.ResponseWriter, request *http.Request) {
-		var userId int
-		user, err := core.CurrentUser(request)
-		if err {
-			userId = 0
-		} else {
-			userId = user.Id
-		}
+		var channels []core.ChannelResult
 
-		var onlyFeatured bool
 		if featured := request.FormValue("featured"); featured == "" {
-			onlyFeatured = false
+			var userId int
+			user, err := core.CurrentUser(request)
+			if err {
+				userId = 0
+			} else {
+				userId = user.Id
+			}
+
+			channels, _ = core.AllChannels(userId, false, 0)
 		} else {
-			onlyFeatured = featured == "true"
+			channels = homeChannel
 		}
 
-		channels, _ := core.AllChannels(userId, onlyFeatured, 0)
 		r.JSON(200, map[string]interface{}{"channels": channels})
 	})
 
