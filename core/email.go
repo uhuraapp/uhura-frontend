@@ -51,7 +51,8 @@ func WelcomeMail(user *User) {
 }
 
 func ErrorMail(err interface{}, stack []byte) {
-	sendMail([]string{FROM}, "[uhura err] "+err.(string), render("error", string(stack)))
+	errTitle := err.(string)
+	sendMail([]string{FROM}, "[uhura err] "+errTitle, render("error", string(stack)))
 }
 
 func sendMail(to []string, subject string, body []byte) error {
