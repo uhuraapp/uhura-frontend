@@ -24,6 +24,12 @@ type Channel struct {
 	Language      string
 }
 
+type ChannelCategories struct {
+	Id         int64
+	ChannelId  int64
+	CategoryId int64
+}
+
 type UserChannel struct {
 	Id        int
 	UserId    int
