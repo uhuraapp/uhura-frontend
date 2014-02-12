@@ -90,7 +90,7 @@ func (i *Item) AfterCreate() {
 // 	return &itemsResult, &counter
 // }
 
-func GetItem(id int, userId int) (episodes ItemResult) {
+func GetItem(id int, userId int) (episodes ItemResult, notFound bool) {
 	itemQuery := database.Table("items").Where("items.id = ?", id)
 
 	if userId > 0 {
@@ -99,8 +99,8 @@ func GetItem(id int, userId int) (episodes ItemResult) {
 		itemQuery = itemQuery.Order("user_items.viewed DESC")
 	}
 
-	itemQuery.Order("published_at DESC").Find(&episodes)
-
+	err := itemQuery.Order("published_at DESC").Find(episodes)
+	notFound = err.RecordNotFound()
 	return
 }
 
@@ -109,11 +109,12 @@ func GetItems(ids []string) (itemsResult []ItemResult) {
 	return
 }
 
-func UserListen(userId int, id string) ItemResult {
+func UserListen(userId int, id string) (itemResult ItemResult) {
 	var item Item
 	var userItem UserItem
 	itemId, _ := strconv.Atoi(id)
 	database.First(&item, itemId)
 	database.Where(UserItem{ItemId: item.Id}).Assign(UserItem{UserId: userId, Viewed: true}).FirstOrCreate(&userItem)
-	return GetItem(item.Id, userId)
+	itemResult, _ = GetItem(item.Id, userId)
+	return
 }
