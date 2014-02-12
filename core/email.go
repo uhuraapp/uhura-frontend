@@ -34,8 +34,8 @@ func init() {
 }
 
 func render(name string, data interface{}) []byte {
-	content, _ := ioutil.ReadFile(TemplateEmailPath + "/welcome.tmpl")
-	t, _ := template.New("welcome").Parse(string(content))
+	content, _ := ioutil.ReadFile(TemplateEmailPath + "/" + name + ".tmpl")
+	t, _ := template.New(name).Parse(string(content))
 	buff := bytes.NewBufferString("")
 	t.Execute(buff, map[string]interface{}{"data": data})
 	return buff.Bytes()
@@ -48,6 +48,10 @@ func WelcomeMail(user *User) {
 			database.Model(user).Update("WelcomeMail", true)
 		}
 	})
+}
+
+func ErrorMail(err interface{}, stack []byte) {
+	sendMail([]string{FROM}, err.(string), render("error", stack))
 }
 
 func sendMail(to []string, subject string, body []byte) error {

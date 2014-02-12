@@ -87,6 +87,8 @@ func main() {
 
 	m.Use(martini.Static("assets"))
 	m.Use(martini.Static("fonts"))
+	m.Use(martini.Recovery())
+	m.Use(core.UhuraRecovery())
 
 	// API
 
