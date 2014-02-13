@@ -8,9 +8,8 @@
 }
 
 #channels_page ul li {
-  margin-bottom: 20px;
   position: relative;
-  height: 230px;
+  margin-bottom: 2%;
 }
 
 #channels_page ul a{
