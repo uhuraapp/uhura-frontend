@@ -99,7 +99,7 @@ func GetItem(id int, userId int) (episodes ItemResult, notFound bool) {
 		itemQuery = itemQuery.Order("user_items.viewed DESC")
 	}
 
-	err := itemQuery.Order("published_at DESC").Find(episodes)
+	err := itemQuery.Order("published_at DESC").Find(&episodes)
 	notFound = err.RecordNotFound()
 	return
 }
