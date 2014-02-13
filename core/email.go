@@ -43,7 +43,7 @@ func render(name string, data interface{}) []byte {
 
 func WelcomeMail(user *User) {
 	coop.After(5*time.Second, func() {
-		err := sendMail([]string{user.Email}, "Welcome to Uhura", render("welcome", user))
+		err := sendMail([]string{user.Email}, "Hello "+user.Name+"!", render("welcome", user))
 		if err == nil {
 			database.Model(user).Update("WelcomeMail", true)
 		}
