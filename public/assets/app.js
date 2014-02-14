@@ -331,11 +331,9 @@ Uhura.Auth = (function() {
   };
 
   Auth.prototype.login = function(callback) {
-    window.focus();
-
     var loginWindow = window.open(this.authorize_url(),'login','height=500,width=800');
 
-    loginWindow.focus();
+    // loginWindow.focus();
 
     var checkLogin = function(){
       try {
