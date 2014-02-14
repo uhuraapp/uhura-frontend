@@ -49,6 +49,6 @@ func NewEpisodeTweet(epId int) {
 
 		message = message + episode.Title + " - " + channel.Title
 
-		client.CreateUpdate(message, []string{bufferProfile}, map[string]interface{}{"now": true})
+		client.CreateUpdate(message, []string{bufferProfile}, map[string]interface{}{})
 	})
 }
