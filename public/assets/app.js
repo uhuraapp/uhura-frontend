@@ -340,6 +340,7 @@ Uhura.Auth = (function() {
         if(loginWindow.closed) {
           clearInterval(timer);
           callback();
+          $("#error-403").remove()
           window.auth.logged = true;
         }
       } catch(e){
@@ -355,7 +356,8 @@ Uhura.Auth = (function() {
     if(this.logged){
       callback();
     } else {
-      this.login(callback);
+      SignInDialog(callback);
+      // this.login(callback);
     }
     //$.ajax({
     //  url: "/api/users/current_user",
@@ -375,30 +377,36 @@ Uhura.Auth = (function() {
 
 window.auth = new Uhura.Auth();
 
+var SignInDialog = function(callback){
+  $("#error-403").remove()
+  var modal = $('<div></div>').addClass('uk-modal uk-open').attr("id", "error-403")
+  var dialog = $('<div></div>').addClass('uk-modal-dialog')
+  var text = $('<h2></h2>').text("Need sign in to continue")
+  var footer = $('<p></p>').html('if this error persist sends a mention to <a rel="nofollow" target="_blank" href="http://twitter.com/UhuraApp">@UhuraApp</a> on twitter')
+  var signLink = $("<button></button>").text("Sign In")
+                      .addClass("uk-button uk-button-large uk-button-success")
+                      .on('click', function(){
+                        window.auth.login(callback)
+                      })
+
+  dialog.append(text)
+  dialog.append(signLink)
+  dialog.append(footer)
+  modal.append(dialog)
+
+  $("#content").append(modal)
+  modal.show()
+  return modal
+}
+
+
 $(document).ajaxError(function( event, request, settings ) {
   'use strict';
   console.log('URL:', settings.type, settings.url);
   console.log('Status:', request.status);
   if(request.status == 403){
-    var modal = $('<div></div>').addClass('uk-modal uk-open').attr("id", "error-403")
-    var dialog = $('<div></div>').addClass('uk-modal-dialog')
-    var text = $('<h2></h2>').text("Need sign in to continue")
-    var footer = $('<p></p>').html('if this error persist sends a mention to <a rel="nofollow" target="_blank" href="http://twitter.com/UhuraApp">@UhuraApp</a> on twitter')
-    var signLink = $("<button></button>").text("Sign In")
-                        .addClass("uk-button uk-button-large uk-button-success")
-                        .on('click', function(){
-                          window.auth.withLoggedUser(function(){ window.location.reload() })
-                        })
-
-    dialog.append(text)
-    dialog.append(signLink)
-    dialog.append(footer)
-    modal.append(dialog)
-
-    $("#content").html(modal)
-
+    SignInDialog(function(){ window.location.reload() });
     window.auth.logged = false;
-    modal.show()
   }
 });
 
