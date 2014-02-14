@@ -169,7 +169,7 @@ func main() {
 
 		channels, episodes := core.AllChannels(userId, false, channelId)
 
-		r.JSON(500, map[string]interface{}{"channel": channels[0], "episodes": &episodes})
+		r.JSON(200, map[string]interface{}{"channel": channels[0], "episodes": episodes})
 	})
 
 	m.Get("/api/channels/:id/subscribe", func(r render.Render, request *http.Request, params martini.Params) {
