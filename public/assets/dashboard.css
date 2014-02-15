@@ -52,7 +52,7 @@
   font-weight: 400;
   padding: 5px 0;
   line-height: 30px;
-  height: 30px;
+  height: 40px;
 }
 
 #dashboard #channels li a:hover{
@@ -89,7 +89,7 @@
 #dashboard #channels li button{
   position: absolute;
   z-index: 3;
-  top: 10px;
+  top: 5px;
   right: 10px;
   display: none;
 }
@@ -109,17 +109,8 @@
 }
 
 #dashboard #episodes li h3{
-  width: 775px;
-  margin: 0;
-  float: left;
-  padding: 15px 0;
-}
-#dashboard #episodes li h3 .title{
-  float: left;
-  width: 730px;
-  margin: 0 0 0 10px;
-  padding: 0;
-  line-height: 1.4;
+  height: 45px;
+  line-height: 25px;
 }
 
 #dashboard #episodes li a{

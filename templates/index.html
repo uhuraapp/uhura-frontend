@@ -282,7 +282,7 @@
             {{#each subscription in subscriptions}}
             {{#with subscription.channel}}
             <li class="channel" id="channel-{{unbound id}}">
-              {{#link-to 'dashboard.channel' uri}}
+              {{#link-to 'dashboard.channel' id}}
               <img {{bind-attr src=image_url}} />
               <span class="title">{{title}}</span>
               <div class="uk-badge uk-badge-notification uk-badge-warning">
@@ -321,8 +321,8 @@
         {{#each episode in subscription.episodes}}
         <li class="audio" {{bind-attr data-listened=episode.listened}} {{bind-attr data-id=episode.id}} {{bind-attr data-source_url=episode.source_url}}>
           {{play-pause-button episode=episode}}
-          <h3>
-            <span class="title">{{episode.title}}</span>
+          <h3 class="column title eleven-twelfth">
+            {{episode.title}}
             <i class="fa fa-chevron-down"></i>
           </h3>
           <div class="description">
@@ -331,7 +331,7 @@
               Mark as Listened
             </button>
             {{/unless}}
-            {{#link-to 'channel.episode' episode.channel_id episode.uri}}
+            {{#link-to 'channel.episode' episode.channel.uri episode.uri}}
             Share Episode
             {{/link-to}}
             <div style="clear:both">{{{episode.description}}}</div>
@@ -348,8 +348,8 @@
         {{#each episode in episodes}}
           <li class="audio" {{bind-attr data-listened=episode.listened}} {{bind-attr data-id=episode.id}} {{bind-attr data-source_url=episode.source_url}}>
             {{play-pause-button episode=episode}}
-            <h3>
-              <span class="title">{{episode.title}}</span>
+            <h3 class="column title eleven-twelfth">
+              {{episode.title}}
               <i class="fa fa-chevron-down"></i>
             </h3>
             <div class="description">
@@ -358,7 +358,7 @@
                 Mark as Listened
               </button>
               {{/unless}}
-              {{#link-to 'channel.episode' episode.channel_id episode.id}}
+              {{#link-to 'channel.episode' episode.channel.uri episode.uri}}
               Share Episode
               {{/link-to}}
               <div>{{{episode.description}}}</div>

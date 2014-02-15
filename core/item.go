@@ -141,6 +141,10 @@ func GetItem(idOrSlug string, userId int) (episode ItemResult, notFound bool) {
 
 func GetItems(ids []string) (itemsResult []ItemResult) {
 	database.Table("items").Where("id in (?)", ids).Order("published_at DESC").Find(&itemsResult)
+	for i, e := range itemsResult {
+		itemsResult[i].Uri = e.GetUri()
+	}
+
 	return
 }
 

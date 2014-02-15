@@ -109,6 +109,7 @@ Uhura.DashboardChannelRoute = Ember.Route.extend({
       for (var i = data.episodes.length - 1; i >= 0; i--) {
         episodes = data.episodes[i]
         data.episodes[i] = Ember.Object.create(episodes)
+        data.episodes[i].channel = Ember.Object.create(data.channel)
       };
       controller.set('episodes', data.episodes)
     });
