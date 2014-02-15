@@ -141,7 +141,7 @@
       <ul id="channels">
         {{#each channel in channels}}
         <li>
-          {{#link-to 'channel' channel.id}}
+          {{#link-to 'channel' channel.uri}}
           <div>
             <img {{bind-attr src=channel.image_url}} />
           </div>
@@ -165,8 +165,8 @@
 
       <ul class="row">
         {{#each}}
-        <li class="column one-sixth">
-          {{#link-to 'channel' id}}
+        <li class="column two-twelfth">
+          {{#link-to 'channel' uri}}
           <div class="img">
             <img {{bind-attr src=image_url}} />
           </div>
@@ -213,16 +213,16 @@
         </div>
         <p>{{copyright}}</p>
       </aside>
-      <div id="episodes">
+      <div id="episodes" class="column nine-twelfth">
         <ol>
           {{#each episode in episodes}}
            <li class="audio" {{bind-attr data-listened=episode.listened}} {{bind-attr data-id=episode.id}} {{bind-attr data-source_url=episode.source_url}} itemscope itemtype="http://schema.org/MusicRecording">
 
-             {{play-pause-button episode=episode}}
 
-             {{#link-to 'channel.episode' episode.id class="title"}}
-               <span itemprop="name">{{episode.title}}</span>
-             {{/link-to}}
+            {{play-pause-button episode=episode}}
+            {{#link-to 'channel.episode' episode.channel.uri episode.uri class="column title eleven-twelfth"}}
+              <span itemprop="name">{{episode.title}}</span>
+            {{/link-to}}
 
              <meta content="{{unbound episode.url}}" itemprop="audio">
              <meta content="{{unbound episode.url}}" itemprop="url">
@@ -268,7 +268,7 @@
             {{#each subscription in subscriptions}}
             {{#with subscription.channel}}
             <li class="channel" id="channel-{{unbound id}}">
-              {{#link-to 'dashboard.channel' id}}
+              {{#link-to 'dashboard.channel' uri}}
               <img {{bind-attr src=image_url}} />
               <span class="title">{{title}}</span>
               <div class="uk-badge uk-badge-notification uk-badge-warning">
@@ -317,7 +317,7 @@
               Mark as Listened
             </button>
             {{/unless}}
-            {{#link-to 'channel.episode' episode.channel_id episode.id}}
+            {{#link-to 'channel.episode' episode.channel_id episode.uri}}
             Share Episode
             {{/link-to}}
             <div style="clear:both">{{{episode.description}}}</div>

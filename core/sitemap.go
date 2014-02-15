@@ -19,7 +19,7 @@ const (
 )
 
 func generateSitemap() string {
-	channels, episodes := AllChannels(0, false, 0)
+	channels, episodes := AllChannels(0, false, "")
 	var items []*sitemap.Item
 
 	item := sitemap.Item{

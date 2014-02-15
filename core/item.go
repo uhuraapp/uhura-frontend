@@ -1,7 +1,12 @@
 package core
 
-import "time"
-import "strconv"
+import (
+	. "github.com/fiam/gounidecode/unidecode"
+	"regexp"
+	"strconv"
+	"strings"
+	"time"
+)
 
 type Item struct {
 	Key         string `sql:"unique"`
@@ -12,6 +17,7 @@ type Item struct {
 	Id          int
 	PublishedAt time.Time `sql:"not null"`
 	Duration    string
+	Uri         string
 }
 
 type UserItem struct {
@@ -41,6 +47,7 @@ type ItemResult struct {
 	Viewed      interface{} `json:"listened"`
 	ChannelId   int         `json:"channel_id"`
 	SourceUrl   string      `json:"source_url"`
+	Uri         interface{} `json:"uri"`
 	PublishedAt time.Time   `json:"published_at"`
 }
 
@@ -50,6 +57,10 @@ type Counter struct {
 	channel     string
 }
 
+func (i *Item) BeforeCreate() {
+	i.Uri = i.SetUri()
+}
+
 func (i *Item) AfterCreate() {
 	nowMonth := time.Now().Month()
 	publishedMonth := i.PublishedAt.Month()
@@ -57,6 +68,25 @@ func (i *Item) AfterCreate() {
 	if publishedMonth >= (nowMonth - 1) {
 		NewEpisodeTweet(i.Id)
 	}
+}
+
+func (i *Item) SetUri() string {
+	re := regexp.MustCompile(`\W`)
+	uri := Unidecode(i.Title)
+	uri = re.ReplaceAllString(uri, "")
+	uri = strings.ToLower(uri)
+	uri = strings.Replace(uri, "podcast", "", -1)
+	return uri
+}
+
+func (i *ItemResult) GetUri() string {
+	var uri string
+	uri, ok := i.Uri.(string)
+	if !ok && uri == "" {
+		item := Item{Title: i.Title}
+		uri = item.SetUri()
+	}
+	return uri
 }
 
 // func GetUserItems(user *User, channels *[]ChannelResult, channel string, pageParams string) (*[]UserItemsResult, *Counter) {
@@ -90,8 +120,9 @@ func (i *Item) AfterCreate() {
 // 	return &itemsResult, &counter
 // }
 
-func GetItem(id int, userId int) (episodes ItemResult, notFound bool) {
-	itemQuery := database.Table("items").Where("items.id = ?", id)
+func GetItem(idOrSlug string, userId int) (episode ItemResult, notFound bool) {
+	id, _ := strconv.Atoi(idOrSlug)
+	itemQuery := database.Table("items").Where("items.id = ? OR items.uri = ?", id, idOrSlug)
 
 	if userId > 0 {
 		itemQuery = itemQuery.Select("user_items.viewed as viewed, items.*")
@@ -99,7 +130,11 @@ func GetItem(id int, userId int) (episodes ItemResult, notFound bool) {
 		itemQuery = itemQuery.Order("user_items.viewed DESC")
 	}
 
-	err := itemQuery.Order("published_at DESC").Find(&episodes)
+	err := itemQuery.Order("published_at DESC").Limit(1).Find(&episode)
+	if _, ok := episode.Uri.(string); !ok {
+		episode.Uri = episode.GetUri()
+	}
+
 	notFound = err.RecordNotFound()
 	return
 }
@@ -115,6 +150,6 @@ func UserListen(userId int, id string) (itemResult ItemResult) {
 	itemId, _ := strconv.Atoi(id)
 	database.First(&item, itemId)
 	database.Where(UserItem{ItemId: item.Id}).Assign(UserItem{UserId: userId, Viewed: true}).FirstOrCreate(&userItem)
-	itemResult, _ = GetItem(item.Id, userId)
+	itemResult, _ = GetItem(id, userId)
 	return
 }

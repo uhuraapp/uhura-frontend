@@ -12,8 +12,8 @@ Uhura.ApplicationAdapter = DS.RESTAdapter.extend({
 Uhura.Router.map(function () {
   'use strict';
   this.resource('channels');
-  this.resource('channel', {path: '/channels/:id'}, function(){
-    this.resource('channel.episode', {path: '/:episode_id'})
+  this.resource('channel', {path: '/channels/:channel_uri'}, function(){
+    this.resource('channel.episode', {path: '/:episode_uri'})
   });
   this.resource('dashboard', function(){
     this.resource('dashboard.channel', {path: '/:channel_id'})
@@ -63,7 +63,10 @@ Uhura.ChannelsRoute = Ember.Route.extend({
 Uhura.ChannelRoute = Ember.Route.extend({
   model: function (params) {
     'use strict';
-    return this.store.find('channel', params.id);
+    return this.store.find('channel', params.channel_uri);
+  },
+  serialize: function(model) {
+    return { channel_uri: model.get('uri') };
   },
   activate: function(){
     var title = this.modelFor('channel').get('title')
@@ -74,12 +77,19 @@ Uhura.ChannelRoute = Ember.Route.extend({
 });
 
 Uhura.ChannelEpisodeRoute = Ember.Route.extend({
+  model: function (params) {
+    'use strict';
+    return this.store.find('episode', params.episode_uri);
+  },
   activate: function(){
     var title = this.modelFor('channel.episode').get('title'),
         channel_title = this.modelFor('channel').get('title');
 
     $(document).attr('title', title + ' - ' + channel_title + ' - Uhura App');
     $("[property='og:title']").attr('content', title + ' - ' + channel_title + ' - Uhura App')
+  },
+  serialize: function(model) {
+    return { episode_uri: model.get('uri') };
   }
 });
 
@@ -125,12 +135,10 @@ Uhura.Episode = DS.Model.extend({
   listened:        DS.attr(),
   published_at:    DS.attr(),
   channel_id:      DS.attr('number'),
+  uri:             DS.attr(),
   channel:         function(){
     return this.store.findById('channel', this.get('channel_id'));
   }.property("channel_id"),
-  listenedChanged: function(){
-    Uhura.Helpers.listened(this.get('id'))
-  }.observes('listened'),
   url: function(){
     host = window.location.host
     return "http://"+host+"/channels/" + this.get("channel_id") + "/" + this.get("id")

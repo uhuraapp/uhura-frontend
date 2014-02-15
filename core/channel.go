@@ -82,7 +82,7 @@ func userInfoScope(userId string) func(d *gorm.DB) *gorm.DB {
 	}
 }
 
-func AllChannels(userId int, onlyFeatured bool, channelId int) (channels []ChannelResult, episodes []ItemResult) {
+func AllChannels(userId int, onlyFeatured bool, channelId string) (channels []ChannelResult, episodes []ItemResult) {
 	channelQuery := database.Table("channels").Where("title IS NOT NULL").Where("title <> ''")
 
 	if userId > 0 {
@@ -93,8 +93,9 @@ func AllChannels(userId int, onlyFeatured bool, channelId int) (channels []Chann
 		channelQuery = channelQuery.Scopes(featuredScope)
 	}
 
-	if channelId > 0 {
-		channelQuery = channelQuery.Where("channels.id = ?", channelId)
+	if channelId != "" {
+		idInt, _ := strconv.Atoi(channelId)
+		channelQuery = channelQuery.Where("channels.id = ? OR channels.uri = ?", idInt, channelId)
 	}
 
 	channelQuery.Order("title").Find(&channels)
@@ -115,6 +116,12 @@ func AllChannels(userId int, onlyFeatured bool, channelId int) (channels []Chann
 		}
 
 		itemQuery.Order("published_at DESC, id DESC, title DESC").Find(&episodes)
+
+		for j, e := range episodes {
+			if e.Uri != "" {
+				episodes[j].Uri = e.GetUri()
+			}
+		}
 		channels[i].Episodes = episodesIds
 	}
 
@@ -175,9 +182,10 @@ func SubscribeChannel(userId int, channelId string) (channel ChannelResult) {
 	channelIdInt, _ := strconv.Atoi(channelId)
 
 	database.Table("user_channels").Where(UserChannel{ChannelId: channelIdInt, UserId: userId}).FirstOrCreate(&userChannel)
-	channels, _ := AllChannels(userId, false, channelIdInt)
+	channels, _ := AllChannels(userId, false, channelId)
 	channel = channels[0]
 	return
+
 }
 
 func UnsubscribeChannel(userId int, channelId string) (channel ChannelResult) {
@@ -186,7 +194,7 @@ func UnsubscribeChannel(userId int, channelId string) (channel ChannelResult) {
 	channelIdInt, _ := strconv.Atoi(channelId)
 
 	database.Table("user_channels").Where(UserChannel{ChannelId: channelIdInt, UserId: userId}).Delete(&userChannel)
-	channels, _ := AllChannels(userId, false, channelIdInt)
+	channels, _ := AllChannels(userId, false, channelId)
 	channel = channels[0]
 	return
 }

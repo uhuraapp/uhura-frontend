@@ -131,7 +131,7 @@ func main() {
 				userId = user.Id
 			}
 
-			channels, _ = core.AllChannels(userId, false, 0)
+			channels, _ = core.AllChannels(userId, false, "")
 		} else {
 			channels = homeChannel
 		}
@@ -165,9 +165,7 @@ func main() {
 			userId = user.Id
 		}
 
-		channelId, _ := strconv.Atoi(params["id"])
-
-		channels, episodes := core.AllChannels(userId, false, channelId)
+		channels, episodes := core.AllChannels(userId, false, params["id"])
 
 		r.JSON(200, map[string]interface{}{"channel": channels[0], "episodes": episodes})
 	})
@@ -218,8 +216,7 @@ func main() {
 	m.Get("/api/episodes/:id", func(params martini.Params, request *http.Request, r render.Render) {
 		user, _ := core.CurrentUser(request)
 
-		idInt, _ := strconv.Atoi(params["id"])
-		episode, notFound := core.GetItem(idInt, user.Id)
+		episode, notFound := core.GetItem(params["id"], user.Id)
 		if notFound {
 			r.JSON(404, nil)
 		} else {
@@ -234,8 +231,7 @@ func main() {
 			return
 		}
 
-		idInt, _ := strconv.Atoi(params["id"])
-		episode, _ := core.GetItem(idInt, user.Id)
+		episode, _ := core.GetItem(params["id"], user.Id)
 
 		r.JSON(200, map[string]interface{}{"episode": episode})
 
@@ -248,9 +244,7 @@ func main() {
 			return
 		}
 
-		idInt, _ := strconv.Atoi(params["id"])
-
-		channels, episodes := core.AllChannels(user.Id, false, idInt)
+		channels, episodes := core.AllChannels(user.Id, false, params["id"])
 		r.JSON(200, map[string]interface{}{"episodes": episodes, "channel": channels[0]})
 	})
 
