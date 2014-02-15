@@ -1,0 +1,90 @@
+header .PlayerContainer{
+  position: absolute;
+  z-index: 6;
+  top: 0;
+  left: 22%;
+  width: 35%;
+}
+
+.PlayerMobile{
+  margin-top: 45px;
+  background: #F1714C;
+}
+
+.PlayerMobile .Player{
+  border: 1px solid #3E4651;
+  border-left: 0;
+  border-right: 0;
+  overflow: hidden;
+}
+
+.Player{
+  position: relative;
+  height: 45px;
+  border-right: 1px solid #B56D58;
+}
+
+.Player *::selection{
+  background: none;
+}
+
+.PlayerLoader,
+.Player .title{
+  width: 85%;
+  position: absolute;
+  height: 45px;
+  top: 0;
+  right: 0;
+}
+
+.PlayerLoader div{
+  height: 45px;
+  width: 0px;
+  position: absolute;
+}
+
+.PlayerLoader div.loading{
+  background: #885F53;
+  z-index: 1;
+}
+
+.PlayerLoader div.playing{
+  background: #B56D58;
+  z-index: 2;
+}
+
+.Player, .Player a{
+  font-size: 25px;
+}
+
+.Player .title{
+  font-size: 15px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  color: #FFF;
+  line-height: 45px;
+  z-index: 3;
+  padding: 0 5px;
+}
+
+.Player a{
+  border-right: 1px solid #B56D58;
+  border-left: 1px solid #B56D58;
+  width: 10%;
+}
+
+.Player a i{
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+}
+
+.Player a, .Player a i{
+  line-height: 45px;
+  height: 45px;
+  display: block;
+  float: left;
+  text-align: center;
+  color: #FFF;
+}

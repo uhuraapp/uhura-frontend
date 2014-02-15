@@ -13,12 +13,12 @@ Uhura.PlayerX.events.loading = function(){
   var percent = (this.bytesLoaded * 100)/this.bytesTotal,
       playing = (this.position * 100)/this.duration
 
-  $("header #loader div.loading").css("width", percent+"%")
+  $(".PlayerLoader div.loading").css("width", percent+"%")
 }
 
 Uhura.PlayerX.events.playing = function(){
   playing = (this.position * 100)/this.duration
-  $("header #loader div.playing").css("width", playing+"%")
+  $(".PlayerLoader div.playing").css("width", playing+"%")
 }
 
 Uhura.PlayerX.events.onload = function(){
@@ -47,11 +47,9 @@ Uhura.PlayerX.getAudio = function(id){
   return Uhura.PlayerX.episodes[id]
 }
 
-// Uhura.PlayerX.stop = function(){
-//   soundManager.stopAll();
-// }
-
 Uhura.PlayerX.play = function(episode){
+  $(".PlayerLoader div").css("width", 0);
+
   oldAudio = Uhura.PlayerX.playing
   if(oldAudio){
     ga('send', 'event', 'button', 'stop', 'episode', oldAudio.id);
@@ -75,11 +73,6 @@ Uhura.PlayerX.play_pause = function(){
   Uhura.PlayerX.episodes[audio.id].togglePause()
   Uhura.PlayerController.set("playing", !isPlaying)
 }
-
-// Uhura.PlayerX.pause = function(id){
-//   var audio = this.getAudio(id);
-//   audio.pause();
-// }
 
 soundManager.setup({
   url: '/assets/swf',

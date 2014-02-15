@@ -5,40 +5,52 @@
   margin-bottom: 20px;
 }
 
-#channel_page aside {
+#channel_info {
   line-height: 1.5
 }
 
-#channel_page aside img{
+#channel_info  img{
   margin: 0 auto;
   text-align: center;
   margin-bottom: 10px
 }
 
-#channel_page aside button {
+#channel_info  button {
   width: 100%;
   margin-bottom: 10px;
 }
 
-#channel_page aside p {
+#channel_info  p {
   font-size: 12px
 }
 
+#channel_info {
+  margin-left: 0;
+}
+
 #episodes .title{
+  display: block;
   font-weight: 200;
-  font-size: 25px;
-  line-height: 1.5;
+  font-size: 20px;
+  line-height: 1;
   margin: 0;
-  padding: 15px 0;
   cursor: pointer;
-  height: 32px;
-  width: 815px;
   color: #333;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  float: left;
-  float: right;
+  padding: 10px 0;
+}
+
+@media screen and (max-width: 640px) {
+  #episodes .title{
+    text-overflow: initial;
+    white-space: normal;
+    overflow: inherit;
+        line-height: 1.7;
+    padding: 5px 0;
+    font-size: 15px;
+  }
 }
 
 #episodes a.title:hover{
@@ -67,7 +79,7 @@
 
 #episodes li button {
   float: left;
-  margin: 12px 0 0 0
+  margin: 10px 0 0 0
 }
 
 #episodes li i {

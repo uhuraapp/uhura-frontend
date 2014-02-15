@@ -88,8 +88,6 @@ header:after{
 }
 
 header hgroup{
-
-
   float: left;
   border-radius: 0 0 2px 2px;
 }
@@ -137,13 +135,24 @@ header h2{
   padding: 0 0 5px 0;
 }
 
-header nav {
+header nav.uk-navbar {
   float: right;
+  background: transparent;
+  border: none;
+
 }
 
-header nav ul{
+header nav .uk-navbar-toggle {
+  text-shadow: none;
+  height: 45px;
+  background: none;
+  border: none;
+}
+
+header nav.uk-navbar ul.uk-navbar-nav{
   margin: 0;
-  padding: 0
+  padding: 0;
+  float: right;
 }
 
 header nav li:first-child{
@@ -156,92 +165,21 @@ header nav li{
   height: 45px;
 }
 
-header nav a{
+header nav .uk-navbar-nav li a{
   display: block;
   height: 45px;
   line-height: 45px;
   margin: 0;
   padding: 0 10px;
   color: #3E4651;
+  text-shadow: none;
 }
 
-header nav a:hover{
+header nav .uk-navbar-nav li a:hover{
   background: #3E4651;
   color: #FFF;
   text-decoration: none;
-  box-shadow: inset 0 0 3px #B56D58;
-}
 
-header #player{
-  width: 40%;
-  position: absolute;
-  left: 25%;
-  height: 45px;
-  padding: 0 20px;
-}
-
-header #player *::selection{
-  background: none;
-}
-
-header #loader{
-  width: 85%;
-  position: absolute;
-  left: 15%;
-  height: 45px;
-
-}
-
-header #loader div{
-  height: 45px;
-  width: 0px;
-  position: absolute;
-}
-
-header #loader div.loading{
-  background: #885F53;
-  z-index: 1;
-}
-
-header #loader div.playing{
-  background: #B56D58;
-  z-index: 2;
-}
-
-header #player, header #player a{
-  font-size: 25px;
-}
-
-header #player .title{
-  width: 85%;
-  font-size: 15px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  color: #FFF;
-  line-height: 45px;
-  z-index: 3;
-  position: relative;
-  float: right;
-}
-
-header #player a{
-  border-right: 1px solid #B56D58;
-  border-left: 1px solid #B56D58;
-  float: left;
-  width: 60px;
-}
-
-header #player a i{
-  width: 60px;
-  text-align: center;
-}
-
-header #player a .title, header #player a i{
-  line-height: 45px;
-  height: 45px;
-  display: block;
-  float: left;
 }
 
 header .uk-container-center{
@@ -254,14 +192,9 @@ header .uk-container-center{
 
 #loading_page {
   font-size: 50px;
-text-align: center;
-margin: 100px;
+  text-align: center;
+  margin: 100px;
 }
-
-/*
-#channel_page, #channels_page, #dashboard, #loading_page  {
-  padding-top: 15px;
-}*/
 
 
 #error-403 {

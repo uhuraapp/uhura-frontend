@@ -35,6 +35,7 @@
   <!-- emberjs -->
   <script src="<% URL %>/assets/vendor/jquery-1.10.2.min.js"></script>
   <script src="<% URL %>/assets/vendor/handlebars-1.0.0.js"></script>
+  <script src="<% URL %>/assets/vendor/uikit.js"></script>
   <script src="<% URL %>/assets/vendor/ember.js"></script>
   <script src="<% URL %>/assets/vendor/ember-data.js"></script>
 
@@ -74,18 +75,18 @@
 </head>
 <body>
   <script type="text/x-handlebars" id="components/play-pause-button">
-    <button {{action "play" episode}} class="uk-button uk-button-large">
+    <button {{action "play" episode}} class="uk-button uk-button-small">
       <i class="fa fa-play"></i>
     </button>
   </script>
 
   <script type="text/x-handlebars" data-template-name="player">
     {{#if model}}
-    <div id="player">
+    <div class="Player">
       <a href="#" {{action play_pause model}}>
         {{#if playing}}<i class="fa fa-pause"></i>{{else}}<i class="fa fa-play"></i>{{/if}}
       </a>
-      <div id="loader">
+      <div class="PlayerLoader">
         <div class="loading"></div>
         <div class="playing"></div>
       </div>
@@ -96,6 +97,9 @@
 
   <script type="text/x-handlebars" data-template-name="application">
     <header>
+      <div class="uk-hidden-small">
+        {{view Uhura.PlayerView}}
+      </div>
       <div class="container">
         <hgroup>
           {{#link-to 'index'}}
@@ -104,10 +108,8 @@
           {{/link-to}}
         </hgroup>
 
-        {{view Uhura.PlayerView}}
-
-        <nav>
-          <ul>
+        <nav class="uk-navbar">
+          <ul class="uk-navbar-nav uk-hidden-small">
             <li>
               {{#link-to "channels"}}
               Discovery New Podcasts
@@ -119,15 +121,37 @@
               {{/link-to}}
             </li>
           </ul>
+          <button class="uk-navbar-toggle uk-visible-small" class="uk-button" data-uk-offcanvas="{target:'#menu'}"></button>
         </nav>
       </div>
     </header>
+
+    <div data-uk-sticky class="uk-visible-small PlayerMobile">
+      {{view Uhura.PlayerView}}
+    </div>
+
+    <div id="menu" class="uk-offcanvas">
+      <div class="uk-offcanvas-bar uk-offcanvas-bar-flip">
+        <ul class="uk-nav uk-nav-offcanvas" data-uk-nav>
+          <li>
+            {{#link-to "channels"}}
+              Discovery New Podcasts
+            {{/link-to}}
+          </li>
+          <li>
+            {{#link-to "dashboard"}}
+              Dashboard
+            {{/link-to}}
+          </li>
+        </ul>
+      </div>
+    </div>
 
     <div id="content" class="container">
       {{outlet}}
     </div>
 
-    <footer>
+    <footer class="column full">
       Created with <span class="heart">♥</span> by <a href="https://github.com/dukex">Duke Khaos</a> with awesome <a href="https://github.com/dukex/uhura/graphs/contributors">Contributors</a>, follow us <a rel="nofollow" href="http://twitter.com/UhuraApp">@UhuraApp</a>
     </footer>
     <div id="fb-root"></div>
@@ -182,24 +206,14 @@
           {{/if}}
         </li>
         {{/each}}
-        <li id="new_podcast">
-          <form class="uk-form" {{action "newChannel" on="submit"}}>
-            <fieldset data-uk-margin class="uk-vertical-align-middle">
-              <label for="new-channel"> Add New Podcast </label>
-              {{input type="url" id="new-channel" class="form-control new-channel" placeholder="Poscast Feed URL"
-              value=url class="form-control"}}
-              <button type="submit" name="submit" class="uk-button uk-button-success">Submit</button>
-            </fieldset>
-          </form>
-        </li>
       </ul>
     </div>
   </script>
 
   <script type="text/x-handlebars" data-template-name="channel">
     <div id="channel_page" itemscope itemtype="http://schema.org/MusicGroup">
-      <h2 itemprop="name">{{title}}</h2>
-      <aside>
+      <h2 itemprop="name" class="column full">{{title}}</h2>
+      <aside id="channel_info" class="column three-twelfth">
         <img {{bind-attr src=image_url}} />
         {{#if subscribed}}
         <button class="uk-button uk-button-large uk-button-success subscribe fa fa-check" {{action 'unsubscribeChannel' id}}>Subscribed</button>

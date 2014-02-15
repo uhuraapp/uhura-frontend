@@ -26,12 +26,14 @@ Uhura.Router.reopen({
     * Tracks pageviews if google analytics is used
     */
     didTransition: function(infos) {
-     this._super(infos);
-     if (window.ga === undefined) { return; }
+      this._super(infos);
+      $(".uk-offcanvas").click();
 
-     Ember.run.next(function(){
-      ga('send', 'pageview', window.location.hash.substr(1));
-    });
+      if (window.ga === undefined) { return; }
+
+      Ember.run.next(function(){
+        ga('send', 'pageview', window.location.hash.substr(1));
+      });
    }
  });
 
@@ -298,12 +300,14 @@ Uhura.PlayerController = Ember.ObjectController.extend({
 
 Uhura.PlayerView = Ember.View.extend({
   templateName: 'player',
+  classNames: ['PlayerContainer'],
   controller: Uhura.PlayerController,
 });
 
 // component
 
 Uhura.PlayPauseButtonComponent = Ember.Component.extend({
+  classNames: ['column', 'one-twelfth'],
   actions: {
     play: function(episode){
       var __playing = function(episode){
