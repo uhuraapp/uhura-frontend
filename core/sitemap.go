@@ -25,11 +25,17 @@ func generateSitemap() string {
 	item := sitemap.Item{
 		Loc:        "http://uhuraapp.com/",
 		LastMod:    time.Now(),
-		Priority:   1,
+		Priority:   0.8,
 		Changefreq: "daily",
 	}
-
 	items = append(items, &item)
+
+	items = append(items, &sitemap.Item{
+		Loc:        "http://uhuraapp.com/channels",
+		LastMod:    time.Now(),
+		Priority:   1,
+		Changefreq: "daily",
+	})
 
 	for _, channel := range channels {
 		updatedAt := channel.UpdatedAt
