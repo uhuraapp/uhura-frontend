@@ -4,7 +4,6 @@ import (
 	"github.com/dukex/buffer"
 	"github.com/rakyll/coop"
 	"os"
-	"strconv"
 	"strings"
 	"time"
 )
@@ -39,13 +38,7 @@ func NewEpisodeTweet(epId int) {
 
 		language := strings.ToLower(channel.Language)
 
-		message = "http://uhuraapp.com/channels/" + strconv.Itoa(channel.Id) + "/" + strconv.Itoa(epId)
-
-		if strings.Contains(language, "br") && strings.Contains(language, "pt") {
-			message = message + " Novo Episódio: "
-		} else {
-			message = message + " New Episode: "
-		}
+		message = "http://uhuraapp.com/channels/" + channel.Uri + "/" + episode.Uri
 
 		message = message + episode.Title + " - " + channel.Title
 
