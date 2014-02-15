@@ -39,7 +39,7 @@ func generateSitemap() string {
 		}
 
 		items = append(items, &sitemap.Item{
-			Loc:        "http://uhuraapp.com/channels/" + strconv.Itoa(channel.Id),
+			Loc:        "http://uhuraapp.com/channels/" + channel.Uri,
 			LastMod:    updatedAt,
 			Priority:   0.5,
 			Changefreq: "weekly",
@@ -54,7 +54,7 @@ func generateSitemap() string {
 		}
 
 		items = append(items, &sitemap.Item{
-			Loc:        "http://uhuraapp.com/channels/" + strconv.Itoa(episode.ChannelId) + "/" + strconv.Itoa(episode.Id),
+			Loc:        "http://uhuraapp.com/channels/" + strconv.Itoa(episode.ChannelId) + "/" + episode.GetUri(),
 			LastMod:    updatedAt,
 			Priority:   0.2,
 			Changefreq: "monthly",
