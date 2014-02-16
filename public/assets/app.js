@@ -313,12 +313,14 @@ Uhura.PlayPauseButtonComponent = Ember.Component.extend({
     play: function(episode){
       var __playing = function(episode){
         return function(){
-          $("#subscribeButton").click()
           $("#episodes [data-playing]").click()
 
           episode.set('started', true)
           episode.set('playing', true)
           Uhura.PlayerX.play(episode)
+          setTimeout(function(){
+            $("#subscribeButton").click()
+          }, 2000)
         }
       }
       window.auth.withLoggedUser(__playing(episode));
