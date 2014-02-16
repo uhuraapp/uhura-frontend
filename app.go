@@ -213,10 +213,17 @@ func main() {
 		r.JSON(200, map[string]interface{}{"episodes": episodes})
 	})
 
-	m.Get("/api/episodes/:id", func(params martini.Params, request *http.Request, r render.Render) {
-		user, _ := core.CurrentUser(request)
+	m.Get("/api/episodes/:slug", func(params martini.Params, request *http.Request, r render.Render) {
+		user, err := core.CurrentUser(request)
+		var userId int
+		if err {
+			userId = 0
+		} else {
+			userId = user.Id
+		}
 
-		episode, notFound := core.GetItem(params["id"], user.Id)
+		episode, notFound := core.GetItem(params["slug"], userId)
+
 		if notFound {
 			r.JSON(404, nil)
 		} else {
