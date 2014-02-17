@@ -144,7 +144,7 @@ Uhura.Episode = DS.Model.extend({
   }.property("channel_id"),
   url: function(){
     host = window.location.host
-    return "http://"+host+"/channels/" + this.get("channel_id") + "/" + this.get("id")
+    return "http://"+host+"/channels/" + this.get("channel_id") + "/" + this.get("uri")
   }.property("channel_id", "id")
 });
 
