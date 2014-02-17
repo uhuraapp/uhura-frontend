@@ -254,18 +254,19 @@ olark.identify('6029-981-10-1508');/*]]>*/</script>
       <div id="episodes" class="column nine-twelfth">
         <ol>
           {{#each episode in episodes}}
-           <li class="audio" {{bind-attr data-listened=episode.listened}} {{bind-attr data-id=episode.id}} {{bind-attr data-source_url=episode.source_url}} itemscope itemtype="http://schema.org/MusicRecording">
+            <li class="audio" {{bind-attr data-listened=episode.listened}} {{bind-attr data-id=episode.id}} {{bind-attr data-source_url=episode.source_url}} itemscope itemtype="http://schema.org/MusicRecording">
 
 
-            {{play-pause-button episode=episode}}
-            {{#link-to 'channel.episode' episode.channel.uri episode.uri class="column title eleven-twelfth"}}
-              <span itemprop="name">{{episode.title}}</span>
-            {{/link-to}}
+              {{play-pause-button episode=episode}}
+              {{#link-to 'channel.episode' episode.channel.uri episode.uri class="column title eleven-twelfth"}}
+                <span itemprop="name">{{episode.title}}</span>
+              {{/link-to}}
 
-             <meta content="{{unbound episode.url}}" itemprop="audio">
-             <meta content="{{unbound episode.url}}" itemprop="url">
-             <meta content="{{unbound episode.channel.title}}" itemprop="inAlbum">
-           </li>
+              <meta {{bind-attr content=episode.durationISO}} itemprop="duration">
+              <meta {{bind-attr content=episode.url}} itemprop="audio">
+              <meta {{bind-attr content=episode.url}} itemprop="url">
+              <meta {{bind-attr content=episode.channel.title}} itemprop="inAlbum">
+            </li>
           {{/each}}
         </ol>
       </div>

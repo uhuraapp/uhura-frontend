@@ -139,6 +139,15 @@ Uhura.Episode = DS.Model.extend({
   published_at:    DS.attr(),
   channel_id:      DS.attr('number'),
   uri:             DS.attr(),
+  duration:        DS.attr(),
+  durationISO:     function(){
+    duration = this.get('duration')
+    if(duration.split(":").length == 2) {
+      duration = "00:"+duration
+    }
+    duration = moment.duration(duration)
+    return duration.toIsoString();
+  }.property("duration"),
   channel:         function(){
     return this.store.findById('channel', this.get('channel_id'));
   }.property("channel_id"),
