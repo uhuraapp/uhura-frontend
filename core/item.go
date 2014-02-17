@@ -49,6 +49,7 @@ type ItemResult struct {
 	SourceUrl   string      `json:"source_url"`
 	Uri         interface{} `json:"uri"`
 	PublishedAt time.Time   `json:"published_at"`
+	Duration    string      `json:"duration"`
 }
 
 type Counter struct {
