@@ -1,0 +1,26 @@
+{
+  "name": "uhura",
+  "version": "0.0.3",
+  "description": "Podcast manager",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/dukex/uhura.git"
+  },
+  "author": "Duke X",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dukex/uhura/issues"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "matchdep": "~0.3.0",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-contrib-concat": "latest",
+    "grunt-contrib-uglify": "latest",
+    "grunt-contrib-jshint": "latest"
+  }
+}
