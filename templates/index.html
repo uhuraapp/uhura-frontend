@@ -191,7 +191,7 @@ olark.identify('6029-981-10-1508');/*]]>*/</script>
         <li>
           {{#link-to 'channel' channel.uri}}
           <div>
-            <img {{bind-attr src=channel.image_url}} />
+            <img {{bind-attr alt=channel.title}} {{bind-attr src=channel.image_url}} />
           </div>
           {{/link-to}}
         </li>
@@ -216,7 +216,7 @@ olark.identify('6029-981-10-1508');/*]]>*/</script>
         <li class="column two-twelfth">
           {{#link-to 'channel' uri}}
           <div class="img">
-            <img {{bind-attr src=image_url}} />
+            <img {{bind-attr alt=title}} {{bind-attr src=image_url}} />
           </div>
           <h4>{{title}}</h4>
           {{/link-to}}
@@ -238,7 +238,7 @@ olark.identify('6029-981-10-1508');/*]]>*/</script>
     <div id="channel_page" itemscope itemtype="http://schema.org/MusicGroup">
       <h2 itemprop="name" class="column full">{{title}}</h2>
       <aside id="channel_info" class="column three-twelfth">
-        <img {{bind-attr src=image_url}} />
+        <img {{bind-attr alt=title}} {{bind-attr src=image_url}} />
         {{#if subscribed}}
         <button class="uk-button uk-button-large uk-button-success subscribe fa fa-check" {{action 'unsubscribeChannel' id}}>Subscribed</button>
         {{else}}
@@ -308,7 +308,7 @@ olark.identify('6029-981-10-1508');/*]]>*/</script>
             {{#with subscription.channel}}
             <li class="channel" id="channel-{{unbound id}}">
               {{#link-to 'dashboard.channel' id}}
-              <img {{bind-attr src=image_url}} />
+              <img {{bind-attr alt=title}} {{bind-attr src=image_url}} />
               <span class="title">{{title}}</span>
               <div class="uk-badge uk-badge-notification uk-badge-warning">
                 {{to_view}}
