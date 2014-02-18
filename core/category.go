@@ -1,10 +1,10 @@
 package core
 
-import "time"
+// import "time"
 
-type Category struct {
-	Id        int64
-	Name      string `sql:"not null;unique"`
-	CreatedAt time.Time
-	UpdatedAt time.Time
-}
+// type Category struct {
+// 	Id        int64
+// 	Name      string `sql:"not null;unique"`
+// 	CreatedAt time.Time
+// 	UpdatedAt time.Time
+// }
