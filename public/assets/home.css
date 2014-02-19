@@ -7811,6 +7811,7 @@ header h1, header h2 {
 }
 header h1 {
   font-size: 43px;
+  color: #f1714c;
 }
 header h2 {
   font-size: 16px;
@@ -7836,21 +7837,28 @@ header hgroup a {
 #home #credits a {
   color: white;
 }
-#home h3 {
-  color: white;
+#home h3, #home h4 {
   text-align: center;
-  text-shadow: 0 2px 2px #333333;
-  font-size: 30px;
-  font-weight: 100;
   width: 430px;
   margin: 0 auto;
+  font-weight: 100;
+  color: white;
+}
+#home h3 {
+  font-size: 30px;
   line-height: 1.5;
   letter-spacing: 2px;
+  text-shadow: 0 2px 2px #333333;
+  margin-bottom: 80px;
+}
+#home h4 {
+  font-size: 15px;
+  color: #eeeeee;
+  text-shadow: 0 1px 1px #333333;
 }
 #home ul {
   width: 400px;
-  margin: 0 auto;
-  margin-top: 100px;
+  margin: 20px auto;
   margin-bottom: 100px;
   overflow: hidden;
 }
