@@ -10,6 +10,7 @@ import (
 	"time"
 
 	auth "github.com/dukex/login2"
+	_ "github.com/dukex/uhura/core"
 	"github.com/gorilla/mux"
 )
 
@@ -19,7 +20,7 @@ import (
 // 	"fmt"
 // 	"github.com/codegangsta/martini"
 // 	"github.com/codegangsta/martini-contrib/render"
-// 	"github.com/dukex/uhura/core"
+//
 // 	"github.com/rakyll/martini-contrib/cors"
 // 	"html/template"
 // 	"io/ioutil"

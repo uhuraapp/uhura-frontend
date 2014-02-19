@@ -1,0 +1,43 @@
+{
+	"ImportPath": "github.com/dukex/uhura",
+	"GoVersion": "go1.2",
+	"Deps": [
+		{
+			"ImportPath": "code.google.com/p/goauth2/oauth",
+			"Comment": "weekly-40",
+			"Rev": "5877582f0cb070bc21b199dab5e7d18fb546444a"
+		},
+		{
+			"ImportPath": "github.com/dukex/login2",
+			"Rev": "ae8ba31e36e2f69e4728c03989e0e6d96aa8ae59"
+		},
+		{
+			"ImportPath": "github.com/fiam/gounidecode/unidecode",
+			"Rev": "311ebb7422d3ff70cc1d064c5a297520ff5f304a"
+		},
+		{
+			"ImportPath": "github.com/gorilla/context",
+			"Rev": "708054d61e5a2918b9f4e9700000ee611dcf03f5"
+		},
+		{
+			"ImportPath": "github.com/gorilla/mux",
+			"Rev": "9ede152210fa25c1377d33e867cb828c19316445"
+		},
+		{
+			"ImportPath": "github.com/gorilla/securecookie",
+			"Rev": "155134204c034796bcd7a72c1e1b53ba005735c6"
+		},
+		{
+			"ImportPath": "github.com/gorilla/sessions",
+			"Rev": "1ace0650f7b7ebbf58eb835609698352efeb9cc9"
+		},
+		{
+			"ImportPath": "github.com/jinzhu/gorm",
+			"Rev": "71e7b37bdfd69432e00565a7483a3788fdc20eb7"
+		},
+		{
+			"ImportPath": "github.com/lib/pq",
+			"Rev": "6c54219055243614d4eaffea55917c15bea2ba2f"
+		}
+	]
+}
