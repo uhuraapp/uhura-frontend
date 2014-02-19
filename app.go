@@ -2,13 +2,15 @@ package main
 
 import (
 	"fmt"
-	"github.com/gorilla/mux"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
 	"strings"
 	"time"
+
+	auth "github.com/dukex/login2"
+	"github.com/gorilla/mux"
 )
 
 // import (
@@ -30,7 +32,7 @@ import (
 // var config oauth.Config
 // var homeChannel []core.ChannelResult
 
-// const profileInfoURL = "https://www.googleapis.com/oauth2/v1/userinfo?alt=json"
+// const profileInfoURL =
 
 // func emberAppHandler(r render.Render, req *http.Request) string {
 // 	var indexTemplate string
@@ -65,35 +67,85 @@ import (
 // 	return indexTemplate
 // }
 
-var indexTemplate string
-var env string
+var (
+	LandingHTML    string
+	ASSETS_VERSION string
+	ENV            string
+	PORT           string
+	URL            string
+	builder        *auth.Builder
+)
 
-func LandingHandler(w http.ResponseWriter, r *http.Request) {
-	if env == "development" {
-		buildLandingPage()
-	}
-	fmt.Fprintf(w, indexTemplate)
-}
+// Helpers
 
 func buildLandingPage() {
 	itb, _ := ioutil.ReadFile("./views/index.html")
-	indexTemplate = string(itb[:])
-	indexTemplate = strings.Replace(indexTemplate, "<% URL %>", os.Getenv("URL"), -1)
-	indexTemplate = strings.Replace(indexTemplate, "<% ASSETS_VERSION %>", os.Getenv("ASSETS_VERSION"), -1)
+	LandingHTML = string(itb[:])
+	LandingHTML = strings.Replace(LandingHTML, "<% URL %>", URL, -1)
+	LandingHTML = strings.Replace(LandingHTML, "<% ASSETS_VERSION %>", ASSETS_VERSION, -1)
+}
+
+func setupUser(provider string, user *auth.User, rawResponde *http.Response) {
+	fmt.Println("USER", user)
+	fmt.Println("raw Response", rawResponde)
+}
+
+func configAuth() {
+	providers := make([]*auth.Provider, 0)
+
+	providers = append(providers, &auth.Provider{
+		RedirectURL: os.Getenv("GOOGLE_CALLBACK_URL"),
+		AuthURL:     "https://accounts.google.com/o/oauth2/auth",
+		TokenURL:    "https://accounts.google.com/o/oauth2/token",
+		Name:        "google",
+		Key:         os.Getenv("GOOGLE_CLIENT_ID"),
+		Secret:      os.Getenv("GOOGLE_CLIENT_SECRET"),
+		Scope:       "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
+		UserInfoURL: "https://www.googleapis.com/oauth2/v1/userinfo?alt=json",
+	})
+
+	providers = append(providers, &auth.Provider{
+		RedirectURL: os.Getenv("FACEBOOK_CALLBACK_URL"),
+		AuthURL:     "https://www.facebook.com/dialog/oauth",
+		TokenURL:    "https://graph.facebook.com/oauth/access_token",
+		Name:        "facebook",
+		Key:         "257036014466425",
+		Secret:      "2a7500446b1e3a135b2fd5caf71ef375",
+		UserInfoURL: "https://graph.facebook.com/me",
+	})
+	builder = auth.NewBuilder(providers, setupUser)
+}
+
+// Handlers
+func LandingHandler(w http.ResponseWriter, r *http.Request) {
+	if ENV == "development" {
+		buildLandingPage()
+	}
+	fmt.Fprintf(w, LandingHTML)
 }
 
 func main() {
-	PORT := os.Getenv("PORT")
-	env = os.Getenv("ENV")
+	ASSETS_VERSION = os.Getenv("ASSETS_VERSION")
+	ENV = os.Getenv("ENV")
+	PORT = os.Getenv("PORT")
+	URL = os.Getenv("URL")
 
+	configAuth()
 	buildLandingPage()
 
+	// HTTP Server
 	r := mux.NewRouter()
+
+	// Auth Router
+	builder.Router(r)
+
+	// Api
+
 	r.HandleFunc("/", LandingHandler)
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./public/")))
 	http.Handle("/", r)
 
-	s := &http.Server{
+	server := &http.Server{
 		Addr:           ":" + PORT,
 		Handler:        r,
 		ReadTimeout:    10 * time.Second,
@@ -102,7 +154,7 @@ func main() {
 	}
 
 	fmt.Println("Starting server on", PORT)
-	log.Fatal(s.ListenAndServe())
+	log.Fatal(server.ListenAndServe())
 }
 
 // func main() {
@@ -304,16 +356,6 @@ func main() {
 // 	})
 
 // 	// API - Auth
-// 	m.Get("/api/authorize", func(w http.ResponseWriter, request *http.Request) string {
-// 		_, err := core.CurrentUser(request)
-// 		if err {
-// 			url := config.AuthCodeURL("")
-// 			http.Redirect(w, request, url, http.StatusFound)
-// 			return ""
-// 		} else {
-// 			return "<script>window.close();</script>"
-// 		}
-// 	})
 
 // 	m.Get("/auth/callback", func(responseWriter http.ResponseWriter, request *http.Request) string {
 // 		code := request.FormValue("code")
