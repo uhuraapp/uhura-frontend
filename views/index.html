@@ -11,20 +11,42 @@
   <meta property="og:image" content="<% URL %>/assets/logo.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link href='http://fonts.googleapis.com/css?family=Exo+2:400,200,400italic,800' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Exo+2:400,900italic,800italic,700italic,600italic,500italic,400italic,300italic,200italic,100italic,900,800,700,600,500,300,100,200' rel='stylesheet' type='text/css'>
 
-  <link href="<% URL %>/assets/home.css?<% ASSETS_VERSION %>">
+
+  <link href="<% URL %>/assets/home.css?<% ASSETS_VERSION %>" rel='stylesheet' type='text/css'>
+  <script src="<% URL %>/assets/home.min.js?<% ASSETS_VERSION %>"></script>
 </head>
 <body>
-   <header>
-      <div class="container">
-        <hgroup>
-          <a>
-            <h1>Uhura</h1>
-            <h2>Podcast Manager</h2>
-          </a>
-        </hgroup>
-      </div>
+  <div id="home">
+    <p id="credits">Photo by <a href="https://www.flickr.com/photos/cclogg/">Chris Clogg</a></p>
+    <header>
+      <hgroup>
+        <a>
+          <h1>Uhura</h1>
+          <h2>Podcast Manager</h2>
+        </a>
+      </hgroup>
     </header>
+    <h3>Listen, Share and Manage your podcasts online</h3>
+
+    <ul>
+      <li>
+        <a href="#tour" data-uk-smooth-scroll class="uk-button">Take a Tour</a>
+      </li>
+      <li>
+        <a href="/auth/google" class="uk-button uk-button-large uk-button-success"><i class="fa fa-google-plus"></i> Connect with Google</a>
+      </li>
+    </ul>
+  </div>
+
+  <div id="tour">
+
+  </div>
+
+  <p id="made-by">
+   Created with <span class="heart">♥</span> by
+   <a href="https://twitter.com/_dukex">Duke X</a>, <br /> follow us <a rel="nofollow" href="http://twitter.com/UhuraApp">@UhuraApp</a>
+ </p>
 </body>
 </html>
