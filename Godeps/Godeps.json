@@ -18,6 +18,10 @@
 			"Rev": "5877582f0cb070bc21b199dab5e7d18fb546444a"
 		},
 		{
+			"ImportPath": "github.com/austinchau/go-mixpanel",
+			"Rev": "4e0c0d6f76663facb6414ed55b17bea1cc444715"
+		},
+		{
 			"ImportPath": "github.com/codegangsta/inject",
 			"Rev": "346a984957aa24276ebc5e7b16b3ac6a50fe8138"
 		},
