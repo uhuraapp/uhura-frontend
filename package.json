@@ -18,9 +18,10 @@
   "devDependencies": {
     "grunt": "~0.4.2",
     "matchdep": "~0.3.0",
-    "grunt-contrib-watch": "~0.5.3",
+    "grunt-contrib-watch": "latest",
     "grunt-contrib-concat": "latest",
     "grunt-contrib-uglify": "latest",
-    "grunt-contrib-jshint": "latest"
+    "grunt-contrib-jshint": "latest",
+    "grunt-contrib-sass": "latest"
   }
 }
