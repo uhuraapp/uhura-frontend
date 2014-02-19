@@ -4,7 +4,7 @@ import (
 	"code.google.com/p/goauth2/oauth"
 	"encoding/json"
 	"fmt"
-	mixpanel "github.com/austinchau/go-mixpanel"
+	// mixpanel "github.com/austinchau/go-mixpanel"
 	"github.com/codegangsta/martini"
 	"github.com/codegangsta/martini-contrib/render"
 	"github.com/dukex/uhura/core"
@@ -58,10 +58,10 @@ func emberAppHandler(r render.Render, req *http.Request) string {
 	return indexTemplate
 }
 
-var MTrack *mixpanel.Mixpanel
+//var MTrack *mixpanel.Mixpanel
 
 func main() {
-	MTrack = mixpanel.NewMixpanel("bf01c5c21072fb671043a3bd17069b61", "45f460d04bc5d54dc516a54c9aff0036")
+	// MTrack = mixpanel.NewMixpanel("bf01c5c21072fb671043a3bd17069b61", "45f460d04bc5d54dc516a54c9aff0036")
 
 	sids := strings.Split(os.Getenv("CHANNELS_HOME"), ",")
 	var ids = make([]int, 0)
@@ -117,7 +117,7 @@ func main() {
 			r.Error(403)
 			return
 		}
-		MTrack.UserInfo(user.IdString())
+		// MTrack.UserInfo(user.IdString())
 
 		episode := core.UserListen(user.Id, params["id"])
 		r.JSON(202, map[string]interface{}{"episode": episode})
@@ -135,7 +135,7 @@ func main() {
 				userId = 0
 			} else {
 				userId = user.Id
-				MTrack.UserInfo(user.IdString())
+				// MTrack.UserInfo(user.IdString())
 			}
 
 			channels, _ = core.AllChannels(userId, false, "")
@@ -157,7 +157,7 @@ func main() {
 			Channel core.Channel `json:"channel"`
 		}
 
-		MTrack.UserInfo(user.IdString())
+		// MTrack.UserInfo(user.IdString())
 
 		json.NewDecoder(request.Body).Decode(&channelJson)
 
@@ -172,7 +172,7 @@ func main() {
 			userId = 0
 		} else {
 			userId = user.Id
-			MTrack.UserInfo(user.IdString())
+			// MTrack.UserInfo(user.IdString())
 		}
 
 		channels, episodes := core.AllChannels(userId, false, params["id"])
@@ -188,7 +188,7 @@ func main() {
 			return
 		}
 
-		MTrack.UserInfo(user.IdString())
+		// MTrack.UserInfo(user.IdString())
 
 		channel := core.SubscribeChannel(user.Id, params["id"])
 
@@ -203,7 +203,7 @@ func main() {
 			return
 		}
 
-		MTrack.UserInfo(user.IdString())
+		// MTrack.UserInfo(user.IdString())
 
 		channel := core.UnsubscribeChannel(user.Id, params["id"])
 
@@ -217,7 +217,7 @@ func main() {
 			r.Error(403)
 			return
 		}
-		MTrack.UserInfo(user.IdString())
+		// MTrack.UserInfo(user.IdString())
 
 		subscribes, channels := core.Subscriptions(user)
 		r.JSON(200, map[string]interface{}{"subscriptions": subscribes, "channels": channels})
@@ -236,7 +236,7 @@ func main() {
 			userId = 0
 		} else {
 			userId = user.Id
-			MTrack.UserInfo(user.IdString())
+			// MTrack.UserInfo(user.IdString())
 		}
 
 		episode, notFound := core.GetItem(params["slug"], userId)
@@ -255,7 +255,7 @@ func main() {
 			return
 		}
 
-		MTrack.UserInfo(user.IdString())
+		// MTrack.UserInfo(user.IdString())
 
 		episode, _ := core.GetItem(params["id"], user.Id)
 
@@ -269,7 +269,7 @@ func main() {
 			r.Error(403)
 			return
 		}
-		MTrack.UserInfo(user.IdString())
+		// MTrack.UserInfo(user.IdString())
 
 		channels, episodes := core.AllChannels(user.Id, false, params["id"])
 		r.JSON(200, map[string]interface{}{"episodes": episodes, "channel": channels[0]})
@@ -277,13 +277,13 @@ func main() {
 
 	// API - Auth
 	m.Get("/api/authorize", func(w http.ResponseWriter, request *http.Request) string {
-		user, err := core.CurrentUser(request)
+		_, err := core.CurrentUser(request)
 		if err {
 			url := config.AuthCodeURL("")
 			http.Redirect(w, request, url, http.StatusFound)
 			return ""
 		} else {
-			MTrack.UserInfo(user.IdString())
+			// MTrack.UserInfo(user.IdString())
 
 			return "<script>window.close();</script>"
 		}
