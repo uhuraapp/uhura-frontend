@@ -275,6 +275,15 @@ func main() {
 		r.JSON(200, map[string]interface{}{"episodes": episodes, "channel": channels[0]})
 	})
 
+	m.Get("/api/users/info", func(r render.Render, request *http.Request) {
+		user, err := core.CurrentUser(request)
+		if err {
+			r.JSON(200, map[string]interface{}{"error": true})
+		} else {
+			r.JSON(200, map[string]interface{}{"user": user})
+		}
+	})
+
 	// API - Auth
 	m.Get("/api/authorize", func(w http.ResponseWriter, request *http.Request) string {
 		_, err := core.CurrentUser(request)

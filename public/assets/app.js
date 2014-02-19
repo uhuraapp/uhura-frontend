@@ -31,6 +31,16 @@ Uhura.Router.reopen({
 
       if (window.ga === undefined) { return; }
 
+
+      $.getJSON("/api/users/info").then(function(data){
+        if(!data.error){
+          olark('api.chat.updateVisitorNickname', {
+            snippet: data.user.Name
+          });
+        }
+      })
+
+
       Ember.run.next(function(){
         ga('send', 'pageview', window.location.hash.substr(1));
       });
