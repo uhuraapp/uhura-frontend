@@ -4,6 +4,7 @@ import (
 	"github.com/dukex/buffer"
 	"github.com/rakyll/coop"
 	"os"
+	"strconv"
 	"time"
 )
 
@@ -35,7 +36,9 @@ func NewEpisodeTweet(epId int) {
 		database.First(&episode, epId)
 		database.First(&channel, episode.ChannelId)
 
-		message = "http://uhuraapp.com/channels/" + channel.Uri + "/" + episode.Uri
+		channelId := strconv.Itoa(channel.Id)
+
+		message = "http://uhuraapp.com/channels/" + channelId + "/" + episode.Uri
 		message = message + episode.Title + " - " + channel.Title
 
 		client.CreateUpdate(message, []string{bufferProfile}, map[string]interface{}{})
