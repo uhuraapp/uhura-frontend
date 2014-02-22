@@ -10,6 +10,27 @@ package core
 
 // var store = sessions.NewCookieStore([]byte("something-very-secret"))
 
+func UserExists(email string) bool {
+	var count int
+
+	database.Table("users").Where("email = ?", email).Count(&count)
+
+	return count > 0
+}
+
+func UserCreate(email, password string) (User, error) {
+	user := User{Email: email, Password: password}
+	err := database.Save(&user).Error
+
+	return user, err
+}
+
+func UserSignIn(email, password string) (User, error) {
+	var user User
+	err := database.Where("email = ? and password = ?", email, password).First(&user).Error
+	return user, err
+}
+
 // type TempUser struct {
 // 	Id         string
 // 	Name       string
