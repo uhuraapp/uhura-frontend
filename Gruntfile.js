@@ -41,9 +41,9 @@ module.exports = function (grunt) {
       },
       app: {
         files: {
-          'public/assets/home.js': ['assets/javascripts/vendor/jquery-1.10.2.min.js', 'assets/javascripts/vendor/uikit.js'],
-          'public/assets/vendor.js': ['assets/javascripts/vendor/*.js'],
-          'public/assets/app.js': ['assets/javascripts/*.js']
+          'tmp/assets/home.js': ['assets/javascripts/vendor/jquery-1.10.2.min.js',  'assets/javascripts/vendor/uikit.js', 'assets/javascripts/home.js'],
+          'tmp/assets/vendor.js': ['assets/javascripts/vendor/*.js'],
+          'tmp/assets/app.js': ['assets/javascripts/app/*.js']
         }
       },
     },
@@ -55,8 +55,8 @@ module.exports = function (grunt) {
         files: [
           {
             expand: true,
-            cwd: 'public/assets/',
-            src: ['*.js', '!*.min.js'],
+            cwd: 'tmp/assets/',
+            src: ['*.js'],
             dest: 'public/assets/',
             ext: '.min.js',
           },
@@ -77,5 +77,5 @@ module.exports = function (grunt) {
     },
   });
 
-  grunt.registerTask('default', ['watch']);
+  grunt.registerTask('default', ['concat:app', 'uglify:app', 'sass:home', 'watch']);
 };
