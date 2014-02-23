@@ -10,7 +10,7 @@ import (
 	"time"
 
 	auth "github.com/dukex/login2"
-	_ "github.com/dukex/uhura/core"
+	"github.com/dukex/uhura/core"
 	"github.com/gorilla/mux"
 )
 
@@ -70,6 +70,8 @@ import (
 
 var (
 	LandingHTML    string
+	AppHTML        string
+	SignUpHTML     string
 	ASSETS_VERSION string
 	ENV            string
 	PORT           string
@@ -86,9 +88,41 @@ func buildLandingPage() {
 	LandingHTML = strings.Replace(LandingHTML, "<% ASSETS_VERSION %>", ASSETS_VERSION, -1)
 }
 
-func setupUser(provider string, user *auth.User, rawResponde *http.Response) {
+func buildAppPage() {
+	itb, _ := ioutil.ReadFile("./views/app.html")
+	AppHTML = string(itb[:])
+	AppHTML = strings.Replace(AppHTML, "<% URL %>", URL, -1)
+	AppHTML = strings.Replace(AppHTML, "<% ASSETS_VERSION %>", ASSETS_VERSION, -1)
+}
+
+func buildSignUpPage(email string) string {
+	itb, _ := ioutil.ReadFile("./views/users/sign_up.html")
+	if ENV == "development" {
+		SignUpHTML = ""
+	}
+
+	if SignUpHTML == "" {
+		SignUpHTML = string(itb[:])
+		SignUpHTML = strings.Replace(SignUpHTML, "<% EMAIL %>", email, -1)
+		SignUpHTML = strings.Replace(SignUpHTML, "<% URL %>", URL, -1)
+		SignUpHTML = strings.Replace(SignUpHTML, "<% ASSETS_VERSION %>", ASSETS_VERSION, -1)
+	}
+	return SignUpHTML
+}
+
+func userSetup(provider string, user *auth.User, rawResponde *http.Response) {
 	fmt.Println("USER", user)
 	fmt.Println("raw Response", rawResponde)
+}
+
+func userCreate(email, password string, request *http.Request) (int64, error) {
+	user, err := core.UserCreate(email, password)
+	return user.Id, err
+}
+
+func userId(email string) (int64, error) {
+	user, err := core.UserByEmail(email)
+	return user.Id, err
 }
 
 func configAuth() {
@@ -114,7 +148,18 @@ func configAuth() {
 		Secret:      "2a7500446b1e3a135b2fd5caf71ef375",
 		UserInfoURL: "https://graph.facebook.com/me",
 	})
-	builder = auth.NewBuilder(providers, setupUser)
+
+	builder = auth.NewBuilder(providers)
+	builder.UserSetupFn = userSetup
+	builder.UserExistsFn = core.UserExists
+	builder.UserCreateFn = userCreate
+	builder.UserIdByEmail = userId
+	builder.UserPasswordByEmail = core.UserPasswordByEmail
+	builder.URLS = auth.URLS{
+		Redirect: "/app",
+		SignIn:   "/#sign-in",
+		SignUp:   "/enter",
+	}
 }
 
 // Handlers
@@ -122,7 +167,30 @@ func LandingHandler(w http.ResponseWriter, r *http.Request) {
 	if ENV == "development" {
 		buildLandingPage()
 	}
-	fmt.Fprintf(w, LandingHTML)
+
+	if builder.CurrentUser(r) != "" {
+		http.Redirect(w, r, "/app/", 302)
+	} else {
+		fmt.Fprintf(w, LandingHTML)
+	}
+}
+
+func EnterHandler(w http.ResponseWriter, request *http.Request) {
+	email := request.FormValue("email")
+	exists := core.UserExists(email)
+	if exists {
+		http.Redirect(w, request, "/#sign-in", 302)
+	} else {
+		fmt.Fprintf(w, buildSignUpPage(email))
+	}
+}
+
+func AppHandler(w http.ResponseWriter, request *http.Request) {
+	if ENV == "development" {
+		buildAppPage()
+	}
+
+	fmt.Fprintf(w, AppHTML)
 }
 
 func main() {
@@ -133,16 +201,25 @@ func main() {
 
 	configAuth()
 	buildLandingPage()
+	buildAppPage()
 
 	// HTTP Server
 	r := mux.NewRouter()
+	r.StrictSlash(true)
 
 	// Auth Router
 	builder.Router(r)
 
-	// Api
+	// User
+	r.HandleFunc("/enter", EnterHandler)
 
+	// App
 	r.HandleFunc("/", LandingHandler)
+	appRouter := r.PathPrefix("/app").Subrouter()
+	appRouter.StrictSlash(true)
+	appRouter.HandleFunc("/", builder.Protected(AppHandler))
+	appRouter.HandleFunc("/{path:.+}", builder.Protected(AppHandler))
+
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./public/")))
 	http.Handle("/", r)
 

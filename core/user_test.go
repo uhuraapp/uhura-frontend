@@ -53,23 +53,3 @@ func TestUserFuncCreateErr(test *testing.T) {
 		test.Errorf("Expexted a err")
 	}
 }
-
-func TestUserFuncSignInOk(test *testing.T) {
-	cleanDB()
-	UserCreate("x@x.com", "abc123")
-	UserCreate("x@xw.com", "abc123")
-
-	user, _ := UserSignIn("x@x.com", "abc123")
-
-	if user.Id < 1 {
-		test.Errorf("Expexted user id")
-	}
-
-	if user.Email != "x@x.com" {
-		test.Errorf("Expexted email x@x.com")
-	}
-
-	if user.Password != "abc123" {
-		test.Errorf("Expexted password abc123")
-	}
-}

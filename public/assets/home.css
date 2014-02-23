@@ -7826,16 +7826,26 @@ header hgroup a {
   background: #47505d url("/assets/landing.jpg") center center no-repeat;
   overflow: hidden;
   min-height: 768px;
+  position: relative;
 }
 #home #credits {
-  float: right;
-  margin: 0 10px 0 0;
+  bottom: 5px;
+  right: 10px;
+  margin: 0;
+  position: absolute;
   display: block;
   color: white;
   font-size: 11px;
 }
 #home #credits a {
   color: white;
+}
+#home #sign-in-link {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  color: white;
+  font-size: 15px;
 }
 #home h3, #home h4 {
   text-align: center;
@@ -7856,17 +7866,55 @@ header hgroup a {
   color: #eeeeee;
   text-shadow: 0 1px 1px #333333;
 }
-#home ul {
-  width: 400px;
+#home form {
+  width: 547px;
   margin: 20px auto;
   margin-bottom: 100px;
   overflow: hidden;
+  border: 2px solid white;
+  background: transparent;
+  background: rgba(255, 255, 255, 0.6);
+  padding: 30px;
+  padding-top: 18px;
 }
-#home ul li {
-  float: left;
-  width: 200px;
-  line-height: 50px;
+#home form legend {
+  margin: 0;
+  padding: 0;
+  border: none;
   text-align: center;
+  color: #333333;
+  font-weight: 600;
+}
+#home form legend:after {
+  border: 0;
+}
+#home form input {
+  padding: 10px;
+  font-size: 16px;
+  float: left;
+  height: 50px;
+  width: 378px;
+  border: 0;
+  border-radius: 3px 0 0 3px;
+}
+#home form button {
+  margin: 0;
+  height: 50px;
+  width: 105px;
+  border-radius: 0 3px 3px 0;
+}
+#home form p {
+  float: right;
+  color: #525252;
+  margin: 5px 0 0;
+}
+#home form p a {
+  text-decoration: underline;
+  margin-left: 10px;
+  color: #333333;
+}
+#home form p i {
+  padding: 0 3px;
 }
 
 #tour {
@@ -7874,7 +7922,67 @@ header hgroup a {
   height: 1000px;
 }
 
+#sign-in .uk-modal-dialog {
+  overflow: hidden;
+}
+#sign-in h3 {
+  text-align: center;
+}
+#sign-in form {
+  margin: 50px 100px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #cccccc;
+  overflow: hidden;
+}
+#sign-in input {
+  width: 100%;
+  margin: 0 0 10px 0;
+}
+#sign-in button {
+  float: right;
+}
+#sign-in i {
+  padding: 0 3px;
+}
+#sign-in a {
+  margin: 0 0 0 20px;
+}
+#sign-in p {
+  margin: 10px 100px;
+  text-align: right;
+}
+
+#sign_up {
+  background: #47505d;
+  overflow: none;
+  max-height: 100%;
+}
+#sign_up form {
+  background: #f7f7f7;
+  padding: 10px;
+  border: 1px solid #333333;
+  box-shadow: 0 1px 3px #343b45;
+  width: 400px;
+  margin: 100px auto;
+  overflow: hidden;
+}
+#sign_up form label {
+  font-weight: 200;
+}
+#sign_up form input {
+  width: 100%;
+  background: #f7f7f7;
+}
+#sign_up form input:focus {
+  background: white;
+}
+#sign_up form button {
+  float: right;
+}
+
 #made-by {
+  padding: 15px 0;
   font-weight: 100;
   margin: 0 auto;
   color: #3e4651;

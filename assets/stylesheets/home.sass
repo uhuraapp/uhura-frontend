@@ -29,14 +29,23 @@ header
   background: #47505d url("/assets/landing.jpg") center center no-repeat
   overflow: hidden
   min-height: 768px
+  position: relative
   #credits
-    float: right
-    margin: 0 10px 0 0
+    bottom: 5px
+    right: 10px
+    margin: 0
+    position: absolute
     display: block
     color: #FFF
     font-size: 11px
     a
       color: #FFF
+  #sign-in-link
+    position: absolute
+    top: 5px
+    right: 10px
+    color: #FFF
+    font-size: 15px
   h3, h4
     text-align: center
     width: 430px
@@ -57,23 +66,108 @@ header
     text-shadow: 0 1px 1px #333
 
 
-  ul
-    width: 400px
+  form
+    width: 547px
     margin: 20px auto
     margin-bottom: 100px
     overflow: hidden
-    li
-      float: left
-      width: 200px
-      line-height: 50px
+    border: 2px solid #FFF
+    background: transparent
+    background: rgba(255, 255, 255, 0.6)
+    padding: 30px
+    padding-top: 18px
+
+    legend
+      margin: 0
+      padding: 0
+      border: none
       text-align: center
+      color: #333
+      font-weight: 600
+      &:after
+        border: 0
+
+    input
+      padding: 10px
+      font-size: 16px
+      float: left
+      height: 50px
+      width: 378px
+      border: 0
+      border-radius: 3px 0 0 3px
+
+    button
+      margin: 0
+      height: 50px
+      width: 105px
+      border-radius: 0 3px 3px 0
+
+    p
+      float: right
+      color: #525252
+      margin: 5px 0 0
+      a
+        text-decoration: underline
+        margin-left: 10px
+        color: #333
+      i
+        padding: 0 3px
+
 
 #tour
   margin: 50px 0
   height: 1000px
 
+#sign-in
+  .uk-modal-dialog
+    overflow: hidden
+  h3
+    text-align: center
+  form
+    margin: 50px 100px
+    margin-bottom: 10px
+    padding-bottom: 10px
+    border-bottom: 1px solid #CCC
+    overflow: hidden
+  input
+    width: 100%
+    margin: 0 0 10px 0
+  button
+    float: right
+  i
+    padding: 0 3px
+  a
+    margin: 0 0 0 20px
+  p
+    margin: 10px 100px
+    text-align: right
+
+#sign_up
+  background: #47505d
+  overflow: none
+
+  max-height: 100%
+  form
+    background: #F7F7F7
+    padding: 10px
+    border: 1px solid #333
+    box-shadow: 0 1px 3px #343b45
+    width: 400px
+    margin: 100px auto
+    overflow: hidden
+    label
+      font-weight: 200
+    input
+      width: 100%
+      background: #F7F7F7
+      &:focus
+        background: #FFF
+    button
+      float: right
+
 #made-by
   //background: #3E4651
+  padding: 15px 0
   font-weight: 100
   margin: 0 auto
   color: #3E4651

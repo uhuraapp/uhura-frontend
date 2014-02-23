@@ -25,10 +25,18 @@ func UserCreate(email, password string) (User, error) {
 	return user, err
 }
 
-func UserSignIn(email, password string) (User, error) {
+func UserByEmail(email string) (User, error) {
 	var user User
-	err := database.Where("email = ? and password = ?", email, password).First(&user).Error
+	err := database.Where("email = ?", email).First(&user).Error
 	return user, err
+}
+
+// test
+func UserPasswordByEmail(email string) (string, error) {
+	var user User
+	err := database.Where("email = ? ", email).First(&user).Error
+
+	return user.Password, err
 }
 
 // type TempUser struct {

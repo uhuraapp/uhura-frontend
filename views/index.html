@@ -20,6 +20,7 @@
 <body>
   <div id="home">
     <p id="credits">Photo by <a href="https://www.flickr.com/photos/cclogg/">Chris Clogg</a></p>
+    <a href="#sign-in" id="sign-in-link" data-uk-modal>Sign In</a>
     <header>
       <hgroup>
         <a>
@@ -29,26 +30,48 @@
       </hgroup>
     </header>
 
-    <h3>Enjoy, Learn and Share your podcasts now</h3>
-    <h4>Listen, manage and share your favorite podcasts from everywhere, <br />no need install or download app, everything online.</h4>
-    <ul>
-      <li>
-        <a href="#tour" data-uk-smooth-scroll class="uk-button">Take a Tour</a>
-      </li>
-      <li>
-        <a href="/auth/google" class="uk-button uk-button-large uk-button-success"><i class="fa fa-google-plus"></i> Connect with Google</a>
-      </li>
-    </ul>
+    <h3>Enjoy, Listen and Share your podcasts now</h3>
+    <!--
+      <h4>Manage your favorite podcasts from everywhere, <br />no need install or download app, everything online.</h4>
+    -->
 
+    <form class="uk-form" id="fast-signup" method="POST" action="/enter">
+      <legend>Create a free account</legend>
+      <input id="email" name="email" type="email" placeholder="Email" />
+      <button type="submit" class="uk-button-success uk-button">Sign Up</button>
+      <p>
+        Or use:
+        <a href="/auth/google"><i class="fa fa-google-plus"></i>Google</a>
+        <a href="/auth/facebook"><i class="fa fa-facebook"></i>Facebook</a>
+      </p>
+    </form>
+
+    <!-- <a href="#tour" data-uk-smooth-scroll class="uk-button">Take a Tour</a> -->
   </div>
 
-  <div id="tour">
-
-  </div>
+<!--   <div id="tour">
+  </div> -->
 
   <p id="made-by">
    Created with <span class="heart">♥</span> by
    <a href="https://twitter.com/_dukex">Duke X</a>, <br /> follow us <a rel="nofollow" href="http://twitter.com/UhuraApp">@UhuraApp</a>
  </p>
+
+ <div id="sign-in" class="uk-modal">
+  <div class="uk-modal-dialog uk-modal-dialog-slide">
+    <a class="uk-modal-close uk-close"></a>
+    <h3>Welcome Back! Choose a way to sign in.</h3>
+    <form class="uk-form" id="signin" method="POST" action="/users/sign_in">
+      <input class="uk-form-large" placeholder="Email" id="email-sign" type="email" name="email" />
+      <input class="uk-form-large" placeholder="Password" id="password" type="password" name="password" />
+      <button type="submit" class="uk-button-success uk-button">Sign In</button>
+    </form>
+    <p>
+      Or
+      <a href="/auth/google"><i class="fa fa-google-plus"></i>Google</a>
+      <a href="/auth/facebook"><i class="fa fa-facebook"></i>Facebook</a>
+    </p>
+  </div>
+</div>
 </body>
 </html>
