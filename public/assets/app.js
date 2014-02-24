@@ -357,7 +357,6 @@ Uhura.Auth = (function() {
   'use strict';
 
   function Auth() {
-    this.logged = false;
   }
 
   Auth.prototype.authorize_url = function(){
@@ -374,8 +373,8 @@ Uhura.Auth = (function() {
         if(loginWindow.closed) {
           clearInterval(timer);
           callback();
-          $("#error-403").remove()
-          window.auth.logged = true;
+          $("#error-403").remove();
+          $.cookie("logged", "true");
         }
       } catch(e){
         console.log(e);
@@ -385,9 +384,12 @@ Uhura.Auth = (function() {
     var timer = window.setInterval(checkLogin, 500);
   };
 
+  Auth.prototype.isLogged = function() {
+    return $.cookie("logged") === "true"
+  }
 
   Auth.prototype.withLoggedUser = function(callback) {
-    if(this.logged){
+    if(this.isLogged()){
       callback();
     } else {
       SignInDialog(callback);
@@ -440,7 +442,7 @@ $(document).ajaxError(function( event, request, settings ) {
   console.log('Status:', request.status);
   if(request.status == 403){
     SignInDialog(function(){ window.location.reload() });
-    window.auth.logged = false;
+    $.cookie("logged", "");
   }
 });
 
