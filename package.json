@@ -22,6 +22,7 @@
     "grunt-contrib-concat": "latest",
     "grunt-contrib-uglify": "latest",
     "grunt-contrib-jshint": "latest",
-    "grunt-contrib-sass": "latest"
+    "grunt-contrib-sass": "latest",
+    "grunt-ember-templates": "latest"
   }
 }
