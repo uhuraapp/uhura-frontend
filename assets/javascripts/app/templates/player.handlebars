@@ -1,0 +1,12 @@
+    {{#if model}}
+    <div class="Player">
+      <a href="#" {{action play_pause model}}>
+        {{#if playing}}<i class="fa fa-pause"></i>{{else}}<i class="fa fa-play"></i>{{/if}}
+      </a>
+      <div class="PlayerLoader">
+        <div class="loading"></div>
+        <div class="playing"></div>
+      </div>
+      <span class="title">{{title}}</span>
+    </div>
+    {{/if}}

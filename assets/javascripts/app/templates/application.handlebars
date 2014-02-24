@@ -1,0 +1,60 @@
+    <header>
+      <div class="uk-hidden-small">
+        {{view App.PlayerView}}
+      </div>
+      <div class="container">
+        <hgroup>
+
+          {{#link-to 'index'}}
+          <h1>Uhura</h1>
+          <h2>Podcast Manager</h2>
+          {{/link-to}}
+        </hgroup>
+
+        <nav class="uk-navbar">
+          <ul class="uk-navbar-nav uk-hidden-small">
+            <li>
+              {{#link-to "channels"}}
+              Discovery New Podcasts
+              {{/link-to}}
+            </li>
+            <li>
+              {{#link-to "dashboard"}}
+              Dashboard
+              {{/link-to}}
+            </li>
+          </ul>
+          <button class="uk-navbar-toggle uk-visible-small" class="uk-button" data-uk-offcanvas="{target:'#menu'}"></button>
+        </nav>
+      </div>
+    </header>
+
+    <div data-uk-sticky class="uk-visible-small PlayerMobile">
+      {{view App.PlayerView}}
+    </div>
+
+    <div id="menu" class="uk-offcanvas">
+      <div class="uk-offcanvas-bar uk-offcanvas-bar-flip">
+        <ul class="uk-nav uk-nav-offcanvas" data-uk-nav>
+          <li>
+            {{#link-to "channels"}}
+            Discovery New Podcasts
+            {{/link-to}}
+          </li>
+          <li>
+            {{#link-to "dashboard"}}
+            Dashboard
+            {{/link-to}}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="content" class="container">
+      {{outlet}}
+    </div>
+
+    <footer class="column full">
+
+    </footer>
+    <div id="fb-root"></div>

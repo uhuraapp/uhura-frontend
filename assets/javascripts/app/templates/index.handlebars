@@ -1,0 +1,18 @@
+<div id="home">
+  {{#link-to 'channels' id="call-to-action"}}
+  Listen Amazing Podcasts
+  {{/link-to}}
+  <ul id="channels">
+    {{#each channel in channels}}
+    <li>
+      {{#link-to 'channel' channel.uri}}
+      <div>
+        <img
+          {{bind-attr alt=channel.title}}
+          {{bind-attr src=channel.image_url}} />
+      </div>
+      {{/link-to}}
+    </li>
+    {{/each}}
+  </ul>
+</div>
