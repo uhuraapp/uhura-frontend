@@ -207,14 +207,20 @@ func main() {
 	r := mux.NewRouter()
 	r.StrictSlash(true)
 
+	r.HandleFunc("/", LandingHandler)
+
 	// Auth Router
 	builder.Router(r)
 
 	// User
 	r.HandleFunc("/enter", EnterHandler)
 
+	// Api
+	apiRouter := r.PathPrefix("/api").Subrouter()
+	apiRouter.StrictSlash(true)
+	apiRouter.HandleFunc("/channels", builder.Protected(core.GetChannels))
+
 	// App
-	r.HandleFunc("/", LandingHandler)
 	appRouter := r.PathPrefix("/app").Subrouter()
 	appRouter.StrictSlash(true)
 	appRouter.HandleFunc("/", builder.Protected(AppHandler))
