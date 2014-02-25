@@ -19,10 +19,6 @@ import (
 
 var builder auth.Builder
 
-func setupUser(provider string, user *auth.User, rawResponse *http.Response){
-  ... Find and Create the User ...
-}
-
 func configAuth() {
   providers := make([]*auth.Provider, 0)
 
@@ -37,9 +33,18 @@ func configAuth() {
     UserInfoURL: "https://www.googleapis.com/oauth2/v1/userinfo?alt=json",
   })
 
-  builder = auth.NewBuilder(providers, setupUser)
+  builder = auth.NewBuilder(providers)
+  builder.UserSetupFn = func(provider string, user *auth.User, rawResponde *http.Response)
+  builder.UserExistsFn = func(email string) bool
+  builder.UserCreateFn = func(email string, password string, request *http.Request) (int64, error)
+  builder.UserIdByEmail = func(email string) (int64, error)
+  builder.UserPasswordByEmail = func(email string) (string, error)
+  builder.URLS = auth.URLS{
+    Redirect: "/app",
+    SignIn:   "/sign-in",
+    SignUp:   "/sign-up",
+  }
 }
-
 
 func main(){
   configAuth()

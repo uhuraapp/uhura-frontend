@@ -3,13 +3,23 @@
 	"GoVersion": "go1.2",
 	"Deps": [
 		{
+			"ImportPath": "code.google.com/p/go.crypto/bcrypt",
+			"Comment": "null-191",
+			"Rev": "7aa593ce8ceaf0199504fff27455bbb60eedabc7"
+		},
+		{
+			"ImportPath": "code.google.com/p/go.crypto/blowfish",
+			"Comment": "null-191",
+			"Rev": "7aa593ce8ceaf0199504fff27455bbb60eedabc7"
+		},
+		{
 			"ImportPath": "code.google.com/p/goauth2/oauth",
 			"Comment": "weekly-40",
 			"Rev": "5877582f0cb070bc21b199dab5e7d18fb546444a"
 		},
 		{
 			"ImportPath": "github.com/dukex/login2",
-			"Rev": "ae8ba31e36e2f69e4728c03989e0e6d96aa8ae59"
+			"Rev": "cf1c27b598065ef2c582212cf30aec0850f2199c"
 		},
 		{
 			"ImportPath": "github.com/fiam/gounidecode/unidecode",
@@ -38,6 +48,11 @@
 		{
 			"ImportPath": "github.com/lib/pq",
 			"Rev": "6c54219055243614d4eaffea55917c15bea2ba2f"
+		},
+		{
+			"ImportPath": "github.com/pmylund/go-cache",
+			"Comment": "go.r60.3-76-g7d1d6d6",
+			"Rev": "7d1d6d6ae935664bc8b80ab2b1fc7ab77a7e46da"
 		}
 	]
 }
