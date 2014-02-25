@@ -185,7 +185,7 @@ func EnterHandler(w http.ResponseWriter, request *http.Request) {
 	}
 }
 
-func AppHandler(w http.ResponseWriter, request *http.Request) {
+func AppHandler(userId string, w http.ResponseWriter, request *http.Request) {
 	if ENV == "development" {
 		buildAppPage()
 	}
