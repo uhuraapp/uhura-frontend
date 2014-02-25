@@ -32,32 +32,32 @@
 // });
 
 
-App.DashboardController = Ember.ArrayController.extend({
-  actions: {
-    unsubscribe: function(idParams) {
-      'use strict';
-      App.Helpers.unsubscribeChannel(this, idParams);
-    },
-    newChannel: function(){
-      App.Helpers.newChannel(this)
-    }
-  }
-})
+// App.DashboardController = Ember.ArrayController.extend({
+//   actions: {
+//     unsubscribe: function(idParams) {
+//       'use strict';
+//       App.Helpers.unsubscribeChannel(this, idParams);
+//     },
+//     newChannel: function(){
+//       App.Helpers.newChannel(this)
+//     }
+//   }
+// })
 
-App.DashboardIndexController = Ember.ArrayController.extend({
-  needs: "dashboard",
-  actions: {
-    listened: function(episode){
-      App.Helpers.listened(episode.id)
-    },
-  }
-})
+// App.DashboardIndexController = Ember.ArrayController.extend({
+//   needs: "dashboard",
+//   actions: {
+//     listened: function(episode){
+//       App.Helpers.listened(episode.id)
+//     },
+//   }
+// })
 
-App.DashboardChannelController = Ember.ArrayController.extend({
-  content: [],
-  actions: {
-    listened: function(episode){
-      App.Helpers.listened(episode.id)
-    }
-  }
-})
+// App.DashboardChannelController = Ember.ArrayController.extend({
+//   content: [],
+//   actions: {
+//     listened: function(episode){
+//       App.Helpers.listened(episode.id)
+//     }
+//   }
+// })

@@ -1,60 +1,46 @@
-    <header>
-      <div class="uk-hidden-small">
-        {{view App.PlayerView}}
-      </div>
-      <div class="container">
-        <hgroup>
+<div id="side-left" class="column three-twelfth">
+  <header>
+    <hgroup>
+      <h1>Uhura</h1>
+      <h2>Podcast Manager</h2>
+    </hgroup>
+  </header>
+  <ul>
+    <li>
+      {{#link-to 'index' }}
+        <span class="typcn typcn-home-outline"></span>Home
+      {{/link-to}}
+    </li>
+    <li><a href="/app/"><span class="typcn typcn-document-add"></span>Add Channel</a></li>
+  </ul>
+  <ol>
+  {{#each channel in channels}}
+    <li>
+      {{#link-to 'channel' channel.id}}
+        <img {{bind-attr src=channel.image_url}} />
+        <span class="title">{{channel.title}}</span>
+        <i>{{channel.to_view}}</i>
+      {{/link-to}}
+    </li>
+  {{/each}}
+  </ol>
 
-          {{#link-to 'index'}}
-          <h1>Uhura</h1>
-          <h2>Podcast Manager</h2>
-          {{/link-to}}
-        </hgroup>
+  <footer>
+  <a>Follow us <span class="typcn typcn-social-twitter"></span></a>
+  </footer>
+</div>
 
-        <nav class="uk-navbar">
-          <ul class="uk-navbar-nav uk-hidden-small">
-            <li>
-              {{#link-to "channels"}}
-              Discovery New Podcasts
-              {{/link-to}}
-            </li>
-            <li>
-              {{#link-to "dashboard"}}
-              Dashboard
-              {{/link-to}}
-            </li>
-          </ul>
-          <button class="uk-navbar-toggle uk-visible-small" class="uk-button" data-uk-offcanvas="{target:'#menu'}"></button>
-        </nav>
-      </div>
-    </header>
+{{!-- <div class="uk-hidden-small">
+  {{view App.PlayerView}}
+</div>
 
-    <div data-uk-sticky class="uk-visible-small PlayerMobile">
-      {{view App.PlayerView}}
-    </div>
+<div data-uk-sticky class="uk-visible-small PlayerMobile">
+  {{view App.PlayerView}}
+</div>
+ --}}
 
-    <div id="menu" class="uk-offcanvas">
-      <div class="uk-offcanvas-bar uk-offcanvas-bar-flip">
-        <ul class="uk-nav uk-nav-offcanvas" data-uk-nav>
-          <li>
-            {{#link-to "channels"}}
-            Discovery New Podcasts
-            {{/link-to}}
-          </li>
-          <li>
-            {{#link-to "dashboard"}}
-            Dashboard
-            {{/link-to}}
-          </li>
-        </ul>
-      </div>
-    </div>
+<div id="content" class="column nine-twelfth">
+  {{outlet}}
+</div>
 
-    <div id="content" class="container">
-      {{outlet}}
-    </div>
-
-    <footer class="column full">
-
-    </footer>
-    <div id="fb-root"></div>
+<div id="fb-root"></div>

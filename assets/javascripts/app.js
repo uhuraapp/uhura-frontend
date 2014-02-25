@@ -6,3 +6,13 @@ var App = Ember.Application.create({
 App.ApplicationAdapter = DS.RESTAdapter.extend({
   namespace: 'api'
 });
+
+$(document).ready(function(){
+  $(window).on("resize", fixedSidebarHeight);
+  fixedSidebarHeight()
+});
+
+var fixedSidebarHeight = function(){
+  $("#side-left").css("height", window.innerHeight+"px");
+}
+
