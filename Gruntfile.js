@@ -21,7 +21,7 @@ module.exports = function (grunt) {
         tasks: ['jshint:app']
       },
       app_js: {
-        files: ['assets/javascripts/*.js', 'assets/javascripts/app/*.js'],
+        files: ['assets/javascripts/*.js', 'assets/javascripts/app/**/*.js'],
         tasks: ['emberTemplates', 'concat:app', 'uglify:app']
       },
       vendor_js: {
@@ -55,7 +55,7 @@ module.exports = function (grunt) {
       },
       app: {
         files: {
-          'tmp/assets/home.js': ['assets/javascripts/vendor/jquery-1.10.2.min.js',  'assets/javascripts/vendor/uikit.js', 'assets/javascripts/home.js'],
+          'tmp/assets/home.js': ['assets/javascripts/vendor/0_jquery-1.10.2.min.js',  'assets/javascripts/vendor/uikit.js', 'assets/javascripts/home.js'],
           'tmp/assets/app.js': ['assets/javascripts/app.js', 'assets/javascripts/app/**/*.js']
         }
       },
