@@ -62,6 +62,7 @@ type UserItem struct {
 	UserId    int64
 	ItemId    int64
 	Viewed    bool
+	ChannelId int64
 	CreatedAt time.Time
 }
 

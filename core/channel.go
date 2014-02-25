@@ -1,11 +1,15 @@
 package core
 
 import (
+	"net/http"
+	"strconv"
 	// 	"github.com/jinzhu/gorm"
 	// 	"regexp"
 	// 	"strconv"
 	"strings"
 	// 	"time"
+
+	r "github.com/dukex/uhura/core/helper"
 )
 
 // func (c *Channel) AfterCreate() {
@@ -35,48 +39,48 @@ func (c *Channel) SetUri() string {
 // 	}
 // }
 
-func AllChannels() (channels []ChannelEntity) {
-	channelQuery := database.Table("channels").Where("title IS NOT NULL").Where("title <> ''")
+// func AllChannels() (channels []ChannelEntity) {
+// 	channelQuery := database.Table("channels").Where("title IS NOT NULL").Where("title <> ''")
 
-	// 	if userId > 0 {
-	// 		channelQuery = channelQuery.Scopes(userInfoScope(strconv.Itoa(userId)))
-	// 	}
+// 	// 	if userId > 0 {
+// 	// 		channelQuery = channelQuery.Scopes(userInfoScope(strconv.Itoa(userId)))
+// 	// 	}
 
-	// 	if onlyFeatured {
-	// 		channelQuery = channelQuery.Scopes(featuredScope)
-	// 	}
+// 	// 	if onlyFeatured {
+// 	// 		channelQuery = channelQuery.Scopes(featuredScope)
+// 	// 	}
 
-	// 	if channelId != "" {
-	// 		idInt, _ := strconv.Atoi(channelId)
-	// 		channelQuery = channelQuery.Where("channels.id = ? OR channels.uri = ?", idInt, channelId)
-	// 	}
+// 	// 	if channelId != "" {
+// 	// 		idInt, _ := strconv.Atoi(channelId)
+// 	// 		channelQuery = channelQuery.Where("channels.id = ? OR channels.uri = ?", idInt, channelId)
+// 	// 	}
 
-	channelQuery.Order("title").Find(&channels)
+// 	channelQuery.Order("title").Find(&channels)
 
-	for i, c := range channels {
-		channels[i].Uri = c.FixUri()
-		// 		var episodesIds []int64
-		// 		itemQuery := database.Table("items").Where("channel_id = ?", c.Id)
-		// 		itemQuery.Pluck("id", &episodesIds)
+// 	for i, c := range channels {
+// 		channels[i].Uri = c.FixUri()
+// 		// 		var episodesIds []int64
+// 		// 		itemQuery := database.Table("items").Where("channel_id = ?", c.Id)
+// 		// 		itemQuery.Pluck("id", &episodesIds)
 
-		// 		if userId > 0 {
-		// 			itemQuery = itemQuery.Select("user_items.viewed as viewed, items.*")
-		// 			itemQuery = itemQuery.Joins("left join user_items on user_items.item_id = items.id and user_items.user_id = " + strconv.Itoa(userId) + " left join channels on channels.id = items.channel_id")
-		// 			itemQuery = itemQuery.Order("user_items.viewed DESC")
-	}
+// 		// 		if userId > 0 {
+// 		// 			itemQuery = itemQuery.Select("user_items.viewed as viewed, items.*")
+// 		// 			itemQuery = itemQuery.Joins("left join user_items on user_items.item_id = items.id and user_items.user_id = " + strconv.Itoa(userId) + " left join channels on channels.id = items.channel_id")
+// 		// 			itemQuery = itemQuery.Order("user_items.viewed DESC")
+// 	}
 
-	// 		itemQuery.Order("published_at DESC, id DESC, title DESC").Find(&episodes)
+// 	// 		itemQuery.Order("published_at DESC, id DESC, title DESC").Find(&episodes)
 
-	// 		for j, e := range episodes {
-	// 			if e.Uri != "" {
-	// 				episodes[j].Uri = e.GetUri()
-	// 			}
-	// 		}
-	// 		channels[i].Episodes = episodesIds
-	// 	}
+// 	// 		for j, e := range episodes {
+// 	// 			if e.Uri != "" {
+// 	// 				episodes[j].Uri = e.GetUri()
+// 	// 			}
+// 	// 		}
+// 	// 		channels[i].Episodes = episodesIds
+// 	// 	}
 
-	return
-}
+// 	return
+// }
 
 // type UserChannelsEntity struct {
 // 	Id        int     `json:"id"`
@@ -158,3 +162,48 @@ func AllChannels() (channels []ChannelEntity) {
 // 	database.Table("channels").Where("id IN (?)", channelsIds).Find(&channels)
 // 	return
 // }
+
+// Handlers
+
+type ChannelResult struct {
+	ChannelEntity
+	Items       int64  `json:"-"`
+	Viewed      int64  `json:"-"`
+	EpisodesIds string `json:"-"`
+}
+
+type ChannelsResult []ChannelResult
+
+func GetChannels(userId string, w http.ResponseWriter, request *http.Request) {
+	var channels ChannelsResult
+	_channels, found := r.Cache.Get("channels-" + userId)
+	if !found {
+		err := database.Table("channels").Select("channels.*, COUNT(items.id) as items, COUNT(user_items.id) as viewed, array_agg(items.id) AS episodes_ids").Joins("INNER JOIN user_channels ON user_channels.channel_id = channels.id LEFT OUTER JOIN items ON items.channel_id = channels.id LEFT OUTER JOIN user_items ON user_items.item_id = items.id AND user_items.user_id = "+userId+" AND user_items.viewed = TRUE").Where("user_channels.user_id = ?", userId).Group("channels.id").Scan(&channels).Error
+
+		for i, channel := range channels {
+			channels[i].ToView = channel.Items - channel.Viewed
+			channels[i].Episodes = convertEpisodesId(channel.EpisodesIds)
+		}
+
+		if err == nil {
+			r.Cache.Set("channels-"+userId, channels, 0)
+		}
+	} else {
+		channels = _channels.(ChannelsResult)
+	}
+
+	r.ResponseJSON(w, 200, map[string]interface{}{"channels": channels})
+	return
+}
+
+func convertEpisodesId(ids string) []int {
+	var iids = make([]int, 0)
+	ids = strings.Replace(ids, "}", "", -1)
+	ids = strings.Replace(ids, "{", "", -1)
+	for _, id := range strings.Split(ids, ",") {
+		if iid, err := strconv.Atoi(id); err == nil && iid > 0 {
+			iids = append(iids, iid)
+		}
+	}
+	return iids
+}
