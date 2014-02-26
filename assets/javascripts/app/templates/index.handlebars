@@ -1,18 +1,34 @@
-<div id="home">
-  {{#link-to 'channels' id="call-to-action"}}
-  Listen Amazing Podcasts
-  {{/link-to}}
-  <ul id="channels">
-    {{#each channel in channels}}
+<ul id="channels">
+  {{#each channel in channels}}
     <li>
-      {{#link-to 'channel' channel.uri}}
-      <div>
-        <img
-          {{bind-attr alt=channel.title}}
-          {{bind-attr src=channel.image_url}} />
-      </div>
-      {{/link-to}}
+      <h3><span class="typcn typcn-th-large-outline"></span>{{channel.title}}</h3>
+      <ul class="episodes">
+        {{#each episode in channel.episodes}}
+          <li class="audio" {{bind-attr data-listened=episode.listened}} {{bind-attr data-id=episode.id}} {{bind-attr data-source_url=episode.source_url}}>
+            {{play-pause-button episode=episode}}
+            {{episode.title}}
+          </li>
+        {{/each}}
+      </ul>
     </li>
-    {{/each}}
-  </ul>
-</div>
+
+{{!--
+
+          <h3 class="column title eleven-twelfth">
+            {{episode.title}}
+            <i class="fa fa-chevron-down"></i>
+          </h3>
+          <div class="description">
+            {{#unless episode.listened}}
+            <button class="uk-button uk-button-success" alt="Mark as Listen!" {{action 'listened' episode}}>
+              Mark as Listened
+            </button>
+            {{/unless}}
+            {{#link-to 'channel.episode' episode.channel.uri episode.uri}}
+            Share Episode
+            {{/link-to}}
+            <div style="clear:both">{{{episode.description}}}</div>
+          </div>
+        </li> --}}
+        {{/each}}
+</ul>

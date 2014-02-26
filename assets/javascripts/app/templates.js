@@ -49,50 +49,66 @@ function program4(depth0,data) {
   
 });
 
+Ember.TEMPLATES["component_play-pause-button"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', escapeExpression=this.escapeExpression;
+
+
+  data.buffer.push("<i class=\"typcn typcn-media-play\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "play", "episode", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
+  data.buffer.push(" ></i>\n");
+  return buffer;
+  
+});
+
 Ember.TEMPLATES["index"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', stack1, helper, options, escapeExpression=this.escapeExpression, self=this, helperMissing=helpers.helperMissing;
+  var buffer = '', stack1, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;
 
 function program1(depth0,data) {
   
-  
-  data.buffer.push("\n  Listen Amazing Podcasts\n  ");
+  var buffer = '', stack1;
+  data.buffer.push("\n    <li>\n      <h3><span class=\"typcn typcn-th-large-outline\"></span>");
+  stack1 = helpers._triageMustache.call(depth0, "channel.title", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</h3>\n      <ul class=\"episodes\">\n        ");
+  stack1 = helpers.each.call(depth0, "episode", "in", "channel.episodes", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(2, program2, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n      </ul>\n    </li>\n\n\n        ");
+  return buffer;
   }
-
-function program3(depth0,data) {
+function program2(depth0,data) {
   
   var buffer = '', stack1, helper, options;
-  data.buffer.push("\n    <li>\n      ");
-  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(4, program4, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "channel", "channel.uri", options) : helperMissing.call(depth0, "link-to", "channel", "channel.uri", options));
+  data.buffer.push("\n          <li class=\"audio\" ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'data-listened': ("episode.listened")
+  },hashTypes:{'data-listened': "ID"},hashContexts:{'data-listened': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(" ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'data-id': ("episode.id")
+  },hashTypes:{'data-id': "ID"},hashContexts:{'data-id': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(" ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'data-source_url': ("episode.source_url")
+  },hashTypes:{'data-source_url': "ID"},hashContexts:{'data-source_url': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(">\n            ");
+  data.buffer.push(escapeExpression((helper = helpers['play-pause-button'] || (depth0 && depth0['play-pause-button']),options={hash:{
+    'episode': ("episode")
+  },hashTypes:{'episode': "ID"},hashContexts:{'episode': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "play-pause-button", options))));
+  data.buffer.push("\n            ");
+  stack1 = helpers._triageMustache.call(depth0, "episode.title", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n    </li>\n    ");
-  return buffer;
-  }
-function program4(depth0,data) {
-  
-  var buffer = '';
-  data.buffer.push("\n      <div>\n        <img\n          ");
-  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
-    'alt': ("channel.title")
-  },hashTypes:{'alt': "ID"},hashContexts:{'alt': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push("\n          ");
-  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
-    'src': ("channel.image_url")
-  },hashTypes:{'src': "ID"},hashContexts:{'src': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(" />\n      </div>\n      ");
+  data.buffer.push("\n          </li>\n        ");
   return buffer;
   }
 
-  data.buffer.push("<div id=\"home\">\n  ");
-  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
-    'id': ("call-to-action")
-  },hashTypes:{'id': "STRING"},hashContexts:{'id': depth0},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "channels", options) : helperMissing.call(depth0, "link-to", "channels", options));
+  data.buffer.push("<ul id=\"channels\">\n  ");
+  stack1 = helpers.each.call(depth0, "channel", "in", "channels", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n  <ul id=\"channels\">\n    ");
-  stack1 = helpers.each.call(depth0, "channel", "in", "channels", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n  </ul>\n</div>\n");
+  data.buffer.push("\n</ul>\n");
   return buffer;
   
 });
