@@ -7560,6 +7560,44 @@ footer a {
     margin: 0;
   }
 }
+#channels {
+  padding: 0 20px 0 0;
+}
+#channels h3 {
+  margin: 0;
+}
+#channels span {
+  font-size: 0.95em;
+  margin-right: 10px;
+}
+#channels li {
+  margin-bottom: 15px;
+}
+
+ul.episodes {
+  max-height: 105px;
+  overflow: hidden;
+  margin-top: 5px;
+}
+ul.episodes li {
+  border-bottom: 1px solid #cccccc;
+  line-height: 25px;
+  padding-left: 20px;
+}
+ul.episodes .play-pause {
+  float: left;
+  margin: 0 10px 0 0;
+}
+ul.episodes .play-pause i {
+  font-size: 22px;
+  line-height: 19px;
+  cursor: pointer;
+  width: 40px;
+  height: 25px;
+  display: block;
+  margin: 0 auto;
+}
+
 #app {
   background: white;
 }
@@ -7677,6 +7715,9 @@ footer a {
 }
 #app nav .uk-container-center {
   position: relative;
+}
+#app #content {
+  overflow: auto;
 }
 #app footer a span {
   font-size: 15px;

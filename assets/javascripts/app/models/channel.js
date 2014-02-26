@@ -6,6 +6,6 @@ App.Channel = DS.Model.extend({
   description:DS.attr(),
   copyright:  DS.attr(),
   subscribed: DS.attr(),
-  // episodes:   DS.hasMany('episode', {async: true}),
+  episodes:   DS.hasMany('episode', {async: true}),
   to_view:    DS.attr()
 });

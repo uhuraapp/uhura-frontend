@@ -14,5 +14,6 @@ $(document).ready(function(){
 
 var fixedSidebarHeight = function(){
   $("#side-left").css("height", window.innerHeight+"px");
+  $("#content").css("height", window.innerHeight+"px");
 }
 
