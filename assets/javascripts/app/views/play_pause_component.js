@@ -13,7 +13,6 @@ App.PlayPauseButtonComponent = Ember.Component.extend({
            //setTimeout(function(){
            //  $("#subscribeButton").click()
            //}, 2000)
-          alert("DDD")
          }
        }
        window.auth.withLoggedUser(__playing(episode));

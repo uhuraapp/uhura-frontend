@@ -98,14 +98,17 @@ function program2(depth0,data) {
   data.buffer.push(escapeExpression((helper = helpers['play-pause-button'] || (depth0 && depth0['play-pause-button']),options={hash:{
     'episode': ("episode")
   },hashTypes:{'episode': "ID"},hashContexts:{'episode': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "play-pause-button", options))));
-  data.buffer.push("\n            ");
+  data.buffer.push("\n            <div class=\"title\">\n              ");
   stack1 = helpers._triageMustache.call(depth0, "episode.title", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n          </li>\n        ");
+  data.buffer.push("\n\n              <button class=\"more-info typcn typcn-info-large\">\n\n              </button>\n            </div>\n\n            <div class=\"description\">\n              ");
+  stack1 = helpers._triageMustache.call(depth0, "episode.description", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n            </div>\n          </li>\n        ");
   return buffer;
   }
 
-  data.buffer.push("<ul id=\"channels\">\n  ");
+  data.buffer.push("<h2>Suggestions</h2>\n\n<ul id=\"channels\">\n  ");
   stack1 = helpers.each.call(depth0, "channel", "in", "channels", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n</ul>\n");

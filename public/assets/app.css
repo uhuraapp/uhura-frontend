@@ -7571,22 +7571,32 @@ footer a {
   margin-right: 10px;
 }
 #channels li {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 ul.episodes {
-  max-height: 105px;
-  overflow: hidden;
   margin-top: 5px;
 }
 ul.episodes li {
-  border-bottom: 1px solid #cccccc;
+  border: 1px solid #cccccc;
   line-height: 25px;
-  padding-left: 20px;
+  margin: 7px 0;
+}
+ul.episodes .more-info {
+  border: none;
+  background: none;
+  float: right;
+}
+ul.episodes .description {
+  border-top: 1px solid #cccccc;
+  padding: 5px 30px 10px 65px;
+  display: none;
 }
 ul.episodes .play-pause {
+  background: #f7f7f7;
   float: left;
-  margin: 0 10px 0 0;
+  margin: 0 10px 0 25px;
+  border-right: 1px solid #cccccc;
 }
 ul.episodes .play-pause i {
   font-size: 22px;
@@ -7718,6 +7728,7 @@ ul.episodes .play-pause i {
 }
 #app #content {
   overflow: auto;
+  padding-top: 20px;
 }
 #app footer a span {
   font-size: 15px;

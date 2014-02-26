@@ -1,3 +1,5 @@
+<h2>Suggestions</h2>
+
 <ul id="channels">
   {{#each channel in channels}}
     <li>
@@ -6,7 +8,17 @@
         {{#each episode in channel.episodes}}
           <li class="audio" {{bind-attr data-listened=episode.listened}} {{bind-attr data-id=episode.id}} {{bind-attr data-source_url=episode.source_url}}>
             {{play-pause-button episode=episode}}
-            {{episode.title}}
+            <div class="title">
+              {{episode.title}}
+
+              <button class="more-info typcn typcn-info-large">
+
+              </button>
+            </div>
+
+            <div class="description">
+              {{episode.description}}
+            </div>
           </li>
         {{/each}}
       </ul>
