@@ -219,6 +219,7 @@ func main() {
 	apiRouter := r.PathPrefix("/api").Subrouter()
 	apiRouter.StrictSlash(true)
 	apiRouter.HandleFunc("/channels", builder.Protected(core.GetChannels))
+	apiRouter.HandleFunc("/episodes", builder.Protected(core.GetEpisodes))
 
 	// App
 	appRouter := r.PathPrefix("/app").Subrouter()

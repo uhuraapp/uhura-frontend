@@ -1,5 +1,11 @@
 package core
 
+import (
+	"net/http"
+
+	r "github.com/dukex/uhura/core/helper"
+)
+
 // import (
 // 	. "github.com/fiam/gounidecode/unidecode"
 // 	"regexp"
@@ -18,18 +24,6 @@ package core
 // 	Description  string
 // 	Id           int
 // 	PublishedAt  time.Time
-// }
-
-// type ItemResult struct {
-// 	Id          int         `json:"id"`
-// 	Title       string      `json:"title"`
-// 	Description string      `json:"description"`
-// 	Viewed      interface{} `json:"listened"`
-// 	ChannelId   int         `json:"channel_id"`
-// 	SourceUrl   string      `json:"source_url"`
-// 	Uri         interface{} `json:"uri"`
-// 	PublishedAt time.Time   `json:"published_at"`
-// 	Duration    string      `json:"duration"`
 // }
 
 // type Counter struct {
@@ -138,3 +132,14 @@ package core
 // 	itemResult, _ = GetItem(id, userId)
 // 	return
 // }
+
+func GetEpisodes(userId string, w http.ResponseWriter, request *http.Request) {
+	var episodes []ItemEntity
+
+	query := request.URL.Query()
+	ids := query["ids[]"]
+
+	database.Table("items").Where("id in (?)", ids).Order("published_at DESC").Find(&episodes)
+
+	r.ResponseJSON(w, 200, map[string]interface{}{"episodes": episodes})
+}
