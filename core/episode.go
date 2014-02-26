@@ -133,6 +133,15 @@ import (
 // 	return
 // }
 
+func SugestionsEpisodes(userId string, w http.ResponseWriter, request *http.Request) {
+	var episodes []ItemEntity
+	var channels []ChannelEntity
+
+	database.Table("user_channels").Select("items.*").Joins("INNER JOIN channels ON channels.id = user_channels.channel_id JOIN (SELECT * FROM (SELECT ROW_NUMBER() OVER (PARTITION BY items.channel_id order by items.channel_id DESC) AS count,items.* FROM items) line WHERE line.count <= 3) items ON items.channel_id = channels.id FULL OUTER JOIN user_items ON user_items.item_id = items.id").Where("user_channels.user_id = ?", userId).Where("user_items.id IS NULL").Find(&episodes).Select("DISTINCT ON (channels.id) channels.id, channels.*").Find(&channels)
+
+	r.ResponseJSON(w, 200, map[string]interface{}{"episodes": episodes, "channels": channels})
+}
+
 func GetEpisodes(userId string, w http.ResponseWriter, request *http.Request) {
 	var episodes []ItemEntity
 
