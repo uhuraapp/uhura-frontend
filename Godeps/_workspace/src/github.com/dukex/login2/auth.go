@@ -54,7 +54,7 @@ type URLS struct {
 
 type Builder struct {
 	Providers           map[string]*builderConfig
-	UserSetupFn         func(provider string, user *User, rawResponde *http.Response)
+	UserSetupFn         func(provider string, user *User, rawResponde *http.Response) (int64, error)
 	UserExistsFn        func(email string) bool
 	UserCreateFn        func(email string, password string, request *http.Request) (int64, error)
 	UserIdByEmail       func(email string) (int64, error)
@@ -63,7 +63,7 @@ type Builder struct {
 }
 
 type User struct {
-	ID     int64
+	Id     string
 	Email  string
 	Link   string
 	Name   string
@@ -124,14 +124,18 @@ func (b *Builder) OAuthLogin() func(http.ResponseWriter, *http.Request) {
 		vars := mux.Vars(request)
 		provider := vars["provider"]
 
-		user := b.OAuthCallback(provider, request)
+		userId, err := b.OAuthCallback(provider, request)
 
-		b.login(request, w, strconv.FormatInt(user.ID, 10))
+		if err != nil {
+			http.Redirect(w, request, b.URLS.SignIn, 302)
+		} else {
+			b.login(request, w, strconv.FormatInt(userId, 10))
+		}
 	}
 }
 
 // OAuthCallback receive code from provider and get user information on provider
-func (b *Builder) OAuthCallback(provider string, r *http.Request) User {
+func (b *Builder) OAuthCallback(provider string, r *http.Request) (int64, error) {
 	config := b.Providers[provider]
 	code := r.FormValue("code")
 	t := &oauth.Transport{Config: config.Auth}
@@ -146,8 +150,7 @@ func (b *Builder) OAuthCallback(provider string, r *http.Request) User {
 		panic(err)
 	}
 
-	b.UserSetupFn(provider, &user, responseAuth)
-	return user
+	return b.UserSetupFn(provider, &user, responseAuth)
 }
 
 // SignUp Hanlder create and login user on database and redirecto to RedirectURL

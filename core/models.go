@@ -40,7 +40,7 @@ type User struct {
 	Locale      string
 	GoogleId    string
 	Email       string `sql:"not null;unique"`
-	Password    string
+	Password    interface{}
 	WelcomeMail bool
 	CreatedAt   time.Time
 }

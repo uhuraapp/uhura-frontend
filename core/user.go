@@ -1,12 +1,12 @@
 package core
 
-// import (
+import (
 // 	"encoding/json"
 // 	"github.com/gorilla/sessions"
 // 	"net/http"
 // 	"strconv"
 // 	"time"
-// )
+)
 
 // var store = sessions.NewCookieStore([]byte("something-very-secret"))
 
@@ -25,6 +25,14 @@ func UserCreate(email, password string) (User, error) {
 	return user, err
 }
 
+// func UserCreateFromOAuth(provider string, r *http.Response) (User, error) {
+// 	var user User
+// 	decoder := json.NewDecoder(responseAuth.Body)
+// 	err := decoder.Decode(&user)
+
+// 	fmt.Println(user)
+// }
+
 func UserByEmail(email string) (User, error) {
 	var user User
 	err := database.Where("email = ?", email).First(&user).Error
@@ -36,7 +44,7 @@ func UserPasswordByEmail(email string) (string, error) {
 	var user User
 	err := database.Where("email = ? ", email).First(&user).Error
 
-	return user.Password, err
+	return user.Password.(string), err
 }
 
 // type TempUser struct {

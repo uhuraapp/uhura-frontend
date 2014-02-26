@@ -110,9 +110,14 @@ func buildSignUpPage(email string) string {
 	return SignUpHTML
 }
 
-func userSetup(provider string, user *auth.User, rawResponde *http.Response) {
-	fmt.Println("USER", user)
-	fmt.Println("raw Response", rawResponde)
+func userSetup(provider string, user *auth.User, rawResponde *http.Response) (int64, error) {
+	realUser, err := core.UserByEmail(user.Email)
+	if err != nil {
+		// realUser, err = core.UserCreateFromOAuth(provider, rawResponde)
+		return 0, err
+	} else {
+		return realUser.Id, nil
+	}
 }
 
 func userCreate(email, password string, request *http.Request) (int64, error) {
