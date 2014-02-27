@@ -13,7 +13,7 @@ $(document).ready(function(){
   'use strict';
   $(window).on('resize', fixedSidebarHeight);
   fixedSidebarHeight();
-  $('.more-info').on('click', showDescription);
+  $(document).on("click", '.more-info', showDescription);
 });
 
 var fixedSidebarHeight = function(){
@@ -26,7 +26,15 @@ var fixedSidebarHeight = function(){
 var showDescription = function(e){
   'use strict';
 
-  debugger
-  $('.description').slideUp();
-  $(e.currentTarget).parent().find('.description').slideDown();
+  var target = $(e.currentTarget),
+    description = target.next('.description'),
+    descriptionIsDisplayed = description.is(':visible');
+
+    console.log(descriptionIsDisplayed)
+
+    $('.description').slideUp();
+
+    if(!descriptionIsDisplayed){
+      description.slideDown();
+    }
 };

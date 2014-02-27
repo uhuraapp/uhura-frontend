@@ -8,6 +8,7 @@ App.Auth = (function() {
     return window.location.protocol + '//' + window.location.host + '/api/authorize';
   };
 
+
   Auth.prototype.login = function(callback) {
     var loginWindow = window.open(this.authorize_url(),'login','height=500,width=800');
 

@@ -101,9 +101,10 @@ function program2(depth0,data) {
   data.buffer.push("\n            <div class=\"title\">\n              ");
   stack1 = helpers._triageMustache.call(depth0, "episode.title", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n\n              <button class=\"more-info typcn typcn-info-large\">\n\n              </button>\n            </div>\n\n            <div class=\"description\">\n              ");
-  stack1 = helpers._triageMustache.call(depth0, "episode.description", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n            </div>\n            <button alt=\"Information\" class=\"more-info typcn typcn-info-large\"> </button>\n            <div class=\"description\">\n              ");
+  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "episode.description", {hash:{
+    'unescaped': ("true")
+  },hashTypes:{'unescaped': "STRING"},hashContexts:{'unescaped': depth0},contexts:[depth0],types:["ID"],data:data})));
   data.buffer.push("\n            </div>\n          </li>\n        ");
   return buffer;
   }
