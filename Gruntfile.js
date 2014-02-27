@@ -27,11 +27,11 @@ module.exports = function (grunt) {
       },
       home_css: {
         files: ['assets/stylesheets/home.sass'],
-        tasks: ['sass:home']
+        tasks: ['sass:app']
       },
       stylesheets: {
         files: ['assets/stylesheets/**/*'],
-        tasks: ['sass:home']
+        tasks: ['sass:app']
       },
       emberTemplates: {
         files: 'assets/javascripts/app/templates/*.handlebars',
@@ -58,7 +58,7 @@ module.exports = function (grunt) {
     }
   };
 
-  console.log(concatFiles[process.env.ENV].home);
+  console.log(concatFiles[process.env.ENV]);
 
 
   grunt.initConfig({
@@ -74,7 +74,7 @@ module.exports = function (grunt) {
     },
     concat: {
       app: {
-        files: concatFiles[process.env.ENV]
+        files: concatFiles['<%= envrioment %>']
       },
       vendor: {
         files: {
@@ -110,7 +110,7 @@ module.exports = function (grunt) {
       },
     },
     sass: {
-      home: {
+      app: {
         options: {
           style: '<%= envrioment == "development" ? "expanded" : "compressed" %>'
         },
@@ -133,5 +133,6 @@ module.exports = function (grunt) {
     },
   });
 
-  grunt.registerTask('default', ['emberTemplates', 'concat:app', 'uglify:app', 'sass:home', 'watch']);
+  grunt.registerTask('default', ['emberTemplates', 'concat:app', 'uglify:app', 'sass:app', 'watch']);
 };
+
