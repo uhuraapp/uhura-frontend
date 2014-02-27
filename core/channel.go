@@ -1,15 +1,14 @@
 package core
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
-	// 	"github.com/jinzhu/gorm"
-	// 	"regexp"
-	// 	"strconv"
 	"strings"
-	// 	"time"
 
 	r "github.com/dukex/uhura/core/helper"
+	"github.com/gorilla/mux"
+	"github.com/jinzhu/gorm"
 )
 
 // func (c *Channel) AfterCreate() {
@@ -176,24 +175,38 @@ type ChannelsResult []ChannelResult
 
 func GetChannels(userId string, w http.ResponseWriter, request *http.Request) {
 	var channels ChannelsResult
-	_channels, found := r.Cache.Get("channels-" + userId)
-	if !found {
-		err := database.Table("channels").Select("channels.*, COUNT(items.id) as items, COUNT(user_items.id) as viewed, array_agg(items.id) AS episodes_ids").Joins("INNER JOIN user_channels ON user_channels.channel_id = channels.id LEFT OUTER JOIN items ON items.channel_id = channels.id LEFT OUTER JOIN user_items ON user_items.item_id = items.id AND user_items.user_id = "+userId+" AND user_items.viewed = TRUE").Where("user_channels.user_id = ?", userId).Group("channels.id").Scan(&channels).Error
 
-		for i, channel := range channels {
-			channels[i].ToView = channel.Items - channel.Viewed
-			channels[i].Episodes = convertEpisodesId(channel.EpisodesIds)
-		}
+	database.Scopes(channelDefaultQuery(userId)).Scan(&channels)
 
-		if err == nil {
-			r.Cache.Set("channels-"+userId, channels, 0)
-		}
-	} else {
-		channels = _channels.(ChannelsResult)
+	for i, channel := range channels {
+		fmt.Println(channel.Items)
+		channels[i].ToView = channel.Items - channel.Viewed
+		channels[i].Episodes = convertEpisodesId(channel.EpisodesIds)
 	}
 
 	r.ResponseJSON(w, 200, map[string]interface{}{"channels": channels})
 	return
+}
+
+func GetChannel(userId string, w http.ResponseWriter, request *http.Request) {
+	var channel ChannelResult
+
+	vars := mux.Vars(request)
+	id := vars["id"]
+
+	database.Scopes(channelDefaultQuery(userId)).Where("channels.id = ?", id).Limit(1).First(&channel)
+
+	channel.ToView = channel.Items - channel.Viewed
+	channel.Episodes = convertEpisodesId(channel.EpisodesIds)
+
+	r.ResponseJSON(w, 200, map[string]interface{}{"channel": channel})
+	return
+}
+
+func channelDefaultQuery(userId string) func(d *gorm.DB) *gorm.DB {
+	return func(d *gorm.DB) *gorm.DB {
+		return d.Table("channels").Select("channels.*, COUNT(items.id) AS items, array_agg(items.id) AS episodes_ids").Joins("INNER JOIN user_channels ON user_channels.channel_id = channels.id LEFT OUTER JOIN items ON items.channel_id = channels.id LEFT OUTER JOIN user_items ON user_items.item_id = items.id AND user_items.user_id = "+userId+" AND user_items.viewed = TRUE").Where("user_channels.user_id = ?", userId).Group("channels.id")
+	}
 }
 
 func convertEpisodesId(ids string) []int {
