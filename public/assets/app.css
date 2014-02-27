@@ -7561,10 +7561,13 @@ footer a {
   }
 }
 #channels {
-  padding: 0 20px 0 0;
+  padding: 0;
 }
 #channels h3 {
   margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 #channels span {
   font-size: 0.95em;
@@ -7581,28 +7584,43 @@ ul.episodes li {
   border: 1px solid #cccccc;
   line-height: 25px;
   margin: 7px 0;
+  overflow: hidden;
+}
+ul.episodes .title {
+  width: 85%;
+  float: left;
+  padding: 0 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 ul.episodes .more-info {
   border: none;
   background: none;
   float: right;
+  width: 5%;
+  color: #f1714c;
+  font-size: 20px;
+  height: 25px;
+  line-height: 18px;
 }
 ul.episodes .description {
   border-top: 1px solid #cccccc;
-  padding: 5px 30px 10px 65px;
+  padding: 5px 25px;
   display: none;
+  clear: both;
 }
 ul.episodes .play-pause {
   background: #f7f7f7;
   float: left;
-  margin: 0 10px 0 25px;
+  width: 5%;
   border-right: 1px solid #cccccc;
 }
 ul.episodes .play-pause i {
   font-size: 22px;
   line-height: 19px;
   cursor: pointer;
-  width: 40px;
+  width: 20px;
   height: 25px;
   display: block;
   margin: 0 auto;
@@ -7729,6 +7747,7 @@ ul.episodes .play-pause i {
 #app #content {
   overflow: auto;
   padding-top: 20px;
+  padding-right: 20px;
 }
 #app footer a span {
   font-size: 15px;

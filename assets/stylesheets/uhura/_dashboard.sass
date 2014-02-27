@@ -1,8 +1,10 @@
 #channels
-  padding: 0 20px 0 0
+  padding: 0
   h3
     margin: 0
-
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
   span
     font-size: .95em
     margin-right: 10px
@@ -15,28 +17,42 @@ ul.episodes
     border: 1px solid #CCC
     line-height: 25px
     margin: 7px 0
+    overflow: hidden
+  .title
+    width: 85%
+    float: left
+    padding: 0 10px
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
   .more-info
     border: none
     background: none
     float: right
+    width: 5%
+    color: #F1714C
+    font-size: 20px
+    height: 25px
+    line-height: 18px
   .description
     border-top: 1px solid #CCC
-    padding: 5px 30px 10px 65px
+    padding: 5px 25px
     display: none
-
+    clear: both
   .play-pause
-    background: #F7f7f7
+    background: #F7F7F7
     float: left
-    margin: 0 10px 0 25px
+    width: 5%
     border-right: 1px solid #CCC
     i
       font-size: 22px
       line-height: 19px
       cursor: pointer
-      width: 40px
+      width: 20px
       height: 25px
       display: block
       margin: 0 auto
+
 
 
 // #empty-dashboard{

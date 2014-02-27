@@ -1,0 +1,17 @@
+<h2>{{title}}</h2>
+
+
+<ul class="episodes">
+  {{#each episode in episodes}}
+  <li class="audio" {{bind-attr data-listened=episode.listened}} {{bind-attr data-id=episode.id}} {{bind-attr data-source_url=episode.source_url}}>
+    {{play-pause-button episode=episode}}
+    <div class="title">
+      {{episode.title}}
+    </div>
+    <button alt="Information" class="more-info typcn typcn-info-large"> </button>
+    <div class="description">
+      {{{episode.description}}}
+    </div>
+  </li>
+  {{/each}}
+</ul>
