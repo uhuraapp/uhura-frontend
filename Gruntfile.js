@@ -2,10 +2,7 @@
 module.exports = function (grunt) {
   'use strict';
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
-
-  grunt.initConfig({
-    envrioment: process.env.ENV || "development",
-    watch: {
+  var watchConfig = {
       options: {
         livereload: true,
       },
@@ -22,7 +19,7 @@ module.exports = function (grunt) {
       },
       app_js: {
         files: ['assets/javascripts/*.js', 'assets/javascripts/app/**/*.js'],
-        tasks: ['emberTemplates', 'concat:app', 'uglify:app']
+        tasks: ['jshint:app', 'emberTemplates', 'concat:app']
       },
       vendor_js: {
         files: ['assets/javascripts/vendor/*.js'],
@@ -36,11 +33,37 @@ module.exports = function (grunt) {
         files: ['assets/stylesheets/**/*'],
         tasks: ['sass:home']
       },
-     emberTemplates: {
+      emberTemplates: {
         files: 'assets/javascripts/app/templates/*.handlebars',
-        tasks: ['emberTemplates', 'concat:app', 'uglify:app']
+        tasks: ['emberTemplates', 'concat:app']
       },
+    };
+
+  if(process.env.ENV != 'development'){
+    watchConfig.app_js.tasks.push('uglify:app');
+    watchConfig.emberTemplates.tasks.push('uglify:app');
+  }
+
+  var homeFiles = ['assets/javascripts/vendor/0_jquery-1.10.2.min.js',  'assets/javascripts/vendor/uikit.js', 'assets/javascripts/home.js'];
+  var appFiles = ['assets/javascripts/app.js', 'assets/javascripts/app/**/*.js'];
+
+  var concatFiles = {
+    "development": {
+      'public/assets/home.min.js': homeFiles,
+      'public/assets/app.min.js': appFiles
     },
+    "production": {
+      'tmp/assets/home.js': homeFiles,
+      'tmp/assets/app.js': appFiles
+    }
+  };
+
+  console.log(concatFiles[process.env.ENV].home);
+
+
+  grunt.initConfig({
+    envrioment: process.env.ENV || "development",
+    watch: watchConfig,
     jshint: {
       gruntfile: {
         src: ['Gruntfile.js']
@@ -50,14 +73,8 @@ module.exports = function (grunt) {
       },
     },
     concat: {
-      options: {
-        separator: ';'
-      },
       app: {
-        files: {
-          'tmp/assets/home.js': ['assets/javascripts/vendor/0_jquery-1.10.2.min.js',  'assets/javascripts/vendor/uikit.js', 'assets/javascripts/home.js'],
-          'tmp/assets/app.js': ['assets/javascripts/app.js', 'assets/javascripts/app/**/*.js']
-        }
+        files: concatFiles[process.env.ENV]
       },
       vendor: {
         files: {
