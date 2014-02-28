@@ -10,13 +10,15 @@ App.ApplicationRoute = Ember.Route.extend({
 
 App.IndexRoute = Ember.Route.extend({
   setupController: function(controller) {
+    _this = this
     jQuery.getJSON("/api/suggestions").then(function (data) {
       for (var i = data.channels.length - 1; i >= 0; i--) {
         c = data.channels[i]
         episodes = _.where(data.episodes, {channel_id: c.id});
-        data.channels[i].episodes = _.map(episodes, function(e){
-          return Ember.Object.create(e);
+        c.episodes = _.map(episodes, function(e){
+          return _this.store.push('episode', e);
         });
+         data.channels[i] = c
       };
 
       controller.set('channels', data.channels)
