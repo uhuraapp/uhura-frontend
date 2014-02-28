@@ -23,6 +23,8 @@ ul.episodes
       -ms-filter: 'progid: DXImageTransform.Microsoft.Alpha(Opacity=100)'
     &.playing
       box-shadow: 0 0 2px #F1714C
+      -webkit-animation: playing 5s infinite
+      animation: playing 5s infinite
   .title
     width: 85%
     float: left
@@ -216,3 +218,25 @@ ul.episodes
 //   font-size: 14px;
 //   text-decoration: underline;
 // }
+
+
+@-webkit-keyframes playing
+  0%, 20%, 80%, 100%
+    box-shadow: 0 0 2px #F1714C
+  5%
+    box-shadow: 0 0 1px #90432c
+  40%
+    box-shadow: 0 0 2px #F1714C
+  60%
+    box-shadow: 0 0 5px #F1714C
+
+@keyframes playing
+  0%, 20%, 80%, 100%
+    box-shadow: 0 0 2px #F1714C
+  5%
+    box-shadow: 0 0 1px #90432c
+  40%
+    box-shadow: 0 0 2px #F1714C
+  60%
+    box-shadow: 0 0 5px #F1714C
+
