@@ -42,28 +42,21 @@ App.Player.getAudio = function(id){
     whileplaying: App.Player.events.playing,
     onload: App.Player.events.onload
   });
-  App.Player.episodes[audio.id] = sound
+  App.Player.episodes[id] = sound
 }
 return App.Player.episodes[id]
 }
 
 App.Player.play = function(episode){
-  // $(".PlayerLoader div").css("width", 0);
-
   playingEpisode = App.Player.playing
   if(playingEpisode){
-  //   ga('send', 'event', 'button', 'stop', 'episode', oldAudio.id);
-
     App.Player.stop(playingEpisode)
   }
-
-  // ga('send', 'event', 'button', 'play', 'episode', episode.id);
 
   var audio = this.getAudio(episode.id);
   audio.play();
 
   App.Player.playing = episode
-
 
   episode.set("playing", true)
 }
