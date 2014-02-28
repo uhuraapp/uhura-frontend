@@ -14,10 +14,10 @@ func init() {
 	database.LogMode(os.Getenv("DEBUG") == "true")
 
 	database.AutoMigrate(Channel{})
-	// database.AutoMigrate(Item{})
-	// database.AutoMigrate(User{})
-	// database.AutoMigrate(UserChannel{})
-	// database.AutoMigrate(UserItem{})
+	database.AutoMigrate(Item{})
+	database.AutoMigrate(User{})
+	database.AutoMigrate(UserChannel{})
+	database.AutoMigrate(UserItem{})
 	// database.AutoMigrate(Category{})
 	// database.AutoMigrate(ChannelCategories{})
 }
