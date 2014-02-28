@@ -220,7 +220,7 @@ func main() {
 	// User
 	r.HandleFunc("/enter", EnterHandler)
 
-	// Api
+	// API
 	apiRouter := r.PathPrefix("/api").Subrouter()
 	apiRouter.StrictSlash(true)
 	apiRouter.HandleFunc("/channels", builder.Protected(core.GetChannels))
