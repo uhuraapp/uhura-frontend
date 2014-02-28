@@ -6,7 +6,14 @@
 
 #app
   background: #FFF
-  #side-left
+  #aside-wrapper
+    overflow: hidden
+    zoom: 1
+    &::after
+      content: "&nbsp;"
+      display: block
+  aside
+    position: fixed
     overflow: auto
     display: block
     background-color: #3E4651
@@ -77,46 +84,45 @@
       overflow: hidden
       border-radius: 0 0 2px 2px
 
-  nav
-    &.uk-navbar
-      float: right
-      background: transparent
-      border: none
-    ul.uk-navbar-nav
-      margin: 0
-      padding: 0
-      float: right
-    li
-      float: left
-      border-right: 1px solid #E7C6BD
-      height: 45px
-      &:first-child
-        border-left: 1px solid #E7C6BD
+  // nav
+  //   &.uk-navbar
+  //     float: right
+  //     background: transparent
+  //     border: none
+  //   ul.uk-navbar-nav
+  //     margin: 0
+  //     padding: 0
+  //     float: right
+  //   li
+  //     float: left
+  //     border-right: 1px solid #E7C6BD
+  //     height: 45px
+  //     &:first-child
+  //       border-left: 1px solid #E7C6BD
 
-    a
-      display: block
-      height: 45px
-      line-height: 45px
-      margin: 0
-      padding: 0 10px
-      color: #3E4651
-      text-shadow: none
-      &:hover
-        background: #3E4651
-        color: #FFF
-        text-decoration: none
+  //   a
+  //     display: block
+  //     height: 45px
+  //     line-height: 45px
+  //     margin: 0
+  //     padding: 0 10px
+  //     color: #3E4651
+  //     text-shadow: none
+  //     &:hover
+  //       background: #3E4651
+  //       color: #FFF
+  //       text-decoration: none
 
-    .uk-navbar-toggle
-      text-shadow: none
-      height: 45px
-      background: none
-      border: none
+  //   .uk-navbar-toggle
+  //     text-shadow: none
+  //     height: 45px
+  //     background: none
+  //     border: none
 
-    .uk-container-center
-      position: relative
+  //   .uk-container-center
+  //     position: relative
 
   #content
-    overflow: auto
     padding-top: 20px
     padding-right: 20px
 

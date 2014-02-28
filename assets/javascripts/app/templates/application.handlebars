@@ -1,33 +1,35 @@
-<div id="side-left" class="column three-twelfth">
-  <header>
-    <hgroup>
-      <h1>Uhura</h1>
-      <h2>Podcast Manager</h2>
-    </hgroup>
-  </header>
-  <ul>
-    <li>
-      {{#link-to 'index' }}
-        <span class="typcn typcn-home-outline"></span>Home
-      {{/link-to}}
-    </li>
-    <li><a href="/app/"><span class="typcn typcn-document-add"></span>Add Channel</a></li>
-  </ul>
-  <ol>
-  {{#each channel in channels}}
-    <li>
-      {{#link-to 'channel' channel.id}}
-        <img {{bind-attr src=channel.image_url}} />
-        <span class="title">{{channel.title}}</span>
-        <i>{{channel.to_view}}</i>
-      {{/link-to}}
-    </li>
-  {{/each}}
-  </ol>
+<div id="aside-wrapper" class="column three-twelfth">
+  <aside class="column three-twelfth">
+    <header>
+      <hgroup>
+        <h1>Uhura</h1>
+        <h2>Podcast Manager</h2>
+      </hgroup>
+    </header>
+    <ul>
+      <li>
+        {{#link-to 'index' }}
+          <span class="typcn typcn-home-outline"></span>Home
+        {{/link-to}}
+      </li>
+      <li><a href="/app/"><span class="typcn typcn-document-add"></span>Add Channel</a></li>
+    </ul>
+    <ol>
+    {{#each channel in channels}}
+      <li>
+        {{#link-to 'channel' channel.id}}
+          <img {{bind-attr src=channel.image_url}} />
+          <span class="title">{{channel.title}}</span>
+          <i>{{channel.to_view}}</i>
+        {{/link-to}}
+      </li>
+    {{/each}}
+    </ol>
 
-  <footer>
-  <a>Follow us <span class="typcn typcn-social-twitter"></span></a>
-  </footer>
+    <footer>
+    <a>Follow us <span class="typcn typcn-social-twitter"></span></a>
+    </footer>
+  </aside>
 </div>
 
 {{!-- <div class="uk-hidden-small">

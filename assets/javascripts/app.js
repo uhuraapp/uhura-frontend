@@ -19,7 +19,7 @@ $(document).ready(function(){
 var fixedSidebarHeight = function(){
     'use strict';
 
-  $('#side-left').css('height', window.innerHeight + 'px');
+  $('aside').css('height', window.innerHeight + 'px');
   $('#content').css('height', window.innerHeight + 'px');
 };
 
