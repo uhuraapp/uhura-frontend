@@ -1,42 +1,13 @@
 <h2>Suggestions</h2>
-
 <ul id="channels">
   {{#each channel in channels}}
     <li>
       <h3><span class="typcn typcn-th-large-outline"></span>{{channel.title}}</h3>
       <ul class="episodes">
         {{#each episode in channel.episodes}}
-          <li class="audio" {{bind-attr data-listened=episode.listened}} {{bind-attr data-id=episode.id}} {{bind-attr data-source_url=episode.source_url}}>
-            {{play-pause-button episode=episode}}
-            <div class="title">
-              {{episode.title}}
-            </div>
-            <button alt="Information" class="more-info typcn typcn-info-large"> </button>
-            <div class="description">
-              {{{episode.description}}}
-            </div>
-          </li>
+          {{episode-list-item episode=episode}}
         {{/each}}
       </ul>
     </li>
-
-{{!--
-
-          <h3 class="column title eleven-twelfth">
-            {{episode.title}}
-            <i class="fa fa-chevron-down"></i>
-          </h3>
-          <div class="description">
-            {{#unless episode.listened}}
-            <button class="uk-button uk-button-success" alt="Mark as Listen!" {{action 'listened' episode}}>
-              Mark as Listened
-            </button>
-            {{/unless}}
-            {{#link-to 'channel.episode' episode.channel.uri episode.uri}}
-            Share Episode
-            {{/link-to}}
-            <div style="clear:both">{{{episode.description}}}</div>
-          </div>
-        </li> --}}
-        {{/each}}
+  {{/each}}
 </ul>
