@@ -30,8 +30,6 @@ var showDescription = function(e){
     description = target.next('.description'),
     descriptionIsDisplayed = description.is(':visible');
 
-    console.log(descriptionIsDisplayed)
-
     $('.description').slideUp();
 
     if(!descriptionIsDisplayed){

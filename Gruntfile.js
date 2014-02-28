@@ -34,7 +34,7 @@ module.exports = function (grunt) {
         tasks: ['sass:app']
       },
       emberTemplates: {
-        files: 'assets/javascripts/app/templates/*.handlebars',
+        files: 'assets/javascripts/app/templates/**/*.handlebars',
         tasks: ['emberTemplates', 'concat:app']
       },
     };
@@ -58,9 +58,6 @@ module.exports = function (grunt) {
     }
   };
 
-  console.log(concatFiles[process.env.ENV]);
-
-
   grunt.initConfig({
     envrioment: process.env.ENV || "development",
     watch: watchConfig,
@@ -74,7 +71,7 @@ module.exports = function (grunt) {
     },
     concat: {
       app: {
-        files: concatFiles['<%= envrioment %>']
+        files: concatFiles[process.env.ENV]
       },
       vendor: {
         files: {
@@ -127,12 +124,12 @@ module.exports = function (grunt) {
           templateBasePath: "assets/javascripts/app/templates/"
         },
         files: {
-          "assets/javascripts/app/templates.js": ["assets/javascripts/app/templates/*.handlebars"]
+          "assets/javascripts/app/templates.js": ["assets/javascripts/app/templates/**/*.handlebars"]
         }
       }
     },
   });
 
-  grunt.registerTask('default', ['emberTemplates', 'concat:app', 'uglify:app', 'sass:app', 'watch']);
+  grunt.registerTask('default', ['emberTemplates', 'concat:vendor', 'uglify:vendor', 'concat:app', 'uglify:app', 'sass:app', 'watch']);
 };
 
