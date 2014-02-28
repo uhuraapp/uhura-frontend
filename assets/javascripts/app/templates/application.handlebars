@@ -13,7 +13,11 @@
           <span class="typcn typcn-home-outline"></span>Home
         {{/link-to}}
       </li>
-      <li><a href="/app/"><span class="typcn typcn-document-add"></span>Add Channel</a></li>
+      <li>
+        {{#link-to 'channel.new' }}
+          <span class="typcn typcn-document-add"></span>Add Channel
+        {{/link-to}}
+      </li>
     </ul>
     <ol>
     {{#each channel in channels}}

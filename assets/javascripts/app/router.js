@@ -1,21 +1,21 @@
 App.Router.map(function () {
   'use strict';
-  this.route('channel', {path: '/:channel_id'}, function(){
-    // this.route('channel.episode', {path: '/:episode_uri'})
-  });
+  this.route('channel.new', {path: '/new'});
+  this.route('channel', {path: '/:channel_id'});
 });
 
 App.Router.reopen({
   rootURL: '/app/',
   location: 'history',
-  didTransition: function(infos) {
-    this._super(infos);
-    $(".uk-offcanvas").click();
+  // didTransition: function(infos) {
+  //   this._super(infos);
+  //   $(".uk-offcanvas").click();
 
-    if (window.ga === undefined) { return; }
 
-    Ember.run.next(function(){
-      ga('send', 'pageview', window.location.hash.substr(1));
-    });
-  }
+  //   if (window.ga === undefined) { return; }
+
+  //   Ember.run.next(function(){
+  //     ga('send', 'pageview', window.location.hash.substr(1));
+  //   });
+  // }
 });

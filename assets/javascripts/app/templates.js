@@ -11,14 +11,20 @@ function program1(depth0,data) {
 
 function program3(depth0,data) {
   
+  
+  data.buffer.push("\n          <span class=\"typcn typcn-document-add\"></span>Add Channel\n        ");
+  }
+
+function program5(depth0,data) {
+  
   var buffer = '', stack1, helper, options;
   data.buffer.push("\n      <li>\n        ");
-  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(4, program4, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "channel", "channel.id", options) : helperMissing.call(depth0, "link-to", "channel", "channel.id", options));
+  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(6, program6, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "channel", "channel.id", options) : helperMissing.call(depth0, "link-to", "channel", "channel.id", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n      </li>\n    ");
   return buffer;
   }
-function program4(depth0,data) {
+function program6(depth0,data) {
   
   var buffer = '', stack1;
   data.buffer.push("\n          <img ");
@@ -38,8 +44,11 @@ function program4(depth0,data) {
   data.buffer.push("<div id=\"aside-wrapper\" class=\"column three-twelfth\">\n  <aside class=\"column three-twelfth\">\n    <header>\n      <hgroup>\n        <h1>Uhura</h1>\n        <h2>Podcast Manager</h2>\n      </hgroup>\n    </header>\n\n    <ul>\n      <li>\n        ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "index", options) : helperMissing.call(depth0, "link-to", "index", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n      </li>\n      <li><a href=\"/app/\"><span class=\"typcn typcn-document-add\"></span>Add Channel</a></li>\n    </ul>\n    <ol>\n    ");
-  stack1 = helpers.each.call(depth0, "channel", "in", "channels", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
+  data.buffer.push("\n      </li>\n      <li>\n        ");
+  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "channel.new", options) : helperMissing.call(depth0, "link-to", "channel.new", options));
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n      </li>\n    </ul>\n    <ol>\n    ");
+  stack1 = helpers.each.call(depth0, "channel", "in", "channels", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(5, program5, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n    </ol>\n\n    <footer>\n    <a>Follow us <span class=\"typcn typcn-social-twitter\"></span></a>\n    </footer>\n  </aside>\n</div>\n\n\n\n<div id=\"content\" class=\"column nine-twelfth\">\n  ");
   stack1 = helpers._triageMustache.call(depth0, "outlet", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
@@ -73,6 +82,16 @@ function program1(depth0,data) {
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n</ul>\n");
   return buffer;
+  
+});
+
+Ember.TEMPLATES["channel_new"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  
+
+
+  data.buffer.push("<h3>Add Channel</h3>\n\n\n<form class=\"uk-search\" data-uk-search>\n    <input class=\"uk-search-field\" type=\"search\" placeholder=\"\">\n    <button class=\"uk-search-close\" type=\"reset\"></button>\n</form>\n");
   
 });
 
