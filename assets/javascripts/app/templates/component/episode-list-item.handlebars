@@ -1,4 +1,4 @@
-<li class="audio" {{bind-attr data-listened=episode.listened}} {{bind-attr data-id=episode.id}} {{bind-attr data-source_url=episode.source_url}}>
+<li {{bind-attr class=":audio episode.listened episode.playing"}} {{bind-attr data-id=episode.id}} {{bind-attr data-source_url=episode.source_url}}>
   {{play-pause-button episode=episode}}
   <div class="title">
     {{episode.title}}
