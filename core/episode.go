@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	r "github.com/dukex/uhura/core/helper"
+	"github.com/jinzhu/gorm"
 )
 
 // import (
@@ -133,25 +134,29 @@ import (
 // 	return
 // }
 
+func episodeDefaultQuery(d *gorm.DB) *gorm.DB {
+	return d.Select("items.*, user_items.viewed as listened").Order("user_items.viewed DESC, items.published_at DESC, title")
+}
+
 func SugestionsEpisodes(userId string, w http.ResponseWriter, request *http.Request) {
-	var episodes []ItemEntity
+	var episodes []EpisodeEntity
 	var channels []ChannelEntity
 
-	q := database.Table("user_channels").Select("items.*").Joins("INNER JOIN channels ON channels.id = user_channels.channel_id JOIN (SELECT * FROM (SELECT ROW_NUMBER() OVER (PARTITION BY items.channel_id order by items.channel_id DESC) AS count,items.* FROM items) line WHERE line.count <= 3) items ON items.channel_id = channels.id FULL OUTER JOIN user_items ON user_items.item_id = items.id").Where("user_channels.user_id = ?", userId).Where("user_items.id IS NULL")
+	q := database.Table("user_channels").Joins("INNER JOIN channels ON channels.id = user_channels.channel_id JOIN (SELECT * FROM (SELECT ROW_NUMBER() OVER (PARTITION BY items.channel_id order by items.channel_id DESC) AS count,items.* FROM items) line WHERE line.count <= 3) items ON items.channel_id = channels.id FULL OUTER JOIN user_items ON user_items.item_id = items.id").Where("user_channels.user_id = ?", userId).Where("user_items.id IS NULL")
 
-	q.Order("items.published_at").Find(&episodes)
+	q.Scopes(episodeDefaultQuery).Find(&episodes)
 	q.Select("DISTINCT ON (channels.id) channels.id, channels.*").Find(&channels)
 
 	r.ResponseJSON(w, 200, map[string]interface{}{"episodes": episodes, "channels": channels})
 }
 
 func GetEpisodes(userId string, w http.ResponseWriter, request *http.Request) {
-	var episodes []ItemEntity
+	var episodes []EpisodeEntity
 
 	query := request.URL.Query()
 	ids := query["ids[]"]
 
-	database.Table("items").Where("id in (?)", ids).Order("published_at DESC").Find(&episodes)
+	database.Table("items").Scopes(episodeDefaultQuery).Joins("FULL OUTER JOIN user_items ON user_items.item_id = items.id").Where("items.id in (?)", ids).Find(&episodes)
 
 	r.ResponseJSON(w, 200, map[string]interface{}{"episodes": episodes})
 }

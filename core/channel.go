@@ -1,7 +1,6 @@
 package core
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -179,7 +178,6 @@ func GetChannels(userId string, w http.ResponseWriter, request *http.Request) {
 	database.Scopes(channelDefaultQuery(userId)).Scan(&channels)
 
 	for i, channel := range channels {
-		fmt.Println(channel.Items)
 		channels[i].ToView = channel.Items - channel.Viewed
 		channels[i].Episodes = convertEpisodesId(channel.EpisodesIds)
 	}

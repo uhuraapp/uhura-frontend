@@ -24,11 +24,11 @@ func (ce *ChannelEntity) FixUri() string {
 	return ce.Uri
 }
 
-type ItemEntity struct {
+type EpisodeEntity struct {
 	Id          int         `json:"id"`
 	Title       string      `json:"title"`
 	Description string      `json:"description"`
-	Viewed      interface{} `json:"listened"`
+	Listened    interface{} `json:"listened"`
 	ChannelId   int         `json:"channel_id"`
 	SourceUrl   string      `json:"source_url"`
 	Uri         interface{} `json:"uri"`
