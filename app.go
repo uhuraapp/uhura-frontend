@@ -229,6 +229,10 @@ func main() {
 	apiRouter.HandleFunc("/episodes/{id}/listened", builder.Protected(core.SetEpisodeListened))
 	apiRouter.HandleFunc("/suggestions", builder.Protected(core.SugestionsEpisodes))
 
+	// API Search
+	apiRouter.HandleFunc("/s/channels", builder.Protected(core.SearchChannels))
+	apiRouter.HandleFunc("/s/episodes", builder.Protected(core.SearchEpisodes))
+
 	// App
 	appRouter := r.PathPrefix("/app").Subrouter()
 	appRouter.StrictSlash(true)
