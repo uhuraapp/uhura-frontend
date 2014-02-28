@@ -226,6 +226,7 @@ func main() {
 	apiRouter.HandleFunc("/channels", builder.Protected(core.GetChannels))
 	apiRouter.HandleFunc("/channels/{id}", builder.Protected(core.GetChannel))
 	apiRouter.HandleFunc("/episodes", builder.Protected(core.GetEpisodes))
+	apiRouter.HandleFunc("/episodes/{id}/listened", builder.Protected(core.SetEpisodeListened))
 	apiRouter.HandleFunc("/suggestions", builder.Protected(core.SugestionsEpisodes))
 
 	// App

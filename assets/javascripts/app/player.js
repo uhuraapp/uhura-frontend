@@ -22,10 +22,10 @@ App.Player.events.playing = function(){
 }
 
 App.Player.events.onload = function(){
-  // this.onPosition(this.duration * 0.9, function(eventPosition) {
-  //   var model = App.PlayerController.get('model')
-  //   App.Helpers.listened(model.id)
-  // });
+  this.onPosition(this.duration * 0.95, function(eventPosition) {
+     var episode = App.Player.playing;
+     App.Player.listened(episode)
+  });
 }
 
 
@@ -80,7 +80,13 @@ App.Player.playpause = function(episode){
   } else {
     App.Player.play(episode);
   }
-  // ga('send', 'event', 'button', (isPlaying ? 'pause' : 'resume'), 'episode', audio.id);
+}
+
+App.Player.listened = function(episode) {
+  var url = "/api/episodes/" + episode.id + "/listened"
+  $.post(url).then(function() {
+    episode.set('listened', true)
+  })
 }
 
 soundManager.setup({

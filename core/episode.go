@@ -1,9 +1,12 @@
 package core
 
 import (
+	"fmt"
 	"net/http"
+	"strconv"
 
 	r "github.com/dukex/uhura/core/helper"
+	"github.com/gorilla/mux"
 	"github.com/jinzhu/gorm"
 )
 
@@ -159,4 +162,17 @@ func GetEpisodes(userId string, w http.ResponseWriter, request *http.Request) {
 	database.Table("items").Scopes(episodeDefaultQuery).Joins("FULL OUTER JOIN user_items ON user_items.item_id = items.id").Where("items.id in (?)", ids).Find(&episodes)
 
 	r.ResponseJSON(w, 200, map[string]interface{}{"episodes": episodes})
+}
+
+func SetEpisodeListened(userId string, w http.ResponseWriter, request *http.Request) {
+	vars := mux.Vars(request)
+	id, _ := strconv.Atoi(vars["id"])
+	userIdInt, _ := strconv.Atoi(userId)
+
+	fmt.Println(vars)
+	fmt.Println(id)
+
+	database.Save(&UserItem{UserId: int64(userIdInt), ItemId: int64(id), Viewed: true})
+
+	r.ResponseJSON(w, 202, nil)
 }
