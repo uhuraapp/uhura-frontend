@@ -1,13 +1,13 @@
 package helper
 
-import (
-	"time"
+// import (
+// 	"time"
 
-	c "github.com/pmylund/go-cache"
-)
+// 	c "github.com/pmylund/go-cache"
+// )
 
-var Cache *c.Cache
+// var Cache *c.Cache
 
-func init() {
-	Cache = c.New(5*time.Minute, 30*time.Second)
-}
+// func init() {
+// 	Cache = c.New(5*time.Minute, 30*time.Second)
+// }

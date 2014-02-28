@@ -48,11 +48,6 @@
 		{
 			"ImportPath": "github.com/lib/pq",
 			"Rev": "6c54219055243614d4eaffea55917c15bea2ba2f"
-		},
-		{
-			"ImportPath": "github.com/pmylund/go-cache",
-			"Comment": "go.r60.3-76-g7d1d6d6",
-			"Rev": "7d1d6d6ae935664bc8b80ab2b1fc7ab77a7e46da"
 		}
 	]
 }
