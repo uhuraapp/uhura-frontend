@@ -39,8 +39,8 @@ type User struct {
 	Gender      string
 	Locale      string
 	GoogleId    string
-	Email       string `sql:"not null;unique"`
-	Password    interface{}
+	Email       string      `sql:"not null;unique"`
+	Password    interface{} `sql:"type:varchar(100);"`
 	WelcomeMail bool
 	CreatedAt   time.Time
 }
