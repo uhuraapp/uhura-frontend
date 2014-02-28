@@ -2,12 +2,12 @@ App.Player = {}
 App.Player.episodes = {}
 App.Player.events = {}
 
-//App.PlayerX.events.play = function(){
-//}
+App.Player.events.play = function(){
+}
 
-// App.PlayerX.events.pause = function(){
-//   App.PlayerController.set("playing", false)
-// }
+App.Player.events.pause = function(){
+  // App.PlayerController.set("playing", false)
+}
 
 App.Player.events.loading = function(){
   // var percent = (this.bytesLoaded * 100)/this.bytesTotal,
@@ -31,47 +31,63 @@ App.Player.events.onload = function(){
 
 App.Player.getAudio = function(id){
  if(!App.Player.episodes[id]){
-    var el = $("[data-id="+ id + "]"),
-        audio = el.data(),
-        sound = soundManager.createSound({
-          id: "e" + audio.id,
-          url: [audio.source_url],
-          onplay: App.Player.events.play,
-          onpause: App.Player.events.pause,
-          whileloading: App.Player.events.loading,
-          whileplaying: App.Player.events.playing,
-          onload: App.Player.events.onload
-        });
-    App.Player.episodes[audio.id] = sound
-  }
-  return App.Player.episodes[id]
+  var el = $("[data-id="+ id + "]"),
+  audio = el.data(),
+  sound = soundManager.createSound({
+    id: "e" + audio.id,
+    url: [audio.source_url],
+    onplay: App.Player.events.play,
+    onpause: App.Player.events.pause,
+    whileloading: App.Player.events.loading,
+    whileplaying: App.Player.events.playing,
+    onload: App.Player.events.onload
+  });
+  App.Player.episodes[audio.id] = sound
+}
+return App.Player.episodes[id]
 }
 
 App.Player.play = function(episode){
   // $(".PlayerLoader div").css("width", 0);
 
-  // oldAudio = App.PlayerX.playing
-  // if(oldAudio){
+  playingEpisode = App.Player.playing
+  if(playingEpisode){
   //   ga('send', 'event', 'button', 'stop', 'episode', oldAudio.id);
-  //   App.Player.episodes[oldAudio.id].destruct()
-  // }
+
+    App.Player.stop(playingEpisode)
+  }
 
   // ga('send', 'event', 'button', 'play', 'episode', episode.id);
 
   var audio = this.getAudio(episode.id);
   audio.play();
-  // App.Player.playing = episode
-  // App.PlayerController.set("model", episode)
-  // App.PlayerController.set("playing", true)
+
+  App.Player.playing = episode
+
+
+  episode.set("playing", true)
 }
 
-App.Player.play_pause = function(){
-  // var audio = App.Player.playing,
-  //     isPlaying = App.PlayerController.get("playing");
 
+App.Player.pause = function(episode) {
+  App.Player.episodes[episode.id].pause()
+  episode.set("playing", false)
+}
+
+App.Player.stop = function(episode) {
+  App.Player.episodes[playingEpisode.id].destruct()
+  episode.set("playing", false)
+}
+
+App.Player.playpause = function(episode){
+  var isPlaying = episode.get("playing");
+
+  if(isPlaying){
+    App.Player.pause(episode);
+  } else {
+    App.Player.play(episode);
+  }
   // ga('send', 'event', 'button', (isPlaying ? 'pause' : 'resume'), 'episode', audio.id);
-  // App.Player.episodes[audio.id].togglePause()
-  // App.PlayerController.set("playing", !isPlaying)
 }
 
 soundManager.setup({
