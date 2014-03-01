@@ -1,7 +1,10 @@
 
 {{#if model}}
 <div id="player">
-  <img {{bind-attr src=channel.image_url}}>
+  <div id="player-image">
+    {{play-pause-button episode=.}}
+    <img {{bind-attr src=channel.image_url}}>
+  </div>
   <div id="player-info">
     <h4>{{title}}</h4>
     <h5>{{channel.title}}</h5>

@@ -22,8 +22,8 @@ App.Player.events.playing = function(){
 App.Player.events.onload = function(){
   "use strict";
   this.onPosition(this.duration * 0.95, function() {
-   var episode = App.Player.playing;
-   App.Player.listened(episode);
+    var episode = App.Player.playing;
+    App.Player.listened(episode);
  });
 };
 
@@ -39,7 +39,8 @@ App.Player.getAudio = function(id){
       onpause: App.Player.events.pause,
       whileloading: App.Player.events.loading,
       whileplaying: App.Player.events.playing,
-      onload: App.Player.events.onload
+      onload: App.Player.events.onload,
+      autoLoad: true
     });
     App.Player.episodes[id] = sound;
   }
@@ -106,7 +107,14 @@ soundManager.setup({
   useHTML5Audio: true,
   preferFlash: false,
   waitForWindowLoad: true,
-  debugMode: false,
+  debugMode: true,
   useFlashBlock: false,
-  autoLoad: true
+  autoLoad: false,
+  useHighPerformance: true,
+  allowScriptAccess: 'always'
+});
+
+soundManager.ontimeout(function(status) {
+  alert("mostra alerta sobre problema no flash")
+  window.location.reload();
 });

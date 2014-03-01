@@ -192,11 +192,11 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = '', stack1;
-  data.buffer.push("\n<div id=\"player\">\n  <img ");
+  data.buffer.push("\n<div id=\"player\">\n  <div id=\"player-image\">\n    <img ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'src': ("channel.image_url")
   },hashTypes:{'src': "ID"},hashContexts:{'src': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(">\n  <div id=\"player-info\">\n    <h4>");
+  data.buffer.push(">\n  </div>\n  <div id=\"player-info\">\n    <h4>");
   stack1 = helpers._triageMustache.call(depth0, "title", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("</h4>\n    <h5>");

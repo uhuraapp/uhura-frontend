@@ -4,20 +4,42 @@
   z-index: 10
   bottom: 5px
   right: 0
-  padding: 0 20px 0 0
+  padding: 0
 
 #player
   height: 62px
   border: 1px solid #333
   background-color: #3E4651
-  border-radius: 5px
-  img
-    width: 60px
-    height: 60px
+  border-radius: 3px 0 0 3px
+  border: 1px solid #F1714C
+  border-right: 0
+  box-shadow: -1px 0 2px #F1714C
+  #player-image
+    width: 20%
     float: left
     padding: 5px
     border-right: 1px solid #333
+    position: relative
+    img
+      max-width: 100%
+      height: 50px
+      display: block
+      margin: 0 auto
+      position: relative
+      z-index: 1
+      opacity: .4
+      -ms-filter: 'progid: DXImageTransform.Microsoft.Alpha(Opacity=40)'
+    .play-pause
+      position: absolute
+      width: 100%
+      color: #FFF
+      text-align: center
+      padding-right: 10px
+      line-height: 45px
+      font-size: 40px
+      z-index: 2
   #player-info
+    width: 80%
     float: left
     height: 60px
     border-left: 1px solid #4e4c4c
@@ -41,6 +63,7 @@
     position: relative
     border: 1px solid #52575E
     width: 100%
+    height: 17px
     div
       height: 15px
       position: absolute
