@@ -53,6 +53,8 @@ function program6(depth0,data) {
   data.buffer.push("\n    </ol>\n\n    <footer>\n    <a>Follow us <span class=\"typcn typcn-social-twitter\"></span></a>\n    </footer>\n  </aside>\n</div>\n\n\n\n<div id=\"content\" class=\"column nine-twelfth\">\n  ");
   stack1 = helpers._triageMustache.call(depth0, "outlet", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n  ");
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.PlayerView", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data})));
   data.buffer.push("\n</div>\n\n<div id=\"fb-root\"></div>\n");
   return buffer;
   
@@ -190,30 +192,21 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = '', stack1;
-  data.buffer.push("\n    <div class=\"Player\">\n      <a href=\"#\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "play_pause", "model", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["ID","ID"],data:data})));
-  data.buffer.push(">\n        ");
-  stack1 = helpers['if'].call(depth0, "playing", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(4, program4, data),fn:self.program(2, program2, data),contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n      </a>\n      <div class=\"PlayerLoader\">\n        <div class=\"loading\"></div>\n        <div class=\"playing\"></div>\n      </div>\n      <span class=\"title\">");
+  data.buffer.push("\n<div id=\"player\">\n  <img ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'src': ("channel.image_url")
+  },hashTypes:{'src': "ID"},hashContexts:{'src': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(">\n  <div id=\"player-info\">\n    <h4>");
   stack1 = helpers._triageMustache.call(depth0, "title", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("</span>\n    </div>\n    ");
+  data.buffer.push("</h4>\n    <h5>");
+  stack1 = helpers._triageMustache.call(depth0, "channel.title", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</h5>\n    <div id=\"player-loader\">\n      <div class=\"loading\"></div>\n      <div class=\"playing\"></div>\n    </div>\n  </div>\n</div>\n");
   return buffer;
   }
-function program2(depth0,data) {
-  
-  
-  data.buffer.push("<i class=\"fa fa-pause\"></i>");
-  }
 
-function program4(depth0,data) {
-  
-  
-  data.buffer.push("<i class=\"fa fa-play\"></i>");
-  }
-
-  data.buffer.push("    ");
+  data.buffer.push("\n");
   stack1 = helpers['if'].call(depth0, "model", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n");
