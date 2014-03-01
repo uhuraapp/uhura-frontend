@@ -48,6 +48,14 @@
 		{
 			"ImportPath": "github.com/lib/pq",
 			"Rev": "6c54219055243614d4eaffea55917c15bea2ba2f"
+		},
+		{
+			"ImportPath": "github.com/mattbaird/elastigo/api",
+			"Rev": "48595f26603636cec754c1c805a0935a61686ede"
+		},
+		{
+			"ImportPath": "github.com/mattbaird/elastigo/core",
+			"Rev": "48595f26603636cec754c1c805a0935a61686ede"
 		}
 	]
 }
