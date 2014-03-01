@@ -1,96 +1,107 @@
-App.Player = {}
-App.Player.episodes = {}
-App.Player.events = {}
-
-App.Player.events.play = function(){
-}
-
-App.Player.events.pause = function(){
-  // App.PlayerController.set("playing", false)
-}
+/* global App, $,soundManager */
+App.Player = {};
+App.Player.episodes = {};
+App.Player.events = {};
+App.Player.current = {
+  model: null,
+  audio: null
+};
 
 App.Player.events.loading = function(){
-  // var percent = (this.bytesLoaded * 100)/this.bytesTotal,
-  //     playing = (this.position * 100)/this.duration
-
-  // $(".PlayerLoader div.loading").css("width", percent+"%")
-}
+  "use strict";
+  var percent = (this.bytesLoaded * 100)/this.bytesTotal;
+  $("#player-loader div.loading").css("width", percent+"%");
+};
 
 App.Player.events.playing = function(){
-  // playing = (this.position * 100)/this.duration
-  // $(".PlayerLoader div.playing").css("width", playing+"%")
-}
+  "use strict";
+  var playing = (this.position * 100)/this.duration;
+  $("#player-loader div.playing").css("width", playing+"%");
+};
 
 App.Player.events.onload = function(){
-  this.onPosition(this.duration * 0.95, function(eventPosition) {
-     var episode = App.Player.playing;
-     App.Player.listened(episode)
-  });
-}
-
+  "use strict";
+  this.onPosition(this.duration * 0.95, function() {
+   var episode = App.Player.playing;
+   App.Player.listened(episode);
+ });
+};
 
 App.Player.getAudio = function(id){
- if(!App.Player.episodes[id]){
-  var el = $("[data-id="+ id + "]"),
-  audio = el.data(),
-  sound = soundManager.createSound({
-    id: "e" + audio.id,
-    url: [audio.source_url],
-    onplay: App.Player.events.play,
-    onpause: App.Player.events.pause,
-    whileloading: App.Player.events.loading,
-    whileplaying: App.Player.events.playing,
-    onload: App.Player.events.onload
-  });
-  App.Player.episodes[id] = sound
-}
-return App.Player.episodes[id]
-}
+  "use strict";
+  if(!App.Player.episodes[id]){
+    var el = $("[data-id="+ id + "]"),
+    audio = el.data(),
+    sound = soundManager.createSound({
+      id: "e" + audio.id,
+      url: [audio.source_url],
+      onplay: App.Player.events.play,
+      onpause: App.Player.events.pause,
+      whileloading: App.Player.events.loading,
+      whileplaying: App.Player.events.playing,
+      onload: App.Player.events.onload
+    });
+    App.Player.episodes[id] = sound;
+  }
+  return App.Player.episodes[id];
+};
 
 App.Player.play = function(episode){
-  playingEpisode = App.Player.playing
+  "use strict";
+
+  var playingEpisode = App.Player.current.model;
   if(playingEpisode){
-    App.Player.stop(playingEpisode)
+    App.Player.stop(playingEpisode);
   }
 
   var audio = this.getAudio(episode.id);
-  audio.play();
 
-  App.Player.playing = episode
+  App.Player.current.audio = audio;
+  App.Player.current.model = episode;
 
-  episode.set("playing", true)
-}
+  App.PlayerController.set("model", episode);
+  episode.set("playing", true);
+
+  App.Player.current.audio.play();
+};
 
 
-App.Player.pause = function(episode) {
-  App.Player.episodes[episode.id].pause()
-  episode.set("playing", false)
-}
+App.Player.togglePause = function(episode) {
+  "use strict";
+  var isPlaying = App.Player.current.model.get("playing");
+  App.Player.current.audio.togglePause();
+  episode.set("playing", !isPlaying);
+};
 
 App.Player.stop = function(episode) {
-  App.Player.episodes[playingEpisode.id].destruct()
-  episode.set("playing", false)
-}
+  "use strict";
+  App.PlayerController.set("model", null);
+  $("#player-loader div").css("width", 0);
+  App.Player.current.audio.destruct();
+  App.Player.current.audio = App.Player.current.model = null;
+  episode.set("playing", false);
+};
 
 App.Player.playpause = function(episode){
-  var isPlaying = episode.get("playing");
-
-  if(isPlaying){
-    App.Player.pause(episode);
+  "use strict";
+  var isPlaying = App.Player.current.model;
+  if(isPlaying && isPlaying.id === episode.id){
+    App.Player.togglePause(episode);
   } else {
     App.Player.play(episode);
   }
-}
+};
 
 App.Player.listened = function(episode) {
-  var url = "/api/episodes/" + episode.id + "/listened"
+  "use strict";
+  var url = "/api/episodes/" + episode.id + "/listened";
   $.post(url).then(function() {
-    episode.set('listened', true)
-  })
-}
+    episode.set("listened", true);
+  });
+};
 
 soundManager.setup({
-  url: '/swf',
+  url: "/swf",
   flashVersion: 9,
   useHTML5Audio: true,
   preferFlash: false,

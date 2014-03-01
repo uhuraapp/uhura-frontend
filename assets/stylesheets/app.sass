@@ -3,8 +3,10 @@
 @import "uhura/defaults"
 @import "uhura/grid"
 @import "uhura/dashboard"
+@import "uhura/player"
 
-
+body
+  overflow: auto
 #app
   background: #FFF
   #aside-wrapper
@@ -126,7 +128,10 @@
   #content
     padding-top: 20px
     padding-right: 20px
-
+    padding-bottom: 80px
+    &::after
+      content: "  "
+      display: block
   footer
     a
       span

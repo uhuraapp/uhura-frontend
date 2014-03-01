@@ -1,5 +1,5 @@
 App.PlayerView = Ember.View.extend({
   templateName: 'player',
-  classNames: ['PlayerContainer'],
+  classNames: ['PlayerContainer', 'column', 'nine-twelfth'],
   controller: App.PlayerController,
 });

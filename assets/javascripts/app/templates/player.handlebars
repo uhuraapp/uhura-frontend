@@ -1,12 +1,14 @@
-    {{#if model}}
-    <div class="Player">
-      <a href="#" {{action play_pause model}}>
-        {{#if playing}}<i class="fa fa-pause"></i>{{else}}<i class="fa fa-play"></i>{{/if}}
-      </a>
-      <div class="PlayerLoader">
-        <div class="loading"></div>
-        <div class="playing"></div>
-      </div>
-      <span class="title">{{title}}</span>
+
+{{#if model}}
+<div id="player">
+  <img {{bind-attr src=channel.image_url}}>
+  <div id="player-info">
+    <h4>{{title}}</h4>
+    <h5>{{channel.title}}</h5>
+    <div id="player-loader">
+      <div class="loading"></div>
+      <div class="playing"></div>
     </div>
-    {{/if}}
+  </div>
+</div>
+{{/if}}

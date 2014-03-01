@@ -17,10 +17,8 @@ $(document).ready(function(){
 });
 
 var fixedSidebarHeight = function(){
-    'use strict';
-
+  'use strict';
   $('aside').css('height', window.innerHeight + 'px');
-  $('#content').css('height', window.innerHeight + 'px');
 };
 
 var showDescription = function(e){

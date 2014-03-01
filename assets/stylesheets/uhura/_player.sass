@@ -1,0 +1,57 @@
+.PlayerContainer
+  position: fixed
+  height: 60px
+  z-index: 10
+  bottom: 5px
+  right: 0
+  padding: 0 20px 0 0
+
+#player
+  height: 62px
+  border: 1px solid #333
+  background-color: #3E4651
+  border-radius: 5px
+  img
+    width: 60px
+    height: 60px
+    float: left
+    padding: 5px
+    border-right: 1px solid #333
+  #player-info
+    float: left
+    height: 60px
+    border-left: 1px solid #4e4c4c
+    padding: 5px
+    h4, h5
+      margin: 0
+      color: #FFF
+      font-size: 13px
+      text-shadow: 1px 1px 1px #000
+      line-height: 17px
+      white-space: nowrap
+      overflow: hidden
+      text-overflow: ellipsis
+      width: 100%
+    h4
+      font-weight: 700
+    h5
+      color: #C7C1C1
+
+  #player-loader
+    position: relative
+    border: 1px solid #52575E
+    width: 100%
+    div
+      height: 15px
+      position: absolute
+      top: 0
+      &.loading
+        box-radius: 3px
+        background-size: 15px 15px
+        background-color: #52575E
+        background-image: linear-gradient(135deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent)
+      &.playing
+        box-radius: 3px
+        background-size: 15px 15px
+        background-color: #F1714C
+        background-image: linear-gradient(135deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent)
