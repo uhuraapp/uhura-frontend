@@ -106,7 +106,7 @@ func AllChannels(userId int, onlyFeatured bool, channelId string) (channels []Ch
 			channels[i] = c
 		}
 		var episodesIds []int64
-		itemQuery := database.Table("items").Where("channel_id = ?", c.Id)
+		itemQuery := database.Table("items").Where("items.channel_id = ?", c.Id)
 		itemQuery.Pluck("id", &episodesIds)
 
 		if userId > 0 {
@@ -115,7 +115,7 @@ func AllChannels(userId int, onlyFeatured bool, channelId string) (channels []Ch
 			itemQuery = itemQuery.Order("user_items.viewed DESC")
 		}
 
-		itemQuery.Order("published_at DESC, id DESC, title DESC").Find(&episodes)
+		itemQuery.Order("items.published_at DESC, items.id DESC, items.title DESC").Find(&episodes)
 
 		for j, e := range episodes {
 			if e.Uri != "" {
