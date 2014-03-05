@@ -16,9 +16,9 @@ type Item struct {
 	ChannelId   int
 	Id          int
 	PublishedAt time.Time `sql:"not null"`
-	Duration    interface{}
+	Duration    string
 	Uri         string
-	Type        interface{}
+	Type        string
 }
 
 type UserItem struct {
@@ -50,7 +50,7 @@ type ItemResult struct {
 	SourceUrl   string      `json:"source_url"`
 	Uri         interface{} `json:"uri"`
 	PublishedAt time.Time   `json:"published_at"`
-	Duration    string      `json:"duration"`
+	Duration    interface{} `json:"duration"`
 }
 
 type Counter struct {
