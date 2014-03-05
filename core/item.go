@@ -16,8 +16,9 @@ type Item struct {
 	ChannelId   int
 	Id          int
 	PublishedAt time.Time `sql:"not null"`
-	Duration    string
+	Duration    interface{}
 	Uri         string
+	Type        interface{}
 }
 
 type UserItem struct {
