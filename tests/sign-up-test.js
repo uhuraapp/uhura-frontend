@@ -1,8 +1,12 @@
-var email =  "user-"+(Math.random()*100)+"@x.com"
+ENDPOINT = "http://127.0.0.1:3002";
 
-casper.test.begin('Sign Up New User', 2, function suite(test) {
-  casper.start("http://127.0.0.1:3002/enter", function() {
+var email =  "user-"+(Math.random()*144400)+"@x.com"
+
+casper.test.begin('Sign Up New User', 4, function suite(test) {
+  casper.start(ENDPOINT+"/enter", function() {
     test.assertExists('form[action="/users/sign_up"]', "Sign Up form is found");
+    test.assertExists('a[href="/auth/google"]', "google link is found");
+    test.assertExists('a[href="/auth/facebook"]', "facebook link is found");
 
     this.fill('form[action="/users/sign_up"]', {
       email: email,
@@ -20,7 +24,7 @@ casper.test.begin('Sign Up New User', 2, function suite(test) {
 });
 
 casper.test.begin('Sign Up Old User', 4, function suite(test) {
-  casper.start("http://127.0.0.1:3002/enter", function() {
+  casper.start(ENDPOINT+"/enter", function() {
     test.assertExists('form[action="/users/sign_up"]', "Sign Up form is found");
 
     this.fill('form[action="/users/sign_up"]', {
