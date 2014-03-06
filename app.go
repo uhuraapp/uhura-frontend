@@ -153,6 +153,7 @@ func configAuth() {
 		Key:         "257036014466425",
 		Secret:      "2a7500446b1e3a135b2fd5caf71ef375",
 		UserInfoURL: "https://graph.facebook.com/me",
+		Scope:       "email",
 	})
 
 	builder = auth.NewBuilder(providers)
