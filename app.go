@@ -11,6 +11,7 @@ import (
 
 	auth "github.com/dukex/login2"
 	"github.com/dukex/uhura/core"
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 )
 
@@ -240,11 +241,12 @@ func main() {
 	appRouter.HandleFunc("/{path:.+}", builder.Protected(AppHandler))
 
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./public/")))
-	http.Handle("/", r)
 
+	h := handlers.LoggingHandler(os.Stdout, r)
+	http.Handle("/", h)
 	server := &http.Server{
 		Addr:           ":" + PORT,
-		Handler:        r,
+		Handler:        h,
 		ReadTimeout:    10 * time.Second,
 		WriteTimeout:   10 * time.Second,
 		MaxHeaderBytes: 1 << 20,
