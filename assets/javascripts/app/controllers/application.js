@@ -12,6 +12,14 @@ App.ApplicationRoute = Ember.Route.extend({
     $(document).attr('title', title);
     $("[property='og:title']").attr('content', title)
   },
+  actions: {
+    searchChannel: function() {
+      var _this = this;
+      jQuery.getJSON("/api/s/channels", {q: $("#q").val()}).then(function (data) {
+        var channels = data.channels;
+        _this.controllerFor('channel_new').set('channels', channels)
+      });
+    }
   }
 });
 

@@ -1,7 +1,14 @@
 <h3>Add Channel</h3>
 
-
-<form class="uk-search" data-uk-search>
-    <input class="uk-search-field" type="search" placeholder="">
-    <button class="uk-search-close" type="reset"></button>
+<form id="search" class="uk-form uk-form-stacked" {{action 'searchChannel' on='submit' }} >
+  <label for="q" class="uk-form-label">Search podcast in Uhura:</label>
+  <input class="uk-form-large" id="q" type="search" name="q" />
+  <button type="submit" class="uk-button uk-button-success">Submit</button>
 </form>
+
+<ul>
+{{#each channel in channels}}
+ <li> <h4>{{channel.title}}</h4><p>{{channel.description}}</p>
+ </li>
+{{/each}}
+</ul>

@@ -69,8 +69,13 @@ func SearchChannels(userId string, w http.ResponseWriter, request *http.Request)
 	}
 
 	out, _ := escore.SearchRequest(true, "uhura", "channel", searchJson, "", 0)
+	ids := getIds(out.Hits.Hits)
 
-	r.ResponseJSON(w, 200, map[string][]int{"channels": getIds(out.Hits.Hits)})
+	channels := make([]ChannelResult, 0)
+
+	database.Table("channels").Where("id in (?)", ids).Scan(&channels)
+
+	r.ResponseJSON(w, 200, map[string][]ChannelResult{"channels": channels})
 }
 
 func SearchEpisodes(userId string, w http.ResponseWriter, request *http.Request) {
