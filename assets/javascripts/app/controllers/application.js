@@ -5,6 +5,13 @@ App.ApplicationRoute = Ember.Route.extend({
     jQuery.getJSON("/api/subscriptions").then(function (data) {
       controller.set('channels', data.channels)
     });
+  },
+  activate: function(){
+    var title = "Dashboard - Uhura App";
+
+    $(document).attr('title', title);
+    $("[property='og:title']").attr('content', title)
+  },
   }
 });
 
