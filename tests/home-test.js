@@ -2,6 +2,10 @@ ENDPOINT = "http://127.0.0.1:3002";
 
 var email =  "test-user-"+(Math.random()*100)+"@x.com";
 
+casper.test.setUp(function(done) {
+    casper.start(ENDPOINT + "/users/sign_out").then(function() {
+    }).run(done);
+});
 
 casper.test.begin('Home Links/Forms', 6, function suite(test) {
   casper.start(ENDPOINT, function() {

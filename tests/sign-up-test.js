@@ -1,6 +1,11 @@
 ENDPOINT = "http://127.0.0.1:3002";
 
-var email =  "user-"+(Math.random()*144400)+"@x.com"
+var email =  "user-"+(Math.random()*144400)+"@x.com";
+
+casper.test.setUp(function(done) {
+    casper.start(ENDPOINT + "/users/sign_out").then(function() {
+    }).run(done);
+});
 
 casper.test.begin('Sign Up New User', 4, function suite(test) {
   casper.start(ENDPOINT+"/enter", function() {
@@ -34,10 +39,11 @@ casper.test.begin('Sign Up Old User', 4, function suite(test) {
   });
 
   casper.then(function() {
-    test.assertUrlMatch(/\/#sign-in/, "sign in open");
-    test.assertVisible('#sign-in');
-        test.assertTitle("Uhura App - Podcasts Manager - Listen your podcasts Here!", "home title");
-
+    this.waitForUrl(/#sign-in$/, function() {
+      test.assertUrlMatch(/\/#sign-in/, "sign in open");
+      test.assertVisible('#sign-in');
+      test.assertTitle("Uhura App - Podcasts Manager - Listen your podcasts Here!", "home title");
+    });
   });
 
   casper.run(function() {
