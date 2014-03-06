@@ -2,8 +2,8 @@ var CHANNEL = {}
 
 App.ApplicationRoute = Ember.Route.extend({
   setupController: function(controller) {
-    this.store.find('channel').then(function(channels){
-      controller.set('channels', channels)
+    jQuery.getJSON("/api/subscriptions").then(function (data) {
+      controller.set('channels', data.channels)
     });
   }
 });

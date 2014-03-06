@@ -225,6 +225,8 @@ func main() {
 	// API
 	apiRouter := r.PathPrefix("/api").Subrouter()
 	apiRouter.StrictSlash(true)
+
+	apiRouter.HandleFunc("/subscriptions", builder.Protected(core.GetSubscriptions))
 	apiRouter.HandleFunc("/channels", builder.Protected(core.GetChannels))
 	apiRouter.HandleFunc("/channels/{id}", builder.Protected(core.GetChannel))
 	apiRouter.HandleFunc("/episodes", builder.Protected(core.GetEpisodes))

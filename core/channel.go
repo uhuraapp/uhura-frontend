@@ -170,10 +170,11 @@ type ChannelResult struct {
 	EpisodesIds string `json:"-"`
 }
 
-type ChannelsResult []ChannelResult
-
 func GetChannels(userId string, w http.ResponseWriter, request *http.Request) {
-	var channels ChannelsResult
+}
+
+func GetSubscriptions(userId string, w http.ResponseWriter, request *http.Request) {
+	channels := make([]ChannelResult, 0)
 
 	database.Scopes(channelDefaultQuery(userId)).Scan(&channels)
 
