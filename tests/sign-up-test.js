@@ -34,9 +34,10 @@ casper.test.begin('Sign Up Old User', 4, function suite(test) {
   });
 
   casper.then(function() {
-    test.assertTitle("Uhura App - Podcasts Manager - Listen your podcasts Here!", "home title");
     test.assertUrlMatch(/\/#sign-in/, "sign in open");
     test.assertVisible('#sign-in');
+        test.assertTitle("Uhura App - Podcasts Manager - Listen your podcasts Here!", "home title");
+
   });
 
   casper.run(function() {
