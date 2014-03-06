@@ -171,6 +171,15 @@ type ChannelResult struct {
 }
 
 func GetChannels(userId string, w http.ResponseWriter, request *http.Request) {
+	query := request.URL.Query()
+	ids := query["ids[]"]
+
+	channels := make([]ChannelResult, 0)
+
+	database.Table("channels").Where("id in (?)", ids).Scan(&channels)
+
+	r.ResponseJSON(w, 200, map[string]interface{}{"channels": channels})
+	return
 }
 
 func GetSubscriptions(userId string, w http.ResponseWriter, request *http.Request) {
