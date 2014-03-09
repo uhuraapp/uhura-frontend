@@ -1,11 +1,12 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
+	"os/exec"
 	"strings"
 	"time"
 
@@ -70,46 +71,14 @@ import (
 // }
 
 var (
-	LandingHTML    string
-	AppHTML        string
-	SignUpHTML     string
 	ASSETS_VERSION string
 	ENV            string
 	PORT           string
 	URL            string
-	builder        *auth.Builder
+	loginBuilder   *auth.Builder
 )
 
 // Helpers
-
-func buildLandingPage() {
-	itb, _ := ioutil.ReadFile("./views/index.html")
-	LandingHTML = string(itb[:])
-	LandingHTML = strings.Replace(LandingHTML, "<% URL %>", URL, -1)
-	LandingHTML = strings.Replace(LandingHTML, "<% ASSETS_VERSION %>", ASSETS_VERSION, -1)
-}
-
-func buildAppPage() {
-	itb, _ := ioutil.ReadFile("./views/app.html")
-	AppHTML = string(itb[:])
-	AppHTML = strings.Replace(AppHTML, "<% URL %>", URL, -1)
-	AppHTML = strings.Replace(AppHTML, "<% ASSETS_VERSION %>", ASSETS_VERSION, -1)
-}
-
-func buildSignUpPage(email string) string {
-	itb, _ := ioutil.ReadFile("./views/users/sign_up.html")
-	if ENV == "development" {
-		SignUpHTML = ""
-	}
-
-	if SignUpHTML == "" {
-		SignUpHTML = string(itb[:])
-		SignUpHTML = strings.Replace(SignUpHTML, "<% EMAIL %>", email, -1)
-		SignUpHTML = strings.Replace(SignUpHTML, "<% URL %>", URL, -1)
-		SignUpHTML = strings.Replace(SignUpHTML, "<% ASSETS_VERSION %>", ASSETS_VERSION, -1)
-	}
-	return SignUpHTML
-}
 
 func userSetup(provider string, user *auth.User, rawResponde *http.Response) (int64, error) {
 	realUser, err := core.UserByEmail(user.Email)
@@ -156,52 +125,34 @@ func configAuth() {
 		Scope:       "email",
 	})
 
-	builder = auth.NewBuilder(providers)
-	builder.UserSetupFn = userSetup
-	builder.UserExistsFn = core.UserExists
-	builder.UserCreateFn = userCreate
-	builder.UserIdByEmail = userId
-	builder.UserPasswordByEmail = core.UserPasswordByEmail
-	builder.URLS = auth.URLS{
+	loginBuilder = auth.NewBuilder(providers)
+	loginBuilder.UserSetupFn = userSetup
+	loginBuilder.UserExistsFn = core.UserExists
+	loginBuilder.UserCreateFn = userCreate
+	loginBuilder.UserIdByEmail = userId
+	loginBuilder.UserPasswordByEmail = core.UserPasswordByEmail
+	loginBuilder.URLS = auth.URLS{
 		Redirect: "/app",
-		SignIn:   "/#sign-in",
+		SignIn:   "/login",
 		SignUp:   "/enter",
 	}
 }
 
-// Handlers
-func LandingHandler(w http.ResponseWriter, r *http.Request) {
-	if ENV == "development" {
-		buildLandingPage()
+func getGitSHA() string {
+	cmd := exec.Command("git", "rev-parse", "HEAD")
+	var out bytes.Buffer
+	cmd.Stdout = &out
+	err := cmd.Run()
+	if err != nil {
+		log.Fatal(err)
 	}
-
-	if builder.CurrentUser(r) != "" {
-		http.Redirect(w, r, "/app/", 302)
-	} else {
-		fmt.Fprintf(w, LandingHTML)
-	}
-}
-
-func EnterHandler(w http.ResponseWriter, request *http.Request) {
-	email := request.FormValue("email")
-	exists := core.UserExists(email)
-	if exists {
-		http.Redirect(w, request, "/#sign-in", 302)
-	} else {
-		fmt.Fprintf(w, buildSignUpPage(email))
-	}
-}
-
-func AppHandler(userId string, w http.ResponseWriter, request *http.Request) {
-	if ENV == "development" {
-		buildAppPage()
-	}
-
-	fmt.Fprintf(w, AppHTML)
+	sha := out.String()
+	sha = strings.Replace(sha, "\n", "", -1)
+	return sha
 }
 
 func main() {
-	ASSETS_VERSION = os.Getenv("ASSETS_VERSION")
+	ASSETS_VERSION = getGitSHA()
 	ENV = os.Getenv("ENV")
 	PORT = os.Getenv("PORT")
 	URL = os.Getenv("URL")
@@ -217,35 +168,39 @@ func main() {
 	r.HandleFunc("/", LandingHandler)
 
 	// Auth Router
-	builder.Router(r)
+	loginBuilder.Router(r)
 
 	// User
 	r.HandleFunc("/enter", EnterHandler)
+	r.HandleFunc("/login", LoginHandler)
 
 	// API
 	apiRouter := r.PathPrefix("/api").Subrouter()
 	apiRouter.StrictSlash(true)
 
-	apiRouter.HandleFunc("/subscriptions", builder.Protected(core.GetSubscriptions))
-	apiRouter.HandleFunc("/channels", builder.Protected(core.GetChannels))
-	apiRouter.HandleFunc("/channels/{id}", builder.Protected(core.GetChannel))
-	apiRouter.HandleFunc("/episodes", builder.Protected(core.GetEpisodes))
-	apiRouter.HandleFunc("/episodes/{id}/listened", builder.Protected(core.SetEpisodeListened))
-	apiRouter.HandleFunc("/suggestions", builder.Protected(core.SugestionsEpisodes))
+	apiRouter.HandleFunc("/subscriptions", loginBuilder.Protected(core.GetSubscriptions))
+	apiRouter.HandleFunc("/channels", loginBuilder.Protected(core.GetChannels))
+	apiRouter.HandleFunc("/channels/{id}", loginBuilder.Protected(core.GetChannel))
+	apiRouter.HandleFunc("/episodes", loginBuilder.Protected(core.GetEpisodes))
+	apiRouter.HandleFunc("/episodes/{id}/listened", loginBuilder.Protected(core.SetEpisodeListened))
+	apiRouter.HandleFunc("/suggestions", loginBuilder.Protected(core.SugestionsEpisodes))
 
 	// API Search
-	apiRouter.HandleFunc("/s/channels", builder.Protected(core.SearchChannels))
-	apiRouter.HandleFunc("/s/episodes", builder.Protected(core.SearchEpisodes))
+	apiRouter.HandleFunc("/s/channels", loginBuilder.Protected(core.SearchChannels))
+	apiRouter.HandleFunc("/s/episodes", loginBuilder.Protected(core.SearchEpisodes))
+
+	apiRouter.HandleFunc("/finder", loginBuilder.Protected(core.FindChannels))
 
 	// App
 	appRouter := r.PathPrefix("/app").Subrouter()
 	appRouter.StrictSlash(true)
-	appRouter.HandleFunc("/", builder.Protected(AppHandler))
-	appRouter.HandleFunc("/{path:.+}", builder.Protected(AppHandler))
+	appRouter.HandleFunc("/", loginBuilder.Protected(AppHandler))
+	appRouter.HandleFunc("/{path:.+}", loginBuilder.Protected(AppHandler))
 
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./public/")))
 
 	h := handlers.LoggingHandler(os.Stdout, r)
+
 	http.Handle("/", h)
 	server := &http.Server{
 		Addr:           ":" + PORT,
