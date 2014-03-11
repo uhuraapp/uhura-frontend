@@ -40,13 +40,18 @@ func UserByEmail(email string) (User, error) {
 }
 
 // test
-func UserPasswordByEmail(email string) (string, error) {
+func UserPasswordByEmail(email string) (string, bool) {
 	var user User
 	err := database.Where("email = ? ", email).First(&user).Error
 	if err != nil {
-		return "", err
+		return "", true
 	}
-	return user.Password.(string), nil
+	password, ok := user.Password.(string)
+	if ok {
+		return password, false
+	}
+
+	return "", true
 }
 
 // type TempUser struct {
