@@ -13,6 +13,7 @@ var (
 	LandingHTML string
 	AppHTML     string
 	SignUpHTML  string
+	SignInHTML  string
 )
 
 // Handlers
@@ -78,7 +79,10 @@ func buildSignUpPage(email string) string {
 }
 
 func buildSignInPage() string {
-	itb, _ := ioutil.ReadFile("./views/users/sign_up.html")
+	itb, _ := ioutil.ReadFile("./views/users/sign_in.html")
+	SignInHTML = string(itb[:])
+	SignInHTML = strings.Replace(SignInHTML, "<% URL %>", URL, -1)
+	SignInHTML = strings.Replace(SignInHTML, "<% ASSETS_VERSION %>", ASSETS_VERSION, -1)
 
-	return string(itb[:])
+	return SignInHTML
 }
