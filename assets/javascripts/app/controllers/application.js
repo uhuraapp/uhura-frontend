@@ -6,6 +6,7 @@ App.ApplicationRoute = Ember.Route.extend({
       controller.set('channels', data.channels)
     });
   },
+
   activate: function(){
     var title = "Dashboard - Uhura App";
 
@@ -16,6 +17,13 @@ App.ApplicationRoute = Ember.Route.extend({
     searchChannel: function() {
       var _this = this;
       jQuery.getJSON("/api/s/channels", {q: $("#q").val()}).then(function (data) {
+        var channels = data.channels;
+        _this.controllerFor('channel_new').set('channels', channels)
+      });
+    },
+    addChannel: function() {
+          var _this = this;
+       jQuery.post("/api/finder", {url: $("#url").val()}).then(function (data) {
         var channels = data.channels;
         _this.controllerFor('channel_new').set('channels', channels)
       });

@@ -1,14 +1,29 @@
-<h3>Add Channel</h3>
+<div id="channel_new">
+  <h3>{{t 'channel_new.title'}}</h3>
+  <h4>{{t 'channel_new.subtitle'}}</h4>
 
-<form id="search" class="uk-form uk-form-stacked" {{action 'searchChannel' on='submit' }} >
-  <label for="q" class="uk-form-label">Search podcast in Uhura:</label>
-  <input class="uk-form-large" id="q" type="search" name="q" />
-  <button type="submit" class="uk-button uk-button-success">Submit</button>
-</form>
+  <form id="add_channel" class="uk-form uk-form-stacked" {{action 'addChannel' on='submit' }} >
+    <label for="url" class="uk-form-label">{{t 'channel_new.podcast_url'}}</label>
+    <input class="uk-form-large" id="url" type="url" name="url" />
+    <button type="submit" class="uk-button uk-button-success">{{t 'channel_new.button.add'}}</button>
+  </form>
 
-<ul>
-{{#each channel in channels}}
- <li> <h4>{{channel.title}}</h4><p>{{channel.description}}</p>
- </li>
-{{/each}}
-</ul>
+
+  <form id="search_channel" class="uk-form uk-form-stacked" {{action 'searchChannel' on='submit' }} >
+    <label for="q" class="uk-form-label">{{t 'channel_new.search'}}</label>
+    <input class="uk-form-large" id="q" type="search" name="q" />
+    <button type="submit" class="uk-button uk-button-success">{{t 'channel_new.button.search'}}</button>
+  </form>
+
+
+  {{#if channels}}
+    <ul>
+    {{#each channel in channels}}
+      <li>
+        <h4>{{channel.title}}</h4><p>{{channel.description}}</p>
+      </li>
+    {{/each}}
+    </ul>
+  {{/if}}
+
+</div>
