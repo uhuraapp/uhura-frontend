@@ -10,17 +10,17 @@
     <ul>
       <li>
         {{#link-to 'index' }}
-          <span class="typcn typcn-home-outline"></span>Home
+          <span class="typcn typcn-home-outline"></span>{{t "sidebar.home"}}
         {{/link-to}}
       </li>
       <li>
         {{#link-to 'channel.new' }}
-          <span class="typcn typcn-document-add"></span>Add Channel
+          <span class="typcn typcn-document-add"></span>{{t "sidebar.channel_add"}}
         {{/link-to}}
       </li>
       <li>
         <a href="/users/sign_out">
-          <span class="typcn typcn-power-outline"></span>Sign Out
+          <span class="typcn typcn-power-outline"></span>{{t "sidebar.sign_out"}}
         </a>
       </li>
     </ul>
@@ -39,23 +39,19 @@
     </ol>
 
     <footer>
-    <a>Follow us <span class="typcn typcn-social-twitter"></span></a>
+    <a>{{t "footer.follow_us"}} <span class="typcn typcn-social-twitter"></span></a>
     </footer>
   </aside>
 </div>
 
-{{!-- <div class="uk-hidden-small">
-
-</div>
-
-<div data-uk-sticky class="uk-visible-small PlayerMobile">
-  {{view App.PlayerView}}
-</div>
- --}}
-
 <div id="content" class="column nine-twelfth">
   {{outlet}}
   {{view App.PlayerView}}
+</div>
+
+<div id="languages">
+  <button id="pt" onclick="t.change(this.id,true);">pt</button>
+  <button id="en" onclick="t.change(this.id,true);">en</button>
 </div>
 
 <div id="fb-root"></div>
