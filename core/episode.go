@@ -1,7 +1,6 @@
 package core
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -142,8 +141,8 @@ func episodeDefaultQuery(d *gorm.DB) *gorm.DB {
 }
 
 func SugestionsEpisodes(userId string, w http.ResponseWriter, request *http.Request) {
-	var episodes []EpisodeEntity
-	var channels []ChannelEntity
+	episodes := make([]EpisodeEntity, 0)
+	channels := make([]ChannelEntity, 0)
 
 	q := database.Table("user_channels").Joins("INNER JOIN channels ON channels.id = user_channels.channel_id JOIN (SELECT * FROM (SELECT ROW_NUMBER() OVER (PARTITION BY items.channel_id order by items.channel_id DESC) AS count,items.* FROM items) line WHERE line.count <= 3) items ON items.channel_id = channels.id FULL OUTER JOIN user_items ON user_items.item_id = items.id").Where("user_channels.user_id = ?", userId).Where("user_items.id IS NULL")
 
@@ -154,7 +153,7 @@ func SugestionsEpisodes(userId string, w http.ResponseWriter, request *http.Requ
 }
 
 func GetEpisodes(userId string, w http.ResponseWriter, request *http.Request) {
-	var episodes []EpisodeEntity
+	episodes := make([]EpisodeEntity, 0)
 
 	query := request.URL.Query()
 	ids := query["ids[]"]
@@ -168,9 +167,6 @@ func SetEpisodeListened(userId string, w http.ResponseWriter, request *http.Requ
 	vars := mux.Vars(request)
 	id, _ := strconv.Atoi(vars["id"])
 	userIdInt, _ := strconv.Atoi(userId)
-
-	fmt.Println(vars)
-	fmt.Println(id)
 
 	database.Save(&UserItem{UserId: int64(userIdInt), ItemId: int64(id), Viewed: true})
 
