@@ -18,6 +18,7 @@ type Channel struct {
 	CreatedAt     time.Time
 	UpdatedAt     time.Time
 	Language      string
+	Link          string
 	helper.Uriable
 }
 
@@ -66,8 +67,15 @@ type UserItem struct {
 	CreatedAt time.Time
 }
 
-// type ChannelCategories struct {
-// 	Id         int64
-// 	ChannelId  int64
-// 	CategoryId int64
-// }
+type ChannelCategories struct {
+	Id         int64
+	ChannelId  int64
+	CategoryId int64
+}
+
+type Category struct {
+	Id        int64
+	Name      string `sql:"not null;unique"`
+	CreatedAt time.Time
+	UpdatedAt time.Time
+}
