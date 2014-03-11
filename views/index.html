@@ -20,7 +20,7 @@
 <body>
   <div id="home">
     <p id="credits">Photo by <a href="https://www.flickr.com/photos/cclogg/">Chris Clogg</a></p>
-    <a href="#sign-in" id="sign-in-link" data-uk-modal>Sign In</a>
+    <a href="/login" id="sign-in-link" data-uk-modal>Sign In</a>
     <header>
       <hgroup>
         <a>
@@ -56,22 +56,6 @@
    Created with <span class="heart">♥</span> by
    <a href="https://twitter.com/_dukex">Duke X</a>, <br /> follow us <a rel="nofollow" href="http://twitter.com/UhuraApp">@UhuraApp</a>
  </p>
-
- <div id="sign-in" class="uk-modal">
-  <div class="uk-modal-dialog uk-modal-dialog-slide">
-    <a class="uk-modal-close uk-close"></a>
-    <h3>Welcome Back! Choose a way to sign in.</h3>
-    <form class="uk-form" id="signin" method="POST" action="/users/sign_in">
-      <input class="uk-form-large" placeholder="Email" id="email-sign" type="email" name="email" />
-      <input class="uk-form-large" placeholder="Password" id="password" type="password" name="password" />
-      <button type="submit" class="uk-button-success uk-button">Sign In</button>
-    </form>
-    <p>
-      Or
-      <a href="/auth/google"><i class="fa fa-google-plus"></i>Google</a>
-      <a href="/auth/facebook"><i class="fa fa-facebook"></i>Facebook</a>
-    </p>
-  </div>
 </div>
 </body>
 </html>
