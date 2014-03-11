@@ -10,3 +10,7 @@ coverage:
 	go test -coverprofile=coverage.out ./core
 	go tool cover -html=coverage.out
 	rm coverage.out
+
+serve:
+	go build
+	./uhura
