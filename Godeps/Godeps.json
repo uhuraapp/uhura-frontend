@@ -3,6 +3,16 @@
 	"GoVersion": "go1.2",
 	"Deps": [
 		{
+			"ImportPath": "code.google.com/p/go-charset/charset",
+			"Comment": "null-32",
+			"Rev": "ebbeafdc430eb6c7e44e9a730a38eaff4c56ba3a"
+		},
+		{
+			"ImportPath": "code.google.com/p/go-charset/data",
+			"Comment": "null-32",
+			"Rev": "ebbeafdc430eb6c7e44e9a730a38eaff4c56ba3a"
+		},
+		{
 			"ImportPath": "code.google.com/p/go.crypto/bcrypt",
 			"Comment": "null-191",
 			"Rev": "7aa593ce8ceaf0199504fff27455bbb60eedabc7"
@@ -19,7 +29,7 @@
 		},
 		{
 			"ImportPath": "github.com/dukex/login2",
-			"Rev": "5ff3f38e2bee010b69b64ec79feecf204cc6f1a2"
+			"Rev": "8d753cef8f926c2f6df00698bcd4f87f06d111b3"
 		},
 		{
 			"ImportPath": "github.com/fiam/gounidecode/unidecode",
@@ -28,6 +38,10 @@
 		{
 			"ImportPath": "github.com/gorilla/context",
 			"Rev": "708054d61e5a2918b9f4e9700000ee611dcf03f5"
+		},
+		{
+			"ImportPath": "github.com/gorilla/handlers",
+			"Rev": "78515eaa93ac9fa1b864f61ef263804af16fb944"
 		},
 		{
 			"ImportPath": "github.com/gorilla/mux",
@@ -44,6 +58,14 @@
 		{
 			"ImportPath": "github.com/jinzhu/gorm",
 			"Rev": "71e7b37bdfd69432e00565a7483a3788fdc20eb7"
+		},
+		{
+			"ImportPath": "github.com/jteeuwen/go-pkg-rss",
+			"Rev": "937de70c03b3af6f78338755794385c6f74f7df1"
+		},
+		{
+			"ImportPath": "github.com/jteeuwen/go-pkg-xmlx",
+			"Rev": "3623786eeb421657b11acad4aa1a9b89683c031f"
 		},
 		{
 			"ImportPath": "github.com/lib/pq",

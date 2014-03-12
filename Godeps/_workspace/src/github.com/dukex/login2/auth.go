@@ -5,6 +5,7 @@ package login2
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 	"os"
 	"strconv"
@@ -58,7 +59,7 @@ type Builder struct {
 	UserExistsFn        func(email string) bool
 	UserCreateFn        func(email string, password string, request *http.Request) (int64, error)
 	UserIdByEmail       func(email string) (int64, error)
-	UserPasswordByEmail func(email string) (string, error)
+	UserPasswordByEmail func(email string) (string, bool)
 	URLS                URLS
 }
 
@@ -99,12 +100,12 @@ func NewBuilder(userProviders []*Provider) *Builder {
 func (b *Builder) Router(r *mux.Router) {
 	for provider, _ := range b.Providers {
 		r.HandleFunc("/auth/"+provider, b.OAuthAuthorize(provider)).Methods("GET")
+		r.HandleFunc("/auth/callback/"+provider, b.OAuthLogin(provider)).Methods("GET")
 	}
 
-	r.HandleFunc("/auth/callback/{provider}", b.OAuthLogin()).Methods("GET")
 	r.HandleFunc("/users/sign_in", b.SignIn()).Methods("POST")
 	r.HandleFunc("/users/sign_up", b.SignUp()).Methods("POST")
-
+	r.HandleFunc("/users/sign_out", b.SignOut()).Methods("GET")
 }
 
 // HTTP server
@@ -115,15 +116,13 @@ func (b *Builder) OAuthAuthorize(provider string) func(http.ResponseWriter, *htt
 
 	return func(w http.ResponseWriter, r *http.Request) {
 		url := config.Auth.AuthCodeURL("")
+		log.Println("Send user to", provider)
 		http.Redirect(w, r, url, http.StatusFound)
 	}
 }
 
-func (b *Builder) OAuthLogin() func(http.ResponseWriter, *http.Request) {
+func (b *Builder) OAuthLogin(provider string) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, request *http.Request) {
-		vars := mux.Vars(request)
-		provider := vars["provider"]
-
 		userId, err := b.OAuthCallback(provider, request)
 
 		if err != nil {
@@ -173,19 +172,29 @@ func (b *Builder) SignIn() func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		email := r.FormValue("email")
 		password := r.FormValue("password")
-		userPassword, err := b.UserPasswordByEmail(email)
+		userPassword, ok := b.UserPasswordByEmail(email)
 
-		if err != nil {
-			http.Redirect(w, r, b.URLS.Redirect, 302)
+		if !ok {
+			http.Redirect(w, r, b.URLS.SignIn+"?password=not_found", 302)
 		}
 
-		err = checkPassword(userPassword, password)
+		err := checkPassword(userPassword, password)
 		if err != nil {
-			http.Redirect(w, r, b.URLS.Redirect, 302)
+			http.Redirect(w, r, b.URLS.SignIn+"?password=no_match", 302)
 		} else {
 			userId, _ := b.UserIdByEmail(email)
 			b.login(r, w, strconv.FormatInt(userId, 10))
 		}
+	}
+}
+
+func (b *Builder) SignOut() func(http.ResponseWriter, *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		session, _ := store.Get(r, "_session")
+		session.Values["user_id"] = nil
+		session.Save(r, w)
+
+		http.Redirect(w, r, b.URLS.SignIn, 302)
 	}
 }
 
