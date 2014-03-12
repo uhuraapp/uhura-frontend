@@ -23,8 +23,8 @@ var T = function() {
       "channel_new.button.subscribed": "Subscribed",
       "channel_new.button.unsubscribe": "Unsubscribed!",
 
-
       "footer.follow_us": "Follow Us",
+      "footer.contact": "Found a bug? Tell me! <br /> Send a email to",
 
       "i18n.changed": "The changes will be finished when page refresh",
 
@@ -46,6 +46,7 @@ var T = function() {
       "channel_new.button.unsubscribe": "Remover Assinaura!",
 
       "footer.follow_us": "Siga nós no",
+      "footer.contact": "Encontrou um Problema? Diga me! <br /> Envie um email para",
 
       "i18n.changed": "A mudança de idioma será efetiva quando a pagina for recarregada",
 
