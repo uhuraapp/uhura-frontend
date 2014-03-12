@@ -14,3 +14,6 @@ coverage:
 serve:
 	go build
 	./uhura
+
+build_assets:
+	ENV=production grunt emberTemplates concat:vendor uglify:vendor concat:app uglify:app sass:app
