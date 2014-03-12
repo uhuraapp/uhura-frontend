@@ -44,8 +44,9 @@ module.exports = function (grunt) {
     watchConfig.emberTemplates.tasks.push('uglify:app');
   }
 
-  var homeFiles = ['assets/javascripts/vendor/0_jquery-1.10.2.min.js',  'assets/javascripts/vendor/uikit.js', 'assets/javascripts/home.js'];
-  var appFiles = ['assets/javascripts/app.js', 'assets/javascripts/app/**/*.js'];
+  var homeFiles = ['assets/javascripts/vendor/0_jquery-1.10.2.min.js', 'assets/javascripts/vendor/uikit.js', 'assets/javascripts/home.js'];
+  var appFiles = ['assets/javascripts/app.js', 'assets/javascripts/app/subscriptions.js',  'assets/javascripts/app/**/*.js'];
+
 
   var concatFiles = {
     "development": {
