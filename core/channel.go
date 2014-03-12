@@ -128,18 +128,6 @@ func (c *Channel) SetUri() string {
 // 	return
 // }
 
-// func SubscribeChannel(userId int, channelId string) (channel ChannelResult) {
-// 	var userChannel UserChannel
-
-// 	channelIdInt, _ := strconv.Atoi(channelId)
-
-// 	database.Table("user_channels").Where(UserChannel{ChannelId: channelIdInt, UserId: userId}).FirstOrCreate(&userChannel)
-// 	channels, _ := AllChannels(userId, false, channelId)
-// 	channel = channels[0]
-// 	return
-
-// }
-
 // func UnsubscribeChannel(userId int, channelId string) (channel ChannelResult) {
 // 	var userChannel UserChannel
 
@@ -180,6 +168,33 @@ func GetChannels(userId string, w http.ResponseWriter, request *http.Request) {
 
 	r.ResponseJSON(w, 200, map[string]interface{}{"channels": channels})
 	return
+}
+
+func SubscribeChannel(userId string, w http.ResponseWriter, request *http.Request) {
+	var userChannel UserChannel
+
+	vars := mux.Vars(request)
+	id := vars["id"]
+
+	channelId, _ := strconv.Atoi(id)
+	userIdInt, _ := strconv.Atoi(userId)
+
+	database.Table("user_channels").Where(UserChannel{ChannelId: int64(channelId), UserId: int64(userIdInt)}).FirstOrCreate(&userChannel)
+
+	GetChannel(userId, w, request)
+}
+
+func UnsubscribeChannel(userId string, w http.ResponseWriter, request *http.Request) {
+	var userChannel UserChannel
+
+	vars := mux.Vars(request)
+	id := vars["id"]
+
+	channelId, _ := strconv.Atoi(id)
+	userIdInt, _ := strconv.Atoi(userId)
+
+	database.Table("user_channels").Where(UserChannel{ChannelId: int64(channelId), UserId: int64(userIdInt)}).Delete(&userChannel)
+
 }
 
 func GetSubscriptions(userId string, w http.ResponseWriter, request *http.Request) {
