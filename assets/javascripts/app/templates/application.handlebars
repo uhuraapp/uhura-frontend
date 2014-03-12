@@ -28,7 +28,7 @@
 
     <ol>
     {{#each channel in channels}}
-      <li>
+      <li id="channel-{{unbound channel.id}}">
         {{#link-to 'channel' channel.id}}
           <img {{bind-attr src=channel.image_url}} />
           <span class="title">{{channel.title}}</span>

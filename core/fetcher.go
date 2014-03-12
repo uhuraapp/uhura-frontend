@@ -1,22 +1,66 @@
 package core
 
-// import (
-// 	"crypto/md5"
-// 	"encoding/hex"
-// 	"fmt"
-// 	rss "github.com/jteeuwen/go-pkg-rss"
-// 	"io"
-// 	"os"
-// 	"strings"
-// 	"time"
+import (
+	"log"
+	//"crypto/md5"
+	//"encoding/hex"
+	//"fmt"
+	//"io"
+	// "os"
+	//"strings"
+	"time"
 
-// 	charset "code.google.com/p/go-charset/charset"
-// 	_ "code.google.com/p/go-charset/data"
-// )
+	charset "code.google.com/p/go-charset/charset"
+	_ "code.google.com/p/go-charset/data"
+	rss "github.com/jteeuwen/go-pkg-rss"
+)
 
-// const (
-// 	itunesExt = "http://www.itunes.com/dtds/podcast-1.0.dtd"
-// )
+const (
+	itunesExt = "http://www.itunes.com/dtds/podcast-1.0.dtd"
+)
+
+var noItemFn = func(feed *rss.Feed, ch *rss.Channel, items []*rss.Item) {}
+
+func FetchOnlyChannelFromBytes(uri string, body []byte) {
+	feed := rss.New(5, true, channelFetchHandler, noItemFn)
+	feed.FetchBytes(uri, body, charset.NewReader)
+
+	<-time.After(time.Duration(feed.SecondsTillUpdate() * 1e9))
+
+	return
+}
+
+// func FetchTempChannelFromLinks(links []string) []TempChannel {
+// 	channels := make([]TempChannel, 0)
+
+// 	ch := func(feed *rss.Feed, c []*rss.Channel) {
+// 		for _, channelData := range c {
+// 			var imageUrl string
+// 			if itunesImage := channelData.Extensions[itunesExt]["image"]; itunesImage != nil {
+// 				imageUrl = itunesImage[0].Attrs["href"]
+// 			} else {
+// 				imageUrl = channelData.Image.Url
+// 			}
+// 			log.Println(channelData)
+// 			channel := TempChannel{Url: feed.Url, Title: channelData.Title, ImageUrl: imageUrl}
+// 			channels = append(channels, channel)
+// 		}
+// 	}
+
+// 	for _, link := range links {
+// 		go func(uri string) {
+// 			feed := rss.New(5, true, ch, noItemFn)
+// 			feed.Fetch(uri, charset.NewReader)
+// 			<-time.After(time.Duration(feed.SecondsTillUpdate() * 1e9))
+// 		}(link)
+
+// 	}
+
+// 	timeout := time.Second * 3
+// 	<-time.After(time.Duration(timeout))
+// 	log.Println(channels)
+// 	return channels
+// }
 
 // func FetchAllChannell() {
 // 	var channels []Channel
@@ -42,53 +86,62 @@ package core
 // 	<-time.After(time.Duration(feed.SecondsTillUpdate() * 1e9))
 // }
 
-// func channelFetchHandler(feed *rss.Feed, channels []*rss.Channel) {
-// 	for _, channelData := range channels {
-// 		var channel Channel
+func channelFetchHandler(feed *rss.Feed, channels []*rss.Channel) {
+	for _, channelData := range channels {
+		var channel Channel
 
-// 		var imageUrl string
-// 		if itunesImage := channelData.Extensions[itunesExt]["image"]; itunesImage != nil {
-// 			imageUrl = itunesImage[0].Attrs["href"]
-// 		} else {
-// 			imageUrl = channelData.Image.Url
-// 		}
+		var imageUrl string
+		if itunesImage := channelData.Extensions[itunesExt]["image"]; itunesImage != nil {
+			imageUrl = itunesImage[0].Attrs["href"]
+		} else {
+			imageUrl = channelData.Image.Url
+		}
 
-// 		database.Table("channels").Where("url = ?", feed.Url).First(&channel)
+		log.Println(channelData.Links)
 
-// 		channel.Title = channelData.Title
-// 		channel.Description = channelData.Description
-// 		channel.ImageUrl = imageUrl
-// 		channel.Copyright = channelData.Copyright
-// 		channel.UpdatedAt = time.Now()
-// 		channel.CreatedAt = time.Now()
-// 		channel.Language = channelData.Language
-// 		channel.LastBuildDate = channelData.LastBuildDate
+		var link string
+		if len(channelData.Links) > 0 {
+			link = channelData.Links[0].Href
+			err := database.Table("channels").Where("link = ?", link).First(&channel).Error
+			if err != nil {
+				database.Table("channels").Where("url = ?", feed.Url).First(&channel)
+			}
+		} else {
+			database.Table("channels").Where("url = ?", feed.Url).First(&channel)
+		}
 
-// 		database.Save(&channel)
+		channel.Title = channelData.Title
+		channel.Description = channelData.Description
+		channel.ImageUrl = imageUrl
+		channel.Copyright = channelData.Copyright
+		channel.UpdatedAt = time.Now()
+		channel.CreatedAt = time.Now()
+		channel.Language = channelData.Language
+		channel.LastBuildDate = channelData.LastBuildDate
+		channel.Url = feed.Url
+		channel.Link = channelData.Links[0].Href
 
-// 		if itunesCategory := channelData.Extensions[itunesExt]["category"]; itunesCategory != nil {
-// 			for _, category := range itunesCategory {
-// 				var categoryDB Category
-// 				database.Where(&Category{Name: category.Attrs["text"]}).FirstOrCreate(&categoryDB)
-// 				database.Save(&ChannelCategories{ChannelId: int64(channel.Id), CategoryId: categoryDB.Id})
-// 			}
-// 		}
+		database.Save(&channel)
 
-// 		ChannelChan <- 1
-// 	}
-// }
+		if itunesCategory := channelData.Extensions[itunesExt]["category"]; itunesCategory != nil {
+			for _, category := range itunesCategory {
+				var categoryDB Category
+				database.Where(&Category{Name: category.Attrs["text"]}).FirstOrCreate(&categoryDB)
+				database.Where(&ChannelCategories{ChannelId: int64(channel.Id), CategoryId: categoryDB.Id}).FirstOrCreate(&ChannelCategories{})
+			}
+		}
+	}
+}
 
-// const itemForm = "Mon, _2 Jan 2006 15:04:05 -0700"
+const itemForm = "Mon, _2 Jan 2006 15:04:05 -0700"
 
 // func itemFetchHandler(feed *rss.Feed, ch *rss.Channel, items []*rss.Item) {
 // 	var channel Channel
 // 	database.Where("url = ?", feed.Url).First(&channel)
-
 // 	for _, itemdata := range items {
 // 		if len(itemdata.Enclosures) > 0 {
 // 			var duration string
 // 			var item Item
-
 // 			h := md5.New()
 // 			io.WriteString(h, itemdata.Enclosures[0].Url)
 // 			key := hex.EncodeToString(h.Sum(nil))

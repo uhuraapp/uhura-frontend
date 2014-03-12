@@ -19,6 +19,10 @@ var T = function() {
       "channel_new.subtitle": "Add a new podcast or Search on Uhura database",
       "channel_new.button.search": "Search",
       "channel_new.button.add": "Add",
+      "channel_new.button.subscribe": "Subscribe!",
+      "channel_new.button.subscribed": "Subscribed",
+      "channel_new.button.unsubscribe": "Unsubscribed!",
+
 
       "footer.follow_us": "Follow Us",
 
@@ -37,6 +41,9 @@ var T = function() {
       "channel_new.subtitle": "Assine um novo podcast ou busque no nosso banco de dados",
       "channel_new.button.search": "Buscar",
       "channel_new.button.add": "Adicionar",
+      "channel_new.button.subscribe": "Assine!",
+      "channel_new.button.subscribed": "Assinado",
+      "channel_new.button.unsubscribe": "Remover Assinaura!",
 
       "footer.follow_us": "Siga nós no",
 

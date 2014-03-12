@@ -1,5 +1,3 @@
 App.EpisodeListItemComponent = Ember.Component.extend({
-  layoutName: "component/episode-list-item",
-  actions: {
-  }
+  layoutName: "component/episode-list-item"
 });

@@ -12,8 +12,10 @@ App.ApplicationAdapter = DS.RESTAdapter.extend({
 $(document).ready(function(){
   'use strict';
   $(window).on('resize', fixedSidebarHeight);
+  $(document).on('click', '.more-info', showDescription);
+  $(document).on('mouseenter mouseleave', '.unsubscribe', toggleHoverUnsubscribe);
+
   fixedSidebarHeight();
-  $(document).on("click", '.more-info', showDescription);
 });
 
 var fixedSidebarHeight = function(){
@@ -33,4 +35,17 @@ var showDescription = function(e){
     if(!descriptionIsDisplayed){
       description.slideDown();
     }
+};
+
+var toggleHoverUnsubscribe = function(e) {
+  var target = $(e.currentTarget);
+  target.toggleClass("uk-button-danger");
+  if(target.is(".uk-button-danger")){
+    label = window.t.get('channel_new.button.unsubscribe');
+  } else {
+    label = window.t.get('channel_new.button.subscribed');
+  }
+  target.toggleClass('fa-times');
+  target.toggleClass('fa-check');
+  target.text(label);
 };

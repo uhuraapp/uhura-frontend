@@ -9,6 +9,10 @@ App.ChannelRoute = Ember.Route.extend({
 
     $(document).attr('title', title);
     $("[property='og:title']").attr('content', title)
+  },
+  actions: {
+    subscribeChannel: Subscriptions.subscribe,
+    unsubscribeChannel: Subscriptions.unsubscribe
   }
 });
 
@@ -21,4 +25,31 @@ App.ChannelController = Ember.ObjectController.extend({
       content: this.get('content.episodes')
     });
   }).property('content.episodes'),
+});
+
+
+App.ChannelNewRoute  = Ember.Route.extend({
+  deactivate: function(){
+    this.controller.set('channels', null);
+  },
+  actions: {
+    searchChannel: function() {
+      var _this = this;
+      jQuery.getJSON("/api/s/channels", {q: $("#q").val()}).then(function (data) {
+        _this.controller.set('channels', _.map(data.channels, function(c){
+          return Ember.Object.create(c);
+        }));
+      });
+    },
+    addChannel: function() {
+      var _this = this;
+      jQuery.post("/api/finder", {url: $("#url").val()}).then(function (data) {
+        _this.controller.set('channels', _.map(data.channels, function(c){
+          return Ember.Object.create(c);
+        }));
+      });
+    },
+    subscribeChannel: Subscriptions.subscribe,
+    unsubscribeChannel: Subscriptions.unsubscribe
+  }
 });

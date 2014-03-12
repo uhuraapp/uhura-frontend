@@ -2,8 +2,13 @@ var CHANNEL = {}
 
 App.ApplicationRoute = Ember.Route.extend({
   setupController: function(controller) {
+    var _this = this;
     jQuery.getJSON("/api/subscriptions").then(function (data) {
-      controller.set('channels', data.channels)
+      for (var i = data.channels.length - 1; i >= 0; i--) {
+        var channel = data.channels[i];
+        _this.store.push('channel', channel);
+      };
+      _this.controller.set('channels', _this.store.find('channel'));
     });
   },
 
@@ -12,28 +17,12 @@ App.ApplicationRoute = Ember.Route.extend({
 
     $(document).attr('title', title);
     $("[property='og:title']").attr('content', title)
-  },
-  actions: {
-    searchChannel: function() {
-      var _this = this;
-      jQuery.getJSON("/api/s/channels", {q: $("#q").val()}).then(function (data) {
-        var channels = data.channels;
-        _this.controllerFor('channel_new').set('channels', channels)
-      });
-    },
-    addChannel: function() {
-          var _this = this;
-       jQuery.post("/api/finder", {url: $("#url").val()}).then(function (data) {
-        var channels = data.channels;
-        _this.controllerFor('channel_new').set('channels', channels)
-      });
-    }
   }
 });
 
 App.IndexRoute = Ember.Route.extend({
   setupController: function(controller) {
-    _this = this
+    var _this = this;
     jQuery.getJSON("/api/suggestions").then(function (data) {
       for (var i = data.channels.length - 1; i >= 0; i--) {
         c = data.channels[i]

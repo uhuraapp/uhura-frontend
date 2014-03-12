@@ -17,13 +17,19 @@
 
 
   {{#if channels}}
-    <ul>
+  <ul id="channels">
     {{#each channel in channels}}
-      <li>
-        <h4>{{channel.title}}</h4><p>{{channel.description}}</p>
-      </li>
+    <li class="channel column three-twelfth">
+      <img {{bind-attr src=channel.image_url}} />
+      <h5>{{channel.title}}</h5>
+      {{#if channel.subscribed}}
+      <button class="uk-button uk-button-small unsubscribe fa fa-check" {{action 'unsubscribeChannel' channel.id}}>{{t 'channel_new.button.subscribed'}}</button>
+      {{else}}
+      <button class="uk-button uk-button-small uk-button-success subscribe" {{action 'subscribeChannel' channel.id}}>{{t 'channel_new.button.subscribe'}}</button>
+      {{/if}}
+    </li>
     {{/each}}
-    </ul>
+  </ul>
   {{/if}}
 
 </div>
