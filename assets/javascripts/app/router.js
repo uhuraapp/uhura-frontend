@@ -1,6 +1,6 @@
 App.Router.map(function () {
   'use strict';
-  this.route('channel.new', {path: '/new'});
+  this.route('channel.new', {path: '/add'});
   this.route('channel', {path: '/:channel_id'});
 });
 
