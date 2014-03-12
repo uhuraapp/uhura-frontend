@@ -200,7 +200,7 @@ func UnsubscribeChannel(userId string, w http.ResponseWriter, request *http.Requ
 func GetSubscriptions(userId string, w http.ResponseWriter, request *http.Request) {
 	channels := make([]ChannelResult, 0)
 
-	database.Scopes(channelDefaultQuery(userId)).Scan(&channels)
+	database.Scopes(ChannelDefaultQuery(userId)).Where("user_channels.user_id = ?", userId).Scan(&channels)
 
 	for i, channel := range channels {
 		channels[i].ToView = channel.Items - channel.Viewed
@@ -217,7 +217,7 @@ func GetChannel(userId string, w http.ResponseWriter, request *http.Request) {
 	vars := mux.Vars(request)
 	id := vars["id"]
 
-	database.Scopes(channelDefaultQuery(userId)).Where("channels.id = ?", id).Limit(1).First(&channel)
+	database.Scopes(ChannelDefaultQuery(userId)).Where("channels.id = ?", id).Limit(1).First(&channel)
 
 	channel.ToView = channel.Items - channel.Viewed
 	channel.Episodes = convertEpisodesId(channel.EpisodesIds)
@@ -226,9 +226,9 @@ func GetChannel(userId string, w http.ResponseWriter, request *http.Request) {
 	return
 }
 
-func channelDefaultQuery(userId string) func(d *gorm.DB) *gorm.DB {
+func ChannelDefaultQuery(userId string) func(d *gorm.DB) *gorm.DB {
 	return func(d *gorm.DB) *gorm.DB {
-		return d.Table("channels").Select("channels.*, COUNT(items.id) AS items, array_agg(items.id) AS episodes_ids").Joins("INNER JOIN user_channels ON user_channels.channel_id = channels.id LEFT OUTER JOIN items ON items.channel_id = channels.id LEFT OUTER JOIN user_items ON user_items.item_id = items.id AND user_items.user_id = "+userId+" AND user_items.viewed = TRUE").Where("user_channels.user_id = ?", userId).Group("channels.id")
+		return d.Table("channels").Select("channels.*, COUNT(items.id) AS items, array_agg(items.id) AS episodes_ids, CAST(user_channels.id AS BOOLEAN) AS subscribed").Joins("LEFT OUTER JOIN user_channels ON user_channels.channel_id = channels.id AND user_channels.user_id = " + userId + " LEFT OUTER JOIN items ON items.channel_id = channels.id LEFT OUTER JOIN user_items ON user_items.item_id = items.id AND user_items.user_id = " + userId + " AND user_items.viewed = TRUE").Group("channels.id, user_channels.id")
 	}
 }
 

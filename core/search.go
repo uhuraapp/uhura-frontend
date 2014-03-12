@@ -73,7 +73,9 @@ func SearchChannels(userId string, w http.ResponseWriter, request *http.Request)
 
 	channels := make([]ChannelResult, 0)
 
-	database.Table("channels").Where("id in (?)", ids).Scan(&channels)
+	if len(ids) > 0 {
+		database.Scopes(ChannelDefaultQuery(userId)).Where("channels.id in (?)", ids).Find(&channels)
+	}
 
 	r.ResponseJSON(w, 200, map[string][]ChannelResult{"channels": channels})
 }
