@@ -30,6 +30,9 @@ var T = function() {
 
       "index.suggestions": "Suggestions",
 
+      "episode.button.info": "More Information",
+      "episode.button.listened": "Make as Listened",
+
       "sidebar.home": "Home",
       "sidebar.channel_add": "Add Channel",
       "sidebar.sign_out": "Sign Out"
@@ -45,12 +48,15 @@ var T = function() {
       "channel_new.button.subscribed": "Assinado",
       "channel_new.button.unsubscribe": "Remover Assinaura!",
 
-      "footer.follow_us": "Siga nós no",
+      "footer.follow_us": "Siga-nos no",
       "footer.contact": "Encontrou um Problema? Diga me! <br /> Envie um email para",
 
       "i18n.changed": "A mudança de idioma será efetiva quando a pagina for recarregada",
 
       "index.suggestions": "Sugestões",
+
+      "episode.button.info": "Mais Informações",
+      "episode.button.listened": "Marcar como Ouvido",
 
       "sidebar.home": "Inicio",
       "sidebar.channel_add": "Adicionar Canal",

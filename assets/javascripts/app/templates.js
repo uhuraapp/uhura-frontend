@@ -60,9 +60,12 @@ function program6(depth0,data) {
   data.buffer.push("\n        </a>\n      </li>\n    </ul>\n\n\n    <ol>\n    ");
   stack1 = helpers.each.call(depth0, "channel", "in", "channels", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(5, program5, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n    </ol>\n\n    <footer>\n    <a>");
+  data.buffer.push("\n    </ol>\n\n    <footer>\n      <a href=\"http://twitter.com/UhuraApp\">");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "footer.follow_us", options) : helperMissing.call(depth0, "t", "footer.follow_us", options))));
-  data.buffer.push(" <span class=\"typcn typcn-social-twitter\"></span></a>\n    </footer>\n  </aside>\n</div>\n\n<div id=\"content\" class=\"column nine-twelfth\">\n  ");
+  data.buffer.push(" <span class=\"typcn typcn-social-twitter\"></span></a>\n\n      <p>");
+  stack1 = (helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "footer.contact", options) : helperMissing.call(depth0, "t", "footer.contact", options));
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n         <a href=\"mailto:dukekhaos@gmail.com\">dukekhaos@gmail.com</a></p>\n    </footer>\n  </aside>\n</div>\n\n<div id=\"content\" class=\"column nine-twelfth\">\n  ");
   stack1 = helpers._triageMustache.call(depth0, "outlet", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n  ");
@@ -229,7 +232,19 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   data.buffer.push("\n  <div class=\"title\">\n    ");
   stack1 = helpers._triageMustache.call(depth0, "episode.title", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n  </div>\n  <button title=\"Information\" class=\"more-info typcn typcn-info-large\"> </button>\n  <div class=\"description\">\n    ");
+  data.buffer.push("\n  </div>\n  <button ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'data-id': ("episode.id")
+  },hashTypes:{'data-id': "ID"},hashContexts:{'data-id': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(" data-uk-tooltip=\"{pos:'bottom'}\" title=\"");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "episode.button.listened", options) : helperMissing.call(depth0, "t", "episode.button.listened", options))));
+  data.buffer.push("\" ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'class': (":listened :typcn episode.listened:typcn-tick:typcn-tick-outline")
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push("> </button>\n  <button  data-uk-tooltip=\"{pos:'bottom'}\" title=\"");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "episode.button.info", options) : helperMissing.call(depth0, "t", "episode.button.info", options))));
+  data.buffer.push("\" class=\"more-info typcn typcn-info-large\"> </button>\n  <div class=\"description\">\n    ");
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "episode.description", {hash:{
     'unescaped': ("true")
   },hashTypes:{'unescaped': "STRING"},hashContexts:{'unescaped': depth0},contexts:[depth0],types:["ID"],data:data})));

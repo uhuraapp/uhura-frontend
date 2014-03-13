@@ -1,5 +1,3 @@
-var CHANNEL = {}
-
 App.ApplicationRoute = Ember.Route.extend({
   setupController: function(controller) {
     var _this = this;
@@ -11,7 +9,6 @@ App.ApplicationRoute = Ember.Route.extend({
       _this.controller.set('channels', _this.store.find('channel'));
     });
   },
-
   activate: function(){
     var title = "Dashboard - Uhura App";
 

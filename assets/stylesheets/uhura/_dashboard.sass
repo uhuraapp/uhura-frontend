@@ -24,6 +24,8 @@ ul.episodes
     &.listened
       opacity: 0.5
       -ms-filter: 'progid: DXImageTransform.Microsoft.Alpha(Opacity=100)'
+      button.listened
+        color: green
     &.playing
       box-shadow: 0 0 2px #F1714C
       -webkit-animation: playing 5s infinite
@@ -35,15 +37,22 @@ ul.episodes
     white-space: nowrap
     overflow: hidden
     text-overflow: ellipsis
-  .more-info
+  button.more-info, button.listened
     border: none
     background: none
     float: right
     width: 5%
-    color: #F1714C
     font-size: 20px
     height: 25px
     line-height: 18px
+    outline: none
+  button.more-info
+    color: #F1714C
+  button.listened
+    color: #CCC
+    &:hover
+      color: green
+
   .description
     border-top: 1px solid #CCC
     padding: 5px 25px
