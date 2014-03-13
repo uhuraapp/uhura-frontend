@@ -7,6 +7,9 @@ App.ApplicationRoute = Ember.Route.extend({
         _this.store.push('channel', channel);
       };
       _this.controller.set('channels', _this.store.find('channel'));
+      if(data.channels.length < 1){
+        _this.intermediateTransitionTo('channel.new');
+      }
     });
   },
   activate: function(){

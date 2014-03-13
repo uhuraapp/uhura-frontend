@@ -22,6 +22,7 @@ var T = function() {
       "channel_new.button.subscribe": "Subscribe!",
       "channel_new.button.subscribed": "Subscribed",
       "channel_new.button.unsubscribe": "Unsubscribed!",
+      "channel_new.alert.not_found": "Channel not found",
 
       "footer.follow_us": "Follow Us",
       "footer.contact": "Found a bug? Tell me! <br /> Send a email to",
@@ -38,7 +39,7 @@ var T = function() {
       "sidebar.sign_out": "Sign Out"
     },
     pt: {
-      "channel_new.title": "Adicionar Channel",
+      "channel_new.title": "Adicionar Canal",
       "channel_new.podcast_url": "URL Feed do Podcast:",
       "channel_new.search": "Buscar Podcasts:",
       "channel_new.subtitle": "Assine um novo podcast ou busque no nosso banco de dados",
@@ -47,6 +48,7 @@ var T = function() {
       "channel_new.button.subscribe": "Assine!",
       "channel_new.button.subscribed": "Assinado",
       "channel_new.button.unsubscribe": "Remover Assinaura!",
+      "channel_new.alert.not_found": "Não foi encontrado nenhum canal",
 
       "footer.follow_us": "Siga-nos no",
       "footer.contact": "Encontrou um Problema? Diga me! <br /> Envie um email para",

@@ -32,6 +32,12 @@ App.ChannelNewRoute  = Ember.Route.extend({
   deactivate: function(){
     this.controller.set('channels', null);
   },
+  activate: function(){
+    var title = window.t.get('channel_new.title');
+
+    $(document).attr('title', title);
+    $("[property='og:title']").attr('content', title);
+  },
   actions: {
     searchChannel: function() {
       var _this = this;
@@ -39,6 +45,10 @@ App.ChannelNewRoute  = Ember.Route.extend({
         _this.controller.set('channels', _.map(data.channels, function(c){
           return Ember.Object.create(c);
         }));
+
+        if(data.channels.length < 1) {
+          alert(t.get("channel_new.alert.not_found"));
+        }
       });
     },
     addChannel: function() {
@@ -48,6 +58,9 @@ App.ChannelNewRoute  = Ember.Route.extend({
           return Ember.Object.create(c);
         }));
       });
+      if(data.channels.length < 1) {
+        alert(t.get("channel_new.alert.not_found"));
+      }
     },
     subscribeChannel: Subscriptions.subscribe,
     unsubscribeChannel: Subscriptions.unsubscribe
