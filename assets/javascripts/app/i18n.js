@@ -34,6 +34,10 @@ var T = function() {
       "episode.button.info": "More Information",
       "episode.button.listened": "Make as Listened",
 
+      "error.?user.no_match": "Password or Email wrong",
+      "error.?user.no_found": "Email not found on Uhura",
+      "error.?user.exists": "User Registered, please Sign In",
+
       "sidebar.home": "Home",
       "sidebar.channel_add": "Add Channel",
       "sidebar.sign_out": "Sign Out"
@@ -93,10 +97,13 @@ T.prototype.init = function() {
 
 window.t = t = new T();
 
-Handlebars.registerHelper('t', function(key){
-  return window.t.get(key);
-});
-
 $(document).ready(function(){
   window.t.init();
 });
+
+
+if(typeof(Handlebars) !== "undefined") {
+  Handlebars.registerHelper('t', function(key){
+    return window.t.get(key);
+  });
+}

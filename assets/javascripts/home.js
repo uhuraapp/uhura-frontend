@@ -8,25 +8,18 @@ $(document).ready(function(){
 
   if(emailField.val().length > 0)  $('input#password').focus();
 
-  var signInModalId = '#sign-in';
-
-  if(document.location.hash === signInModalId) {
-    var modal = new $.UIkit.modal.Modal(signInModalId);
-    modal.show();
-    emailField.blur();
-  }
-
-  $(signInModalId).on({
-    'uk.modal.show': function(){
-      $('input#email-sign').focus();
-    },
-    'uk.modal.hide': function(){
-      emailField.focus();
-    }
-  });
-
-  validateEmail($('form#signin'), $('input#email-sign'));
+  validateEmail($('#sign-in'), $('#email'));
   validateEmail($('form#fast-signup'), $('#email'));
+
+  var search = window.location.search;
+  if(search.length > 0) {
+    search = search.split("=");
+    var type = search[0];
+    var error = search[1];
+    debugger
+    $(".error").removeClass("hide");
+    $(".error").text(window.t.get("error."+type+"."+error));
+  }
 });
 
 
