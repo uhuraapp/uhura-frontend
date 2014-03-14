@@ -62,7 +62,7 @@ func SearchChannels(userId string, w http.ResponseWriter, request *http.Request)
 	searchJson := map[string]interface{}{
 		"query": map[string]interface{}{
 			"multi_match": map[string]interface{}{
-				"fields": []string{"title", "url", "description"},
+				"fields": []string{"title^3", "url", "description^2"},
 				"query":  q,
 			},
 		},

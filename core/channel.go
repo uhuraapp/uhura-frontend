@@ -203,6 +203,7 @@ func GetSubscriptions(userId string, w http.ResponseWriter, request *http.Reques
 	database.Scopes(ChannelDefaultQuery(userId)).Where("user_channels.user_id = ?", userId).Scan(&channels)
 
 	for i, channel := range channels {
+		channels[i].Uri = channel.FixUri()
 		channels[i].ToView = channel.Items - channel.Viewed
 		channels[i].Episodes = convertEpisodesId(channel.EpisodesIds)
 	}

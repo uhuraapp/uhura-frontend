@@ -18,6 +18,6 @@ func init() {
 	database.AutoMigrate(User{})
 	database.AutoMigrate(UserChannel{})
 	database.AutoMigrate(UserItem{})
-	// database.AutoMigrate(Category{})
-	// database.AutoMigrate(ChannelCategories{})
+	database.AutoMigrate(Category{})
+	database.AutoMigrate(ChannelCategories{})
 }
