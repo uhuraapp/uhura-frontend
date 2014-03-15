@@ -1,13 +1,10 @@
 package core
 
 import (
-	"log"
-	//"crypto/md5"
-	//"encoding/hex"
-	//"fmt"
-	//"io"
-	// "os"
-	//"strings"
+	"crypto/md5"
+	"encoding/hex"
+	"io"
+	"strings"
 	"time"
 
 	charset "code.google.com/p/go-charset/charset"
@@ -97,9 +94,8 @@ func channelFetchHandler(feed *rss.Feed, channels []*rss.Channel) {
 			imageUrl = channelData.Image.Url
 		}
 
-		log.Println(channelData.Links)
-
 		var link string
+
 		if len(channelData.Links) > 0 {
 			link = channelData.Links[0].Href
 			err := database.Table("channels").Where("link = ?", link).First(&channel).Error
@@ -120,6 +116,7 @@ func channelFetchHandler(feed *rss.Feed, channels []*rss.Channel) {
 		channel.LastBuildDate = channelData.LastBuildDate
 		channel.Url = feed.Url
 		channel.Link = channelData.Links[0].Href
+		channel.Uri = channel.MakeUri(channelData.Title)
 
 		database.Save(&channel)
 
@@ -135,43 +132,41 @@ func channelFetchHandler(feed *rss.Feed, channels []*rss.Channel) {
 
 const itemForm = "Mon, _2 Jan 2006 15:04:05 -0700"
 
-// func itemFetchHandler(feed *rss.Feed, ch *rss.Channel, items []*rss.Item) {
-// 	var channel Channel
-// 	database.Where("url = ?", feed.Url).First(&channel)
-// 	for _, itemdata := range items {
-// 		if len(itemdata.Enclosures) > 0 {
-// 			var duration string
-// 			var item Item
-// 			h := md5.New()
-// 			io.WriteString(h, itemdata.Enclosures[0].Url)
-// 			key := hex.EncodeToString(h.Sum(nil))
+func itemFetchHandler(feed *rss.Feed, ch *rss.Channel, items []*rss.Item) {
+	var channel Channel
+	database.Where("url = ?", feed.Url).First(&channel)
+	for _, itemdata := range items {
+		if len(itemdata.Enclosures) > 0 {
+			var duration string
+			var item Item
+			h := md5.New()
+			io.WriteString(h, itemdata.Enclosures[0].Url)
+			key := hex.EncodeToString(h.Sum(nil))
 
-// 			itemdata.PubDate = strings.Replace(itemdata.PubDate, "GMT", "-0100", -1)
-// 			itemdata.PubDate = strings.Replace(itemdata.PubDate, "PST", "-0800", -1)
-// 			itemdata.PubDate = strings.Replace(itemdata.PubDate, "PDT", "-0700", -1)
+			itemdata.PubDate = strings.Replace(itemdata.PubDate, "GMT", "-0100", -1)
+			itemdata.PubDate = strings.Replace(itemdata.PubDate, "PST", "-0800", -1)
+			itemdata.PubDate = strings.Replace(itemdata.PubDate, "PDT", "-0700", -1)
 
-// 			publishedAt, err := time.Parse(itemForm, itemdata.PubDate)
-// 			if err != nil {
-// 				// publishedAt = time.Now()
-// 				fmt.Println("ERR", err)
-// 				fmt.Println("")
-// 			}
+			publishedAt, err := time.Parse(itemForm, itemdata.PubDate)
+			if err != nil {
+				// TODO: ErrorEmail publishedAt problem
+			}
 
-// 			if i := itemdata.Extensions[itunesExt]; i != nil {
-// 				if i["summary"] != nil {
-// 					itemdata.Description = i["summary"][0].Value
-// 				} else if i["subtitle"] != nil {
-// 					itemdata.Description = i["subtitle"][0].Value
-// 				}
+			if i := itemdata.Extensions[itunesExt]; i != nil {
+				if i["summary"] != nil {
+					itemdata.Description = i["summary"][0].Value
+				} else if i["subtitle"] != nil {
+					itemdata.Description = i["subtitle"][0].Value
+				}
 
-// 				if i["duration"] != nil {
-// 					duration = i["duration"][0].Value
-// 				}
-// 			}
+				if i["duration"] != nil {
+					duration = i["duration"][0].Value
+				}
+			}
 
-// 			itemTmp := Item{Title: itemdata.Title}
+			itemTmp := Item{Title: itemdata.Title}
 
-// 			database.Where(Item{Key: key}).Assign(Item{Uri: itemTmp.SetUri(), Title: itemdata.Title, SourceUrl: itemdata.Enclosures[0].Url, Description: itemdata.Description, ChannelId: channel.Id, PublishedAt: publishedAt, Duration: duration}).FirstOrCreate(&item)
-// 		}
-// 	}
-// }
+			database.Where(Item{Key: key}).Assign(Item{Uri: itemTmp.MakeUri(itemdata.Title), Title: itemdata.Title, SourceUrl: itemdata.Enclosures[0].Url, Description: itemdata.Description, ChannelId: channel.Id, PublishedAt: publishedAt, Duration: duration}).FirstOrCreate(&item)
+		}
+	}
+}

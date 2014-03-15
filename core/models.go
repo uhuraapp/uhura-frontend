@@ -56,6 +56,7 @@ type Item struct {
 	PublishedAt time.Time `sql:"not null"`
 	Duration    string
 	Uri         string
+	helper.Uriable
 }
 
 type UserItem struct {
