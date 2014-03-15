@@ -10,15 +10,6 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-// func (c *Channel) AfterCreate() {
-// 	NewChannelTweet(c.Id)
-// }
-
-// func (c *Channel) ShareUrl() string {
-// 	id := strconv.Itoa(c.Id)
-// 	return "http://uhuraapp.com/channels/" + id
-// }
-
 func (c *Channel) SetUri() string {
 	uri := c.Uriable.MakeUri(c.Title)
 	uri = strings.Replace(uri, "podcast", "", -1)
@@ -26,128 +17,6 @@ func (c *Channel) SetUri() string {
 
 	return uri
 }
-
-// func featuredScope(d *gorm.DB) *gorm.DB {
-// 	return d.Not("featured", "false").Order("random()").Limit(12)
-// }
-
-// func userInfoScope(userId string) func(d *gorm.DB) *gorm.DB {
-// 	return func(d *gorm.DB) *gorm.DB {
-// 		return d.Joins("FULL OUTER JOIN user_channels ON user_channels.channel_id=channels.id AND user_channels.user_id=" + userId).Select("channels.*, CAST(user_channels.user_id AS BOOLEAN) AS subscribed ")
-// 	}
-// }
-
-// func AllChannels() (channels []ChannelEntity) {
-// 	channelQuery := database.Table("channels").Where("title IS NOT NULL").Where("title <> ''")
-
-// 	// 	if userId > 0 {
-// 	// 		channelQuery = channelQuery.Scopes(userInfoScope(strconv.Itoa(userId)))
-// 	// 	}
-
-// 	// 	if onlyFeatured {
-// 	// 		channelQuery = channelQuery.Scopes(featuredScope)
-// 	// 	}
-
-// 	// 	if channelId != "" {
-// 	// 		idInt, _ := strconv.Atoi(channelId)
-// 	// 		channelQuery = channelQuery.Where("channels.id = ? OR channels.uri = ?", idInt, channelId)
-// 	// 	}
-
-// 	channelQuery.Order("title").Find(&channels)
-
-// 	for i, c := range channels {
-// 		channels[i].Uri = c.FixUri()
-// 		// 		var episodesIds []int64
-// 		// 		itemQuery := database.Table("items").Where("channel_id = ?", c.Id)
-// 		// 		itemQuery.Pluck("id", &episodesIds)
-
-// 		// 		if userId > 0 {
-// 		// 			itemQuery = itemQuery.Select("user_items.viewed as viewed, items.*")
-// 		// 			itemQuery = itemQuery.Joins("left join user_items on user_items.item_id = items.id and user_items.user_id = " + strconv.Itoa(userId) + " left join channels on channels.id = items.channel_id")
-// 		// 			itemQuery = itemQuery.Order("user_items.viewed DESC")
-// 	}
-
-// 	// 		itemQuery.Order("published_at DESC, id DESC, title DESC").Find(&episodes)
-
-// 	// 		for j, e := range episodes {
-// 	// 			if e.Uri != "" {
-// 	// 				episodes[j].Uri = e.GetUri()
-// 	// 			}
-// 	// 		}
-// 	// 		channels[i].Episodes = episodesIds
-// 	// 	}
-
-// 	return
-// }
-
-// type UserChannelsEntity struct {
-// 	Id        int     `json:"id"`
-// 	ChannelId int     `json:"channel"`
-// 	Episodes  []int64 `json:"episodes"`
-// }
-
-// func Subscriptions(user *User) (subscriptions []UserChannelsEntity, channels []ChannelResult) {
-// 	var channelsIds []int64
-
-// 	subscriptionsQuery := database.Table("user_channels").Where("user_id = ?", user.Id)
-// 	subscriptionsQuery.Find(&subscriptions).Pluck("channel_id", &channelsIds)
-
-// 	database.Table("channels").Where("id IN (?)", channelsIds).Order("title DESC").Find(&channels)
-
-// 	for i, channel := range channels {
-// 		var userItems []interface{}
-// 		var watched []int64
-// 		var items []int64
-// 		var notListened []int64
-
-// 		itemQuery := database.Table("items").Select("DISTINCT items.id").Where("channel_id = ?", channel.Id)
-// 		itemQuery = itemQuery.Joins("FULL OUTER JOIN user_items ON user_items.item_id=items.id AND user_items.user_id=" + strconv.Itoa(user.Id))
-// 		itemQuery.Pluck("items.id", &items)
-// 		itemQuery.Pluck("user_items.id", &userItems)
-// 		itemQuery.Where("user_items.user_id IS NULL").Pluck("items.id", &notListened)
-
-// 		for _, j := range userItems {
-// 			id, ok := j.(int64)
-// 			if ok {
-// 				watched = append(watched, id)
-// 			}
-// 		}
-
-// 		toView := len(items) - len(watched)
-// 		channel.ToView = toView
-// 		channels[i] = channel
-
-// 		if len(notListened) > 0 {
-// 			for k, subscription := range subscriptions {
-// 				if subscription.ChannelId == channel.Id {
-// 					subscriptions[k].Episodes = append(subscription.Episodes, notListened[0])
-// 				}
-// 			}
-// 		}
-// 	}
-// 	return
-// }
-
-// func UnsubscribeChannel(userId int, channelId string) (channel ChannelResult) {
-// 	var userChannel UserChannel
-
-// 	channelIdInt, _ := strconv.Atoi(channelId)
-
-// 	database.Table("user_channels").Where(UserChannel{ChannelId: channelIdInt, UserId: userId}).Delete(&userChannel)
-// 	channels, _ := AllChannels(userId, false, channelId)
-// 	channel = channels[0]
-// 	return
-// }
-
-// func GetChannel(channelId int) (channel Channel) {
-// 	database.First(&channel, channelId)
-// 	return
-// }
-
-// func GetChannels(channelsIds []int) (channels []ChannelResult) {
-// 	database.Table("channels").Where("id IN (?)", channelsIds).Find(&channels)
-// 	return
-// }
 
 // Handlers
 
@@ -194,7 +63,6 @@ func UnsubscribeChannel(userId string, w http.ResponseWriter, request *http.Requ
 	userIdInt, _ := strconv.Atoi(userId)
 
 	database.Table("user_channels").Where(UserChannel{ChannelId: int64(channelId), UserId: int64(userIdInt)}).Delete(&userChannel)
-
 }
 
 func GetSubscriptions(userId string, w http.ResponseWriter, request *http.Request) {
