@@ -65,10 +65,10 @@ func configAuth() {
 		AuthURL:     "https://www.facebook.com/dialog/oauth",
 		TokenURL:    "https://graph.facebook.com/oauth/access_token",
 		Name:        "facebook",
-		Key:         "257036014466425",
-		Secret:      "2a7500446b1e3a135b2fd5caf71ef375",
-		UserInfoURL: "https://graph.facebook.com/me",
+		Key:         os.Getenv("FACEBOOK_CLIENT_ID"),
+		Secret:      os.Getenv("FACEBOOK_CLIENT_SECRET"),
 		Scope:       "email",
+		UserInfoURL: "https://graph.facebook.com/me",
 	})
 
 	loginBuilder = auth.NewBuilder(providers)
