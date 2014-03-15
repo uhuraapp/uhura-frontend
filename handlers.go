@@ -10,79 +10,65 @@ import (
 )
 
 var (
-	LandingHTML string
-	AppHTML     string
-	SignUpHTML  string
-	SignInHTML  string
+	EMAIL string
+	PAGES map[string][]byte
 )
+
+func init() {
+	PAGES = make(map[string][]byte, 0)
+}
 
 // Handlers
 func LandingHandler(w http.ResponseWriter, r *http.Request) {
-	if ENV == "development" {
-		buildLandingPage()
-	}
-
 	if loginBuilder.CurrentUser(r) != "" {
 		http.Redirect(w, r, "/app/", 302)
 	} else {
-		fmt.Fprintf(w, LandingHTML)
+		fmt.Fprintf(w, BuildPage("index"))
 	}
 }
 
 func EnterHandler(w http.ResponseWriter, request *http.Request) {
-	email := request.FormValue("email")
-	exists := core.UserExists(email)
+	EMAIL = request.FormValue("email")
+	exists := core.UserExists(EMAIL)
 	if exists {
-		http.Redirect(w, request, "/login", 302)
+		http.Redirect(w, request, "/login?user=exists", 302)
 	} else {
-		fmt.Fprintf(w, buildSignUpPage(email))
+		fmt.Fprintf(w, BuildPage("users/sign_up"))
 	}
 }
 
 func AppHandler(userId string, w http.ResponseWriter, request *http.Request) {
-	if ENV == "development" {
-		buildAppPage()
-	}
-
-	fmt.Fprintf(w, AppHTML)
+	fmt.Fprintf(w, BuildPage("app"))
 }
 
 func LoginHandler(w http.ResponseWriter, request *http.Request) {
-	fmt.Fprintf(w, buildSignInPage())
+	fmt.Fprintf(w, BuildPage("users/sign_in"))
 }
 
 // helpers
 
-func buildLandingPage() {
-	itb, _ := ioutil.ReadFile("./views/index.html")
-	LandingHTML = string(itb[:])
-	LandingHTML = strings.Replace(LandingHTML, "<% URL %>", URL, -1)
-	LandingHTML = strings.Replace(LandingHTML, "<% ASSETS_VERSION %>", ASSETS_VERSION, -1)
+func BuildPage(page string) string {
+	if ENV == "development" {
+		buildPageFromFile(page)
+	}
+
+	var pageBytes []byte
+	pageBytes, ok := PAGES[page]
+
+	if !ok {
+		pageBytes, _ = buildPageFromFile(page)
+	}
+
+	pageHTML := string(pageBytes[:])
+	pageHTML = strings.Replace(pageHTML, "<% EMAIL %>", EMAIL, -1)
+	pageHTML = strings.Replace(pageHTML, "<% URL %>", URL, -1)
+	pageHTML = strings.Replace(pageHTML, "<% ASSETS_VERSION %>", ASSETS_VERSION, -1)
+
+	return pageHTML
 }
 
-func buildAppPage() {
-	itb, _ := ioutil.ReadFile("./views/app.html")
-	AppHTML = string(itb[:])
-	AppHTML = strings.Replace(AppHTML, "<% URL %>", URL, -1)
-	AppHTML = strings.Replace(AppHTML, "<% ASSETS_VERSION %>", ASSETS_VERSION, -1)
-}
-
-func buildSignUpPage(email string) string {
-	itb, _ := ioutil.ReadFile("./views/users/sign_up.html")
-
-	SignUpHTML = string(itb[:])
-	SignUpHTML = strings.Replace(SignUpHTML, "<% EMAIL %>", email, -1)
-	SignUpHTML = strings.Replace(SignUpHTML, "<% URL %>", URL, -1)
-	SignUpHTML = strings.Replace(SignUpHTML, "<% ASSETS_VERSION %>", ASSETS_VERSION, -1)
-
-	return SignUpHTML
-}
-
-func buildSignInPage() string {
-	itb, _ := ioutil.ReadFile("./views/users/sign_in.html")
-	SignInHTML = string(itb[:])
-	SignInHTML = strings.Replace(SignInHTML, "<% URL %>", URL, -1)
-	SignInHTML = strings.Replace(SignInHTML, "<% ASSETS_VERSION %>", ASSETS_VERSION, -1)
-
-	return SignInHTML
+func buildPageFromFile(page string) ([]byte, error) {
+	pBytes, err := ioutil.ReadFile("./views/" + page + ".html")
+	PAGES[page] = pBytes
+	return pBytes, err
 }

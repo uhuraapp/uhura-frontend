@@ -104,8 +104,9 @@ func main() {
 	URL = os.Getenv("URL")
 
 	configAuth()
-	buildLandingPage()
-	buildAppPage()
+
+	BuildPage("index")
+	BuildPage("app")
 
 	// HTTP Server
 	r := mux.NewRouter()
