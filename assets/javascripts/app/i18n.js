@@ -64,6 +64,10 @@ var T = function() {
       "episode.button.info": "Mais Informações",
       "episode.button.listened": "Marcar como Ouvido",
 
+      "error.?user.no_match": "Email ou Password não conferem",
+      "error.?user.no_found": "Email não encontrado",
+      "error.?user.exists": "Email já registrado, faça o login",
+
       "sidebar.home": "Inicio",
       "sidebar.channel_add": "Adicionar Canal",
       "sidebar.sign_out": "Sair",
