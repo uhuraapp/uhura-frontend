@@ -29,7 +29,7 @@
 		},
 		{
 			"ImportPath": "github.com/dukex/login2",
-			"Rev": "8d753cef8f926c2f6df00698bcd4f87f06d111b3"
+			"Rev": "ead3a2b5cb308be4d339b0cb6ff00bf5daa67ec7"
 		},
 		{
 			"ImportPath": "github.com/fiam/gounidecode/unidecode",
@@ -60,8 +60,12 @@
 			"Rev": "71e7b37bdfd69432e00565a7483a3788fdc20eb7"
 		},
 		{
+			"ImportPath": "github.com/jordan-wright/email",
+			"Rev": "dcd24f3acd808a4ec1c910214415c33ac4d59daf"
+		},
+		{
 			"ImportPath": "github.com/jteeuwen/go-pkg-rss",
-			"Rev": "937de70c03b3af6f78338755794385c6f74f7df1"
+			"Rev": "2b6dc03edeb0bb531e0d85dd973e8ac0d7187884"
 		},
 		{
 			"ImportPath": "github.com/jteeuwen/go-pkg-xmlx",
@@ -78,6 +82,10 @@
 		{
 			"ImportPath": "github.com/mattbaird/elastigo/core",
 			"Rev": "48595f26603636cec754c1c805a0935a61686ede"
+		},
+		{
+			"ImportPath": "github.com/rakyll/coop",
+			"Rev": "9f25699aa4d3e675cc377aeeb1e3c8cd113d36a6"
 		}
 	]
 }

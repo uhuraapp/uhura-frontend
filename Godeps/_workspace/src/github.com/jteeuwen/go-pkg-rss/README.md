@@ -1,6 +1,4 @@
-================================================================================
- RSS
-================================================================================
+# RSS
 
 This package allows us to fetch Rss and Atom feeds from the internet.
 They are parsed into an object tree which is a hybrid of both the RSS and Atom
@@ -30,15 +28,12 @@ either a new channel or a new item is found that previously did not exist.
 This allows you to easily monitor a feed for changes. See src/feed_test.go for
 an example of how this works.
 
-================================================================================
- DEPENDENCIES
-================================================================================
+## DEPENDENCIES
 
- github.com/jteeuwen/go-pkg-xmlx
+[github.com/jteeuwen/go-pkg-xmlx](http://github.com/jteeuwen/go-pkg-xmlx)
 
-================================================================================
- USAGE
-================================================================================
+## USAGE
 
- An idiomatic example program can be found in example.go.
+
+An idiomatic example program can be found in [testdata/example.go](https://github.com/jteeuwen/go-pkg-rss/blob/master/testdata/example.go).
 

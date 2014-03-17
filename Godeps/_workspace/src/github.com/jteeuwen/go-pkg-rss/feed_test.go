@@ -143,6 +143,26 @@ func Test_CData(t *testing.T) {
 	}
 }
 
+func Test_Link(t *testing.T) {
+	content, _ := ioutil.ReadFile("testdata/nytimes.rss")
+	feed := New(1, true, chanHandler, itemHandler)
+	feed.FetchBytes("http://example.com", content, nil)
+
+	channel := feed.Channels[0]
+	item := channel.Items[0]
+
+	channelLinkExpected := "http://www.nytimes.com/services/xml/rss/nyt/US.xml"
+	itemLinkExpected := "http://www.nytimes.com/2014/01/18/technology/in-keeping-grip-on-data-pipeline-obama-does-little-to-reassure-industry.html?partner=rss&emc=rss"
+
+	if channel.Links[0].Href != channelLinkExpected {
+		t.Errorf("Expected author to be %s but found %s", channelLinkExpected, channel.Links[0].Href)
+	}
+
+	if item.Links[0].Href != itemLinkExpected {
+		t.Errorf("Expected author to be %s but found %s", itemLinkExpected, item.Links[0].Href)
+	}
+}
+
 func chanHandler(feed *Feed, newchannels []*Channel) {
 	println(len(newchannels), "new channel(s) in", feed.Url)
 }

@@ -126,7 +126,7 @@ func (b *Builder) OAuthLogin(provider string) func(http.ResponseWriter, *http.Re
 		userId, err := b.OAuthCallback(provider, request)
 
 		if err != nil {
-			http.Redirect(w, request, b.URLS.SignIn, 302)
+			http.Redirect(w, request, b.URLS.SignIn, http.StatusTemporaryRedirect)
 		} else {
 			b.login(request, w, strconv.FormatInt(userId, 10))
 		}
@@ -161,7 +161,7 @@ func (b *Builder) SignUp() func(http.ResponseWriter, *http.Request) {
 
 		userID, err := b.UserCreateFn(email, hpassword, request)
 		if err != nil {
-			http.Redirect(w, request, b.URLS.SignIn, 302)
+			http.Redirect(w, request, b.URLS.SignIn+"?user=exists", http.StatusTemporaryRedirect)
 		} else {
 			b.login(request, w, strconv.FormatInt(userID, 10))
 		}
@@ -175,12 +175,12 @@ func (b *Builder) SignIn() func(http.ResponseWriter, *http.Request) {
 		userPassword, ok := b.UserPasswordByEmail(email)
 
 		if !ok {
-			http.Redirect(w, r, b.URLS.SignIn+"?password=not_found", 302)
+			http.Redirect(w, r, b.URLS.SignIn+"?user=not_found", http.StatusTemporaryRedirect)
 		}
 
 		err := checkPassword(userPassword, password)
 		if err != nil {
-			http.Redirect(w, r, b.URLS.SignIn+"?password=no_match", 302)
+			http.Redirect(w, r, b.URLS.SignIn+"?user=no_match", http.StatusTemporaryRedirect)
 		} else {
 			userId, _ := b.UserIdByEmail(email)
 			b.login(r, w, strconv.FormatInt(userId, 10))
@@ -194,7 +194,7 @@ func (b *Builder) SignOut() func(http.ResponseWriter, *http.Request) {
 		session.Values["user_id"] = nil
 		session.Save(r, w)
 
-		http.Redirect(w, r, b.URLS.SignIn, 302)
+		http.Redirect(w, r, b.URLS.SignIn, http.StatusTemporaryRedirect)
 	}
 }
 
@@ -204,7 +204,7 @@ func (b *Builder) Protected(fn func(string, http.ResponseWriter, *http.Request))
 		if userID != "" {
 			fn(userID, w, r)
 		} else {
-			http.Redirect(w, r, b.URLS.SignIn, 302)
+			http.Redirect(w, r, b.URLS.SignIn, http.StatusTemporaryRedirect)
 		}
 	}
 }
