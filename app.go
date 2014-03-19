@@ -14,6 +14,7 @@ import (
 	"github.com/dukex/uhura/core"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
+	"github.com/jinzhu/gorm"
 )
 
 var (
@@ -29,7 +30,9 @@ var (
 func userSetup(provider string, user *auth.User, rawResponde *http.Response) (int64, error) {
 	realUser, err := core.UserByEmail(user.Email)
 	if err != nil {
-		// realUser, err = core.UserCreateFromOAuth(provider, rawResponde)
+		if err == gorm.RecordNotFound {
+			return core.UserCreateFromOAuth(provider, user)
+		}
 		return 0, err
 	} else {
 		return realUser.Id, nil
