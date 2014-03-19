@@ -3,7 +3,9 @@ package core
 import (
 	"crypto/md5"
 	"encoding/hex"
+	"fmt"
 	"io"
+	"os"
 	"strings"
 	"time"
 
@@ -68,20 +70,20 @@ func FetchOnlyChannelFromBytes(uri string, body []byte) {
 // 	}
 // }
 
-// func FetchChanell(channel Channel) {
-// 	go pollFeed(channel.Url, 5)
-// }
+func FetchChannel(url string) {
+	go fetcher(url, 5)
+}
 
-// func pollFeed(uri string, timeout int) {
-// 	feed := rss.New(timeout, true, channelFetchHandler, itemFetchHandler)
+func fetcher(uri string, timeout int) {
+	feed := rss.New(timeout, true, channelFetchHandler, itemFetchHandler)
 
-// 	if err := feed.Fetch(uri, charset.NewReader); err != nil {
-// 		fmt.Fprintf(os.Stderr, "[e] %s: %s", uri, err)
-// 		return
-// 	}
+	if err := feed.Fetch(uri, charset.NewReader); err != nil {
+		fmt.Fprintf(os.Stderr, "[e] %s: %s", uri, err)
+		return
+	}
 
-// 	<-time.After(time.Duration(feed.SecondsTillUpdate() * 1e9))
-// }
+	<-time.After(time.Duration(feed.SecondsTillUpdate() * 1e9))
+}
 
 func channelFetchHandler(feed *rss.Feed, channels []*rss.Channel) {
 	for _, channelData := range channels {
