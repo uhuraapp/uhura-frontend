@@ -1,4 +1,5 @@
 var Subscriptions = {};
+
 Subscriptions.subscribe = function(_id){
   var route = this,
   id = _id,

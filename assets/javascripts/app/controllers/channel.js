@@ -57,10 +57,11 @@ App.ChannelNewRoute  = Ember.Route.extend({
         _this.controller.set('channels', _.map(data.channels, function(c){
           return Ember.Object.create(c);
         }));
-      });
-      if(data.channels.length < 1) {
-        alert(t.get("channel_new.alert.not_found"));
-      }
+
+        if(data.channels.length < 1) {
+          alert(t.get("channel_new.alert.not_found"));
+        }
+       });
     },
     subscribeChannel: Subscriptions.subscribe,
     unsubscribeChannel: Subscriptions.unsubscribe
