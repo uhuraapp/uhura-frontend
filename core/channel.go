@@ -55,6 +55,8 @@ func SubscribeChannel(userId string, w http.ResponseWriter, request *http.Reques
 		p.Track("subscribed", map[string]interface{}{"Channel ID": id})
 	}()
 
+	TouchChannel(channelId)
+
 	GetChannel(userId, w, request)
 }
 
@@ -103,6 +105,14 @@ func GetChannel(userId string, w http.ResponseWriter, request *http.Request) {
 
 	r.ResponseJSON(w, 200, map[string]interface{}{"channel": channel})
 	return
+}
+
+func ReloadChannel(userId string, w http.ResponseWriter, request *http.Request) {
+	vars := mux.Vars(request)
+	id := vars["id"]
+	idI, _ := strconv.Atoi(id)
+
+	TouchChannel(idI)
 }
 
 func ChannelDefaultQuery(userId string) func(d *gorm.DB) *gorm.DB {
