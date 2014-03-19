@@ -1,10 +1,13 @@
 <h2>
   {{title}}
   {{#if subscribed}}
-    <button class="uk-button uk-button-small uk-button-danger fa fa-times" {{action 'unsubscribeChannel' id}}>{{t 'channel_new.button.unsubscribe'}}</button>
+    <button class="uk-button uk-button-small uk-button-danger typcn typcn-times" {{action 'unsubscribeChannel' id}}> {{t 'channel_new.button.unsubscribe'}}</button>
   {{else}}
-    <button class="uk-button uk-button-small uk-button-success subscribe" {{action 'subscribeChannel' id}}>{{t 'channel_new.button.subscribe'}}</button>
+    <button class="uk-button uk-button-small uk-button-success subscribe" {{action 'subscribeChannel' id}}> {{t 'channel_new.button.subscribe'}}</button>
   {{/if}}
+
+
+  <button id="reload" class="uk-button"><i class="typcn typcn-refresh"></i></button>
 </h2>
 
 <ul class="episodes">
