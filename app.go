@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"strconv"
 	"strings"
 	"time"
 
@@ -23,6 +24,7 @@ var (
 	PORT           string
 	URL            string
 	loginBuilder   *auth.Builder
+	MIXPANEL       *core.Mixpanel
 )
 
 // Helpers
@@ -41,6 +43,14 @@ func userSetup(provider string, user *auth.User, rawResponde *http.Response) (in
 
 func userCreate(email, password string, request *http.Request) (int64, error) {
 	user, err := core.UserCreate(email, password)
+
+	go func() {
+		userId := strconv.Itoa(int(user.Id))
+		p := MIXPANEL.Identify(userId)
+		p.Track("sign up", map[string]interface{}{"from": "email"})
+		p.Set(map[string]interface{}{"$email": user.Email, "gender": user.Gender})
+	}()
+
 	return user.Id, err
 }
 
@@ -105,6 +115,7 @@ func main() {
 	ENV = os.Getenv("ENV")
 	PORT = os.Getenv("PORT")
 	URL = os.Getenv("URL")
+	MIXPANEL = core.NewMixpanel(os.Getenv("MIXPANEL_TOKEN"))
 
 	configAuth()
 

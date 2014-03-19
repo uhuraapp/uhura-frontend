@@ -42,6 +42,13 @@ func UserCreateFromOAuth(provider string, temp *auth.User) (int64, error) {
 		return 0, err
 	}
 
+	go func() {
+		userId := strconv.Itoa(int(user.Id))
+		p := MIXPANEL.Identify(userId)
+		p.Track("sign up", map[string]interface{}{"from": provider})
+		p.Set(map[string]interface{}{"$email": user.Email, "gender": user.Gender})
+	}()
+
 	return user.Id, err
 }
 

@@ -43,5 +43,12 @@ func SetEpisodeListened(userId string, w http.ResponseWriter, request *http.Requ
 
 	database.Save(&UserItem{UserId: int64(userIdInt), ItemId: int64(id), Viewed: true})
 
+	go func() {
+		userId := strconv.Itoa(int(user.Id))
+		p := MIXPANEL.Identify(userId)
+		p.Track("listened", map[string]interface{}{"Episode ID": id})
+		p.Set(map[string]interface{}{"$email": user.Email, "gender": user.Gender})
+	}()
+
 	r.ResponseJSON(w, 202, nil)
 }

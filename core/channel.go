@@ -50,6 +50,11 @@ func SubscribeChannel(userId string, w http.ResponseWriter, request *http.Reques
 
 	database.Table("user_channels").Where(UserChannel{ChannelId: int64(channelId), UserId: int64(userIdInt)}).FirstOrCreate(&userChannel)
 
+	go func() {
+		p := MIXPANEL.Identify(userId)
+		p.Track("subscribed", map[string]interface{}{"Channel ID": id})
+	}()
+
 	GetChannel(userId, w, request)
 }
 
@@ -61,6 +66,11 @@ func UnsubscribeChannel(userId string, w http.ResponseWriter, request *http.Requ
 
 	channelId, _ := strconv.Atoi(id)
 	userIdInt, _ := strconv.Atoi(userId)
+
+	go func() {
+		p := MIXPANEL.Identify(userId)
+		p.Track("unsubscribed", map[string]interface{}{"Channel ID": channelId})
+	}()
 
 	database.Table("user_channels").Where(UserChannel{ChannelId: int64(channelId), UserId: int64(userIdInt)}).Delete(&userChannel)
 }
