@@ -59,12 +59,12 @@ func (p *People) Track(eventName string, properties map[string]interface{}) {
 }
 
 func (p *People) Set(setParams map[string]interface{}) {
-	params = engageParams{
+	params := engageParams{
 		Token:      p.m.Token,
 		DistinctId: p.id,
 		Set:        setParams,
 	}
-	m.send("engage", params)
+	p.m.send("engage", params)
 }
 
 func (m *Mixpanel) to64(data string) string {
