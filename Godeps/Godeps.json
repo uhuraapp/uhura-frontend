@@ -1,6 +1,6 @@
 {
 	"ImportPath": "github.com/dukex/uhura",
-	"GoVersion": "go1.2",
+	"GoVersion": "go1.2.1",
 	"Deps": [
 		{
 			"ImportPath": "code.google.com/p/go-charset/charset",
@@ -28,8 +28,12 @@
 			"Rev": "5877582f0cb070bc21b199dab5e7d18fb546444a"
 		},
 		{
+			"ImportPath": "github.com/dchest/uniuri",
+			"Rev": "bc4af7603a3e0ce9d58009f82fca481555182e1c"
+		},
+		{
 			"ImportPath": "github.com/dukex/login2",
-			"Rev": "ead3a2b5cb308be4d339b0cb6ff00bf5daa67ec7"
+			"Rev": "7ddee89630087cc7312ba0273eea2b839eba8eb5"
 		},
 		{
 			"ImportPath": "github.com/fiam/gounidecode/unidecode",

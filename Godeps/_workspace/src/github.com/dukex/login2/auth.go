@@ -64,12 +64,13 @@ type Builder struct {
 }
 
 type User struct {
-	Id     string
-	Email  string
-	Link   string
-	Name   string
-	Gender string
-	Locale string
+	Id      string
+	Email   string
+	Link    string
+	Name    string
+	Gender  string
+	Locale  string
+	Picture string
 }
 
 func NewBuilder(userProviders []*Provider) *Builder {
