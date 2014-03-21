@@ -117,7 +117,7 @@ func ReloadChannel(userId string, w http.ResponseWriter, request *http.Request) 
 
 func ChannelDefaultQuery(userId string) func(d *gorm.DB) *gorm.DB {
 	return func(d *gorm.DB) *gorm.DB {
-		return d.Table("channels").Select("channels.*, COUNT(items.id) AS items, array_agg(items.id) AS episodes_ids, CAST(user_channels.id AS BOOLEAN) AS subscribed").Joins("LEFT OUTER JOIN user_channels ON user_channels.channel_id = channels.id AND user_channels.user_id = " + userId + " LEFT OUTER JOIN items ON items.channel_id = channels.id LEFT OUTER JOIN user_items ON user_items.item_id = items.id AND user_items.user_id = " + userId + " AND user_items.viewed = TRUE").Group("channels.id, user_channels.id")
+		return d.Table("channels").Select("channels.*, COUNT(items.id) AS items, array_agg(items.id) AS episodes_ids, user_channels.id AS subscribed").Joins("LEFT OUTER JOIN user_channels ON user_channels.channel_id = channels.id AND user_channels.user_id = " + userId + " LEFT OUTER JOIN items ON items.channel_id = channels.id LEFT OUTER JOIN user_items ON user_items.item_id = items.id AND user_items.user_id = " + userId + " AND user_items.viewed = TRUE").Group("channels.id, user_channels.id")
 	}
 }
 
