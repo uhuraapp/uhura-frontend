@@ -19,6 +19,7 @@ type Channel struct {
 	UpdatedAt     time.Time
 	Language      string
 	Link          string
+	Loading       bool
 	helper.Uriable
 }
 

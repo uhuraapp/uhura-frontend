@@ -1,6 +1,10 @@
 .play-pause
   cursor: pointer
 
+#content
+  h2
+    margin-top: 20px
+
 #channels
   padding: 0
   h3
@@ -71,12 +75,21 @@ ul.episodes
       height: 25px
       display: block
       margin: 0 auto
+
 #reload
-  font-size: 20px
+  font-size: 13px
   float: right
   line-height: 18px
   padding: 0 5px
-  margin: 10px 0 0
+  margin: 5px 0 0
+  color: #333
+  cursor: default
+  &:hover
+    text-decoration: none
+  i
+    cursor: pointer
+    font-size: 20px
+
 
 #channel_new
   overflow: hidden
@@ -123,7 +136,18 @@ ul.episodes
       top: 10px
       right: 10px
 
-
+#loading
+  border: 1px solid orange
+  background: orange
+  width: 10px
+  height: 10px
+  border-radius: 10px
+  display: block
+  float: left
+  margin: 10px 0 0 -15px
+  -webkit-animation: playing 5s infinite
+  animation: playing 5s infinite
+  cursor: help
 
 @-webkit-keyframes playing
   0%, 20%, 80%, 100%

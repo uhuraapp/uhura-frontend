@@ -3,7 +3,6 @@ App.ChannelRoute = Ember.Route.extend({
     'use strict';
     return this.store.find('channel', params.channel_id);
   },
-
   activate: function(){
     var title = this.modelFor('channel').get('title')
 
@@ -12,10 +11,15 @@ App.ChannelRoute = Ember.Route.extend({
   },
   actions: {
     subscribeChannel: Subscriptions.subscribe,
-    unsubscribeChannel: Subscriptions.unsubscribe
+    unsubscribeChannel: Subscriptions.unsubscribe,
+    reloadChannel: function() {
+      var _this = this;
+      $.post("/api/channels/"+this.currentModel.id+"/reload").then(function() {
+        _this.currentModel.set("loading", true);
+      });
+    }
   }
 });
-
 
 App.ChannelController = Ember.ObjectController.extend({
   episodes: (function() {
@@ -26,7 +30,6 @@ App.ChannelController = Ember.ObjectController.extend({
     });
   }).property('content.episodes'),
 });
-
 
 App.ChannelNewRoute  = Ember.Route.extend({
   deactivate: function(){

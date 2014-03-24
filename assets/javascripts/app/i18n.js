@@ -13,6 +13,9 @@ var T = function() {
   // Translation
   this.keys = {
     en: {
+      "channel.status.loading": "Trying find more episodes",
+      "channel.message.loading": "Finding new episodes",
+
       "channel_new.title": "Add Channel",
       "channel_new.podcast_url": "Podcast Feed URL:",
       "channel_new.search": "Search Podcast:",
@@ -43,6 +46,9 @@ var T = function() {
       "sidebar.sign_out": "Sign Out"
     },
     pt: {
+      "channel.status.loading": "Tentando buscar mais episódios",
+      "channel.message.loading": "Buscando novos episódios",
+
       "channel_new.title": "Adicionar Canal",
       "channel_new.podcast_url": "URL Feed do Podcast:",
       "channel_new.search": "Buscar Podcasts:",
