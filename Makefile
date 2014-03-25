@@ -15,5 +15,9 @@ serve:
 	go build
 	./uhura
 
-build_assets:
+new_version:
+	echo '$(shell git rev-parse --abbrev-ref HEAD)-$(shell git rev-parse HEAD)' > VERSION
+
+build_assets:	new_version
 	ENV=production grunt emberTemplates concat:vendor uglify:vendor concat:app uglify:app sass:app
+
