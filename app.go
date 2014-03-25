@@ -1,13 +1,11 @@
 package main
 
 import (
-	"bytes"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
-	"os/exec"
 	"strconv"
 	"strings"
 	"time"
@@ -100,17 +98,14 @@ func configAuth() {
 	}
 }
 
-func getGitSHA() string {
-	cmd := exec.Command("git", "rev-parse", "HEAD")
-	var out bytes.Buffer
-	cmd.Stdout = &out
-	err := cmd.Run()
+func getVersion() string {
+	vBytes, err := ioutil.ReadFile("./VERSION")
 	if err != nil {
-		log.Fatal(err)
+		return "1"
 	}
-	sha := out.String()
-	sha = strings.Replace(sha, "\n", "", -1)
-	return sha
+	version := string(vBytes[:])
+	version = strings.Replace(version, "\n", "", -1)
+	return version
 }
 
 func BuildPage(page string) string {
@@ -177,7 +172,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	PAGES = make(map[string][]byte, 0)
-	ASSETS_VERSION = getGitSHA()
+	ASSETS_VERSION = getVersion()
 	ENV = os.Getenv("ENV")
 	PORT = os.Getenv("PORT")
 	URL = os.Getenv("URL")
