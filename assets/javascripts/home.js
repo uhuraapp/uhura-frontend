@@ -16,12 +16,10 @@ $(document).ready(function(){
     search = search.split("=");
     var type = search[0];
     var error = search[1];
-    debugger
     $(".error").removeClass("hide");
     $(".error").text(window.t.get("error."+type+"."+error));
   }
 });
-
 
 var validateEmail = function(form, email) {
   'use strict';

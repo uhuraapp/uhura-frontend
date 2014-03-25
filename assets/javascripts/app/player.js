@@ -115,6 +115,7 @@ soundManager.setup({
 });
 
 soundManager.ontimeout(function(status) {
-  alert("mostra alerta sobre problema no flash")
+  // alert("mostra alerta sobre problema no flash")
+  // TODO: this
   window.location.reload();
 });
