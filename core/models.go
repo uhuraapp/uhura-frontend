@@ -45,7 +45,7 @@ type User struct {
 	Password    interface{} `sql:"type:varchar(100);"`
 	WelcomeMail bool
 	CreatedAt   time.Time
-	Provider    string
+	Provider    interface{} `sql:"type:varchar(100);"`
 	ProviderId  interface{} `sql:"type:varchar(50);"`
 }
 
