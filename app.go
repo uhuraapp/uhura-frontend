@@ -235,6 +235,8 @@ func main() {
 		MaxHeaderBytes: 1 << 20,
 	}
 
+	go core.DatabaseManager()
+
 	fmt.Println("Starting server on", PORT)
 	log.Fatal(server.ListenAndServe())
 }

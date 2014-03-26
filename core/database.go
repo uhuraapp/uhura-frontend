@@ -1,9 +1,12 @@
 package core
 
 import (
+	"os"
+	"time"
+
 	"github.com/jinzhu/gorm"
 	pq "github.com/lib/pq"
-	"os"
+	"github.com/rakyll/coop"
 )
 
 var database gorm.DB
@@ -20,4 +23,10 @@ func init() {
 	database.AutoMigrate(UserItem{})
 	database.AutoMigrate(Category{})
 	database.AutoMigrate(ChannelCategories{})
+}
+
+func DatabaseManager() {
+	coop.Every(time.Hour*2, func() {
+		database.Where("title is NULL").Or("title = ''").Delete(&Channel{})
+	})
 }
