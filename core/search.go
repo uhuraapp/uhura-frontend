@@ -33,9 +33,16 @@ func init() {
 	userPassword := searchURL.User.String()
 	domainPort := strings.Split(searchURL.Host, ":")
 	domain := domainPort[0]
+	var port string
+	if len(domainPort) < 2 {
+		port = "80"
+	} else {
+		port = domainPort[1]
+	}
 
 	esapi.Protocol = searchURL.Scheme
 	esapi.Domain = userPassword + "@" + domain
+	esapi.Port = port
 
 	if os.Getenv("SEARCH_INDEX") == "true" {
 
