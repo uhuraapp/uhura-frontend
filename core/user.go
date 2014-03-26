@@ -69,3 +69,16 @@ func UserPasswordByEmail(email string) (password string, ok bool) {
 	ok = true
 	return
 }
+
+func init() {
+	var users []User
+	database.Table("users").Find(&users)
+
+	for _, user := range users {
+		user.ProviderId = user.GoogleId
+		if user.Provider == "" {
+			user.Provider = "google	"
+		}
+		database.Save(&user)
+	}
+}

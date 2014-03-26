@@ -17,6 +17,7 @@ type Channel struct {
 	Featured      bool
 	CreatedAt     time.Time
 	UpdatedAt     time.Time
+	DeletedAt     time.Time
 	Language      string
 	Link          string
 	Loading       bool
@@ -34,19 +35,17 @@ type UserChannel struct {
 type User struct {
 	Id          int64
 	Name        string
-	GivenName   string
-	FamilyName  string
 	Link        string
 	Picture     string
 	Gender      string
 	Locale      string
 	GoogleId    string
-	Email       string      `sql:"not null;unique"`
-	Password    interface{} `sql:"type:varchar(100);"`
+	Email       string `sql:"not null;unique"`
+	Password    string `sql:"type:varchar(100);"`
 	WelcomeMail bool
 	CreatedAt   time.Time
-	Provider    interface{} `sql:"type:varchar(100);"`
-	ProviderId  interface{} `sql:"type:varchar(50);"`
+	Provider    string `sql:"type:varchar(100);"`
+	ProviderId  string `sql:"type:varchar(50);"`
 }
 
 type Item struct {
