@@ -33,7 +33,9 @@ func GetChannels(userId string, w http.ResponseWriter, request *http.Request) {
 
 	channels := make([]ChannelResult, 0)
 
-	database.Table("channels").Where("id in (?)", ids).Scan(&channels)
+	if len(ids) > 0 {
+		database.Table("channels").Where("id in (?)", ids).Scan(&channels)
+	}
 
 	r.ResponseJSON(w, 200, map[string]interface{}{"channels": channels})
 	return
