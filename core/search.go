@@ -30,7 +30,7 @@ type EpisodeES struct {
 
 func init() {
 	searchURL, _ := url.Parse(os.Getenv("SEARCHBOX_URL"))
-	userPassword, _ := searchURL.User.Password()
+	userPassword := searchURL.User.String()
 	domainPort := strings.Split(searchURL.Host, ":")
 	domain := domainPort[0]
 
