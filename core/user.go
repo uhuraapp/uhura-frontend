@@ -37,6 +37,7 @@ func UserCreateFromOAuth(provider string, temp *auth.User) (int64, error) {
 		Link:       temp.Link,
 		Picture:    temp.Picture,
 		Locale:     temp.Locale,
+		Name:       temp.Name,
 	}
 	err := database.Save(&user).Error
 
