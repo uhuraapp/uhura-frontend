@@ -2,7 +2,7 @@ package core
 
 import (
 	"encoding/json"
-	"fmt"
+	"log"
 	"net/http"
 	"net/url"
 	"os"
@@ -14,6 +14,20 @@ import (
 	escore "github.com/mattbaird/elastigo/core"
 )
 
+type ChannelES struct {
+	Id          int    `json:"id"`
+	Title       string `json:"title"`
+	URL         string `json:"url"`
+	Description string `json:"description"`
+}
+
+type EpisodeES struct {
+	Id          int    `json:"id"`
+	Title       string `json:"title"`
+	URL         string `json:"url"`
+	Description string `json:"description"`
+}
+
 func init() {
 	searchURL, _ := url.Parse(os.Getenv("SEARCHBOX_URL"))
 	userPassword, _ := searchURL.User.Password()
@@ -24,42 +38,41 @@ func init() {
 	esapi.Domain = userPassword + "@" + domain
 
 	if os.Getenv("SEARCH_INDEX") == "true" {
-		type channelES struct {
-			Id          int    `json:"id"`
-			Title       string `json:"title"`
-			URL         string `json:"url"`
-			Description string `json:"description"`
-		}
 
-		type episodeES struct {
-			Id          int    `json:"id"`
-			Title       string `json:"title"`
-			URL         string `json:"url"`
-			Description string `json:"description"`
-		}
-
-		var channels []channelES
-		var episodes []episodeES
+		var channels []ChannelES
+		var episodes []EpisodeES
 
 		database.Table("channels").Find(&channels)
 		database.Table("items").Find(&episodes)
 
 		go func() {
 			for _, channel := range channels {
-				fmt.Println("Indexing Channel", channel.Id, "....")
-				id := strconv.Itoa(channel.Id)
-				escore.Index(true, "uhura", "channel", id, channel)
+				IndexChannel(channel)
 			}
 		}()
 
 		go func() {
 			for _, episode := range episodes {
-				fmt.Println("Indexing Episodes", episode.Id, "....")
-				id := strconv.Itoa(episode.Id)
-				escore.Index(true, "uhura", "episode", id, episode)
+				IndexEpisode(episode)
 			}
 		}()
 	}
+}
+
+func IndexChannel(channel ChannelES) {
+	log.Println("Indexing Channel", channel.Id, "....")
+	id := strconv.Itoa(channel.Id)
+	r, e := escore.Index(true, "uhura", "channel", id, channel)
+	log.Println("Response", r)
+	log.Println("Response", e)
+}
+
+func IndexEpisode(episode EpisodeES) {
+	log.Println("Indexing Episodes", episode.Id, "....")
+	id := strconv.Itoa(episode.Id)
+	r, e := escore.Index(true, "uhura", "episode", id, episode)
+	log.Println("Response", r)
+	log.Println("Response", e)
 }
 
 func SearchChannels(userId string, w http.ResponseWriter, request *http.Request) {
