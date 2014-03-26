@@ -15,14 +15,14 @@ import (
 )
 
 type ChannelES struct {
-	Id          int    `json:"id"`
+	Id          int    `json:"_id"`
 	Title       string `json:"title"`
 	URL         string `json:"url"`
 	Description string `json:"description"`
 }
 
 type EpisodeES struct {
-	Id          int    `json:"id"`
+	Id          int    `json:"_id"`
 	Title       string `json:"title"`
 	URL         string `json:"url"`
 	Description string `json:"description"`
@@ -131,7 +131,7 @@ func getIds(hits []escore.Hit) []int {
 	ids := make([]int, 0)
 	for _, hit := range hits {
 		var source struct {
-			Id int `json:"id"`
+			Id int `json:"_id"`
 		}
 		js, _ := hit.Source.MarshalJSON()
 		json.Unmarshal(js, &source)
