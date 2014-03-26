@@ -38,7 +38,7 @@ var T = function() {
       "episode.button.listened": "Make as Listened",
 
       "error.?user.no_match": "Password or Email wrong",
-      "error.?user.no_found": "Email not found on Uhura",
+      "error.?user.not_found": "Email not found on Uhura",
       "error.?user.exists": "User Registered, please Sign In",
 
       "sidebar.home": "Home",
@@ -71,7 +71,7 @@ var T = function() {
       "episode.button.listened": "Marcar como Ouvido",
 
       "error.?user.no_match": "Email ou Password não conferem",
-      "error.?user.no_found": "Email não encontrado",
+      "error.?user.not_found": "Email não encontrado",
       "error.?user.exists": "Email já registrado, faça o login",
 
       "sidebar.home": "Inicio",
