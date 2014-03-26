@@ -54,17 +54,17 @@ func UserCreateFromOAuth(provider string, temp *auth.User) (int64, error) {
 	return user.Id, err
 }
 
-// test
-func UserPasswordByEmail(email string) (string, bool) {
+func UserPasswordByEmail(email string) (password string, ok bool) {
 	var user User
+	ok = false
+
 	err := database.Where("email = ? ", email).First(&user).Error
+
 	if err != nil {
-		return "", true
-	}
-	password, ok := user.Password.(string)
-	if ok {
-		return password, false
+		return
 	}
 
-	return "", true
+	password = user.Password
+	ok = true
+	return
 }
