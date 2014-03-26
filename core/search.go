@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"net/url"
 	"os"
 	"strconv"
 	"strings"
@@ -14,7 +15,13 @@ import (
 )
 
 func init() {
-	esapi.Domain = "127.0.0.1"
+	searchURL, _ := url.Parse(os.Getenv("SEARCHBOX_URL"))
+	userPassword, _ := searchURL.User.Password()
+	domainPort := strings.Split(searchURL.Host, ":")
+	domain := domainPort[0]
+
+	esapi.Protocol = searchURL.Scheme
+	esapi.Domain = userPassword + "@" + domain
 
 	if os.Getenv("SEARCH_INDEX") == "true" {
 		type channelES struct {
