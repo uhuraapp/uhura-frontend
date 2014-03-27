@@ -224,7 +224,7 @@ function program5(depth0,data) {
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "channel_new.podcast_url", options) : helperMissing.call(depth0, "t", "channel_new.podcast_url", options))));
   data.buffer.push("</label>\n    <input class=\"uk-form-large\" id=\"url\" type=\"url\" name=\"url\" />\n    <button type=\"submit\" class=\"uk-button uk-button-success\">");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "channel_new.button.add", options) : helperMissing.call(depth0, "t", "channel_new.button.add", options))));
-  data.buffer.push("</button>\n  </form>\n\n\n  <form id=\"search_channel\" class=\"uk-form uk-form-stacked\" ");
+  data.buffer.push("</button>\n  </form>\n\n  <form id=\"search_channel\" class=\"uk-form uk-form-stacked\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "searchChannel", {hash:{
     'on': ("submit")
   },hashTypes:{'on': "STRING"},hashContexts:{'on': depth0},contexts:[depth0],types:["STRING"],data:data})));
@@ -232,10 +232,10 @@ function program5(depth0,data) {
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "channel_new.search", options) : helperMissing.call(depth0, "t", "channel_new.search", options))));
   data.buffer.push("</label>\n    <input class=\"uk-form-large\" id=\"q\" type=\"search\" name=\"q\" />\n    <button type=\"submit\" class=\"uk-button uk-button-success\">");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "channel_new.button.search", options) : helperMissing.call(depth0, "t", "channel_new.button.search", options))));
-  data.buffer.push("</button>\n  </form>\n\n\n  ");
+  data.buffer.push("</button>\n  </form>\n\n  ");
   stack1 = helpers['if'].call(depth0, "channels", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n\n</div>\n");
+  data.buffer.push("\n</div>\n");
   return buffer;
   
 });
