@@ -30,6 +30,7 @@ type UserChannel struct {
 	ChannelId int64
 	CreatedAt time.Time
 	UpdatedAt time.Time
+	DeletedAt time.Time
 }
 
 type User struct {
