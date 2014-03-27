@@ -28,6 +28,7 @@ var T = function() {
       "channel_new.alert.not_found": "Channel not found",
 
       "footer.follow_us": "Follow Us",
+      "footer.like_us": "Like us page",
       "footer.contact": "Found a bug? Tell me! <br /> Send a email to",
 
       "i18n.changed": "The changes will be finished when page refresh",
@@ -61,6 +62,7 @@ var T = function() {
       "channel_new.alert.not_found": "Não foi encontrado nenhum canal",
 
       "footer.follow_us": "Siga-nos no",
+      "footer.like_us": "Curta nossa página",
       "footer.contact": "Encontrou um Problema? Diga me! <br /> Envie um email para",
 
       "i18n.changed": "A mudança de idioma será efetiva quando a pagina for recarregada",
