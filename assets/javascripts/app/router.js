@@ -7,15 +7,13 @@ App.Router.map(function () {
 App.Router.reopen({
   rootURL: '/app/',
   location: 'history',
-  // didTransition: function(infos) {
-  //   this._super(infos);
-  //   $(".uk-offcanvas").click();
+  didTransition: function(infos) {
+    this._super(infos);
 
+    if (window.ga === undefined) { return; }
 
-  //   if (window.ga === undefined) { return; }
-
-  //   Ember.run.next(function(){
-  //     ga('send', 'pageview', window.location.hash.substr(1));
-  //   });
-  // }
+    Ember.run.next(function(){
+      ga('send', 'pageview', window.location.pathname);
+    });
+  }
 });

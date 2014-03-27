@@ -64,6 +64,8 @@ App.Player.play = function(episode){
   episode.set("playing", true);
 
   App.Player.current.audio.play();
+
+  ga('send', 'event', 'button', 'play', 'play episode');
 };
 
 
@@ -72,6 +74,7 @@ App.Player.togglePause = function(episode) {
   var isPlaying = App.Player.current.model.get("playing");
   App.Player.current.audio.togglePause();
   episode.set("playing", !isPlaying);
+  ga('send', 'event', 'button', 'togglePause', 'togglePause episode');
 };
 
 App.Player.stop = function(episode) {
@@ -81,6 +84,7 @@ App.Player.stop = function(episode) {
   App.Player.current.audio.destruct();
   App.Player.current.audio = App.Player.current.model = null;
   episode.set("playing", false);
+  ga('send', 'event', 'button', 'stop', 'stop episode');
 };
 
 App.Player.playpause = function(episode){
@@ -98,6 +102,7 @@ App.Player.listened = function(episode) {
   var url = "/api/episodes/" + episode.id + "/listened";
   $.post(url).then(function() {
     episode.set("listened", true);
+    ga('send', 'event', 'button', 'listened', 'listened episode');
   });
 };
 

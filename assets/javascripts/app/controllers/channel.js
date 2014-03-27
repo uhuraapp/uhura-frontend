@@ -17,6 +17,7 @@ App.ChannelRoute = Ember.Route.extend({
       $.post("/api/channels/"+this.currentModel.id+"/reload").then(function() {
         _this.currentModel.set("loading", true);
       });
+      ga('send', 'event', 'button', 'reload', 'reload channel');
     }
   }
 });
@@ -53,6 +54,7 @@ App.ChannelNewRoute  = Ember.Route.extend({
           alert(t.get("channel_new.alert.not_found"));
         }
       });
+      ga('send', 'event', 'form', 'search', 'search channel');
     },
     addChannel: function() {
       var _this = this;
@@ -65,6 +67,7 @@ App.ChannelNewRoute  = Ember.Route.extend({
           alert(t.get("channel_new.alert.not_found"));
         }
        });
+      ga('send', 'event', 'form', 'add', 'add channel');
     },
     subscribeChannel: Subscriptions.subscribe,
     unsubscribeChannel: Subscriptions.unsubscribe

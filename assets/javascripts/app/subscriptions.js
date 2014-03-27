@@ -11,6 +11,8 @@ Subscriptions.subscribe = function(_id){
     c.set('subscribed', true);
     route.store.push('channel', data.channel);
     $("#channel-"+id).show();
+
+    ga('send', 'event', 'button', 'subscribe', 'subscribe channel');
   },
   subscribeFn = function(){
     $.ajax({
@@ -32,6 +34,7 @@ Subscriptions.unsubscribe = function(_id){
     }
     c.set('subscribed', false);
     $("#channel-"+id).hide();
+    ga('send', 'event', 'button', 'unsubscribe', 'channel');
   },
   unsubscribeFn = function(){
     $.ajax({

@@ -99,6 +99,7 @@ T.prototype.change = function(language, withAlert) {
   if(withAlert){
     alert(this.get("i18n.changed"));
   }
+  ga('send', 'event', 'button', 'language', 'changed language');
 }
 
 T.prototype.init = function() {
