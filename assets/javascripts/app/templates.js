@@ -60,9 +60,11 @@ function program6(depth0,data) {
   data.buffer.push("\n        </a>\n      </li>\n    </ul>\n\n    <ol>\n    ");
   stack1 = helpers.each.call(depth0, "channel", "in", "model", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(5, program5, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n    </ol>\n\n    <footer>\n      <a href=\"http://twitter.com/UhuraApp\">");
+  data.buffer.push("\n    </ol>\n\n    <footer>\n      <a href=\"http://twitter.com/UhuraApp\"><span class=\"typcn typcn-social-twitter\"> </span>");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "footer.follow_us", options) : helperMissing.call(depth0, "t", "footer.follow_us", options))));
-  data.buffer.push(" <span class=\"typcn typcn-social-twitter\"></span></a>\n\n      <p>");
+  data.buffer.push("</a>\n      <br />\n      <a href=\"https://www.facebook.com/uhuraapp\"><span class=\"typcn typcn-social-facebook\"></span>");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "footer.like_us", options) : helperMissing.call(depth0, "t", "footer.like_us", options))));
+  data.buffer.push("</a>\n\n      <p>");
   stack1 = (helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "footer.contact", options) : helperMissing.call(depth0, "t", "footer.contact", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n         <a href=\"mailto:dukekhaos@gmail.com\">dukekhaos@gmail.com</a></p>\n    </footer>\n  </aside>\n</div>\n\n<div id=\"content\" class=\"column nine-twelfth\">\n  ");
