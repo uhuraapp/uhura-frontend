@@ -35,8 +35,8 @@ func init() {
 }
 
 func WelcomeMail(user *User) {
-	coop.After(5*time.Second, func() {
-		err := sendMail([]string{user.Email}, "Hello "+user.Name+"!", renderEmail("welcome", user))
+	coop.After(DELAY_WELCOME_EMAIL, func() {
+		err := sendMail([]string{user.Email}, "Welcome to Uhura", renderEmail("welcome", user))
 		if err == nil {
 			database.Model(user).Update("WelcomeMail", true)
 		}
@@ -44,8 +44,14 @@ func WelcomeMail(user *User) {
 }
 
 func renderEmail(name string, data interface{}) []byte {
-	content, _ := ioutil.ReadFile(TemplateEmailPath + "/" + name + ".tmpl")
-	t, _ := template.New(name).Parse(string(content))
+	content, err := ioutil.ReadFile(TemplateEmailPath + "/" + name + ".tmpl")
+	if err != nil {
+		panic(err)
+	}
+	t, err := template.New(name).Parse(string(content))
+	if err != nil {
+		panic(err)
+	}
 	buff := bytes.NewBufferString("")
 	t.Execute(buff, map[string]interface{}{"data": data})
 	return buff.Bytes()

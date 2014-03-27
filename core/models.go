@@ -49,6 +49,10 @@ type User struct {
 	ProviderId  string `sql:"type:varchar(50);"`
 }
 
+func (u *User) AfterCreate() {
+	WelcomeMail(u)
+}
+
 type Item struct {
 	Id          int64
 	ChannelId   int64
