@@ -2,11 +2,11 @@ package core
 
 import (
 	"os"
-	"time"
+	//"time"
 
 	"github.com/jinzhu/gorm"
 	pq "github.com/lib/pq"
-	"github.com/rakyll/coop"
+	//"github.com/rakyll/coop"
 )
 
 var database gorm.DB
@@ -26,7 +26,23 @@ func init() {
 }
 
 func DatabaseManager() {
-	coop.Every(time.Hour*2, func() {
-		database.Where("title is NULL").Or("title = ''").Delete(&Channel{})
-	})
+	database.Where("title is NULL").Or("title = ''").Delete(&Channel{})
+
+	var users []User
+
+	database.Table("users").Find(&users)
+
+	for _, user := range users {
+		user.ProviderId = user.GoogleId
+		if user.Provider == "" {
+			user.Provider = "google	"
+		}
+		database.Save(&user)
+	}
+
+	var usersE []User
+	database.Not("welcome_mail", true).Find(&usersE)
+	for _, user := range usersE {
+		WelcomeMail(&user)
+	}
 }
