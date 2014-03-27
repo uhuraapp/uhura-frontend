@@ -108,11 +108,6 @@ T.prototype.init = function() {
 
 window.t = t = new T();
 
-$(document).ready(function(){
-  window.t.init();
-});
-
-
 if(typeof(Handlebars) !== "undefined") {
   Handlebars.registerHelper('t', function(key){
     return window.t.get(key);
