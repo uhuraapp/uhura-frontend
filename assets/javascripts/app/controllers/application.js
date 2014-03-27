@@ -1,17 +1,21 @@
 App.ApplicationRoute = Ember.Route.extend({
-  setupController: function(controller) {
-    var _this = this;
-    jQuery.getJSON("/api/subscriptions").then(function (data) {
-      for (var i = data.channels.length - 1; i >= 0; i--) {
-        var channel = data.channels[i];
-        _this.store.push('channel', channel);
-      };
-      _this.controller.set('channels', _this.store.find('channel'));
-      if(data.channels.length < 1){
-        _this.intermediateTransitionTo('channel.new');
-      }
-    });
+  model: function(){
+    'use strict';
+    return this.store.find('subscription');
   },
+  // setupController: function(controller) {
+  //   var _this = this;
+  //   jQuery.getJSON("/api/subscriptions").then(function (data) {
+  //     for (var i = data.channels.length - 1; i >= 0; i--) {
+  //       var channel = data.channels[i];
+  //       _this.store.push('subscription', channel);
+  //     };
+  //     _this.controller.set('channels', _this.store.find('subscription'));
+  //     //if(data.channels.length < 1){
+  //     //  _this.intermediateTransitionTo('channel.new');
+  //     //}
+  //   });
+  // },
   activate: function(){
     var title = "Dashboard - Uhura App";
 

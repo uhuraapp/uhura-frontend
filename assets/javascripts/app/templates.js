@@ -57,8 +57,8 @@ function program6(depth0,data) {
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n      </li>\n      <li>\n        <a href=\"/users/sign_out\">\n          <span class=\"typcn typcn-power-outline\"></span>");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "sidebar.sign_out", options) : helperMissing.call(depth0, "t", "sidebar.sign_out", options))));
-  data.buffer.push("\n        </a>\n      </li>\n    </ul>\n\n\n    <ol>\n    ");
-  stack1 = helpers.each.call(depth0, "channel", "in", "channels", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(5, program5, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
+  data.buffer.push("\n        </a>\n      </li>\n    </ul>\n\n    <ol>\n    ");
+  stack1 = helpers.each.call(depth0, "channel", "in", "model", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(5, program5, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n    </ol>\n\n    <footer>\n      <a href=\"http://twitter.com/UhuraApp\">");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "footer.follow_us", options) : helperMissing.call(depth0, "t", "footer.follow_us", options))));

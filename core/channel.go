@@ -90,7 +90,7 @@ func GetSubscriptions(userId string, w http.ResponseWriter, request *http.Reques
 		channels[i].Episodes = convertEpisodesId(channel.EpisodesIds)
 	}
 
-	r.ResponseJSON(w, 200, map[string]interface{}{"channels": channels})
+	r.ResponseJSON(w, 200, map[string]interface{}{"subscriptions": channels})
 	return
 }
 

@@ -9,3 +9,12 @@ App.Channel = DS.Model.extend({
   episodes:   DS.hasMany('episode', {async: true}),
   to_view:    DS.attr()
 });
+
+
+App.Subscription = DS.Model.extend({
+  title:      DS.attr(),
+  image_url:  DS.attr(),
+  url:        DS.attr(),
+  uri:        DS.attr(),
+  to_view:    DS.attr()
+});
