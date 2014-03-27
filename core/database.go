@@ -3,6 +3,7 @@ package core
 import (
 	"os"
 	//"time"
+	"log"
 
 	"github.com/jinzhu/gorm"
 	pq "github.com/lib/pq"
@@ -43,6 +44,7 @@ func DatabaseManager() {
 	var usersE []User
 	database.Not("welcome_mail", true).Find(&usersE)
 	for _, user := range usersE {
+		log.Println("will send email to " + user.Email)
 		WelcomeMail(&user)
 	}
 }
