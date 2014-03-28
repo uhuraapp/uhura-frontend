@@ -29,23 +29,26 @@ type EpisodeES struct {
 }
 
 func init() {
-	searchURL, _ := url.Parse(os.Getenv("SEARCHBOX_URL"))
-	userPassword := searchURL.User.String()
-	domainPort := strings.Split(searchURL.Host, ":")
-	domain := domainPort[0]
-	var port string
-	if len(domainPort) < 2 {
-		port = "80"
+	var scheme, domain, port string
+
+	if os.Getenv("ENV") == "development" {
+		scheme = "http"
+		domain = "localhost"
+		port = "9200"
 	} else {
-		port = domainPort[1]
+		searchURL, _ := url.Parse(os.Getenv("SEARCHBOX_URL"))
+		userPassword := searchURL.User.String()
+		domainPort := strings.Split(searchURL.Host, ":")
+		domain = userPassword + "@" + domainPort[0]
+		port = "80"
+		scheme = searchURL.Scheme
 	}
 
-	esapi.Protocol = searchURL.Scheme
-	esapi.Domain = userPassword + "@" + domain
+	esapi.Protocol = scheme
+	esapi.Domain = domain
 	esapi.Port = port
 
 	if os.Getenv("SEARCH_INDEX") == "true" {
-
 		var channels []ChannelES
 		var episodes []EpisodeES
 
