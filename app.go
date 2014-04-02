@@ -71,9 +71,9 @@ func userId(email string) (int64, error) {
 }
 
 func configAuth() {
-	providers := make([]*auth.Provider, 0)
+	loginBuilder = auth.NewBuilder()
 
-	providers = append(providers, &auth.Provider{
+	loginBuilder.NewProvider(&auth.Provider{
 		RedirectURL: os.Getenv("GOOGLE_CALLBACK_URL"),
 		AuthURL:     "https://accounts.google.com/o/oauth2/auth",
 		TokenURL:    "https://accounts.google.com/o/oauth2/token",
@@ -84,7 +84,7 @@ func configAuth() {
 		UserInfoURL: "https://www.googleapis.com/oauth2/v1/userinfo?alt=json",
 	})
 
-	providers = append(providers, &auth.Provider{
+	loginBuilder.NewProvider(&auth.Provider{
 		RedirectURL: os.Getenv("FACEBOOK_CALLBACK_URL"),
 		AuthURL:     "https://www.facebook.com/dialog/oauth",
 		TokenURL:    "https://graph.facebook.com/oauth/access_token",
@@ -95,9 +95,7 @@ func configAuth() {
 		UserInfoURL: "https://graph.facebook.com/me",
 	})
 
-	loginBuilder = auth.NewBuilder(providers)
 	loginBuilder.UserSetupFn = userSetup
-	loginBuilder.UserExistsFn = core.UserExists
 	loginBuilder.UserCreateFn = userCreate
 	loginBuilder.UserIdByEmail = userId
 	loginBuilder.UserPasswordByEmail = core.UserPasswordByEmail

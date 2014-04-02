@@ -7,14 +7,6 @@ import (
 	auth "github.com/dukex/login2"
 )
 
-func UserExists(email string) bool {
-	var count int
-
-	database.Table("users").Where("email = ?", email).Count(&count)
-
-	return count > 0
-}
-
 func UserCreate(email, password string) (User, error) {
 	user := User{Email: email, Password: password, Provider: "email"}
 	err := database.Save(&user).Error
