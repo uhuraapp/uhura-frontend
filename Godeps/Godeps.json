@@ -33,7 +33,7 @@
 		},
 		{
 			"ImportPath": "github.com/dukex/login2",
-			"Rev": "7ddee89630087cc7312ba0273eea2b839eba8eb5"
+			"Rev": "2c99e539d9e30fce90d278d8c0095e347e8d3556"
 		},
 		{
 			"ImportPath": "github.com/fiam/gounidecode/unidecode",

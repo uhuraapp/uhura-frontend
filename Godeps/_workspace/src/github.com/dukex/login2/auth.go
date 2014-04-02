@@ -6,9 +6,11 @@ package login2
 import (
 	"encoding/json"
 	"log"
+	"math/rand"
 	"net/http"
 	"os"
 	"strconv"
+	"time"
 
 	"code.google.com/p/go.crypto/bcrypt"
 	"code.google.com/p/goauth2/oauth"
@@ -48,19 +50,20 @@ type builderConfig struct {
 // URLS
 
 type URLS struct {
-	Redirect string
-	SignIn   string
-	SignUp   string
+	Redirect                string
+	SignIn                  string
+	SignUp                  string
+	RememberPasswordSuccess string
 }
 
 type Builder struct {
-	Providers           map[string]*builderConfig
-	UserSetupFn         func(provider string, user *User, rawResponde *http.Response) (int64, error)
-	UserExistsFn        func(email string) bool
-	UserCreateFn        func(email string, password string, request *http.Request) (int64, error)
-	UserIdByEmail       func(email string) (int64, error)
-	UserPasswordByEmail func(email string) (string, bool)
-	URLS                URLS
+	Providers              map[string]*builderConfig
+	UserSetupFn            func(provider string, user *User, rawResponde *http.Response) (int64, error)
+	UserCreateFn           func(email string, password string, request *http.Request) (int64, error)
+	UserRememberPasswordFn func(token int64, email string)
+	UserIdByEmail          func(email string) (int64, error)
+	UserPasswordByEmail    func(email string) (string, bool)
+	URLS                   URLS
 }
 
 type User struct {
@@ -73,29 +76,34 @@ type User struct {
 	Picture string
 }
 
-func NewBuilder(userProviders []*Provider) *Builder {
+func NewBuilder() *Builder {
 	builder := new(Builder)
 	builder.Providers = make(map[string]*builderConfig, 0)
+	return builder
+}
 
-	for _, p := range userProviders {
-		config := &oauth.Config{
-			ClientId:     p.Key,
-			ClientSecret: p.Secret,
-			RedirectURL:  p.RedirectURL,
-			Scope:        p.Scope,
-			AuthURL:      p.AuthURL,
-			TokenURL:     p.TokenURL,
-			TokenCache:   oauth.CacheFile("cache-" + p.Name + ".json"),
-		}
+func (b *Builder) NewProviders(providers []*Provider) {
+	for _, p := range providers {
+		b.NewProvider(p)
+	}
+}
 
-		provider := new(builderConfig)
-		provider.Auth = config
-		provider.UserInfoURL = p.UserInfoURL
-
-		builder.Providers[p.Name] = provider
+func (b *Builder) NewProvider(p *Provider) {
+	config := &oauth.Config{
+		ClientId:     p.Key,
+		ClientSecret: p.Secret,
+		RedirectURL:  p.RedirectURL,
+		Scope:        p.Scope,
+		AuthURL:      p.AuthURL,
+		TokenURL:     p.TokenURL,
+		TokenCache:   oauth.CacheFile("cache-" + p.Name + ".json"),
 	}
 
-	return builder
+	provider := new(builderConfig)
+	provider.Auth = config
+	provider.UserInfoURL = p.UserInfoURL
+
+	b.Providers[p.Name] = provider
 }
 
 func (b *Builder) Router(r *mux.Router) {
@@ -107,6 +115,7 @@ func (b *Builder) Router(r *mux.Router) {
 	r.HandleFunc("/users/sign_in", b.SignIn()).Methods("POST")
 	r.HandleFunc("/users/sign_up", b.SignUp()).Methods("POST")
 	r.HandleFunc("/users/sign_out", b.SignOut()).Methods("GET")
+	r.HandleFunc("/password/remember", b.RememberPassword()).Methods("POST")
 }
 
 // HTTP server
@@ -158,7 +167,11 @@ func (b *Builder) SignUp() func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, request *http.Request) {
 		email := request.FormValue("email")
 		password := request.FormValue("password")
-		hpassword := generatePassword(password)
+		hpassword, err := generateHash(password)
+		if err != nil {
+			http.Redirect(w, request, b.URLS.SignUp+"?password=error", http.StatusTemporaryRedirect)
+			return
+		}
 
 		userID, err := b.UserCreateFn(email, hpassword, request)
 		if err != nil {
@@ -179,7 +192,7 @@ func (b *Builder) SignIn() func(http.ResponseWriter, *http.Request) {
 			http.Redirect(w, r, b.URLS.SignIn+"?user=not_found", http.StatusTemporaryRedirect)
 		}
 
-		err := checkPassword(userPassword, password)
+		err := checkHash(userPassword, password)
 		if err != nil {
 			http.Redirect(w, r, b.URLS.SignIn+"?user=no_match", http.StatusTemporaryRedirect)
 		} else {
@@ -205,8 +218,20 @@ func (b *Builder) Protected(fn func(string, http.ResponseWriter, *http.Request))
 		if userID != "" {
 			fn(userID, w, r)
 		} else {
+			session, _ := store.Get(r, "_session")
+			session.Values["return_to"] = r.URL.String()
+			session.Save(r, w)
 			http.Redirect(w, r, b.URLS.SignIn, http.StatusTemporaryRedirect)
 		}
+	}
+}
+
+func (b *Builder) RememberPassword() func(http.ResponseWriter, *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		email := r.FormValue("email")
+		token := buildToken()
+		go b.UserRememberPasswordFn(token, email)
+		http.Redirect(w, request, b.URLS.RememberPasswordSuccess, http.StatusTemporaryRedirect)
 	}
 }
 
@@ -215,23 +240,35 @@ func (b *Builder) Protected(fn func(string, http.ResponseWriter, *http.Request))
 func (b *Builder) login(r *http.Request, w http.ResponseWriter, userId string) {
 	session, _ := store.Get(r, "_session")
 	session.Values["user_id"] = userId
-	session.Save(r, w)
 
-	http.Redirect(w, r, b.URLS.Redirect, 302)
+	var returnTo string
+	returnToSession := session.Values["return_to"]
+	returnTo, ok := returnToSession.(string)
+	if !ok {
+		returnTo = b.URLS.Redirect
+	}
+
+	session.Values["return_to"] = nil
+	session.Save(r, w)
+	http.Redirect(w, r, returnTo, 302)
 }
 
-func (b *Builder) CurrentUser(r *http.Request) string {
+func (b *Builder) CurrentUser(r *http.Request) (string, error) {
 	session, _ := store.Get(r, "_session")
 	userId := session.Values["user_id"]
-	id, _ := userId.(string)
-	return id
+	return userId.(string)
 }
 
-func generatePassword(password string) string {
-	h, _ := bcrypt.GenerateFromPassword([]byte(password), 0)
-	return string(h[:])
+func generateHash(data string) (string, error) {
+	h, err := bcrypt.GenerateFromPassword([]byte(data), 0)
+	return string(h[:]), err
 }
 
-func checkPassword(hashedPassword, password string) error {
-	return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
+func checkHash(hashed, plain string) error {
+	return bcrypt.CompareHashAndPassword([]byte(hashed), []byte(plain))
+}
+
+func generateToken() int64 {
+	rand.Seed(time.Now().Unix())
+	rand.Int63n(10)
 }
