@@ -38,13 +38,14 @@ func userSetup(provider string, user *auth.User, rawResponde *http.Response) (in
 		}
 		return 0, err
 	} else {
-
 		go func() {
-			people := MIXPANEL.Identify(realUser.id)
+			id := strconv.Itoa(int(realUser.Id))
+			people := MIXPANEL.Identify(id)
 			people.Set(map[string]interface{}{
 				"$email":      user.Email,
 				"$last_login": time.Now(),
 				"$created":    realUser.CreatedAt,
+				"provider":    provider,
 			})
 		}()
 
