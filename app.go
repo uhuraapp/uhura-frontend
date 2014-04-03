@@ -145,22 +145,21 @@ func buildPageFromFile(page string) ([]byte, error) {
 
 // Handlers
 func LandingHandler(w http.ResponseWriter, r *http.Request) {
-
-	if loginBuilder.CurrentUser(r) != "" {
+	if _, ok := loginBuilder.CurrentUser(r); ok {
 		http.Redirect(w, r, "/app/", 302)
 	} else {
 		fmt.Fprintf(w, BuildPage("index"))
 	}
 }
 
-func EnterHandler(w http.ResponseWriter, request *http.Request) {
-	if loginBuilder.CurrentUser(request) != "" {
-		http.Redirect(w, request, "/app/", 302)
+func EnterHandler(w http.ResponseWriter, r *http.Request) {
+	if _, ok := loginBuilder.CurrentUser(r); ok {
+		http.Redirect(w, r, "/app/", 302)
 	} else {
-		EMAIL = request.FormValue("email")
+		EMAIL = r.FormValue("email")
 		exists := core.UserExists(EMAIL)
 		if exists {
-			http.Redirect(w, request, "/login?user=exists", 302)
+			http.Redirect(w, r, "/login?user=exists", 302)
 		} else {
 			fmt.Fprintf(w, BuildPage("users/sign_up"))
 		}
@@ -172,7 +171,7 @@ func AppHandler(userId string, w http.ResponseWriter, request *http.Request) {
 }
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
-	if loginBuilder.CurrentUser(r) != "" {
+	if _, ok := loginBuilder.CurrentUser(r); ok {
 		http.Redirect(w, r, "/app/", 302)
 	} else {
 		fmt.Fprintf(w, BuildPage("users/sign_in"))
