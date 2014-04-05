@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"html/template"
 	"io/ioutil"
+	"log"
 	"net/smtp"
 	"os"
 	"strconv"
@@ -36,7 +37,7 @@ func init() {
 
 func WelcomeMail(user *User) {
 	coop.After(DELAY_WELCOME_EMAIL, func() {
-		err := sendMail([]string{user.Email}, "Welcome to Uhura", renderEmail("welcome", user))
+		err := sendMail([]string{user.Email}, "duke@uhuraapp.com", "Welcome to Uhura", renderEmail("welcome", user), false)
 		if err == nil {
 			database.Model(user).Update("WelcomeMail", true)
 		}
@@ -57,11 +58,20 @@ func renderEmail(name string, data interface{}) []byte {
 	return buff.Bytes()
 }
 
-func sendMail(to []string, subject string, body []byte) error {
+func sendMail(to []string, from string, subject string, body []byte, useHtml bool) error {
+	log.Println("Sending '"+subject+"' to", to)
+	log.Println(string(body[:]))
+
 	e := email.NewEmail()
-	e.From = FROM
+	e.From = from
 	e.To = to
 	e.Subject = subject
-	e.Text = body
-	return e.Send(SMTP_SERVER, smtp.PlainAuth("", FROM, SMTP_PASSWORD, SMTP_HOST))
+	if useHtml {
+		e.HTML = body
+	} else {
+		e.Text = body
+	}
+	err := e.Send(SMTP_SERVER, smtp.PlainAuth("", from, SMTP_PASSWORD, SMTP_HOST))
+	log.Println(err)
+	return err
 }
