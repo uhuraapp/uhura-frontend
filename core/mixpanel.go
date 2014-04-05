@@ -27,15 +27,6 @@ type trackParams struct {
 	Properties map[string]interface{} `json:"properties"`
 }
 
-type engageParams struct {
-	Token      string                 `json:$token`
-	DistinctId string                 `json:$distinct_id`
-	Ip         string                 `json:$ip,omitempty`
-	Time       int64                  `json:$time,omitempty`
-	IgnoreTime bool                   `json:$ignore_time,omitempty`
-	Set        map[string]interface{} `json:$set,omitempty`
-}
-
 func (m *Mixpanel) Track(distinctId string, eventName string,
 	properties map[string]interface{}) {
 	params := trackParams{Event: eventName}
@@ -49,7 +40,7 @@ func (m *Mixpanel) Track(distinctId string, eventName string,
 }
 
 func (m *Mixpanel) Identify(id string) *People {
-	params := engageParams{Token: m.Token, DistinctId: id}
+	params := map[string]interface{}{"$token": m.Token, "$distinct_id": id}
 	m.send("engage", params)
 	return &People{m: m, id: id}
 }
@@ -59,10 +50,10 @@ func (p *People) Track(eventName string, properties map[string]interface{}) {
 }
 
 func (p *People) Set(setParams map[string]interface{}) {
-	params := engageParams{
-		Token:      p.m.Token,
-		DistinctId: p.id,
-		Set:        setParams,
+	params := map[string]interface{}{
+		"$token":       p.m.Token,
+		"$distinct_id": p.id,
+		"$set":         setParams,
 	}
 	p.m.send("engage", params)
 }
