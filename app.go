@@ -53,9 +53,6 @@ func userSetup(provider string, user *auth.User, rawResponde *http.Response) (in
 		}
 		return 0, err
 	} else {
-		id := strconv.Itoa(int(realUser.Id))
-		userLogin(id)
-
 		return realUser.Id, nil
 	}
 }
