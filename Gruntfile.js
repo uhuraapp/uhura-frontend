@@ -72,7 +72,7 @@ module.exports = function (grunt) {
     },
     concat: {
       app: {
-        files: concatFiles[process.env.ENV]
+        files: concatFiles[process.env.ENV || "development"]
       },
       vendor: {
         files: {

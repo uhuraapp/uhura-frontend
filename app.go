@@ -101,10 +101,12 @@ func configAuth() {
 	loginBuilder.UserCreateFn = userCreate
 	loginBuilder.UserIdByEmail = userId
 	loginBuilder.UserPasswordByEmail = core.UserPasswordByEmail
+	loginBuilder.UserResetPasswordFn = core.UserResetPassword
 	loginBuilder.URLS = auth.URLS{
-		Redirect: "/app",
-		SignIn:   "/login",
-		SignUp:   "/enter",
+		Redirect:             "/app",
+		SignIn:               "/login",
+		SignUp:               "/enter",
+		ResetPasswordSuccess: "/reset_password?step=2",
 	}
 }
 
@@ -118,7 +120,7 @@ func getVersion() string {
 	return version
 }
 
-func BuildPage(page string) string {
+func BuildPage(page string, data string) string {
 	if ENV == "development" {
 		buildPageFromFile(page)
 	}
@@ -134,6 +136,7 @@ func BuildPage(page string) string {
 	pageHTML = strings.Replace(pageHTML, "<% EMAIL %>", EMAIL, -1)
 	pageHTML = strings.Replace(pageHTML, "<% URL %>", URL, -1)
 	pageHTML = strings.Replace(pageHTML, "<% ASSETS_VERSION %>", ASSETS_VERSION, -1)
+	pageHTML = strings.Replace(pageHTML, "<% DATA %>", data, -1)
 
 	return pageHTML
 }
@@ -149,7 +152,7 @@ func LandingHandler(w http.ResponseWriter, r *http.Request) {
 	if _, ok := loginBuilder.CurrentUser(r); ok {
 		http.Redirect(w, r, "/app/", 302)
 	} else {
-		fmt.Fprintf(w, BuildPage("index"))
+		fmt.Fprintf(w, BuildPage("index", ""))
 	}
 }
 
@@ -162,20 +165,40 @@ func EnterHandler(w http.ResponseWriter, r *http.Request) {
 		if exists {
 			http.Redirect(w, r, "/login?user=exists", 302)
 		} else {
-			fmt.Fprintf(w, BuildPage("users/sign_up"))
+			fmt.Fprintf(w, BuildPage("users/sign_up", ""))
 		}
 	}
 }
 
-func AppHandler(userId string, w http.ResponseWriter, request *http.Request) {
-	fmt.Fprintf(w, BuildPage("app"))
+func AppHandler(userId string, w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, BuildPage("app", ""))
 }
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	if _, ok := loginBuilder.CurrentUser(r); ok {
-		http.Redirect(w, r, "/app/", 302)
+
 	} else {
-		fmt.Fprintf(w, BuildPage("users/sign_in"))
+		fmt.Fprintf(w, BuildPage("users/sign_in", ""))
+	}
+}
+
+func ResetPassword(w http.ResponseWriter, r *http.Request) {
+	query := r.URL.Query()
+	if step, ok := query["step"]; ok && step[0] == "2" {
+		fmt.Fprintf(w, BuildPage("users/success_reset_password", ""))
+	} else {
+		fmt.Fprintf(w, BuildPage("users/reset_password", ""))
+	}
+}
+
+func ChangePasswordPage(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	hash := vars["hash"]
+	ok := core.UserExistsByRememberToken(hash)
+	if ok {
+		fmt.Fprintf(w, BuildPage("users/change_password", hash))
+	} else {
+		http.Redirect(w, r, "/", 302)
 	}
 }
 
@@ -189,8 +212,8 @@ func main() {
 
 	configAuth()
 
-	BuildPage("index")
-	BuildPage("app")
+	BuildPage("index", "")
+	BuildPage("app", "")
 
 	// HTTP Server
 	r := mux.NewRouter()
@@ -204,6 +227,9 @@ func main() {
 	// User
 	r.HandleFunc("/enter", EnterHandler)
 	r.HandleFunc("/login", LoginHandler)
+	r.HandleFunc("/reset_password", ResetPassword)
+	r.HandleFunc("/change_password/{hash}", ChangePasswordPage)
+	r.HandleFunc("/password", core.ChangePassword).Methods("POST")
 
 	// API
 	apiRouter := r.PathPrefix("/api").Subrouter()

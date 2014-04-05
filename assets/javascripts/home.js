@@ -6,7 +6,7 @@ $(document).ready(function(){
   var emailField = $('input#email');
   emailField.focus();
 
-  if(emailField.val().length > 0)  $('input#password').focus();
+  if(emailField.val() && emailField.val().length > 0) $('input#password').focus();
 
   validateEmail($('#sign-in'), $('#email'));
   validateEmail($('form#fast-signup'), $('#email'));

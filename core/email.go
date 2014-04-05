@@ -44,6 +44,19 @@ func WelcomeMail(user *User) {
 	})
 }
 
+func ResetPasswordEmail(user *User) {
+	token := user.RememberToken
+	changePasswordUrl := UrlTo("change_password/"+token, map[string]string{})
+	to := []string{user.Email}
+	subject := "Uhura Login - Password Reset"
+	body := renderEmail("reset_password", map[string]interface{}{
+		"user": user,
+		"url":  changePasswordUrl,
+	})
+
+	go sendMail(to, "noreply@uhuraapp.com", subject, body, true)
+}
+
 func renderEmail(name string, data interface{}) []byte {
 	content, err := ioutil.ReadFile(TemplateEmailPath + "/" + name + ".tmpl")
 	if err != nil {

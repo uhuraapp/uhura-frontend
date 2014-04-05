@@ -41,6 +41,8 @@ var T = function() {
       "error.?user.no_match": "Password or Email wrong",
       "error.?user.not_found": "Email not found on Uhura",
       "error.?user.exists": "User Registered, please Sign In",
+      "error.?password.dont_match": "Password don't match",
+      "error.?password.changed": "Password changed",
 
       "sidebar.home": "Home",
       "sidebar.channel_add": "Add Channel",

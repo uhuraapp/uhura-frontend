@@ -4,6 +4,7 @@
 package login2
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"log"
 	"math/rand"
@@ -50,20 +51,20 @@ type builderConfig struct {
 // URLS
 
 type URLS struct {
-	Redirect                string
-	SignIn                  string
-	SignUp                  string
-	RememberPasswordSuccess string
+	Redirect             string
+	SignIn               string
+	SignUp               string
+	ResetPasswordSuccess string
 }
 
 type Builder struct {
-	Providers              map[string]*builderConfig
-	UserSetupFn            func(provider string, user *User, rawResponde *http.Response) (int64, error)
-	UserCreateFn           func(email string, password string, request *http.Request) (int64, error)
-	UserRememberPasswordFn func(token int64, email string)
-	UserIdByEmail          func(email string) (int64, error)
-	UserPasswordByEmail    func(email string) (string, bool)
-	URLS                   URLS
+	Providers           map[string]*builderConfig
+	UserSetupFn         func(provider string, user *User, rawResponde *http.Response) (int64, error)
+	UserCreateFn        func(email string, password string, request *http.Request) (int64, error)
+	UserResetPasswordFn func(token string, email string)
+	UserIdByEmail       func(email string) (int64, error)
+	UserPasswordByEmail func(email string) (string, bool)
+	URLS                URLS
 }
 
 type User struct {
@@ -115,7 +116,7 @@ func (b *Builder) Router(r *mux.Router) {
 	r.HandleFunc("/users/sign_in", b.SignIn()).Methods("POST")
 	r.HandleFunc("/users/sign_up", b.SignUp()).Methods("POST")
 	r.HandleFunc("/users/sign_out", b.SignOut()).Methods("GET")
-	r.HandleFunc("/password/remember", b.RememberPassword()).Methods("POST")
+	r.HandleFunc("/password/reset", b.ResetPassword()).Methods("POST")
 }
 
 // HTTP server
@@ -167,7 +168,7 @@ func (b *Builder) SignUp() func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, request *http.Request) {
 		email := request.FormValue("email")
 		password := request.FormValue("password")
-		hpassword, err := generateHash(password)
+		hpassword, err := GenerateHash(password)
 		if err != nil {
 			http.Redirect(w, request, b.URLS.SignUp+"?password=error", http.StatusTemporaryRedirect)
 			return
@@ -214,8 +215,8 @@ func (b *Builder) SignOut() func(http.ResponseWriter, *http.Request) {
 
 func (b *Builder) Protected(fn func(string, http.ResponseWriter, *http.Request)) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-		userID := b.CurrentUser(r)
-		if userID != "" {
+		userID, ok := b.CurrentUser(r)
+		if ok {
 			fn(userID, w, r)
 		} else {
 			session, _ := store.Get(r, "_session")
@@ -226,12 +227,13 @@ func (b *Builder) Protected(fn func(string, http.ResponseWriter, *http.Request))
 	}
 }
 
-func (b *Builder) RememberPassword() func(http.ResponseWriter, *http.Request) {
+func (b *Builder) ResetPassword() func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		email := r.FormValue("email")
-		token := buildToken()
-		go b.UserRememberPasswordFn(token, email)
-		http.Redirect(w, request, b.URLS.RememberPasswordSuccess, http.StatusTemporaryRedirect)
+		hash, _ := GenerateHash(strconv.Itoa(int(generateToken())))
+		token := base64.URLEncoding.EncodeToString([]byte(hash))
+		go b.UserResetPasswordFn(token, email)
+		http.Redirect(w, r, b.URLS.ResetPasswordSuccess, http.StatusTemporaryRedirect)
 	}
 }
 
@@ -253,13 +255,14 @@ func (b *Builder) login(r *http.Request, w http.ResponseWriter, userId string) {
 	http.Redirect(w, r, returnTo, 302)
 }
 
-func (b *Builder) CurrentUser(r *http.Request) (string, error) {
+func (b *Builder) CurrentUser(r *http.Request) (id string, ok bool) {
 	session, _ := store.Get(r, "_session")
 	userId := session.Values["user_id"]
-	return userId.(string)
+	id, ok = userId.(string)
+	return
 }
 
-func generateHash(data string) (string, error) {
+func GenerateHash(data string) (string, error) {
 	h, err := bcrypt.GenerateFromPassword([]byte(data), 0)
 	return string(h[:]), err
 }
@@ -270,5 +273,5 @@ func checkHash(hashed, plain string) error {
 
 func generateToken() int64 {
 	rand.Seed(time.Now().Unix())
-	rand.Int63n(10)
+	return rand.Int63()
 }
