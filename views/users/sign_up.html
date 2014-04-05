@@ -13,8 +13,9 @@
 
   <link href="<% URL %>/assets/home.css?<% ASSETS_VERSION %>" rel='stylesheet' type='text/css'>
   <script src="<% URL %>/assets/home.min.js?<% ASSETS_VERSION %>"></script>
+  <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 </head>
-<body id="sign_up">
+<body id="users">
     <header>
       <hgroup>
         <a href="/">
@@ -40,13 +41,13 @@
       </div>
     </div>
     <div class="uk-form-row">
+      <p id="services">
+        <span>Or use:</span>
+        <a href="/auth/google"><i class="fa fa-google-plus"></i>Google</a>
+        <a href="/auth/facebook"><i class="fa fa-facebook"></i>Facebook</a>
+      </p>
       <button type="submit" class="uk-button uk-button-success">Submit</button>
     </div>
-    <p>
-      <span>Or</span>
-      <a href="/auth/google"><i class="fa fa-google-plus"></i>Google</a>
-      <a href="/auth/facebook"><i class="fa fa-facebook"></i>Facebook</a>
-    </p>
   </form>
 </body>
 </html>
