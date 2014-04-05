@@ -64,6 +64,7 @@ type Builder struct {
 	UserResetPasswordFn func(token string, email string)
 	UserIdByEmail       func(email string) (int64, error)
 	UserPasswordByEmail func(email string) (string, bool)
+	LoginFn             func(userId string)
 	URLS                URLS
 }
 
@@ -249,6 +250,8 @@ func (b *Builder) login(r *http.Request, w http.ResponseWriter, userId string) {
 	if !ok {
 		returnTo = b.URLS.Redirect
 	}
+
+	go b.LoginFn(userId)
 
 	session.Values["return_to"] = nil
 	session.Save(r, w)

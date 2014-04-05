@@ -23,6 +23,12 @@ func UserCreate(email, password string) (User, error) {
 	return user, err
 }
 
+func UserById(id string) (User, error) {
+	var user User
+	err := database.First(&user, id).Error
+	return user, err
+}
+
 func UserByEmail(email string) (User, error) {
 	var user User
 	err := database.Where("email = ?", email).First(&user).Error

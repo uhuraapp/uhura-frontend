@@ -31,6 +31,20 @@ var (
 
 // Helpers
 
+func userLogin(userId string) {
+	go func() {
+		user, _ := core.UserById(userId)
+
+		people := MIXPANEL.Identify(userId)
+		people.Set(map[string]interface{}{
+			"$email":      user.Email,
+			"$last_login": time.Now(),
+			"$created":    user.CreatedAt,
+			"provider":    user.Provider,
+		})
+	}()
+}
+
 func userSetup(provider string, user *auth.User, rawResponde *http.Response) (int64, error) {
 	realUser, err := core.UserByEmail(user.Email)
 	if err != nil {
@@ -39,16 +53,8 @@ func userSetup(provider string, user *auth.User, rawResponde *http.Response) (in
 		}
 		return 0, err
 	} else {
-		go func() {
-			id := strconv.Itoa(int(realUser.Id))
-			people := MIXPANEL.Identify(id)
-			people.Set(map[string]interface{}{
-				"$email":      user.Email,
-				"$last_login": time.Now(),
-				"$created":    realUser.CreatedAt,
-				"provider":    provider,
-			})
-		}()
+		id := strconv.Itoa(int(realUser.Id))
+		userLogin(id)
 
 		return realUser.Id, nil
 	}
@@ -102,6 +108,7 @@ func configAuth() {
 	loginBuilder.UserIdByEmail = userId
 	loginBuilder.UserPasswordByEmail = core.UserPasswordByEmail
 	loginBuilder.UserResetPasswordFn = core.UserResetPassword
+	loginBuilder.LoginFn = userLogin
 	loginBuilder.URLS = auth.URLS{
 		Redirect:             "/app",
 		SignIn:               "/login",
