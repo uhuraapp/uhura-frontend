@@ -12,6 +12,7 @@ import (
 
 	auth "github.com/dukex/login2"
 	"github.com/dukex/uhura/core"
+	"github.com/gorilla/context"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"github.com/jinzhu/gorm"
@@ -232,7 +233,7 @@ func main() {
 
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./public/")))
 
-	h := handlers.LoggingHandler(os.Stdout, r)
+	h := context.ClearHandler(handlers.LoggingHandler(os.Stdout, r))
 
 	http.Handle("/", h)
 	server := &http.Server{
