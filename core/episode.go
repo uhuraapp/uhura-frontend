@@ -10,7 +10,7 @@ import (
 )
 
 func episodeDefaultQuery(d *gorm.DB) *gorm.DB {
-	return d.Select("items.*, user_items.viewed as listened").Order("user_items.viewed DESC, items.published_at DESC, title")
+	return d.Select("DISTINCT items.id,items.*, user_items.viewed as listened").Order("user_items.viewed DESC, items.published_at DESC, title")
 }
 
 func SugestionsEpisodes(userId string, w http.ResponseWriter, request *http.Request) {
