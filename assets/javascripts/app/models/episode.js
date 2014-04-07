@@ -10,6 +10,10 @@ App.Episode = DS.Model.extend({
   duration:        DS.attr(),
   durationISO:     function(){
     duration = this.get('duration')
+    if(typeof(duke) === "undefined") {
+      return ""
+    }
+
     if(duration.split(":").length == 2) {
       duration = "00:"+duration
     }
