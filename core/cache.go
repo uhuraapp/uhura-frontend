@@ -69,4 +69,5 @@ func init() {
 	}
 
 	log.Println("CACHE", cache.IsHealthy())
+	cache.Set(0, "duke", 0, -1, []byte("Dukeee"))
 }
