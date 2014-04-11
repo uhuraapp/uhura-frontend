@@ -70,7 +70,7 @@ func UnsubscribeChannel(userId string, w http.ResponseWriter, request *http.Requ
 		p.Track("unsubscribed", map[string]interface{}{"Channel ID": channelId})
 	}()
 
-	cache.Delete("s:" + id + ":" + userId)
+	cache.Del(0, "s:"+id+":"+userId)
 
 	database.Table("user_channels").Where(UserChannel{ChannelId: int64(channelId), UserId: int64(userIdInt)}).Delete(&userChannel)
 }

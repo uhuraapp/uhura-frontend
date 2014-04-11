@@ -27,7 +27,7 @@ type Channel struct {
 }
 
 func (c *Channel) BeforeUpdate() {
-	cache.Delete("c:" + strconv.Itoa(int(c.Id)))
+	cache.Del(0, "c:"+strconv.Itoa(int(c.Id)))
 }
 
 func (c *Channel) SetUri() string {

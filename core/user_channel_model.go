@@ -17,11 +17,11 @@ func (uc *UserChannel) AfterCreate() {
 	CacheUserSubscription(uc)
 }
 
-func CacheUserSubscription(uc *UserChannel) error {
+func CacheUserSubscription(uc *UserChannel) {
 	channelId := strconv.Itoa(int(uc.ChannelId))
 	userId := strconv.Itoa(int(uc.UserId))
 
 	cacheKey := "s:" + channelId + ":" + userId
 
-	return CacheSet(cacheKey, true)
+	CacheSet(cacheKey, true)
 }

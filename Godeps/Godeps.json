@@ -28,17 +28,16 @@
 			"Rev": "5877582f0cb070bc21b199dab5e7d18fb546444a"
 		},
 		{
-			"ImportPath": "github.com/bradfitz/gomemcache/memcache",
-			"Comment": "release.r60-17-g799dd6f",
-			"Rev": "799dd6f8c603b393e3fb9d20a841109766c60fa5"
-		},
-		{
 			"ImportPath": "github.com/dchest/uniuri",
 			"Rev": "bc4af7603a3e0ce9d58009f82fca481555182e1c"
 		},
 		{
 			"ImportPath": "github.com/dukex/login2",
 			"Rev": "6ff57dcc363cb679208871b5a3774c328b2ef2c7"
+		},
+		{
+			"ImportPath": "github.com/dustin/gomemcached",
+			"Rev": "3bc2b0e8fd5d0304d37f246b38cde753803cee41"
 		},
 		{
 			"ImportPath": "github.com/fiam/gounidecode/unidecode",

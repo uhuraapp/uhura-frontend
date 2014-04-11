@@ -93,7 +93,7 @@ func checkVars() {
 	checkEnvVar("ENV")
 	checkEnvVar("PORT")
 	checkEnvVar("DATABASE_URL")
-	checkEnvVar("MEMCACHED_URL")
+	checkEnvVar("MEMCACHEDCLOUD_SERVERS")
 	checkEnvVar("GOOGLE_CALLBACK_URL")
 	checkEnvVar("GOOGLE_CLIENT_ID")
 	checkEnvVar("GOOGLE_CLIENT_SECRET")
