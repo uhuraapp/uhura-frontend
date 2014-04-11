@@ -29,8 +29,10 @@ func CacheSet(key string, data interface{}) {
 	err := enc.Encode(data)
 
 	if err == nil {
+		_, err = cache.Set(0, key, 0, 0, value)
 		log.Println("CACHE ERROR:", err)
-		cache.Set(0, key, 0, -1, value)
+	} else {
+		log.Println("CACHE ERROR:", err)
 	}
 }
 
@@ -57,7 +59,7 @@ func CacheGet(key string, as interface{}) (interface{}, error) {
 func init() {
 	memcachedUrl := os.Getenv("MEMCACHEDCLOUD_SERVERS")
 	memcachedPassword := os.Getenv("MEMCACHEDCLOUD_PASSWORD")
-	memcachedUsername := os.Getenv("MMEMCACHEDCLOUD_USERNAME")
+	memcachedUsername := os.Getenv("MEMCACHEDCLOUD_USERNAME")
 
 	cache, err := memcache.Connect("tcp", memcachedUrl)
 	if err != nil {
@@ -68,6 +70,7 @@ func init() {
 		cache.Auth(memcachedUsername, memcachedPassword)
 	}
 
-	log.Println("CACHE", cache.IsHealthy())
-	cache.Set(0, "duke", 0, -1, []byte("Dukeee"))
+	log.Println("CACHE Healthy", cache.IsHealthy())
+	log.Println(cache.Set(0, "test", 0, 5, []byte("1")))
+	log.Println(cache.Get(0, "test"))
 }
