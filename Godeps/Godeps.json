@@ -28,6 +28,11 @@
 			"Rev": "5877582f0cb070bc21b199dab5e7d18fb546444a"
 		},
 		{
+			"ImportPath": "github.com/bradfitz/gomemcache/memcache",
+			"Comment": "release.r60-17-g799dd6f",
+			"Rev": "799dd6f8c603b393e3fb9d20a841109766c60fa5"
+		},
+		{
 			"ImportPath": "github.com/dchest/uniuri",
 			"Rev": "bc4af7603a3e0ce9d58009f82fca481555182e1c"
 		},
@@ -90,6 +95,10 @@
 		{
 			"ImportPath": "github.com/rakyll/coop",
 			"Rev": "9f25699aa4d3e675cc377aeeb1e3c8cd113d36a6"
+		},
+		{
+			"ImportPath": "github.com/ugorji/go/codec",
+			"Rev": "cdeae7b76625959e4164eab9eb303087a794f2cc"
 		}
 	]
 }

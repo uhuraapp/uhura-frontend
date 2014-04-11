@@ -15,6 +15,14 @@ serve:
 	go build
 	./uhura
 
+
+prepare:
+	make build_assets
+	make save_deps
+
+save_deps:
+	godep save
+
 new_version:
 	echo '$(shell git rev-parse --abbrev-ref HEAD)-$(shell git rev-parse HEAD)' > VERSION
 
