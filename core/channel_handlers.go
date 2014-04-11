@@ -3,24 +3,10 @@ package core
 import (
 	"net/http"
 	"strconv"
-	"strings"
 
 	r "github.com/dukex/uhura/core/helper"
 	"github.com/gorilla/mux"
-	"github.com/jinzhu/gorm"
 )
-
-func (c *Channel) BeforeUpdate() {
-	cache.Delete("c:" + strconv.Itoa(int(c.Id)))
-}
-
-func (c *Channel) SetUri() string {
-	uri := c.Uriable.MakeUri(c.Title)
-	uri = strings.Replace(uri, "podcast", "", -1)
-	database.Table("channels").Where(c.Id).Update("Uri", uri)
-
-	return uri
-}
 
 type ChannelResult struct {
 	ChannelEntity
@@ -44,14 +30,33 @@ func (cr *ChannelResult) SetSubscribe(userId string) {
 	cr.Subscribed = status
 }
 
-// Handlers
-
 func ReloadChannel(userId string, w http.ResponseWriter, request *http.Request) {
 	vars := mux.Vars(request)
 	id := vars["id"]
 	idI, _ := strconv.Atoi(id)
 
 	TouchChannel(idI)
+}
+
+func SubscribeChannel(userId string, w http.ResponseWriter, request *http.Request) {
+	var userChannel UserChannel
+
+	vars := mux.Vars(request)
+	id := vars["id"]
+
+	channelId, _ := strconv.Atoi(id)
+	userIdInt, _ := strconv.Atoi(userId)
+
+	database.Table("user_channels").Where(UserChannel{ChannelId: int64(channelId), UserId: int64(userIdInt)}).FirstOrCreate(&userChannel)
+
+	go func() {
+		p := MIXPANEL.Identify(userId)
+		p.Track("subscribed", map[string]interface{}{"Channel ID": id})
+	}()
+
+	TouchChannel(channelId)
+
+	GetChannel(userId, w, request)
 }
 
 func GetChannel(userId string, w http.ResponseWriter, request *http.Request) {
@@ -86,27 +91,6 @@ func GetChannel(userId string, w http.ResponseWriter, request *http.Request) {
 	r.ResponseJSON(w, 200, map[string]interface{}{"channel": channel})
 
 	return
-}
-
-func SubscribeChannel(userId string, w http.ResponseWriter, request *http.Request) {
-	var userChannel UserChannel
-
-	vars := mux.Vars(request)
-	id := vars["id"]
-
-	channelId, _ := strconv.Atoi(id)
-	userIdInt, _ := strconv.Atoi(userId)
-
-	database.Table("user_channels").Where(UserChannel{ChannelId: int64(channelId), UserId: int64(userIdInt)}).FirstOrCreate(&userChannel)
-
-	go func() {
-		p := MIXPANEL.Identify(userId)
-		p.Track("subscribed", map[string]interface{}{"Channel ID": id})
-	}()
-
-	TouchChannel(channelId)
-
-	GetChannel(userId, w, request)
 }
 
 func UnsubscribeChannel(userId string, w http.ResponseWriter, request *http.Request) {
@@ -157,24 +141,4 @@ func GetSubscriptions(userId string, w http.ResponseWriter, request *http.Reques
 
 	r.ResponseJSON(w, 200, map[string]interface{}{"subscriptions": channels})
 	return
-}
-
-func ChannelDefaultQuery(userId string) func(d *gorm.DB) *gorm.DB {
-	return func(d *gorm.DB) *gorm.DB {
-		//return d.Table("channels").Select("channels.*, COUNT(user_items.id) AS viewed, array_agg(items.id) AS episodes_ids, user_channels.id AS subscribed").Joins("LEFT OUTER JOIN user_channels ON user_channels.channel_id = channels.id AND user_channels.user_id = " + userId + " LEFT OUTER JOIN items ON items.channel_id = channels.id LEFT OUTER JOIN user_items ON user_items.item_id = items.id AND user_items.user_id = " + userId + " AND user_items.viewed = TRUE").Group("channels.id, user_channels.id")
-
-		return d.Table("channels").Joins("LEFT OUTER JOIN user_channels ON user_channels.channel_id = channels.id AND user_channels.user_id = " + userId)
-	}
-}
-
-func convertEpisodesId(ids string) []int {
-	var iids = make([]int, 0)
-	ids = strings.Replace(ids, "}", "", -1)
-	ids = strings.Replace(ids, "{", "", -1)
-	for _, id := range strings.Split(ids, ",") {
-		if iid, err := strconv.Atoi(id); err == nil && iid > 0 {
-			iids = append(iids, iid)
-		}
-	}
-	return iids
 }

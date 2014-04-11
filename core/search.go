@@ -104,7 +104,7 @@ func SearchChannels(userId string, w http.ResponseWriter, request *http.Request)
 	channels := make([]ChannelResult, 0)
 
 	if len(ids) > 0 {
-		database.Scopes(ChannelDefaultQuery(userId)).Where("channels.id in (?)", ids).Find(&channels)
+		// database.Scopes(ChannelDefaultQuery(userId)).Where("channels.id in (?)", ids).Find(&channels)
 	}
 
 	go MIXPANEL.Track(userId, "search", map[string]interface{}{"q": q})
