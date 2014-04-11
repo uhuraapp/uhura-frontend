@@ -138,6 +138,21 @@ func GetSubscriptions(userId string, w http.ResponseWriter, request *http.Reques
 		channels[i].Uri = channel.FixUri()
 		channels[i] = channels[i].Cache()
 		channels[i].SetSubscribe(userId)
+
+		listened := make([]int, 0)
+
+		for _, eId := range channels[i].Episodes {
+			var marked bool
+			cache, err := CacheGet("el:"+strconv.Itoa(eId)+":"+userId, marked)
+			if err == nil {
+				marked = cache.(bool)
+				if marked {
+					listened = append(listened, eId)
+				}
+			}
+		}
+
+		channels[i].ToView = len(channel.Episodes) - len(listened)
 	}
 
 	r.ResponseJSON(w, 200, map[string]interface{}{"subscriptions": channels})
