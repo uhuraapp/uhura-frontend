@@ -5,14 +5,6 @@ import (
 	"time"
 )
 
-type UserChannel struct {
-	Id        int64
-	UserId    int64
-	ChannelId int64
-	CreatedAt time.Time
-	UpdatedAt time.Time
-}
-
 type User struct {
 	Id            int64
 	Name          string

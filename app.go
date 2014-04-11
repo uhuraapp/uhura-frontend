@@ -240,7 +240,7 @@ func main() {
 	apiRouter.StrictSlash(true)
 
 	apiRouter.HandleFunc("/subscriptions", loginBuilder.Protected(core.GetSubscriptions))
-	apiRouter.HandleFunc("/channels", loginBuilder.Protected(core.GetChannels))
+	// apiRouter.HandleFunc("/channels", loginBuilder.Protected(core.GetChannels))
 	apiRouter.HandleFunc("/channels/{id}", loginBuilder.Protected(core.GetChannel))
 	apiRouter.HandleFunc("/channels/{id}/reload", loginBuilder.Protected(core.ReloadChannel))
 	apiRouter.HandleFunc("/channels/{id}/subscribe", loginBuilder.Protected(core.SubscribeChannel))

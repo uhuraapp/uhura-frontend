@@ -1,6 +1,7 @@
 package core
 
 import (
+	"log"
 	"net/http"
 	"strconv"
 
@@ -8,27 +9,21 @@ import (
 	"github.com/gorilla/mux"
 )
 
-type ChannelResult struct {
-	ChannelEntity
-	//Viewed      int64  `json:"-"`
-	//EpisodesIds string `json:"-"`
-}
+// func GetChannels(userId string, w http.ResponseWriter, request *http.Request) {
+// 	query := request.URL.Query()
+// 	ids := query["ids[]"]
 
-func (cr *ChannelResult) SetSubscribe(userId string) {
-	var status bool
-	cacheKey := "s:" + strconv.Itoa(int(cr.Id)) + ":" + userId
+// 	channels := make([]ChannelEntity, 0)
 
-	cached, err := CacheGet(cacheKey, status)
-	if err != nil {
-		err = database.Table("user_channels").Where("channel_id = ? AND user_id = ?", cr.Id, userId).First(&UserChannel{}).Error
-		status = err == nil
-		CacheSet(cacheKey, status)
-	} else {
-		status = cached.(bool)
-	}
+// 	if len(ids) > 0 {
+// 		database.Table("channels").Where("id in (?)", ids).Scan(&channels)
+// 	}
 
-	cr.Subscribed = status
-}
+// 	r.ResponseJSON(w, 200, map[string]interface{}{"channels": channels})
+// 	return
+// }
+
+/// --------
 
 func ReloadChannel(userId string, w http.ResponseWriter, request *http.Request) {
 	vars := mux.Vars(request)
@@ -49,6 +44,8 @@ func SubscribeChannel(userId string, w http.ResponseWriter, request *http.Reques
 
 	database.Table("user_channels").Where(UserChannel{ChannelId: int64(channelId), UserId: int64(userIdInt)}).FirstOrCreate(&userChannel)
 
+	CacheUserSubscription(&userChannel)
+
 	go func() {
 		p := MIXPANEL.Identify(userId)
 		p.Track("subscribed", map[string]interface{}{"Channel ID": id})
@@ -57,40 +54,6 @@ func SubscribeChannel(userId string, w http.ResponseWriter, request *http.Reques
 	TouchChannel(channelId)
 
 	GetChannel(userId, w, request)
-}
-
-func GetChannel(userId string, w http.ResponseWriter, request *http.Request) {
-	vars := mux.Vars(request)
-	id := vars["id"]
-	cacheKey := "c:" + id
-	var channel ChannelResult
-
-	cached, err := CacheGet(cacheKey, channel)
-
-	if err != nil {
-		var episodesIds []int
-
-		err = database.Table("channels").Where("channels.id = ?", id).First(&channel).Error
-		if err != nil {
-			w.WriteHeader(404)
-			return
-		}
-
-		database.Table("items").Where("items.channel_id = ?", id).Pluck("id", &episodesIds)
-		channel.Episodes = episodesIds
-
-		CacheSet(cacheKey, channel)
-	} else {
-		channel = cached.(ChannelResult)
-	}
-
-	channel.SetSubscribe(userId)
-
-	// database.Scopes(ChannelDefaultQuery(userId))
-
-	r.ResponseJSON(w, 200, map[string]interface{}{"channel": channel})
-
-	return
 }
 
 func UnsubscribeChannel(userId string, w http.ResponseWriter, request *http.Request) {
@@ -112,31 +75,69 @@ func UnsubscribeChannel(userId string, w http.ResponseWriter, request *http.Requ
 	database.Table("user_channels").Where(UserChannel{ChannelId: int64(channelId), UserId: int64(userIdInt)}).Delete(&userChannel)
 }
 
-func GetChannels(userId string, w http.ResponseWriter, request *http.Request) {
-	query := request.URL.Query()
-	ids := query["ids[]"]
+func GetChannel(userId string, w http.ResponseWriter, request *http.Request) {
+	var (
+		vars     = mux.Vars(request)
+		id       = vars["id"]
+		cacheKey = "c:" + id
+		channel  ChannelEntity
+	)
 
-	channels := make([]ChannelResult, 0)
+	cached, err := CacheGet(cacheKey, channel)
 
-	if len(ids) > 0 {
-		database.Table("channels").Where("id in (?)", ids).Scan(&channels)
+	if err != nil {
+		err = database.Table("channels").Where("channels.id = ?", id).First(&channel).Error
+		if err != nil {
+			w.WriteHeader(404)
+			return
+		}
+
+		channel = channel.Cache()
+	} else {
+		channel = cached.(ChannelEntity)
 	}
 
-	r.ResponseJSON(w, 200, map[string]interface{}{"channels": channels})
+	channel.SetSubscribe(userId)
+
+	r.ResponseJSON(w, 200, map[string]interface{}{"channel": channel})
+
 	return
 }
 
 func GetSubscriptions(userId string, w http.ResponseWriter, request *http.Request) {
-	channels := make([]ChannelResult, 0)
+	channels := make([]ChannelEntity, 0)
+	var ids []interface{}
+	toDB := make([]int64, 0)
 
-	database.Table("channels").Select("channels.*").Joins("LEFT OUTER JOIN user_channels ON user_channels.channel_id = channels.id AND user_channels.user_id = "+userId).Where("user_channels.user_id = ?", userId).Scan(&channels)
+	cache, err := CacheGet("s:ids:"+userId, ids)
+	if err == nil {
+		ids = cache.([]interface{})
+	} else {
+		database.Table("channels").Select("channels.*").Joins("LEFT OUTER JOIN user_channels ON user_channels.channel_id = channels.id AND user_channels.user_id = "+userId).Where("user_channels.user_id = ?", userId).Pluck("channels.id", &ids)
+
+		CacheSet("s:ids:"+userId, ids)
+	}
+
+	for _, id := range ids {
+		channelId := int(id.(int64))
+
+		cache, err := CacheGet("c:"+strconv.Itoa(channelId), ChannelEntity{})
+		if err == nil {
+			channels = append(channels, cache.(ChannelEntity))
+		} else {
+			log.Println(err)
+			toDB = append(toDB, 1)
+		}
+	}
+
+	if len(toDB) > 0 {
+		database.Table("channels").Where("channels.id in (?)", toDB).Find(&channels)
+	}
 
 	for i, channel := range channels {
 		channels[i].Uri = channel.FixUri()
+		channels[i] = channels[i].Cache()
 		channels[i].SetSubscribe(userId)
-
-		//channels[i].Episodes = convertEpisodesId(channel.EpisodesIds)
-		//channels[i].ToView = int64(len(channels[i].Episodes)) - channel.Viewed
 	}
 
 	r.ResponseJSON(w, 200, map[string]interface{}{"subscriptions": channels})
