@@ -36,6 +36,10 @@
 			"Rev": "6ff57dcc363cb679208871b5a3774c328b2ef2c7"
 		},
 		{
+			"ImportPath": "github.com/dustin/gomemcached",
+			"Rev": "3bc2b0e8fd5d0304d37f246b38cde753803cee41"
+		},
+		{
 			"ImportPath": "github.com/fiam/gounidecode/unidecode",
 			"Rev": "311ebb7422d3ff70cc1d064c5a297520ff5f304a"
 		},
@@ -90,6 +94,10 @@
 		{
 			"ImportPath": "github.com/rakyll/coop",
 			"Rev": "9f25699aa4d3e675cc377aeeb1e3c8cd113d36a6"
+		},
+		{
+			"ImportPath": "github.com/ugorji/go/codec",
+			"Rev": "cdeae7b76625959e4164eab9eb303087a794f2cc"
 		}
 	]
 }

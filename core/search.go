@@ -101,15 +101,15 @@ func SearchChannels(userId string, w http.ResponseWriter, request *http.Request)
 	out, _ := escore.SearchRequest(true, "uhura", "channel", searchJson, "", 0)
 	ids := getIds(out.Hits.Hits)
 
-	channels := make([]ChannelResult, 0)
+	channels := make([]ChannelEntity, 0)
 
 	if len(ids) > 0 {
-		database.Scopes(ChannelDefaultQuery(userId)).Where("channels.id in (?)", ids).Find(&channels)
+		// database.Scopes(ChannelDefaultQuery(userId)).Where("channels.id in (?)", ids).Find(&channels)
 	}
 
 	go MIXPANEL.Track(userId, "search", map[string]interface{}{"q": q})
 
-	r.ResponseJSON(w, 200, map[string][]ChannelResult{"channels": channels})
+	r.ResponseJSON(w, 200, map[string][]ChannelEntity{"channels": channels})
 }
 
 func SearchEpisodes(userId string, w http.ResponseWriter, request *http.Request) {

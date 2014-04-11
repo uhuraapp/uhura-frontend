@@ -75,6 +75,33 @@ func userId(email string) (int64, error) {
 	return user.Id, err
 }
 
+func checkEnvVar(key string) {
+	if os.Getenv(key) == "" {
+		panic("Missing " + key)
+	}
+}
+
+func checkVars() {
+	checkEnvVar("URL")
+	checkEnvVar("BUFFER_PROFILE")
+	checkEnvVar("SEARCHBOX_URL")
+	checkEnvVar("SEARCH_INDEX")
+	checkEnvVar("MIXPANEL_TOKEN")
+	checkEnvVar("SMTP_PASSWORD")
+	checkEnvVar("SMTP_HOST")
+	checkEnvVar("SMTP_SERVER")
+	checkEnvVar("ENV")
+	checkEnvVar("PORT")
+	checkEnvVar("DATABASE_URL")
+	checkEnvVar("MEMCACHEDCLOUD_SERVERS")
+	checkEnvVar("GOOGLE_CALLBACK_URL")
+	checkEnvVar("GOOGLE_CLIENT_ID")
+	checkEnvVar("GOOGLE_CLIENT_SECRET")
+	checkEnvVar("FACEBOOK_CALLBACK_URL")
+	checkEnvVar("FACEBOOK_CLIENT_ID")
+	checkEnvVar("FACEBOOK_CLIENT_SECRET")
+}
+
 func configAuth() {
 	loginBuilder = auth.NewBuilder()
 
@@ -207,6 +234,8 @@ func ChangePasswordPage(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	checkVars()
+
 	PAGES = make(map[string][]byte, 0)
 	ASSETS_VERSION = getVersion()
 	ENV = os.Getenv("ENV")
@@ -240,7 +269,7 @@ func main() {
 	apiRouter.StrictSlash(true)
 
 	apiRouter.HandleFunc("/subscriptions", loginBuilder.Protected(core.GetSubscriptions))
-	apiRouter.HandleFunc("/channels", loginBuilder.Protected(core.GetChannels))
+	// apiRouter.HandleFunc("/channels", loginBuilder.Protected(core.GetChannels))
 	apiRouter.HandleFunc("/channels/{id}", loginBuilder.Protected(core.GetChannel))
 	apiRouter.HandleFunc("/channels/{id}/reload", loginBuilder.Protected(core.ReloadChannel))
 	apiRouter.HandleFunc("/channels/{id}/subscribe", loginBuilder.Protected(core.SubscribeChannel))
