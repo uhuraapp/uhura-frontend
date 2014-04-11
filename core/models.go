@@ -17,7 +17,6 @@ type Channel struct {
 	Featured      bool
 	CreatedAt     time.Time
 	UpdatedAt     time.Time
-	DeletedAt     time.Time
 	Language      string
 	Link          string
 	Loading       bool
@@ -30,7 +29,6 @@ type UserChannel struct {
 	ChannelId int64
 	CreatedAt time.Time
 	UpdatedAt time.Time
-	DeletedAt time.Time
 }
 
 type User struct {
