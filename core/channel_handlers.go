@@ -105,63 +105,32 @@ func GetChannel(userId string, w http.ResponseWriter, request *http.Request) {
 }
 
 func GetSubscriptions(userId string, w http.ResponseWriter, request *http.Request) {
-	channels := make([]ChannelEntity, 0)
-	var ids []interface{}
-	toDB := make([]int64, 0)
+	subscriptions := make([]ChannelEntity, 0)
+	var ids []int
 
-	cache, err := CacheGet("s:ids:"+userId, ids)
+	subscriptionsCached, err := CacheGet("s:ids:"+userId, ids)
+
+	log.Println(subscriptionsCached, err)
+
 	if err == nil {
-		ids = cache.([]interface{})
+		ids = subscriptionsCached.([]int)
 	} else {
-		database.Table("channels").Select("channels.*").Joins("LEFT OUTER JOIN user_channels ON user_channels.channel_id = channels.id AND user_channels.user_id = "+userId).Where("user_channels.user_id = ?", userId).Pluck("channels.id", &ids)
-
-		CacheSet("s:ids:"+userId, ids)
+		database.Table("user_channels").Where("user_channels.user_id = ?", userId).
+			Pluck("user_channels.channel_id", &ids)
+		go CacheSet("s:ids:"+userId, ids)
 	}
 
-	for _, id := range ids {
-		channelId := int(id.(int64))
-
-		cache, err := CacheGet("c:"+strconv.Itoa(channelId), ChannelEntity{})
-		if err == nil {
-			channels = append(channels, cache.(ChannelEntity))
-		} else {
-			log.Println(err)
-			toDB = append(toDB, id.(int64))
-		}
+	if len(ids) > 0 {
+		database.Table("channels").Where("channels.id in (?)", ids).Find(&subscriptions)
 	}
 
-	if len(toDB) > 0 {
-		database.Table("channels").Where("channels.id in (?)", toDB).Find(&channels)
+	for i, channel := range subscriptions {
+		subscriptions[i].Uri = channel.FixUri()
+		go subscriptions[i].SetSubscribed(userId)
+		subscriptions[i].Episodes = channel.GetEpisodesIds()
+		subscriptions[i].ToView = channel.GetToView(userId)
 	}
 
-	for i, channel := range channels {
-		channels[i].Uri = channel.FixUri()
-		channels[i] = channels[i].Cache()
-		channels[i].SetSubscribe(userId)
-
-		listened := make([]int, 0)
-
-		for _, eId := range channels[i].Episodes {
-			var marked bool
-			cache, err := CacheGet("el:"+strconv.Itoa(eId)+":"+userId, marked)
-			if err == nil {
-				marked = cache.(bool)
-				if marked {
-					listened = append(listened, eId)
-				}
-			} else {
-				err := database.Table("user_items").
-					Where("user_items.item_id = ? AND user_items.user_id = ?", eId, userId).
-					Find(&UserItem{}).Error
-				if err == nil {
-					listened = append(listened, eId)
-				}
-			}
-		}
-
-		channels[i].ToView = len(channels[i].Episodes) - len(listened)
-	}
-
-	r.ResponseJSON(w, 200, map[string]interface{}{"subscriptions": channels})
+	r.ResponseJSON(w, 200, map[string]interface{}{"subscriptions": subscriptions})
 	return
 }
