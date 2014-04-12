@@ -1,43 +1,8 @@
 package core
 
 import (
-	"github.com/dukex/uhura/core/helper"
 	"time"
 )
-
-type User struct {
-	Id            int64
-	Name          string
-	Link          string
-	Picture       string
-	Gender        string
-	Locale        string
-	GoogleId      string
-	Email         string `sql:"not null;unique"`
-	Password      string `sql:"type:varchar(100);"`
-	WelcomeMail   bool
-	CreatedAt     time.Time
-	Provider      string `sql:"type:varchar(100);"`
-	ProviderId    string `sql:"type:varchar(50);"`
-	RememberToken string `sql:"type:varchar(100);"`
-}
-
-func (u *User) AfterCreate() {
-	WelcomeMail(u)
-}
-
-type Item struct {
-	Id          int64
-	ChannelId   int64
-	Key         string `sql:"unique"`
-	SourceUrl   string `sql:"not null;unique"`
-	Title       string
-	Description string
-	PublishedAt time.Time `sql:"not null"`
-	Duration    string
-	Uri         string
-	helper.Uriable
-}
 
 type UserItem struct {
 	Id        int64

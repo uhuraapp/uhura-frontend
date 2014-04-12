@@ -3,7 +3,7 @@ package core
 import "time"
 
 type EpisodeEntity struct {
-	Id          int         `json:"id"`
+	Id          int64       `json:"id"`
 	Title       string      `json:"title"`
 	Description string      `json:"description"`
 	Listened    interface{} `json:"listened"`
