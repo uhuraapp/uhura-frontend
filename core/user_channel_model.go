@@ -20,8 +20,7 @@ func (uc *UserChannel) AfterCreate() {
 func CacheUserSubscription(uc *UserChannel) {
 	channelId := strconv.Itoa(int(uc.ChannelId))
 	userId := strconv.Itoa(int(uc.UserId))
-
-	cacheKey := "s:" + channelId + ":" + userId
-
-	CacheSet(cacheKey, true)
+	cachedKey := "s:" + channelId + ":" + userId
+	CacheSet(cachedKey, true)
+	CACHE.Del(0, "s:ids:"+userId)
 }

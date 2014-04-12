@@ -37,9 +37,44 @@ func (ce *ChannelEntity) SetSubscribed(userId string) {
 	ce.Subscribed = status
 }
 
-func (ce *ChannelEntity) GetEpisodesIds() []int64 {
+func (ce *ChannelEntity) SetEpisodesIds() {
+	ce.Episodes = getEpisodesIds(ce.Id)
+}
+
+func (ce *ChannelEntity) SetSubscription(userId string) {
+	var status bool
+	key := "s:" + strconv.Itoa(int(ce.Id)) + ":" + userId
+	_, err := CacheGet(key, status)
+	ce.Subscribed = err == nil
+}
+
+func (ce *ChannelEntity) SetToView(userId string) {
+	ce.ToView = getToView(ce.Id, userId)
+}
+
+func getToView(channelId int64, userId string) int64 {
 	var (
-		key         = "c:e:" + strconv.Itoa(int(ce.Id))
+		listened int64
+		key      = "u:l:" + strconv.Itoa(int(channelId)) + ":" + userId
+	)
+
+	episodesIds := int64(len(getEpisodesIds(channelId)))
+
+	listenedCache, err := CacheGet(key, listened)
+	if err == nil {
+		listened = listenedCache.(int64)
+	} else {
+		database.Table("user_items").
+			Where("channel_id = ? AND user_id = ?", channelId, userId).
+			Count(&listened)
+		go CacheSet(key, listened)
+	}
+	return episodesIds - listened
+}
+
+func getEpisodesIds(channelId int64) []int64 {
+	var (
+		key         = "c:e:" + strconv.Itoa(int(channelId))
 		episodesIds []int64
 	)
 
@@ -47,29 +82,9 @@ func (ce *ChannelEntity) GetEpisodesIds() []int64 {
 	if err == nil {
 		episodesIds = cachedEpisodes.([]int64)
 	} else {
-		database.Table("items").Where("items.channel_id = ?", ce.Id).Pluck("id", &episodesIds)
+		database.Table("items").Where("items.channel_id = ?", channelId).Pluck("id", &episodesIds)
 
 		go CacheSet(key, episodesIds)
 	}
 	return episodesIds
-}
-
-func (ce *ChannelEntity) GetToView(userId string) int64 {
-	var (
-		listened int64
-		key      = "u:l:" + strconv.Itoa(int(ce.Id)) + ":" + userId
-	)
-
-	episodesIds := int64(len(ce.GetEpisodesIds()))
-
-	listenedCache, err := CacheGet(key, listened)
-	if err == nil {
-		listened = listenedCache.(int64)
-	} else {
-		database.Table("user_items").
-			Where("channel_id = ? AND user_id = ?", ce.Id, userId).
-			Count(&listened)
-		go CacheSet(key, listened)
-	}
-	return episodesIds - listened
 }

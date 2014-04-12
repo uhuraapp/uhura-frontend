@@ -23,8 +23,6 @@ import (
 // 	return
 // }
 
-/// --------
-
 func ReloadChannel(userId string, w http.ResponseWriter, request *http.Request) {
 	vars := mux.Vars(request)
 	id := vars["id"]
@@ -51,7 +49,7 @@ func SubscribeChannel(userId string, w http.ResponseWriter, request *http.Reques
 		p.Track("subscribed", map[string]interface{}{"Channel ID": id})
 	}()
 
-	TouchChannel(channelId)
+	go TouchChannel(channelId)
 
 	GetChannel(userId, w, request)
 }
@@ -70,34 +68,30 @@ func UnsubscribeChannel(userId string, w http.ResponseWriter, request *http.Requ
 		p.Track("unsubscribed", map[string]interface{}{"Channel ID": channelId})
 	}()
 
-	cache.Del(0, "s:"+id+":"+userId)
+	CACHE.Del(0, "s:"+id+":"+userId)
 
-	database.Table("user_channels").Where(UserChannel{ChannelId: int64(channelId), UserId: int64(userIdInt)}).Delete(&userChannel)
+	database.Table("user_channels").
+		Where(UserChannel{ChannelId: int64(channelId), UserId: int64(userIdInt)}).
+		Delete(&userChannel)
 }
 
 func GetChannel(userId string, w http.ResponseWriter, request *http.Request) {
 	var (
-		vars     = mux.Vars(request)
-		id       = vars["id"]
-		cacheKey = "c:" + id
-		channel  ChannelEntity
+		vars    = mux.Vars(request)
+		id      = vars["id"]
+		channel ChannelEntity
 	)
 
-	cached, err := CacheGet(cacheKey, channel)
+	err := database.Table("channels").Where("channels.id = ?", id).First(&channel).Error
 
 	if err != nil {
-		err = database.Table("channels").Where("channels.id = ?", id).First(&channel).Error
-		if err != nil {
-			w.WriteHeader(404)
-			return
-		}
-
-		channel = channel.Cache()
-	} else {
-		channel = cached.(ChannelEntity)
+		w.WriteHeader(404)
+		return
 	}
 
-	channel.SetSubscribe(userId)
+	channel.SetEpisodesIds()
+	channel.SetSubscription(userId)
+	channel.SetToView(userId)
 
 	r.ResponseJSON(w, 200, map[string]interface{}{"channel": channel})
 
@@ -127,8 +121,8 @@ func GetSubscriptions(userId string, w http.ResponseWriter, request *http.Reques
 	for i, channel := range subscriptions {
 		subscriptions[i].Uri = channel.FixUri()
 		go subscriptions[i].SetSubscribed(userId)
-		subscriptions[i].Episodes = channel.GetEpisodesIds()
-		subscriptions[i].ToView = channel.GetToView(userId)
+		subscriptions[i].SetEpisodesIds()
+		subscriptions[i].SetToView(userId)
 	}
 
 	r.ResponseJSON(w, 200, map[string]interface{}{"subscriptions": subscriptions})

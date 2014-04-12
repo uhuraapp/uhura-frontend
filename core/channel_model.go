@@ -1,7 +1,6 @@
 package core
 
 import (
-	"strconv"
 	"strings"
 	"time"
 
@@ -24,10 +23,6 @@ type Channel struct {
 	Link          string
 	Loading       bool
 	helper.Uriable
-}
-
-func (c *Channel) BeforeUpdate() {
-	cache.Del(0, "c:"+strconv.Itoa(int(c.Id)))
 }
 
 func (c *Channel) SetUri() string {
