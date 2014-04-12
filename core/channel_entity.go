@@ -12,10 +12,10 @@ type ChannelEntity struct {
 	Url         string      `json:"url"`
 	Id          int64       `json:"id"`
 	Uri         string      `json:"uri"`
-	ToView      int         `json:"to_view"`
+	ToView      int64       `json:"to_view"`
 	Subscribed  interface{} `json:"subscribed"`
 	Copyright   string      `json:"copyright"`
-	Episodes    []int       `json:"episodes"`
+	Episodes    []int64     `json:"episodes"`
 	UpdatedAt   time.Time   `json:"updated_at"`
 }
 
@@ -27,40 +27,49 @@ func (ce *ChannelEntity) FixUri() string {
 	return ce.Uri
 }
 
-func (ce *ChannelEntity) SetSubscribe(userId string) {
-	var status bool
-
-	channelId := strconv.Itoa(int(ce.Id))
-	cacheKey := "s:" + channelId + ":" + userId
-
-	cached, err := CacheGet(cacheKey, status)
-
-	if err != nil {
-		err = database.Table("user_channels").
-			Where("channel_id = ? AND user_id = ?", ce.Id, userId).
-			First(&UserChannel{}).Error
-		status = err == nil
-
+func (ce *ChannelEntity) SetSubscribed(userId string) {
+	status := true
+	go func() {
+		channelId := strconv.Itoa(int(ce.Id))
+		cacheKey := "s:" + channelId + ":" + userId
 		CacheSet(cacheKey, status)
-	} else {
-		status = cached.(bool)
-	}
-
+	}()
 	ce.Subscribed = status
 }
 
-func (ce *ChannelEntity) Cache() ChannelEntity {
+func (ce *ChannelEntity) GetEpisodesIds() []int64 {
 	var (
-		cacheKey    = "c:" + strconv.Itoa(int(ce.Id))
-		episodesIds []int
+		key         = "c:e:" + strconv.Itoa(int(ce.Id))
+		episodesIds []int64
 	)
 
-	if _, err := CacheGet(cacheKey, ChannelEntity{}); err != nil {
+	cachedEpisodes, err := CacheGet(key, episodesIds)
+	if err == nil {
+		episodesIds = cachedEpisodes.([]int64)
+	} else {
 		database.Table("items").Where("items.channel_id = ?", ce.Id).Pluck("id", &episodesIds)
-		ce.Episodes = episodesIds
 
-		CacheSet(cacheKey, ce)
+		go CacheSet(key, episodesIds)
 	}
+	return episodesIds
+}
 
-	return *ce
+func (ce *ChannelEntity) GetToView(userId string) int64 {
+	var (
+		listened int64
+		key      = "u:l:" + strconv.Itoa(int(ce.Id)) + ":" + userId
+	)
+
+	episodesIds := int64(len(ce.GetEpisodesIds()))
+
+	listenedCache, err := CacheGet(key, listened)
+	if err == nil {
+		listened = listenedCache.(int64)
+	} else {
+		database.Table("user_items").
+			Where("channel_id = ? AND user_id = ?", ce.Id, userId).
+			Count(&listened)
+		go CacheSet(key, listened)
+	}
+	return episodesIds - listened
 }
