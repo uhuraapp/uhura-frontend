@@ -20,7 +20,10 @@ func FindChannels(userId string, w http.ResponseWriter, request *http.Request) {
 	if isXml {
 		body, _ := ioutil.ReadAll(pageR.Body)
 		FetchOnlyChannelFromBytes(url, body)
-		// database.Scopes(ChannelDefaultQuery(userId)).Where("url = ?", url).Scan(&channels)
+		database.Table("channels").Where("url = ?", url).Scan(&channels)
+		for i, _ := range channels {
+			channels[i].SetSubscription(userId)
+		}
 	} else {
 		// channels = FetchTempChannelFromLinks(findLinks(pageR.Body))
 	}
