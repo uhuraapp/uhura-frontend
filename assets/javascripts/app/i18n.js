@@ -101,7 +101,11 @@ T.prototype.change = function(language, withAlert) {
   $("#languages button").removeClass("current");
   $("#"+language).addClass("current");
   if(withAlert){
-    alert(this.get("i18n.changed"));
+    if(App.Player.current.audio == null) {
+      window.location.reload()
+    } else {
+      alert(this.get("i18n.changed"));
+    }
   }
   ga('send', 'event', 'button', 'language', 'changed language');
 }
