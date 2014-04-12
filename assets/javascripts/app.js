@@ -14,8 +14,6 @@ $(document).ready(function(){
   $(window).on('resize', fixedSidebarHeight);
   $(document).on('click', '.more-info', showDescription);
   $(document).on('mouseenter mouseleave', '.unsubscribe', toggleHoverUnsubscribe);
-
-  fixedSidebarHeight();
 });
 
 var fixedSidebarHeight = function(){
