@@ -72,62 +72,53 @@ func init() {
 func IndexChannel(channel ChannelES) {
 	log.Println("Indexing Channel", channel.Id, "....")
 	id := strconv.Itoa(channel.Id)
-	r, e := escore.Index(true, "uhura", "channel", id, channel)
+	r, e := escore.Index(true, "channels", "channel", id, channel)
 	log.Println("Response", r)
-	log.Println("Response", e)
+	log.Println("err", e)
 }
 
 func IndexEpisode(episode EpisodeES) {
 	log.Println("Indexing Episodes", episode.Id, "....")
 	id := strconv.Itoa(episode.Id)
-	r, e := escore.Index(true, "uhura", "episode", id, episode)
+	r, e := escore.Index(true, "episodes", "episode", id, episode)
 	log.Println("Response", r)
-	log.Println("Response", e)
+	log.Println("err", e)
 }
 
 func SearchChannels(userId string, w http.ResponseWriter, request *http.Request) {
 	query := request.URL.Query()
 	q := strings.Join(query["q"], " ")
 
-	searchJson := map[string]interface{}{
+	search := map[string]interface{}{
 		"query": map[string]interface{}{
-			"multi_match": map[string]interface{}{
-				"fields": []string{"title^3", "url", "description^2"},
-				"query":  q,
+			"fuzzy_like_this": map[string]interface{}{
+				"fields":    []string{"title", "description"},
+				"like_text": q,
+			},
+		},
+		"filter": map[string]interface{}{
+			"type": map[string]string{
+				"value": "channel",
 			},
 		},
 	}
 
-	out, _ := escore.SearchRequest(true, "uhura", "channel", searchJson, "", 0)
+	out, _ := escore.SearchRequest(true, "channels", "channel", search, "", 0)
 	ids := getIds(out.Hits.Hits)
 
 	channels := make([]ChannelEntity, 0)
 
 	if len(ids) > 0 {
-		// database.Scopes(ChannelDefaultQuery(userId)).Where("channels.id in (?)", ids).Find(&channels)
+		database.Table("channels").Where("channels.id in (?)", ids).Find(&channels)
+	}
+
+	for i, _ := range channels {
+		channels[i].SetSubscription(userId)
 	}
 
 	go MIXPANEL.Track(userId, "search", map[string]interface{}{"q": q})
 
 	r.ResponseJSON(w, 200, map[string][]ChannelEntity{"channels": channels})
-}
-
-func SearchEpisodes(userId string, w http.ResponseWriter, request *http.Request) {
-	query := request.URL.Query()
-	q := strings.Join(query["q"], " ")
-
-	searchJson := map[string]interface{}{
-		"query": map[string]interface{}{
-			"multi_match": map[string]interface{}{
-				"fields": []string{"title", "description"},
-				"query":  q,
-			},
-		},
-	}
-
-	out, _ := escore.SearchRequest(true, "uhura", "episode", searchJson, "", 0)
-
-	r.ResponseJSON(w, 200, map[string][]int{"episodes": getIds(out.Hits.Hits)})
 }
 
 func getIds(hits []escore.Hit) []int {

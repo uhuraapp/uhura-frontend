@@ -280,7 +280,6 @@ func main() {
 
 	// API Search
 	apiRouter.HandleFunc("/s/channels", loginBuilder.Protected(core.SearchChannels))
-	apiRouter.HandleFunc("/s/episodes", loginBuilder.Protected(core.SearchEpisodes))
 
 	apiRouter.HandleFunc("/finder", loginBuilder.Protected(core.FindChannels))
 
