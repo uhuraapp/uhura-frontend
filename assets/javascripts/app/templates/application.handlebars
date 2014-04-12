@@ -25,14 +25,17 @@
       </li>
     </ul>
 
+
     <ol>
     {{#each channel in model}}
-      <li id="channel-{{unbound channel.id}}">
-        {{#link-to 'channel' channel.id}}
-          <img {{bind-attr src=channel.image_url}} />
-          <span class="title">{{channel.title}}</span>
-          <i>{{channel.to_view}}</i>
-        {{/link-to}}
+      {{#with channel}}
+        <li id="channel-{{unbound id}}" {{bind-attr class=to_view:new:ok}}>
+          {{#link-to 'channel' id}}
+            <img {{bind-attr src=image_url}} />
+            <span class="title">{{title}}</span>
+            {{#if to_view}}<i>{{to_view}}</i>{{/if}}
+          {{/link-to}}
+        {{/with}}
       </li>
     {{/each}}
     </ol>
