@@ -1,9 +1,25 @@
 # Cache Keys
 
 ```
-c:$channel_id           // The Channel
-s:$channel_id:$user_id  // The Subscription Status
-s:ids:$user_id          // User's channels subscriptions
-e:$episode_id           // The Episode
-el:$episode_id:$user_id // User's listened status
+s:ids:$user_id              []int             // User's channels subscriptions
+```
+
+```
+u:l:$channel_id:$user_id    int64             // User Channel's Episodes listened
+```
+
+```
+c:$channel_id               ChannelEntity     // The Channel
+```
+
+```
+c:e:$channel_id             []int             // The Channel's Episodes
+```
+
+```
+s:$channel_id:$user_id      bool              // The Subscription Status
+```
+
+```
+e:l:$episode_id:$user_id    []int             // The User's listened status
 ```
