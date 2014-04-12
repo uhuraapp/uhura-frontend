@@ -126,7 +126,7 @@ func GetSubscriptions(userId string, w http.ResponseWriter, request *http.Reques
 			channels = append(channels, cache.(ChannelEntity))
 		} else {
 			log.Println(err)
-			toDB = append(toDB, 1)
+			toDB = append(toDB, id.(int64))
 		}
 	}
 
@@ -149,10 +149,17 @@ func GetSubscriptions(userId string, w http.ResponseWriter, request *http.Reques
 				if marked {
 					listened = append(listened, eId)
 				}
+			} else {
+				err := database.Table("user_items").
+					Where("user_items.item_id = ? AND user_items.user_id = ?", eId, userId).
+					Find(&UserItem{}).Error
+				if err == nil {
+					listened = append(listened, eId)
+				}
 			}
 		}
 
-		channels[i].ToView = len(channel.Episodes) - len(listened)
+		channels[i].ToView = len(channels[i].Episodes) - len(listened)
 	}
 
 	r.ResponseJSON(w, 200, map[string]interface{}{"subscriptions": channels})
