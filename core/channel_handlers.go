@@ -1,27 +1,12 @@
 package core
 
 import (
-	"log"
 	"net/http"
 	"strconv"
 
 	r "github.com/dukex/uhura/core/helper"
 	"github.com/gorilla/mux"
 )
-
-// func GetChannels(userId string, w http.ResponseWriter, request *http.Request) {
-// 	query := request.URL.Query()
-// 	ids := query["ids[]"]
-
-// 	channels := make([]ChannelEntity, 0)
-
-// 	if len(ids) > 0 {
-// 		database.Table("channels").Where("id in (?)", ids).Scan(&channels)
-// 	}
-
-// 	r.ResponseJSON(w, 200, map[string]interface{}{"channels": channels})
-// 	return
-// }
 
 func ReloadChannel(userId string, w http.ResponseWriter, request *http.Request) {
 	vars := mux.Vars(request)
@@ -103,8 +88,6 @@ func GetSubscriptions(userId string, w http.ResponseWriter, request *http.Reques
 	var ids []int
 
 	subscriptionsCached, err := CacheGet("s:ids:"+userId, ids)
-
-	log.Println(subscriptionsCached, err)
 
 	if err == nil {
 		ids = subscriptionsCached.([]int)

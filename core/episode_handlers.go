@@ -8,17 +8,31 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// func SugestionsEpisodes(userId string, w http.ResponseWriter, request *http.Request) {
-// 	episodes := make([]EpisodeEntity, 0)
-// 	channels := make([]ChannelEntity, 0)
+func SugestionsEpisodes(userId string, w http.ResponseWriter, request *http.Request) {
+	var (
+		channelsIds []int
+		items       []int64
+	)
 
-// 	q := database.Table("user_channels").Joins("INNER JOIN channels ON channels.id = user_channels.channel_id JOIN (SELECT * FROM (SELECT ROW_NUMBER() OVER (PARTITION BY items.channel_id order by items.channel_id DESC) AS count,items.* FROM items) line WHERE line.count <= 5) items ON items.channel_id = channels.id FULL OUTER JOIN user_items ON user_items.item_id = items.id").Where("user_channels.user_id = ?", userId).Where("user_items.id IS NULL")
+	channels := make([]ChannelEntity, 0)
+	episodes := make([]EpisodeEntity, 0)
 
-// 	//q.Scopes(episodeDefaultQuery).Find(&episodes)
-// 	q.Select("DISTINCT ON (channels.id) channels.id, channels.*").Find(&channels)
+	subscriptionsCached, err := CacheGet("s:ids:"+userId, channelsIds)
 
-// 	r.ResponseJSON(w, 200, map[string]interface{}{"episodes": episodes, "channels": channels})
-// }
+	if err == nil {
+		channelsIds = subscriptionsCached.([]int)
+
+		if len(channelsIds) > 0 {
+			database.Table("channels").Where("channels.id in (?)", channelsIds).Find(&channels)
+		}
+
+		database.Table("user_items").Where("user_id = ?", userId).Pluck("item_id", &items)
+
+		database.Raw("SELECT * FROM (SELECT items.*,row_number() OVER (PARTITION BY channel_id ORDER BY title) AS number_rows FROM items WHERE channel_id IN (?) AND id NOT IN (?)) AS itemS WHERE number_rows <= 5 ORDER BY title", channelsIds, items).Scan(&episodes)
+	}
+
+	r.ResponseJSON(w, 200, map[string]interface{}{"episodes": episodes, "channels": channels})
+}
 
 func GetEpisodes(userId string, w http.ResponseWriter, request *http.Request) {
 	var userItems []int64
