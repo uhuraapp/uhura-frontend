@@ -23,29 +23,51 @@ function program3(depth0,data) {
 
 function program5(depth0,data) {
   
-  var buffer = '', stack1, helper, options;
-  data.buffer.push("\n      <li id=\"channel-");
-  data.buffer.push(escapeExpression(helpers.unbound.call(depth0, "channel.id", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\">\n        ");
-  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(6, program6, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "channel", "channel.id", options) : helperMissing.call(depth0, "link-to", "channel", "channel.id", options));
+  var buffer = '', stack1;
+  data.buffer.push("\n      ");
+  stack1 = helpers['with'].call(depth0, "channel", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(6, program6, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n      </li>\n    ");
   return buffer;
   }
 function program6(depth0,data) {
   
-  var buffer = '', stack1;
-  data.buffer.push("\n          <img ");
+  var buffer = '', stack1, helper, options;
+  data.buffer.push("\n        <li id=\"channel-");
+  data.buffer.push(escapeExpression(helpers.unbound.call(depth0, "id", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data})));
+  data.buffer.push("\" ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
-    'src': ("channel.image_url")
+    'class': ("to_view:new:ok")
+  },hashTypes:{'class': "ID"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(">\n          ");
+  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "channel", "id", options) : helperMissing.call(depth0, "link-to", "channel", "id", options));
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n        ");
+  return buffer;
+  }
+function program7(depth0,data) {
+  
+  var buffer = '', stack1;
+  data.buffer.push("\n            <img ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'src': ("image_url")
   },hashTypes:{'src': "ID"},hashContexts:{'src': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(" />\n          <span class=\"title\">");
-  stack1 = helpers._triageMustache.call(depth0, "channel.title", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  data.buffer.push(" />\n            <span class=\"title\">");
+  stack1 = helpers._triageMustache.call(depth0, "title", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("</span>\n          <i>");
-  stack1 = helpers._triageMustache.call(depth0, "channel.to_view", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  data.buffer.push("</span>\n            ");
+  stack1 = helpers['if'].call(depth0, "to_view", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(8, program8, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("</i>\n        ");
+  data.buffer.push("\n          ");
+  return buffer;
+  }
+function program8(depth0,data) {
+  
+  var buffer = '', stack1;
+  data.buffer.push("<i>");
+  stack1 = helpers._triageMustache.call(depth0, "to_view", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</i>");
   return buffer;
   }
 
@@ -57,7 +79,7 @@ function program6(depth0,data) {
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n      </li>\n      <li>\n        <a href=\"/users/sign_out\">\n          <span class=\"typcn typcn-power-outline\"></span>");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "sidebar.sign_out", options) : helperMissing.call(depth0, "t", "sidebar.sign_out", options))));
-  data.buffer.push("\n        </a>\n      </li>\n    </ul>\n\n    <ol>\n    ");
+  data.buffer.push("\n        </a>\n      </li>\n    </ul>\n\n\n    <ol>\n    ");
   stack1 = helpers.each.call(depth0, "channel", "in", "model", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(5, program5, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n    </ol>\n\n    <footer>\n      <a href=\"http://twitter.com/UhuraApp\"><span class=\"typcn typcn-social-twitter\"> </span>");
@@ -72,7 +94,7 @@ function program6(depth0,data) {
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n  ");
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.PlayerView", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\n</div>\n\n<div id=\"languages\">\n  <button id=\"pt\" onclick=\"t.change(this.id,true);\">pt</button>\n  <button id=\"en\" onclick=\"t.change(this.id,true);\">en</button>\n</div>\n\n<div id=\"fb-root\"></div>\n");
+  data.buffer.push("\n</div>\n\n<div id=\"languages\">\n  <button id=\"pt\" onclick=\"t.change(this.id,true);\">pt</button>\n  <button id=\"en\" onclick=\"t.change(this.id,true);\">en</button>\n</div>\n<script>\n$(document).ready(function(){\n  fixedSidebarHeight();\n  window.t.init();\n})\n</script>\n<div id=\"fb-root\"></div>\n\n");
   return buffer;
   
 });
@@ -301,6 +323,77 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   data.buffer.push(" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "playpause", "episode", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
   data.buffer.push(">\n</i>\n\n\n\n");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["episode"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', stack1, helper, options, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;
+
+function program1(depth0,data) {
+  
+  var buffer = '', stack1;
+  data.buffer.push(" ");
+  stack1 = helpers._triageMustache.call(depth0, "channel.title", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push(" ");
+  return buffer;
+  }
+
+function program3(depth0,data) {
+  
+  var buffer = '', helper, options;
+  data.buffer.push("\n    <button class=\"uk-button uk-button-small uk-button-danger typcn typcn-times\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "unsubscribeChannel", "channel.id", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
+  data.buffer.push("> ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "channel_new.button.unsubscribe", options) : helperMissing.call(depth0, "t", "channel_new.button.unsubscribe", options))));
+  data.buffer.push("</button>\n    ");
+  return buffer;
+  }
+
+function program5(depth0,data) {
+  
+  var buffer = '', helper, options;
+  data.buffer.push("\n    <button class=\"uk-button uk-button-small uk-button-success subscribe\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "subscribeChannel", "channel.id", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
+  data.buffer.push("> ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "channel_new.button.subscribe", options) : helperMissing.call(depth0, "t", "channel_new.button.subscribe", options))));
+  data.buffer.push("</button>\n    ");
+  return buffer;
+  }
+
+function program7(depth0,data) {
+  
+  
+  data.buffer.push("\n  <script>\n    $(document).ready(function(){\n      sublime.load();\n      sublime.ready(function(){\n        App.PLAYER.APIS.video.init();\n      });\n   });\n  </script>\n  ");
+  }
+
+  data.buffer.push("<div id=\"episode\">\n  <h2>");
+  stack1 = helpers._triageMustache.call(depth0, "title", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</h2>\n  <h3>  ");
+  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "channel", "channel.id", options) : helperMissing.call(depth0, "link-to", "channel", "channel.id", options));
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n\n    ");
+  stack1 = helpers['if'].call(depth0, "channel.subscribed", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(5, program5, data),fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n  </h3>\n\n  ");
+  stack1 = helpers['if'].call(depth0, "title", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n\n  <video width=\"100%\"\n    class='sublime'\n    ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'data-title': ("title"),
+    'data-uid': ("id"),
+    'data-sharing-url': ("url"),
+    'data-sharing-text': ("title")
+  },hashTypes:{'data-title': "ID",'data-uid': "ID",'data-sharing-url': "ID",'data-sharing-text': "ID"},hashContexts:{'data-title': depth0,'data-uid': depth0,'data-sharing-url': depth0,'data-sharing-text': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push("\n    data-logo-link-url='http://uhuraapp.com'\n    data-autoresize='fit'\n    data-logo-type='custom'\n    data-logo-link-url='http://www.uhuraapp.com/assets/logo.png'\n    data-autoplay='true' data-player-kit='1'>\n    <source ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'src': ("source_url")
+  },hashTypes:{'src': "ID"},hashContexts:{'src': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(">\n  </video>\n</div>\n");
   return buffer;
   
 });
