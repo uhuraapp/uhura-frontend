@@ -5,7 +5,7 @@ App.PlayPauseButtonComponent = Ember.Component.extend({
     playpause: function(episode){
       var __playing = function(episode){
         return function(){
-          App.Player.playpause(episode);
+          App.PLAYER.playpause(episode);
         }
       }
       window.auth.withLoggedUser(__playing(episode));

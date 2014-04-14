@@ -95,13 +95,14 @@ T.prototype.get = function(key) {
   return this.currentKeys()[key]
 };
 
+
 T.prototype.change = function(language, withAlert) {
   $.cookie("language", language);
   this.language = language;
   $("#languages button").removeClass("current");
   $("#"+language).addClass("current");
   if(withAlert){
-    if(App.Player.current.audio == null) {
+    if(App.PLAYER.isPlaying) {
       window.location.reload()
     } else {
       alert(this.get("i18n.changed"));

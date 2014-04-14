@@ -3,7 +3,7 @@ App.EpisodeListItemComponent = Ember.Component.extend({
   click: function(e){
     element  = $(e.toElement)
     if(element.is(".listened")) {
-      App.Player.listened(this.episode);
+      App.PLAYER.listened(this.episode);
     }
   }
 });

@@ -1,110 +1,147 @@
 /* global App, $,soundManager */
-App.Player = {};
-App.Player.episodes = {};
-App.Player.events = {};
-App.Player.current = {
-  model: null,
-  audio: null
+App.PLAYER = {};
+App.PLAYER.isPlaying = false;
+App.PLAYER.current = null
+App.PLAYER.APIS = {
+  video: {},
+  audio: {}
+}
+
+App.PLAYER.playpause = function(episode){
+  "use strict";
+  if(App.PLAYER.isPlaying && App.PLAYER.current.id === episode.id){
+    App.PLAYER.togglePause(episode);
+  } else {
+    App.PLAYER.play(episode);
+  }
 };
 
-App.Player.events.loading = function(){
+App.PLAYER.togglePause = function (episode) {
+  var api = App.PLAYER.getApi(episode),
+      newPlayingStatus = !App.PLAYER.isPlaying;
+
+  episode.set('playing', newPlayingStatus);
+  ga('send', 'event', episode.get('mediaApi'), 'togglePause', 'togglePause episode');
+
+  api.togglePause(episode);
+
+  App.PLAYER.isPlaying = newPlayingStatus;
+}
+
+App.PLAYER.stopCurrent = function() {
+  if(App.PLAYER.isPlaying) {
+    var api = App.PLAYER.getApi(App.PLAYER.current);
+    api.stop();
+    App.PLAYER.current.set("playing", false);
+    ga('send', 'event', App.PLAYER.current.get('mediaApi'), 'stop', 'stop episode');
+    App.PLAYER.current = null
+    App.PlayerController.set("model", null);
+  }
+}
+
+App.PLAYER.play = function (episode) {
+  App.PLAYER.stopCurrent();
+
+  var api = App.PLAYER.getApi(episode);
+  if(api.play(episode)){
+    App.PLAYER.current = episode;
+    App.PLAYER.isPlaying = true;
+    App.PlayerController.set("model", episode);
+    episode.set("playing", true);
+    ga('send', 'event', episode.get('mediaApi'), 'play', 'play episode');
+  }
+}
+
+App.PLAYER.getApi = function (episode) {
+  var api = App.PLAYER.APIS[episode.get('mediaApi')];
+  return api;
+}
+
+App.PLAYER.listened = function(episode) {
   "use strict";
-  var percent = (this.bytesLoaded * 100)/this.bytesTotal;
-  $("#player-loader div.loading").css("width", percent+"%");
+  var url = "/api/episodes/" + episode.id + "/listened";
+  $.post(url).then(function() {
+    episode.set("listened", true);
+    ga('send', 'event', episode.get('mediaApi'), 'listened', 'listened episode');
+  });
 };
 
-App.Player.events.playing = function(){
+// -- API AUDIO --
+App.PLAYER.APIS.audio.episodes = {};
+
+App.PLAYER.APIS.audio.play = function(episode) {
   "use strict";
-  var playing = (this.position * 100)/this.duration;
-  $("#player-loader div.playing").css("width", playing+"%");
+
+  var audio = App.PLAYER.APIS.audio.getAudio(episode.id);
+  App.PLAYER.APIS.audio.current = audio;
+  App.PLAYER.APIS.audio.current.play();
+
+  return true;
+}
+
+App.PLAYER.APIS.audio.togglePause = function(episode) {
+  "use strict";
+  App.PLAYER.APIS.audio.current.togglePause();
 };
 
-App.Player.events.onload = function(){
+App.PLAYER.APIS.audio.stop = function(episode) {
   "use strict";
-  this.onPosition(this.duration * 0.95, function() {
-    var episode = App.Player.playing;
-    App.Player.listened(episode);
- });
+  App.PLAYER.APIS.audio.current.destruct();
+  App.PLAYER.APIS.audio.current = null;
 };
 
-App.Player.getAudio = function(id){
+// private
+App.PLAYER.APIS.audio.getAudio = function(id){
   "use strict";
-  if(!App.Player.episodes[id]){
+  if(!App.PLAYER.APIS.audio.episodes[id]){
     var el = $("[data-id="+ id + "]"),
     audio = el.data(),
     sound = soundManager.createSound({
       id: "e" + audio.id,
       url: [audio.source_url],
-      onplay: App.Player.events.play,
-      onpause: App.Player.events.pause,
-      whileloading: App.Player.events.loading,
-      whileplaying: App.Player.events.playing,
-      onload: App.Player.events.onload,
+      // onplay: App.Player.events.play,
+      // onpause: App.Player.events.pause,
+      // whileloading: App.Player.events.loading,
+      // whileplaying: App.Player.events.playing,
+      // onload: App.Player.events.onload,
       autoLoad: true
     });
-    App.Player.episodes[id] = sound;
+    App.PLAYER.APIS.audio.episodes[id] = sound;
   }
-  return App.Player.episodes[id];
-};
-
-App.Player.play = function(episode){
-  "use strict";
-
-  var playingEpisode = App.Player.current.model;
-  if(playingEpisode){
-    App.Player.stop(playingEpisode);
-  }
-
-  var audio = this.getAudio(episode.id);
-
-  App.Player.current.audio = audio;
-  App.Player.current.model = episode;
-
-  App.PlayerController.set("model", episode);
-  episode.set("playing", true);
-
-  App.Player.current.audio.play();
-
-  ga('send', 'event', 'button', 'play', 'play episode');
+  return App.PLAYER.APIS.audio.episodes[id];
 };
 
 
-App.Player.togglePause = function(episode) {
-  "use strict";
-  var isPlaying = App.Player.current.model.get("playing");
-  App.Player.current.audio.togglePause();
-  episode.set("playing", !isPlaying);
-  ga('send', 'event', 'button', 'togglePause', 'togglePause episode');
+//\ -- API VIDEO --
+
+App.PLAYER.APIS.video.play = function(episode) {
+  window.location = ("/app/" + episode.get('channel_id') +"/" +episode.id+"?play")
 };
 
-App.Player.stop = function(episode) {
-  "use strict";
-  App.PlayerController.set("model", null);
-  $("#player-loader div").css("width", 0);
-  App.Player.current.audio.destruct();
-  App.Player.current.audio = App.Player.current.model = null;
-  episode.set("playing", false);
-  ga('send', 'event', 'button', 'stop', 'stop episode');
+App.PLAYER.APIS.video.togglePause = function(episode) {
 };
 
-App.Player.playpause = function(episode){
-  "use strict";
-  var isPlaying = App.Player.current.model;
-  if(isPlaying && isPlaying.id === episode.id){
-    App.Player.togglePause(episode);
-  } else {
-    App.Player.play(episode);
-  }
+App.PLAYER.APIS.video.stop = function(episode) {
 };
 
-App.Player.listened = function(episode) {
-  "use strict";
-  var url = "/api/episodes/" + episode.id + "/listened";
-  $.post(url).then(function() {
-    episode.set("listened", true);
-    ga('send', 'event', 'button', 'listened', 'listened episode');
-  });
-};
+
+function createVideo(video, source) {
+  var videoHTML = $("<video></video>")
+    .attr("id", video.id)
+    .attr("title", video.title)
+    .attr("width", "640")
+    .attr("preload", "auto")
+    .attr("data-uid", video.id)
+    .addClass("sublime");
+
+  var sourceHTML = $("<source><source>")
+    .attr("src", source.url)
+
+  videoHTML.append(sourceHTML)
+
+  return videoHTML;
+}
+
 
 soundManager.setup({
   url: "/swf",
