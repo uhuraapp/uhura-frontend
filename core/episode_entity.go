@@ -12,4 +12,5 @@ type EpisodeEntity struct {
 	Uri         interface{} `json:"uri"`
 	PublishedAt time.Time   `json:"published_at"`
 	Duration    string      `json:"duration"`
+	Type        string      `json:"type"`
 }

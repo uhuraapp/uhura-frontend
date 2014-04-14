@@ -168,7 +168,7 @@ func itemFetchHandler(feed *rss.Feed, ch *rss.Channel, items []*rss.Item) {
 
 			itemTmp := Item{Title: itemdata.Title}
 
-			database.Where(Item{Key: key}).Assign(Item{Uri: itemTmp.MakeUri(itemdata.Title), Title: itemdata.Title, SourceUrl: itemdata.Enclosures[0].Url, Description: itemdata.Description, ChannelId: channel.Id, PublishedAt: publishedAt, Duration: duration}).FirstOrCreate(&item)
+			database.Where(Item{Key: key}).Assign(Item{Uri: itemTmp.MakeUri(itemdata.Title), Title: itemdata.Title, SourceUrl: itemdata.Enclosures[0].Url, Description: itemdata.Description, ChannelId: channel.Id, PublishedAt: publishedAt, Duration: duration, Type: itemdata.Enclosures[0].Type}).FirstOrCreate(&item)
 		}
 	}
 }
