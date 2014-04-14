@@ -11,32 +11,32 @@ module.exports = function (grunt) {
       },
       gruntfile: {
         files: 'Gruntfile.js',
-        tasks: ['jshint:gruntfile']
+        tasks: ['jshint:gruntfile', 'notify:watch']
       },
       hint_app: {
         files: ['assets/javascripts/*.js'],
-        tasks: ['jshint:app']
+        tasks: ['jshint:app', 'notify:watch']
       },
       app_js: {
         files: ['assets/javascripts/*.js', 'assets/javascripts/app/**/*.js'],
-        tasks: ['jshint:app', 'emberTemplates', 'concat:app']
+        tasks: ['jshint:app', 'emberTemplates', 'concat:app', 'notify:watch']
       },
       vendor_js: {
         files: ['assets/javascripts/vendor/*.js'],
-        tasks: ['concat:vendor', 'uglify:vendor']
+        tasks: ['concat:vendor', 'uglify:vendor', 'notify:watch']
       },
       home_css: {
-        files: ['assets/stylesheets/home.sass'],
+        files: ['assets/stylesheets/home.sass', 'notify:watch'],
         tasks: ['sass:app']
       },
       stylesheets: {
         files: ['assets/stylesheets/**/*'],
-        tasks: ['sass:app']
+        tasks: ['sass:app', 'notify:watch']
       },
       emberTemplates: {
         files: 'assets/javascripts/app/templates/**/*.handlebars',
-        tasks: ['emberTemplates', 'concat:app']
-      },
+        tasks: ['emberTemplates', 'concat:app', 'notify:watch']
+      }
     };
 
   if(process.env.ENV != 'development'){
@@ -62,6 +62,13 @@ module.exports = function (grunt) {
   grunt.initConfig({
     envrioment: process.env.ENV || "development",
     watch: watchConfig,
+    notify: {
+      watch: {
+        options: {
+          message: "Grunt Finished"
+        }
+      },
+    },
     jshint: {
       gruntfile: {
         src: ['Gruntfile.js']

@@ -23,6 +23,7 @@
     "grunt-contrib-uglify": "latest",
     "grunt-contrib-jshint": "latest",
     "grunt-contrib-sass": "latest",
-    "grunt-ember-templates": "latest"
+    "grunt-ember-templates": "latest",
+    "grunt-notify": "latest"
   }
 }
