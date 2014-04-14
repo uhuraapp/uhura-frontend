@@ -124,23 +124,21 @@ App.PLAYER.APIS.video.togglePause = function(episode) {
 App.PLAYER.APIS.video.stop = function(episode) {
 };
 
+App.PLAYER.APIS.video.init = function() {
+  App.PLAYER.APIS.video.current = sublime.player($('video')[0]);
+  App.PLAYER.APIS.video.listened = false;
+  App.PLAYER.APIS.current = Ember.Object.create({id: $('video').data('uid'), mediaApi: 'video'})
 
-function createVideo(video, source) {
-  var videoHTML = $("<video></video>")
-    .attr("id", video.id)
-    .attr("title", video.title)
-    .attr("width", "640")
-    .attr("preload", "auto")
-    .attr("data-uid", video.id)
-    .addClass("sublime");
+  App.PLAYER.isPlaying = true;
 
-  var sourceHTML = $("<source><source>")
-    .attr("src", source.url)
-
-  videoHTML.append(sourceHTML)
-
-  return videoHTML;
-}
+  App.PLAYER.APIS.video.current.on('timeUpdate', function(player, time) {
+    var p = (time * 100)/player.duration();
+    if(p > 90 && !App.PLAYER.APIS.video.listened){
+      App.PLAYER.APIS.video.listened = true;
+      App.PLAYER.listened(App.PLAYER.APIS.current)
+    }
+  });
+};
 
 
 soundManager.setup({

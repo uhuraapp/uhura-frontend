@@ -1,6 +1,6 @@
 <div id="episode">
   <h2>{{title}}</h2>
-  <h3>{{channel.title}}
+  <h3>  {{#link-to 'channel' channel.id}} {{channel.title}} {{/link-to}}
 
     {{#if channel.subscribed}}
     <button class="uk-button uk-button-small uk-button-danger typcn typcn-times" {{action 'unsubscribeChannel' channel.id}}> {{t 'channel_new.button.unsubscribe'}}</button>
@@ -12,12 +12,22 @@
   {{#if title}}
   <script>
     $(document).ready(function(){
-     sublime.load()
+      sublime.load();
+      sublime.ready(function(){
+        App.PLAYER.APIS.video.init();
+      });
    });
   </script>
   {{/if}}
 
-  <video width="100%" class='sublime' data-title='{{unbound title}}' data-uid='{{unbound id}}' data-autoresize='fit' data-logo-type='custom' data-logo-link-url='http://www.uhuraapp.com/assets/logo.png' data-autoplay='true' data-player-kit='1'>
+  <video width="100%"
+    class='sublime'
+    {{bind-attr data-title=title data-uid=id data-sharing-url=url data-sharing-text=title}}
+    data-logo-link-url='http://uhuraapp.com'
+    data-autoresize='fit'
+    data-logo-type='custom'
+    data-logo-link-url='http://www.uhuraapp.com/assets/logo.png'
+    data-autoplay='true' data-player-kit='1'>
     <source {{bind-attr src=source_url}}>
   </video>
 </div>
