@@ -34,6 +34,6 @@ App.Episode = DS.Model.extend({
   }.property("channel_id"),
   url: function(){
     host = window.location.host
-    return "http://"+host+"/channels/" + this.get("channel_id") + "/" + this.get("uri")
+    return "http://"+host+"/app/" + this.get("channel_id") + "/" + this.get("id")
   }.property("channel_id", "id")
 });
