@@ -81,7 +81,14 @@ func SetEpisodeListened(userId string, w http.ResponseWriter, request *http.Requ
 	id, _ := strconv.Atoi(vars["id"])
 	userIdInt, _ := strconv.Atoi(userId)
 
-	database.Save(&UserItem{UserId: int64(userIdInt), ItemId: int64(id), Viewed: true})
+	var episode EpisodeEntity
+	database.Table("items").First(&episode, id)
+	database.Save(&UserItem{
+		UserId:    int64(userIdInt),
+		ItemId:    int64(id),
+		Viewed:    true,
+		ChannelId: episode.ChannelId,
+	})
 
 	go func() {
 		p := MIXPANEL.Identify(userId)
