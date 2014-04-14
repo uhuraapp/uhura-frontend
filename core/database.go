@@ -24,30 +24,32 @@ func init() {
 }
 
 func DatabaseManager() {
-	database.Where("title is NULL").Or("title = ''").Delete(&Channel{})
+	if os.Getenv("SETUP_DATABASE") == "true" {
+		database.Where("title is NULL").Or("title = ''").Delete(&Channel{})
 
-	var channels []Channel
-	database.Table("channels").Find(&channels)
-	for _, channel := range channels {
-		TouchChannel(int(channel.Id))
-	}
-
-	var users []User
-	database.Table("users").Find(&users)
-	for _, user := range users {
-		user.ProviderId = user.GoogleId
-		if user.Provider == "" {
-			user.Provider = "google	"
+		var channels []Channel
+		database.Table("channels").Find(&channels)
+		for _, channel := range channels {
+			TouchChannel(int(channel.Id))
 		}
-		database.Save(&user)
-	}
 
-	var userItems []UserItem
-	database.Table("user_items").Find(&userItems)
-	for _, listened := range userItems {
-		var item Item
-		database.Table("items").First(&item, listened.ItemId)
-		database.Table("user_items").Where("id = ?", listened.Id).
-			Update("channel_id", item.ChannelId)
+		var users []User
+		database.Table("users").Find(&users)
+		for _, user := range users {
+			user.ProviderId = user.GoogleId
+			if user.Provider == "" {
+				user.Provider = "google	"
+			}
+			database.Save(&user)
+		}
+
+		var userItems []UserItem
+		database.Table("user_items").Find(&userItems)
+		for _, listened := range userItems {
+			var item Item
+			database.Table("items").First(&item, listened.ItemId)
+			database.Table("user_items").Where("id = ?", listened.Id).
+				Update("channel_id", item.ChannelId)
+		}
 	}
 }
