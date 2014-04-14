@@ -59,6 +59,23 @@ func GetEpisodes(userId string, w http.ResponseWriter, request *http.Request) {
 	r.ResponseJSON(w, 200, map[string]interface{}{"episodes": episodes})
 }
 
+func GetEpisode(userId string, w http.ResponseWriter, request *http.Request) {
+	vars := mux.Vars(request)
+	id := vars["id"]
+	idI, _ := strconv.Atoi(id)
+
+	var episode EpisodeEntity
+
+	err := database.Table("items").First(&episode, idI).Error
+
+	if err != nil {
+		w.WriteHeader(404)
+		return
+	}
+
+	r.ResponseJSON(w, 200, map[string]interface{}{"episode": episode})
+}
+
 func SetEpisodeListened(userId string, w http.ResponseWriter, request *http.Request) {
 	vars := mux.Vars(request)
 	id, _ := strconv.Atoi(vars["id"])
