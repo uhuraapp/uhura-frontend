@@ -11,7 +11,6 @@ import (
 func SugestionsEpisodes(userId string, w http.ResponseWriter, request *http.Request) {
 	var (
 		channelsIds []int
-		items       []int64
 	)
 
 	channels := make([]ChannelEntity, 0)
@@ -26,9 +25,7 @@ func SugestionsEpisodes(userId string, w http.ResponseWriter, request *http.Requ
 			database.Table("channels").Where("channels.id in (?)", channelsIds).Find(&channels)
 		}
 
-		database.Table("user_items").Where("user_id = ?", userId).Pluck("item_id", &items)
-
-		database.Raw("SELECT * FROM (SELECT items.*,row_number() OVER (PARTITION BY channel_id ORDER BY title) AS number_rows FROM items WHERE channel_id IN (?) AND id NOT IN (?)) AS itemS WHERE number_rows <= 5 ORDER BY title", channelsIds, items).Scan(&episodes)
+		database.Raw("SELECT * FROM (SELECT items.*,row_number() OVER (PARTITION BY items.channel_id ORDER BY items.title) AS number_rows FROM items LEFT JOIN user_items ON user_items.item_id = items.id AND user_items.user_id = ? AND user_items.viewed = FALSE WHERE items.channel_id IN (?)) AS itemS WHERE number_rows <= 5 ORDER BY title", userId, channelsIds).Scan(&episodes)
 	}
 
 	r.ResponseJSON(w, 200, map[string]interface{}{"episodes": episodes, "channels": channels})
