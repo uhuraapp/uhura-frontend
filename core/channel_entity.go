@@ -62,6 +62,14 @@ func getToView(channelId int64, userId string) int64 {
 
 	listenedCache, err := CacheGet(key, listened)
 	if err == nil {
+		switch listenedCache := listenedCache.(type) {
+		case int64:
+			return listenedCache
+		case uint64:
+			return int64(listenedCache)
+		default:
+			return 0
+		}
 		listened = listenedCache.(int64)
 	} else {
 		database.Table("user_items").
@@ -69,6 +77,7 @@ func getToView(channelId int64, userId string) int64 {
 			Count(&listened)
 		go CacheSet(key, listened)
 	}
+
 	return episodesIds - listened
 }
 
