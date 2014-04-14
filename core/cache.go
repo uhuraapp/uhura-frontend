@@ -67,8 +67,13 @@ func init() {
 	memcachedUrl := os.Getenv("MEMCACHEDCLOUD_SERVERS")
 	memcachedPassword := os.Getenv("MEMCACHEDCLOUD_PASSWORD")
 	memcachedUsername := os.Getenv("MEMCACHEDCLOUD_USERNAME")
+	var memcachedErr error
 
-	CACHE, _ = memcache.Connect("tcp", memcachedUrl)
+	CACHE, memcachedErr = memcache.Connect("tcp", memcachedUrl)
+
+	if memcachedErr != nil {
+		log.Panic("Memcached error")
+	}
 
 	if memcachedPassword != "" {
 		CACHE.Auth(memcachedUsername, memcachedPassword)
