@@ -93,6 +93,8 @@ func SetEpisodeListened(userId string, w http.ResponseWriter, request *http.Requ
 	go func() {
 		p := MIXPANEL.Identify(userId)
 		p.Track("listened", map[string]interface{}{"Episode ID": id})
+
+		CACHE.Del(0, "u:l:"+strconv.Itoa(int(episode.ChannelId))+":"+userId)
 	}()
 
 	r.ResponseJSON(w, 202, nil)

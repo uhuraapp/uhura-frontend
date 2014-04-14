@@ -7,7 +7,7 @@ type EpisodeEntity struct {
 	Title       string      `json:"title"`
 	Description string      `json:"description"`
 	Listened    interface{} `json:"listened"`
-	ChannelId   int         `json:"channel_id"`
+	ChannelId   int64       `json:"channel_id"`
 	SourceUrl   string      `json:"source_url"`
 	Uri         interface{} `json:"uri"`
 	PublishedAt time.Time   `json:"published_at"`
