@@ -26,6 +26,12 @@ func init() {
 func DatabaseManager() {
 	database.Where("title is NULL").Or("title = ''").Delete(&Channel{})
 
+	var channels []Channel
+	database.Table("channels").Find(&channels)
+	for _, channel := range channels {
+		TouchChannel(int(channel.Id))
+	}
+
 	var users []User
 	database.Table("users").Find(&users)
 	for _, user := range users {
