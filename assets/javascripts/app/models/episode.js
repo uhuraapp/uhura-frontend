@@ -8,7 +8,13 @@ App.Episode = DS.Model.extend({
   channel_id:      DS.attr('number'),
   uri:             DS.attr(),
   duration:        DS.attr(),
-  type: DS.attr(),
+  type:           DS.attr(),
+  isVideo: function(){
+    return this.get('mediaApi') === 'video';
+  }.property('type'),
+  isAudio: function(){
+    return this.get('mediaApi') === 'audio';
+  }.property('type'),
   mediaApi: function() {
     var type = this.get("type")
     if(type.length === 0) {
