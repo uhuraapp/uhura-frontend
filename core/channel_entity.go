@@ -60,25 +60,31 @@ func getToView(channelId int64, userId string) int64 {
 
 	episodesIds := int64(len(getEpisodesIds(channelId)))
 
-	listenedCache, err := CacheGet(key, listened)
-	if err == nil {
-		switch listenedCache := listenedCache.(type) {
-		case int64:
-			return listenedCache
-		case uint64:
-			return int64(listenedCache)
-		default:
-			return 0
-		}
-		listened = listenedCache.(int64)
-	} else {
-		database.Table("user_items").
-			Where("channel_id = ? AND user_id = ?", channelId, userId).
-			Count(&listened)
-		go CacheSet(key, listened)
-	}
 
-	return episodesIds - listened
+	// listenedCache, err := CacheGet(key, listened)
+	// if err == nil  {
+	// 	switch listenedCache := listenedCache.(type) {
+	// 	case int64:
+	// 		return listenedCache
+	// 	case uint64:
+	// 		return int64(listenedCache)
+	// 	default:
+	// 		return 0
+	// 	}
+	// 	log.Println("...", listenedCache)
+	// 	listened = listenedCache.(int64)
+	// } else {
+	database.Table("user_items").
+		Where("channel_id = ? AND user_id = ?", channelId, userId).
+		Count(&listened)
+	go CacheSet(key, listened)
+	//}
+
+	listenedCount := episodesIds - listened
+	if listenedCount < 0 {
+		listenedCount = 0
+	}
+	return listenedCount
 }
 
 func getEpisodesIds(channelId int64) []int64 {
