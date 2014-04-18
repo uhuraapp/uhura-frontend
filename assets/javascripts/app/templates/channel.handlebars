@@ -1,24 +1,22 @@
 <div id="about">
-  <img {{bind-attr src=image_url}} />
-  <div>
+  <div class="column four-twelfth">
+    <img {{bind-attr src=image_url}} />
+  </div>
+  <div class="column eight-twelfth">
     <h2>
       {{#if loading}}
-      <span id="loading" data-uk-tooltip="{pos:'bottom'}" title="{{t "channel.status.loading"}}"></span>
+        <span id="loading" data-uk-tooltip="{pos:'bottom'}" title="{{t "channel.status.loading"}}"></span>
       {{/if}}
 
       {{title}}
 
       {{#if subscribed}}
-      <button class="uk-button uk-button-small uk-button-danger typcn typcn-times" {{action 'unsubscribeChannel' id}}> {{t 'channel_new.button.unsubscribe'}}</button>
+        <button class="uk-button uk-button-small uk-button-danger typcn typcn-times" {{action 'unsubscribeChannel' id}}> {{t 'channel_new.button.unsubscribe'}}</button>
       {{else}}
-      <button class="uk-button uk-button-small uk-button-success subscribe" {{action 'subscribeChannel' id}}> {{t 'channel_new.button.subscribe'}}</button>
+        <button class="uk-button uk-button-small uk-button-success subscribe" {{action 'subscribeChannel' id}}> {{t 'channel_new.button.subscribe'}}</button>
       {{/if}}
 
-      {{#if loading}}
-        <button id="reload" class="uk-button uk-button-link" data-uk-tooltip="{pos:'bottom'}" title="{{t "channel.message.loading"}}">Loading...</button>
-      {{else}}
-        <button id="reload" class="uk-button" {{action 'reloadChannel' id}}><i class="typcn typcn-refresh"></i></button>
-      {{/if}}
+
     </h2>
     {{description}}
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -34,7 +32,14 @@
   </div>
 </div>
 
-<h3>Episodes</h3>
+<h3>
+  Episodes
+  {{#if loading}}
+    <button id="reload" class="uk-button uk-button-link" data-uk-tooltip="{pos:'bottom'}" title="{{t "channel.message.loading"}}">Loading...</button>
+  {{else}}
+    <button id="reload" class="uk-button" {{action 'reloadChannel' id}}><i class="typcn typcn-refresh"></i></button>
+  {{/if}}
+</h3>
 <ul class="episodes">
   {{#each episode in episodes}}
   {{episode-list-item episode=episode}}
