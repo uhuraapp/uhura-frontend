@@ -4,3 +4,4 @@ tmp/*
 cache*.json
 node_modules
 uhura
+output.txt
