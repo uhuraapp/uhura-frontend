@@ -14,11 +14,20 @@ $(document).ready(function(){
   $(window).on('resize', fixedSidebarHeight);
   $(document).on('click', '.more-info', showDescription);
   $(document).on('mouseenter mouseleave', '.unsubscribe', toggleHoverUnsubscribe);
+  $(document).on('click', '#toggle-screen', toggleScreen)
+
 });
+
+var toggleScreen = function() {
+  $("#content").toggleClass("nine-twelfth");
+  $("#content").toggleClass("full");
+  $("#aside-wrapper").toggleClass("uk-hidden")
+};
 
 var fixedSidebarHeight = function(){
   'use strict';
   $('aside').css('height', window.innerHeight + 'px');
+  $('#aside-wrapper').css('height', window.innerHeight + 'px');
 };
 
 var showDescription = function(e){

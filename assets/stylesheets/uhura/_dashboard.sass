@@ -21,7 +21,6 @@
       color: #333
       text-decoration: none
 
-
 ul.episodes
   margin-top: 5px
   li
@@ -43,9 +42,12 @@ ul.episodes
     float: left
     padding: 0 10px
     span
+      max-width: 80%
+      overflow: hidden
+      text-overflow: ellipsis
+      white-space: nowrap
       display: inline-block
       float: left
-
   button.more-info, button.listened
     border: none
     background: none
@@ -177,7 +179,9 @@ ul.episodes
     background: #FFF
     margin-top: 10px
 
-@media screen and (max-width: 767px)
+@media screen and (max-width: 640px)
+  body
+    border: 5px solid red
   .uk-navbar-toggle
     padding: 0 5px
 
@@ -201,7 +205,6 @@ ul.episodes
           margin-top: 30%
       button.more-info, button.listened
         text-align: center
-
 
 @-webkit-keyframes playing
   0%, 20%, 80%, 100%
