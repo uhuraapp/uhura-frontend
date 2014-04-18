@@ -54,6 +54,7 @@ func UnsubscribeChannel(userId string, w http.ResponseWriter, request *http.Requ
 	}()
 
 	CACHE.Del(0, "s:"+id+":"+userId)
+	CACHE.Del(0, "s:ids:"+userId)
 
 	database.Table("user_channels").
 		Where(UserChannel{ChannelId: int64(channelId), UserId: int64(userIdInt)}).
@@ -90,7 +91,13 @@ func GetSubscriptions(userId string, w http.ResponseWriter, request *http.Reques
 	subscriptionsCached, err := CacheGet("s:ids:"+userId, ids)
 
 	if err == nil {
-		ids = subscriptionsCached.([]int)
+		var ok bool
+		ids, ok = subscriptionsCached.([]int)
+		if !ok {
+			database.Table("user_channels").Where("user_channels.user_id = ?", userId).
+				Pluck("user_channels.channel_id", &ids)
+			go CacheSet("s:ids:"+userId, ids)
+		}
 	} else {
 		database.Table("user_channels").Where("user_channels.user_id = ?", userId).
 			Pluck("user_channels.channel_id", &ids)

@@ -19,8 +19,11 @@ func SugestionsEpisodes(userId string, w http.ResponseWriter, request *http.Requ
 	subscriptionsCached, err := CacheGet("s:ids:"+userId, channelsIds)
 
 	if err == nil {
-		channelsIds = subscriptionsCached.([]int)
+		var ok bool
+		channelsIds, ok = subscriptionsCached.([]int)
+		if !ok {
 
+		}
 		if len(channelsIds) > 0 {
 			database.Table("channels").Where("channels.id in (?)", channelsIds).Find(&channels)
 		}
