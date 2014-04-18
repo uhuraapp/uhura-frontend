@@ -28,4 +28,5 @@ new_version:
 
 build_assets:	new_version
 	ENV=production grunt emberTemplates concat:vendor uglify:vendor concat:app uglify:app sass:app
+	rm tmp/assets/*.js
 
