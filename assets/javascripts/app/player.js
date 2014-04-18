@@ -133,7 +133,7 @@ App.PLAYER.APIS.audio.events.onload = function(){
 //\ -- API VIDEO --
 
 App.PLAYER.APIS.video.play = function(episode) {
-  window.location = ("/app/" + episode.get('channel_id') +"/" +episode.id+"?play")
+  App.Router.router.transitionTo('episode', episode.get('channel_id'), episode.id)
 };
 
 App.PLAYER.APIS.video.togglePause = function(episode) {
