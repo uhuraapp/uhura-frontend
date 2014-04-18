@@ -10,3 +10,4 @@ App.EpisodeRoute = Ember.Route.extend({
     $("[property='og:title']").attr('content', title)
   }
 })
+

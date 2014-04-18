@@ -9,7 +9,13 @@ App.Channel = DS.Model.extend({
   episodes:   function(){
     var _this = this;
     jQuery.getJSON("/api/channels/"+this.get('id')+"/episodes").then(function(data){
-      _this.set('episodes', data.episodes);
+      var episodes = [];
+
+      for (var i = data.episodes.length - 1; i >= 0; i--) {
+        episodes.push(Ember.Object.create(data.episodes[i]))
+      };
+
+      _this.set('episodes', episodes);
       $("#loading-page").parent().remove()
     })
     return [];
