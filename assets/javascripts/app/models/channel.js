@@ -15,10 +15,9 @@ App.Channel = DS.Model.extend({
         var episode = _this.store.push('episode', data.episodes[i]);
         episodes.push(episode)
       };
-
-      _this.set('episodes', episodes);
       $("#loading-page").parent().remove()
-    })
+      _this.set('episodes', episodes);
+    });
     return [];
   }.property("channel_id"),
   to_view:    DS.attr()
