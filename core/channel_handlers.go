@@ -84,6 +84,29 @@ func GetChannel(userId string, w http.ResponseWriter, request *http.Request) {
 	return
 }
 
+func GetChannelEpisodes(userId string, w http.ResponseWriter, request *http.Request) {
+	var (
+		userItems []int64
+		vars      = mux.Vars(request)
+		id        = vars["id"]
+	)
+	episodes := make([]EpisodeEntity, 0)
+
+	database.Table("items").Where("items.channel_id = ?", id).Find(&episodes)
+
+	database.Table("user_items").
+		Where("channel_id = ?", id).
+		Where("user_id = ?", userId).
+		Where("viewed = TRUE").
+		Pluck("item_id", &userItems)
+
+	for i, episode := range episodes {
+		episode.Listened = HasListened(userItems, episode.Id)
+		episodes[i] = episode
+	}
+	r.ResponseJSON(w, 200, map[string]interface{}{"episodes": episodes})
+}
+
 func GetSubscriptions(userId string, w http.ResponseWriter, request *http.Request) {
 	subscriptions := make([]ChannelEntity, 0)
 	var ids []int

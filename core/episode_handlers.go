@@ -48,7 +48,7 @@ func GetEpisodes(userId string, w http.ResponseWriter, request *http.Request) {
 	}
 
 	for i, episode := range episodes {
-		episode.Listened = hasListened(userItems, episode.Id)
+		episode.Listened = HasListened(userItems, episode.Id)
 		episodes[i] = episode
 	}
 
@@ -96,7 +96,7 @@ func SetEpisodeListened(userId string, w http.ResponseWriter, request *http.Requ
 	r.ResponseJSON(w, 202, nil)
 }
 
-func hasListened(listened []int64, episode int64) bool {
+func HasListened(listened []int64, episode int64) bool {
 	for _, t := range listened {
 		if t == episode {
 			return true

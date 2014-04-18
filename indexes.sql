@@ -7,3 +7,5 @@ CREATE INDEX suggestions ON items USING btree(channel_id, id);
 CREATE INDEX index4 ON user_items USING btree(user_id, viewed);
 CREATE INDEX user_token ON users USING btree(remember_token ASC NULLS LAST);
 CREATE INDEX user_email ON users USING btree(email ASC NULLS LAST);
+CREATE INDEX "index5" ON "public"."user_items" USING btree( "channel_id" ASC NULLS LAST, "user_id" ASC NULLS LAST, "viewed" ASC NULLS LAST );
+CREATE INDEX "index6" ON "public"."user_items" USING btree( "channel_id" ASC NULLS LAST );

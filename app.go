@@ -274,6 +274,7 @@ func main() {
 	apiRouter.HandleFunc("/channels/{id}/reload", loginBuilder.Protected(core.ReloadChannel))
 	apiRouter.HandleFunc("/channels/{id}/subscribe", loginBuilder.Protected(core.SubscribeChannel))
 	apiRouter.HandleFunc("/channels/{id}/unsubscribe", loginBuilder.Protected(core.UnsubscribeChannel))
+	apiRouter.HandleFunc("/channels/{id}/episodes", loginBuilder.Protected(core.GetChannelEpisodes))
 	apiRouter.HandleFunc("/episodes", loginBuilder.Protected(core.GetEpisodes))
 	apiRouter.HandleFunc("/episodes/{id}", loginBuilder.Protected(core.GetEpisode))
 	apiRouter.HandleFunc("/episodes/{id}/listened", loginBuilder.Protected(core.SetEpisodeListened))
