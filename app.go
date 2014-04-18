@@ -53,6 +53,11 @@ func userSetup(provider string, user *auth.User, rawResponde *http.Response) (in
 		}
 		return 0, err
 	} else {
+		go func() {
+			if !realUser.WelcomeMail {
+				core.WelcomeMail(realUser)
+			}
+		}()
 		return realUser.Id, nil
 	}
 }
