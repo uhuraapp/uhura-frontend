@@ -366,34 +366,60 @@ function program5(depth0,data) {
 
 function program7(depth0,data) {
   
-  
-  data.buffer.push("\n  <script>\n    $(document).ready(function(){\n      sublime.load();\n      sublime.ready(function(){\n        App.PLAYER.APIS.video.init();\n      });\n   });\n  </script>\n  ");
-  }
-
-  data.buffer.push("<div id=\"episode\">\n  <h2>");
-  stack1 = helpers._triageMustache.call(depth0, "title", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("</h2>\n  <h3>  ");
-  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "channel", "channel.id", options) : helperMissing.call(depth0, "link-to", "channel", "channel.id", options));
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n\n    ");
-  stack1 = helpers['if'].call(depth0, "channel.subscribed", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(5, program5, data),fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n  </h3>\n\n  ");
-  stack1 = helpers['if'].call(depth0, "title", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n\n  <video width=\"100%\"\n    class='sublime'\n    ");
+  var buffer = '';
+  data.buffer.push("\n    <video width=\"100%\"\n      class='sublime'\n      ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'data-title': ("title"),
     'data-uid': ("id"),
     'data-sharing-url': ("url"),
     'data-sharing-text': ("title")
   },hashTypes:{'data-title': "ID",'data-uid': "ID",'data-sharing-url': "ID",'data-sharing-text': "ID"},hashContexts:{'data-title': depth0,'data-uid': depth0,'data-sharing-url': depth0,'data-sharing-text': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push("\n    data-logo-link-url='http://uhuraapp.com'\n    data-autoresize='fit'\n    data-logo-type='custom'\n    data-logo-link-url='http://www.uhuraapp.com/assets/logo.png'\n    data-autoplay='true' data-player-kit='1'>\n    <source ");
+  data.buffer.push("\n      data-logo-link-url='http://uhuraapp.com'\n      data-autoresize='fit'\n      data-logo-type='custom'\n      data-logo-link-url='http://www.uhuraapp.com/assets/logo.png'\n      data-autoplay='true' data-player-kit='1'>\n      <source ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'src': ("source_url")
   },hashTypes:{'src': "ID"},hashContexts:{'src': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(">\n  </video>\n</div>\n");
+  data.buffer.push(">\n    </video>\n  ");
+  return buffer;
+  }
+
+function program9(depth0,data) {
+  
+  var buffer = '';
+  data.buffer.push("\n    <span ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'data-id': ("id")
+  },hashTypes:{'data-id': "ID"},hashContexts:{'data-id': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(" ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'data-source_url': ("source_url")
+  },hashTypes:{'data-source_url': "ID"},hashContexts:{'data-source_url': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(">\n    </span>\n  ");
+  return buffer;
+  }
+
+  data.buffer.push("<div id=\"episode\" ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'class': ("mediaApi")
+  },hashTypes:{'class': "ID"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push("\">\n  <h2>");
+  stack1 = helpers._triageMustache.call(depth0, "title", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</h2>\n  <h3>\n    ");
+  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "channel", "channel.id", options) : helperMissing.call(depth0, "link-to", "channel", "channel.id", options));
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n    ");
+  stack1 = helpers['if'].call(depth0, "channel.subscribed", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(5, program5, data),fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n  </h3>\n  ");
+  stack1 = helpers['if'].call(depth0, "isVideo", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n\n  ");
+  stack1 = helpers['if'].call(depth0, "isAudio", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n\n  ");
+  stack1 = helpers._triageMustache.call(depth0, "description", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n</div>\n");
   return buffer;
   
 });
