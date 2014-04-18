@@ -1,10 +1,13 @@
 <li {{bind-attr class=":audio episode.listened episode.playing"}} {{bind-attr data-id=episode.id}} {{bind-attr data-source_url=episode.source_url}}>
   {{play-pause-button episode=episode}}
   <div class="title">
-    {{episode.title}}
+    <span>{{episode.title}}</span>
+    <div>
+      <button {{bind-attr data-id=episode.id}} data-uk-tooltip="{pos:'bottom'}" title="{{t "episode.button.listened"}}" {{bind-attr class=":typcn :listened episode.listened:typcn-tick:typcn-tick-outline"}}>
+      </button>
+      <button data-uk-tooltip="{pos:'bottom'}" title="{{t "episode.button.info"}}" class="more-info typcn typcn-info-large"> </button>
+    </div>
   </div>
-  <button {{bind-attr data-id=episode.id}} data-uk-tooltip="{pos:'bottom'}" title="{{t "episode.button.listened"}}" {{bind-attr class=":listened :typcn episode.listened:typcn-tick:typcn-tick-outline"}}> </button>
-  <button data-uk-tooltip="{pos:'bottom'}" title="{{t "episode.button.info"}}" class="more-info typcn typcn-info-large"> </button>
   <div class="description">
     {{{episode.description}}}
   </div>

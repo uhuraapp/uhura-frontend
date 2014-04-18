@@ -10,6 +10,7 @@ App.Router.reopen({
   location: 'history',
   didTransition: function(infos) {
     this._super(infos);
+    $(".uk-active").click()
 
     if (window.ga === undefined) { return; }
 

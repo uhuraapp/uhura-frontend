@@ -26,8 +26,9 @@ body
     overflow: hidden
     zoom: 1
     &::after
-      content: "&nbsp;"
+      content: " uhura "
       display: block
+
     p
       color: #FFF
       font-weight: 500
@@ -53,14 +54,29 @@ body
       padding: 0 0 0 20px
       padding-bottom: 10px
       a
-        display: inline-block
-        color: #FFF
         font-weight: 200
         font-size: .9em
+        display: inline-block
         height: 15px
-        line-height: 15px
+
+  #sidebar-mobile
+    footer p
+      color: #FFF
+    li
+      max-height: 35px
+      overflow: hidden
+      a .title
+        height: 18px
+
+  aside, #sidebar-mobile
+    li
+      overflow: hidden
+      a
+        margin: 0
         overflow: hidden
         width: 100%
+        color: #FFF
+        line-height: 15px
       img
         height: 15px
         width: 15px
@@ -111,43 +127,6 @@ body
       overflow: hidden
       border-radius: 0 0 2px 2px
 
-  // nav
-  //   &.uk-navbar
-  //     float: right
-  //     background: transparent
-  //     border: none
-  //   ul.uk-navbar-nav
-  //     margin: 0
-  //     padding: 0
-  //     float: right
-  //   li
-  //     float: left
-  //     border-right: 1px solid #E7C6BD
-  //     height: 45px
-  //     &:first-child
-  //       border-left: 1px solid #E7C6BD
-
-  //   a
-  //     display: block
-  //     height: 45px
-  //     line-height: 45px
-  //     margin: 0
-  //     padding: 0 10px
-  //     color: #3E4651
-  //     text-shadow: none
-  //     &:hover
-  //       background: #3E4651
-  //       color: #FFF
-  //       text-decoration: none
-
-  //   .uk-navbar-toggle
-  //     text-shadow: none
-  //     height: 45px
-  //     background: none
-  //     border: none
-
-  //   .uk-container-center
-  //     position: relative
 
   #content
     padding-top: 20px
@@ -160,3 +139,4 @@ body
     a
       span
         font-size: 15px
+

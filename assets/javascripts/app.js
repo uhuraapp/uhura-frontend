@@ -25,7 +25,7 @@ var showDescription = function(e){
   'use strict';
 
   var target = $(e.currentTarget),
-    description = target.next('.description'),
+    description = target.parents('.title').next('.description'),
     descriptionIsDisplayed = description.is(':visible');
 
     $('.description').slideUp();

@@ -1,5 +1,5 @@
-<div id="aside-wrapper" class="column three-twelfth">
-  <aside class="column three-twelfth">
+<div id="aside-wrapper" class="column three-twelfth uk-visible-large">
+  <aside class="column three-twelfth ">
     <header>
       <hgroup>
         {{#link-to 'index'}}
@@ -27,31 +27,85 @@
       </li>
     </ul>
 
-
     <ol>
-    {{#each channel in model}}
-      {{#with channel}}
+      {{#each channel in model}}
+        {{#with channel}}
         <li id="channel-{{unbound id}}" {{bind-attr class=to_view:new:ok}}>
           {{#link-to 'channel' id}}
             <img {{bind-attr src=image_url}} />
             <span class="title">{{title}}</span>
             {{#if to_view}}<i>{{to_view}}</i>{{/if}}
           {{/link-to}}
+        </li>
         {{/with}}
-      </li>
-    {{/each}}
+      {{/each}}
     </ol>
 
     <footer>
-      <a href="http://twitter.com/UhuraApp"><span class="typcn typcn-social-twitter"> </span>{{t "footer.follow_us"}}</a>
+      <a href="http://twitter.com/UhuraApp">
+        <span class="typcn typcn-social-twitter"></span>{{t "footer.follow_us"}}
+      </a>
       <br />
-      <a href="https://www.facebook.com/uhuraapp"><span class="typcn typcn-social-facebook"></span>{{t "footer.like_us"}}</a>
-
-      <p>{{{t "footer.contact"}}}
-         <a href="mailto:dukekhaos@gmail.com">dukekhaos@gmail.com</a></p>
+      <a href="https://www.facebook.com/uhuraapp">
+        <span class="typcn typcn-social-facebook"></span>{{t "footer.like_us"}}
+      </a>
+      <p>
+        {{{t "footer.contact"}}}
+        <a href="mailto:dukekhaos@gmail.com">dukekhaos@gmail.com</a>
+      </p>
     </footer>
   </aside>
 </div>
+
+<div id="sidebar-mobile" class="uk-offcanvas">
+  <div class="uk-offcanvas-bar">
+    <ul class="uk-nav uk-nav-offcanvas" data-uk-nav>
+      <li>
+        {{#link-to 'index' }}
+          <span class="typcn typcn-home-outline"></span>{{t "sidebar.home"}}
+        {{/link-to}}
+      </li>
+      <li>
+        {{#link-to 'channel.new' }}
+          <span class="typcn typcn-document-add"></span>{{t "sidebar.channel_add"}}
+        {{/link-to}}
+      </li>
+      <li>
+        <a href="/users/sign_out">
+          <span class="typcn typcn-power-outline"></span>{{t "sidebar.sign_out"}}
+        </a>
+      </li>
+      {{#each channel in model}}
+        {{#with channel}}
+          <li {{bind-attr class="to_view:new:ok" }}>
+            {{#link-to 'channel' id}}
+              <img {{bind-attr src=image_url}} />
+              <span class="title">{{title}}</span>
+              {{#if to_view}}<i>{{to_view}}</i>{{/if}}
+            {{/link-to}}
+          </li>
+        {{/with}}
+      {{/each}}
+    </ul>
+
+    <footer>
+      <a href="http://twitter.com/UhuraApp">
+        <span class="typcn typcn-social-twitter"> </span>{{t "footer.follow_us"}}
+      </a>
+      <br />
+      <a href="https://www.facebook.com/uhuraapp">
+        <span class="typcn typcn-social-facebook"></span>{{t "footer.like_us"}}
+      </a>
+
+      <p>
+        {{{t "footer.contact"}}}<br />
+        <a href="mailto:dukekhaos@gmail.com">dukekhaos@gmail.com</a>
+      </p>
+    </footer>
+  </div>
+</div>
+
+<a href="#sidebar-mobile" class="uk-navbar-toggle uk-hidden-large" data-uk-offcanvas></a>
 
 <div id="content" class="column nine-twelfth">
   {{outlet}}
@@ -62,11 +116,11 @@
   <button id="pt" onclick="t.change(this.id,true);">pt</button>
   <button id="en" onclick="t.change(this.id,true);">en</button>
 </div>
+
 <script>
-$(document).ready(function(){
-  fixedSidebarHeight();
-  window.t.init();
-})
+  $(document).ready(function(){
+    fixedSidebarHeight();
+    window.t.init();
+  })
 </script>
 <div id="fb-root"></div>
-
