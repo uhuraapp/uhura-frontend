@@ -16,6 +16,10 @@ App.IndexRoute = Ember.Route.extend({
   setupController: function(controller) {
     var _this = this;
     jQuery.getJSON("/api/suggestions").then(function (data) {
+      if (data.channels.length === 0) {
+        _this.transitionTo('channel.new')
+      }
+
       for (var i = data.channels.length - 1; i >= 0; i--) {
         c = data.channels[i]
         episodes = _.where(data.episodes, {channel_id: c.id});
