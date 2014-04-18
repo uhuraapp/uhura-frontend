@@ -116,7 +116,7 @@ function program14(depth0,data) {
   return buffer;
   }
 
-  data.buffer.push("<div id=\"aside-wrapper\" class=\"column three-twelfth uk-visible-large\">\n  <aside class=\"column three-twelfth \">\n    <header>\n      <hgroup>\n        ");
+  data.buffer.push("<div id=\"aside-wrapper\" class=\"column three-twelfth uk-hidden-small\">\n  <aside class=\"column three-twelfth \">\n    <header>\n      <hgroup>\n        ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "index", options) : helperMissing.call(depth0, "link-to", "index", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n      </hgroup>\n    </header>\n\n    <ul>\n      <li>\n        ");
@@ -155,7 +155,7 @@ function program14(depth0,data) {
   data.buffer.push("\n      </a>\n\n      <p>\n        ");
   stack1 = (helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "footer.contact", options) : helperMissing.call(depth0, "t", "footer.contact", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("<br />\n        <a href=\"mailto:dukekhaos@gmail.com\">dukekhaos@gmail.com</a>\n      </p>\n    </footer>\n  </div>\n</div>\n\n<a href=\"#sidebar-mobile\" class=\"uk-navbar-toggle uk-hidden-large\" data-uk-offcanvas></a>\n\n<div id=\"content\" class=\"column nine-twelfth\">\n  ");
+  data.buffer.push("<br />\n        <a href=\"mailto:dukekhaos@gmail.com\">dukekhaos@gmail.com</a>\n      </p>\n    </footer>\n  </div>\n</div>\n\n<a href=\"#sidebar-mobile\" class=\"uk-navbar-toggle uk-visible-small\" data-uk-offcanvas></a>\n<a id=\"toggle-screen\" class=\"uk-navbar-toggle uk-hidden-small\"></a>\n\n<div id=\"content\" class=\"column nine-twelfth\">\n  ");
   stack1 = helpers._triageMustache.call(depth0, "outlet", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n  ");
