@@ -1,24 +1,30 @@
-<h2>
-  {{#if loading}}
-  <span id="loading" data-uk-tooltip="{pos:'bottom'}" title="{{t "channel.status.loading"}}"></span>
-  {{/if}}
+<div id="about">
+  <img {{bind-attr src=image_url}} />
+  <div>
+    <h2>
+      {{#if loading}}
+      <span id="loading" data-uk-tooltip="{pos:'bottom'}" title="{{t "channel.status.loading"}}"></span>
+      {{/if}}
 
-  {{title}}
+      {{title}}
 
-  {{#if subscribed}}
-  <button class="uk-button uk-button-small uk-button-danger typcn typcn-times" {{action 'unsubscribeChannel' id}}> {{t 'channel_new.button.unsubscribe'}}</button>
-  {{else}}
-  <button class="uk-button uk-button-small uk-button-success subscribe" {{action 'subscribeChannel' id}}> {{t 'channel_new.button.subscribe'}}</button>
-  {{/if}}
+      {{#if subscribed}}
+      <button class="uk-button uk-button-small uk-button-danger typcn typcn-times" {{action 'unsubscribeChannel' id}}> {{t 'channel_new.button.unsubscribe'}}</button>
+      {{else}}
+      <button class="uk-button uk-button-small uk-button-success subscribe" {{action 'subscribeChannel' id}}> {{t 'channel_new.button.subscribe'}}</button>
+      {{/if}}
 
-  {{#if loading}}
-    <button id="reload" class="uk-button uk-button-link" data-uk-tooltip="{pos:'bottom'}" title="{{t "channel.message.loading"}}">Loading...</button>
-  {{else}}
-    <button id="reload" class="uk-button" {{action 'reloadChannel' id}}><i class="typcn typcn-refresh"></i></button>
-  {{/if}}
-</h2>
+      {{#if loading}}
+        <button id="reload" class="uk-button uk-button-link" data-uk-tooltip="{pos:'bottom'}" title="{{t "channel.message.loading"}}">Loading...</button>
+      {{else}}
+        <button id="reload" class="uk-button" {{action 'reloadChannel' id}}><i class="typcn typcn-refresh"></i></button>
+      {{/if}}
+    </h2>
+    {{description}}
+  </div>
+</div>
 
-
+<h3>Episodes</h3>
 <ul class="episodes">
   {{#each episode in episodes}}
   {{episode-list-item episode=episode}}
