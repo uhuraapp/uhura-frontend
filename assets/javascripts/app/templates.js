@@ -243,13 +243,15 @@ function program11(depth0,data) {
   data.buffer.push("\n\n      ");
   stack1 = helpers['if'].call(depth0, "subscribed", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(5, program5, data),fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n\n\n    </h2>\n    ");
+  data.buffer.push("\n    </h2>\n    ");
   stack1 = helpers._triageMustache.call(depth0, "description", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n    <script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>\n    <!-- uhura channel -->\n    <ins class=\"adsbygoogle\"\n         style=\"display:block\"\n         data-ad-client=\"ca-pub-5957735818581866\"\n         data-ad-slot=\"2065467837\"\n         data-ad-format=\"auto\"></ins>\n    <script>\n      (adsbygoogle = window.adsbygoogle || []).push({});\n    </script>\n  </div>\n</div>\n\n<h3>\n  Episodes\n  ");
+  data.buffer.push("\n    <script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>\n    <!-- uhura-links -->\n    <ins class=\"adsbygoogle\"\n         style=\"display:inline-block;width:468px;height:15px\"\n         data-ad-client=\"ca-pub-5957735818581866\"\n         data-ad-slot=\"3247823037\"></ins>\n    <script>\n    (adsbygoogle = window.adsbygoogle || []).push({});\n    </script>\n  </div>\n</div>\n\n<h3>\n  Episodes\n  ");
   stack1 = helpers['if'].call(depth0, "loading", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(9, program9, data),fn:self.program(7, program7, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n</h3>\n<ul class=\"episodes\">\n  ");
+  data.buffer.push("\n</h3>\n");
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.LoadingView", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data})));
+  data.buffer.push("\n\n<ul class=\"episodes\">\n  ");
   stack1 = helpers.each.call(depth0, "episode", "in", "episodes", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(11, program11, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n</ul>\n");
@@ -535,10 +537,12 @@ function program4(depth0,data) {
 
   data.buffer.push("<h2>");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "index.suggestions", options) : helperMissing.call(depth0, "t", "index.suggestions", options))));
-  data.buffer.push("</h2>\n<ul id=\"channels\">\n  ");
+  data.buffer.push("</h2>\n\n");
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.LoadingView", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data})));
+  data.buffer.push("\n\n<ul id=\"channels\">\n  ");
   stack1 = helpers.each.call(depth0, "channel", "in", "channels", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n</ul>\n\n");
+  data.buffer.push("\n</ul>\n<script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>\n<!-- uhura-links-suggestions- -->\n<ins class=\"adsbygoogle\"\n     style=\"display:inline-block;width:468px;height:15px\"\n     data-ad-client=\"ca-pub-5957735818581866\"\n     data-ad-slot=\"7678022638\"></ins>\n<script>\n(adsbygoogle = window.adsbygoogle || []).push({});\n</script>\n");
   return buffer;
   
 });
@@ -546,10 +550,13 @@ function program4(depth0,data) {
 Ember.TEMPLATES["loading"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  
+  var buffer = '', helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
 
 
-  data.buffer.push("loading...\n");
+  data.buffer.push("<div id=\"loading-page\">\n");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "loading.label", options) : helperMissing.call(depth0, "t", "loading.label", options))));
+  data.buffer.push("\n</div>\n");
+  return buffer;
   
 });
 
