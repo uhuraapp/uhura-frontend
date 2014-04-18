@@ -12,7 +12,8 @@ App.Channel = DS.Model.extend({
       var episodes = [];
 
       for (var i = data.episodes.length - 1; i >= 0; i--) {
-        episodes.push(Ember.Object.create(data.episodes[i]))
+        var episode = _this.store.push('episode', data.episodes[i]);
+        episodes.push(episode)
       };
 
       _this.set('episodes', episodes);
