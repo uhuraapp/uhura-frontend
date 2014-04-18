@@ -97,6 +97,26 @@ App.PLAYER.APIS.audio.stop = function(episode) {
 };
 
 // private
+App.PLAYER.APIS.audio.events = {};
+App.PLAYER.APIS.audio.events.loading = function(){
+  var percent = (this.bytesLoaded * 100)/this.bytesTotal,
+      playing = (this.position * 100)/this.durationEstimate
+
+  $("#player-loader div.loading").css("width", percent+"%")
+};
+
+App.PLAYER.APIS.audio.events.playing = function(){
+  playing = (this.position * 100)/this.durationEstimate
+  $("#player-loader div.playing").css("width", playing+"%")
+};
+
+App.PLAYER.APIS.audio.events.onplay = function(){
+  this.onPosition(this.duration * 0.9, function(eventPosition) {
+    var model = App.PLAYER.current
+    App.PLAYER.listened(model);
+  });
+};
+
 App.PLAYER.APIS.audio.getAudio = function(id){
   "use strict";
   if(!App.PLAYER.APIS.audio.episodes[id]){
@@ -107,7 +127,10 @@ App.PLAYER.APIS.audio.getAudio = function(id){
       url: [audio.source_url],
       whileloading: App.PLAYER.APIS.audio.events.loading,
       whileplaying: App.PLAYER.APIS.audio.events.playing,
-      onload: App.PLAYER.APIS.audio.events.onload,
+      onplay:    App.PLAYER.APIS.audio.events.onplay,
+      onfinish: function() {
+        App.PLAYER.stopCurrent();
+      },
       autoLoad: true
     });
     App.PLAYER.APIS.audio.episodes[id] = sound;
@@ -115,25 +138,7 @@ App.PLAYER.APIS.audio.getAudio = function(id){
   return App.PLAYER.APIS.audio.episodes[id];
 };
 
-App.PLAYER.APIS.audio.events = {};
-App.PLAYER.APIS.audio.events.loading = function(){
-  var percent = (this.bytesLoaded * 100)/this.bytesTotal,
-      playing = (this.position * 100)/this.durationEstimate
 
-  $("#player-loader div.loading").css("width", percent+"%")
-};
-
-App.PLAYER.APIS.audio.events.playing = function(){
-  playing = (this.position * 100)/this.duration
-  $("#player-loader div.playing").css("width", playing+"%")
-};
-
-App.PLAYER.APIS.audio.events.onload = function(){
-  this.onPosition(this.duration * 0.1, function(eventPosition) {
-    var model = Uhura.PlayerController.get('model')
-    Uhura.Helpers.listened(model.id)
-  });
-};
 
 //\ -- API VIDEO --
 
@@ -162,7 +167,6 @@ App.PLAYER.APIS.video.init = function() {
     }
   });
 };
-
 
 soundManager.setup({
   url: "/swf",
