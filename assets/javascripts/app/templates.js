@@ -30,10 +30,10 @@ function program5(depth0,data) {
 function program7(depth0,data) {
   
   var buffer = '', stack1;
-  data.buffer.push("\n      ");
+  data.buffer.push("\n        ");
   stack1 = helpers['with'].call(depth0, "channel", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(8, program8, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n      </li>\n    ");
+  data.buffer.push("\n      ");
   return buffer;
   }
 function program8(depth0,data) {
@@ -48,7 +48,7 @@ function program8(depth0,data) {
   data.buffer.push(">\n          ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "channel", "id", options) : helperMissing.call(depth0, "link-to", "channel", "id", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n        ");
+  data.buffer.push("\n        </li>\n        ");
   return buffer;
   }
 function program9(depth0,data) {
@@ -77,7 +77,46 @@ function program10(depth0,data) {
   return buffer;
   }
 
-  data.buffer.push("<div id=\"aside-wrapper\" class=\"column three-twelfth\">\n  <aside class=\"column three-twelfth\">\n    <header>\n      <hgroup>\n        ");
+function program12(depth0,data) {
+  
+  var buffer = '', stack1;
+  data.buffer.push("\n        ");
+  stack1 = helpers['with'].call(depth0, "channel", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(13, program13, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n      ");
+  return buffer;
+  }
+function program13(depth0,data) {
+  
+  var buffer = '', stack1, helper, options;
+  data.buffer.push("\n          <li ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'class': ("to_view:new:ok")
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(">\n            ");
+  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(14, program14, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "channel", "id", options) : helperMissing.call(depth0, "link-to", "channel", "id", options));
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n          </li>\n        ");
+  return buffer;
+  }
+function program14(depth0,data) {
+  
+  var buffer = '', stack1;
+  data.buffer.push("\n              <img ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'src': ("image_url")
+  },hashTypes:{'src': "ID"},hashContexts:{'src': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(" />\n              <span class=\"title\">");
+  stack1 = helpers._triageMustache.call(depth0, "title", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</span>\n              ");
+  stack1 = helpers['if'].call(depth0, "to_view", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(10, program10, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n            ");
+  return buffer;
+  }
+
+  data.buffer.push("<div id=\"aside-wrapper\" class=\"column three-twelfth uk-visible-large\">\n  <aside class=\"column three-twelfth \">\n    <header>\n      <hgroup>\n        ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "index", options) : helperMissing.call(depth0, "link-to", "index", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n      </hgroup>\n    </header>\n\n    <ul>\n      <li>\n        ");
@@ -88,22 +127,40 @@ function program10(depth0,data) {
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n      </li>\n      <li>\n        <a href=\"/users/sign_out\">\n          <span class=\"typcn typcn-power-outline\"></span>");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "sidebar.sign_out", options) : helperMissing.call(depth0, "t", "sidebar.sign_out", options))));
-  data.buffer.push("\n        </a>\n      </li>\n    </ul>\n\n\n    <ol>\n    ");
+  data.buffer.push("\n        </a>\n      </li>\n    </ul>\n\n    <ol>\n      ");
   stack1 = helpers.each.call(depth0, "channel", "in", "model", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n    </ol>\n\n    <footer>\n      <a href=\"http://twitter.com/UhuraApp\"><span class=\"typcn typcn-social-twitter\"> </span>");
+  data.buffer.push("\n    </ol>\n\n    <footer>\n      <a href=\"http://twitter.com/UhuraApp\">\n        <span class=\"typcn typcn-social-twitter\"></span>");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "footer.follow_us", options) : helperMissing.call(depth0, "t", "footer.follow_us", options))));
-  data.buffer.push("</a>\n      <br />\n      <a href=\"https://www.facebook.com/uhuraapp\"><span class=\"typcn typcn-social-facebook\"></span>");
+  data.buffer.push("\n      </a>\n      <br />\n      <a href=\"https://www.facebook.com/uhuraapp\">\n        <span class=\"typcn typcn-social-facebook\"></span>");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "footer.like_us", options) : helperMissing.call(depth0, "t", "footer.like_us", options))));
-  data.buffer.push("</a>\n\n      <p>");
+  data.buffer.push("\n      </a>\n      <p>\n        ");
   stack1 = (helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "footer.contact", options) : helperMissing.call(depth0, "t", "footer.contact", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n         <a href=\"mailto:dukekhaos@gmail.com\">dukekhaos@gmail.com</a></p>\n    </footer>\n  </aside>\n</div>\n\n<div id=\"content\" class=\"column nine-twelfth\">\n  ");
+  data.buffer.push("\n        <a href=\"mailto:dukekhaos@gmail.com\">dukekhaos@gmail.com</a>\n      </p>\n    </footer>\n  </aside>\n</div>\n\n<div id=\"sidebar-mobile\" class=\"uk-offcanvas\">\n  <div class=\"uk-offcanvas-bar\">\n    <ul class=\"uk-nav uk-nav-offcanvas\" data-uk-nav>\n      <li>\n        ");
+  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "index", options) : helperMissing.call(depth0, "link-to", "index", options));
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n      </li>\n      <li>\n        ");
+  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(5, program5, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "channel.new", options) : helperMissing.call(depth0, "link-to", "channel.new", options));
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n      </li>\n      <li>\n        <a href=\"/users/sign_out\">\n          <span class=\"typcn typcn-power-outline\"></span>");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "sidebar.sign_out", options) : helperMissing.call(depth0, "t", "sidebar.sign_out", options))));
+  data.buffer.push("\n        </a>\n      </li>\n      ");
+  stack1 = helpers.each.call(depth0, "channel", "in", "model", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(12, program12, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n    </ul>\n\n    <footer>\n      <a href=\"http://twitter.com/UhuraApp\">\n        <span class=\"typcn typcn-social-twitter\"> </span>");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "footer.follow_us", options) : helperMissing.call(depth0, "t", "footer.follow_us", options))));
+  data.buffer.push("\n      </a>\n      <br />\n      <a href=\"https://www.facebook.com/uhuraapp\">\n        <span class=\"typcn typcn-social-facebook\"></span>");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "footer.like_us", options) : helperMissing.call(depth0, "t", "footer.like_us", options))));
+  data.buffer.push("\n      </a>\n\n      <p>\n        ");
+  stack1 = (helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "footer.contact", options) : helperMissing.call(depth0, "t", "footer.contact", options));
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("<br />\n        <a href=\"mailto:dukekhaos@gmail.com\">dukekhaos@gmail.com</a>\n      </p>\n    </footer>\n  </div>\n</div>\n\n<a href=\"#sidebar-mobile\" class=\"uk-navbar-toggle uk-hidden-large\" data-uk-offcanvas></a>\n\n<div id=\"content\" class=\"column nine-twelfth\">\n  ");
   stack1 = helpers._triageMustache.call(depth0, "outlet", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n  ");
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.PlayerView", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\n</div>\n\n<div id=\"languages\">\n  <button id=\"pt\" onclick=\"t.change(this.id,true);\">pt</button>\n  <button id=\"en\" onclick=\"t.change(this.id,true);\">en</button>\n</div>\n<script>\n$(document).ready(function(){\n  fixedSidebarHeight();\n  window.t.init();\n})\n</script>\n<div id=\"fb-root\"></div>\n\n");
+  data.buffer.push("\n</div>\n\n<div id=\"languages\">\n  <button id=\"pt\" onclick=\"t.change(this.id,true);\">pt</button>\n  <button id=\"en\" onclick=\"t.change(this.id,true);\">en</button>\n</div>\n\n<script>\n  $(document).ready(function(){\n    fixedSidebarHeight();\n    window.t.init();\n  })\n</script>\n<div id=\"fb-root\"></div>\n");
   return buffer;
   
 });
@@ -116,7 +173,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = '', helper, options;
-  data.buffer.push("\n      <span id=\"loading\" data-uk-tooltip=\"{pos:'bottom'}\" title=\"");
+  data.buffer.push("\n        <span id=\"loading\" data-uk-tooltip=\"{pos:'bottom'}\" title=\"");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "channel.status.loading", options) : helperMissing.call(depth0, "t", "channel.status.loading", options))));
   data.buffer.push("\"></span>\n      ");
   return buffer;
@@ -125,7 +182,7 @@ function program1(depth0,data) {
 function program3(depth0,data) {
   
   var buffer = '', helper, options;
-  data.buffer.push("\n      <button class=\"uk-button uk-button-small uk-button-danger typcn typcn-times\" ");
+  data.buffer.push("\n        <button class=\"uk-button uk-button-small uk-button-danger typcn typcn-times\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "unsubscribeChannel", "id", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
   data.buffer.push("> ");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "channel_new.button.unsubscribe", options) : helperMissing.call(depth0, "t", "channel_new.button.unsubscribe", options))));
@@ -136,7 +193,7 @@ function program3(depth0,data) {
 function program5(depth0,data) {
   
   var buffer = '', helper, options;
-  data.buffer.push("\n      <button class=\"uk-button uk-button-small uk-button-success subscribe\" ");
+  data.buffer.push("\n        <button class=\"uk-button uk-button-small uk-button-success subscribe\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "subscribeChannel", "id", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
   data.buffer.push("> ");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "channel_new.button.subscribe", options) : helperMissing.call(depth0, "t", "channel_new.button.subscribe", options))));
@@ -147,18 +204,18 @@ function program5(depth0,data) {
 function program7(depth0,data) {
   
   var buffer = '', helper, options;
-  data.buffer.push("\n        <button id=\"reload\" class=\"uk-button uk-button-link\" data-uk-tooltip=\"{pos:'bottom'}\" title=\"");
+  data.buffer.push("\n    <button id=\"reload\" class=\"uk-button uk-button-link\" data-uk-tooltip=\"{pos:'bottom'}\" title=\"");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "channel.message.loading", options) : helperMissing.call(depth0, "t", "channel.message.loading", options))));
-  data.buffer.push("\">Loading...</button>\n      ");
+  data.buffer.push("\">Loading...</button>\n  ");
   return buffer;
   }
 
 function program9(depth0,data) {
   
   var buffer = '';
-  data.buffer.push("\n        <button id=\"reload\" class=\"uk-button\" ");
+  data.buffer.push("\n    <button id=\"reload\" class=\"uk-button\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "reloadChannel", "id", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
-  data.buffer.push("><i class=\"typcn typcn-refresh\"></i></button>\n      ");
+  data.buffer.push("><i class=\"typcn typcn-refresh\"></i></button>\n  ");
   return buffer;
   }
 
@@ -173,11 +230,11 @@ function program11(depth0,data) {
   return buffer;
   }
 
-  data.buffer.push("<div id=\"about\">\n  <img ");
+  data.buffer.push("<div id=\"about\">\n  <div class=\"column four-twelfth\">\n    <img ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'src': ("image_url")
   },hashTypes:{'src': "ID"},hashContexts:{'src': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(" />\n  <div>\n    <h2>\n      ");
+  data.buffer.push(" />\n  </div>\n  <div class=\"column eight-twelfth\">\n    <h2>\n      ");
   stack1 = helpers['if'].call(depth0, "loading", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n\n      ");
@@ -186,13 +243,13 @@ function program11(depth0,data) {
   data.buffer.push("\n\n      ");
   stack1 = helpers['if'].call(depth0, "subscribed", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(5, program5, data),fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n\n      ");
-  stack1 = helpers['if'].call(depth0, "loading", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(9, program9, data),fn:self.program(7, program7, data),contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n    </h2>\n    ");
+  data.buffer.push("\n\n\n    </h2>\n    ");
   stack1 = helpers._triageMustache.call(depth0, "description", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n    <script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>\n    <!-- uhura channel -->\n    <ins class=\"adsbygoogle\"\n         style=\"display:block\"\n         data-ad-client=\"ca-pub-5957735818581866\"\n         data-ad-slot=\"2065467837\"\n         data-ad-format=\"auto\"></ins>\n    <script>\n      (adsbygoogle = window.adsbygoogle || []).push({});\n    </script>\n  </div>\n</div>\n\n<h3>Episodes</h3>\n<ul class=\"episodes\">\n  ");
+  data.buffer.push("\n    <script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>\n    <!-- uhura channel -->\n    <ins class=\"adsbygoogle\"\n         style=\"display:block\"\n         data-ad-client=\"ca-pub-5957735818581866\"\n         data-ad-slot=\"2065467837\"\n         data-ad-format=\"auto\"></ins>\n    <script>\n      (adsbygoogle = window.adsbygoogle || []).push({});\n    </script>\n  </div>\n</div>\n\n<h3>\n  Episodes\n  ");
+  stack1 = helpers['if'].call(depth0, "loading", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(9, program9, data),fn:self.program(7, program7, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n</h3>\n<ul class=\"episodes\">\n  ");
   stack1 = helpers.each.call(depth0, "episode", "in", "episodes", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(11, program11, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n</ul>\n");
@@ -302,10 +359,10 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   data.buffer.push(escapeExpression((helper = helpers['play-pause-button'] || (depth0 && depth0['play-pause-button']),options={hash:{
     'episode': ("episode")
   },hashTypes:{'episode': "ID"},hashContexts:{'episode': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "play-pause-button", options))));
-  data.buffer.push("\n  <div class=\"title\">\n    ");
+  data.buffer.push("\n  <div class=\"title\">\n    <span>");
   stack1 = helpers._triageMustache.call(depth0, "episode.title", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n  </div>\n  <button ");
+  data.buffer.push("</span>\n    <div>\n      <button ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'data-id': ("episode.id")
   },hashTypes:{'data-id': "ID"},hashContexts:{'data-id': depth0},contexts:[],types:[],data:data})));
@@ -313,11 +370,11 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "episode.button.listened", options) : helperMissing.call(depth0, "t", "episode.button.listened", options))));
   data.buffer.push("\" ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
-    'class': (":listened :typcn episode.listened:typcn-tick:typcn-tick-outline")
+    'class': (":typcn :listened episode.listened:typcn-tick:typcn-tick-outline")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push("> </button>\n  <button data-uk-tooltip=\"{pos:'bottom'}\" title=\"");
+  data.buffer.push(">\n      </button>\n      <button data-uk-tooltip=\"{pos:'bottom'}\" title=\"");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "episode.button.info", options) : helperMissing.call(depth0, "t", "episode.button.info", options))));
-  data.buffer.push("\" class=\"more-info typcn typcn-info-large\"> </button>\n  <div class=\"description\">\n    ");
+  data.buffer.push("\" class=\"more-info typcn typcn-info-large\"> </button>\n    </div>\n  </div>\n  <div class=\"description\">\n    ");
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "episode.description", {hash:{
     'unescaped': ("true")
   },hashTypes:{'unescaped': "STRING"},hashContexts:{'unescaped': depth0},contexts:[depth0],types:["ID"],data:data})));
@@ -483,6 +540,16 @@ function program4(depth0,data) {
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n</ul>\n\n");
   return buffer;
+  
+});
+
+Ember.TEMPLATES["loading"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  
+
+
+  data.buffer.push("loading...\n");
   
 });
 
