@@ -103,6 +103,8 @@ func SearchChannels(userId string, w http.ResponseWriter, request *http.Request)
 		},
 	}
 
+	log.Println("Query", search)
+
 	out, _ := escore.SearchRequest(true, "channels", "channel", search, "", 0)
 	ids := getIds(out.Hits.Hits)
 
