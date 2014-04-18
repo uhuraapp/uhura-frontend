@@ -9,7 +9,7 @@ App.PLAYER.APIS = {
 
 App.PLAYER.playpause = function(episode){
   "use strict";
-  if(App.PLAYER.isPlaying && App.PLAYER.current.id === episode.id){
+  if(App.PLAYER.isPlaying && App.PLAYER.current && App.PLAYER.current.id === episode.id){
     App.PLAYER.togglePause(episode);
   } else {
     App.PLAYER.play(episode);
@@ -30,11 +30,16 @@ App.PLAYER.togglePause = function (episode) {
 
 App.PLAYER.stopCurrent = function() {
   if(App.PLAYER.isPlaying) {
-    var api = App.PLAYER.getApi(App.PLAYER.current);
-    api.stop();
-    App.PLAYER.current.set("playing", false);
-    ga('send', 'event', App.PLAYER.current.get('mediaApi'), 'stop', 'stop episode');
+    try {
+      var api = App.PLAYER.getApi(App.PLAYER.current);
+      api.stop();
+      App.PLAYER.current.set("playing", false);
+      ga('send', 'event', App.PLAYER.current.get('mediaApi'), 'stop', 'stop episode');
+    }catch(err) {
+      ga('send', 'event', 'video', 'stop', 'stop episode');
+    }
     App.PLAYER.current = null
+    App.PLAYER.isPlaying = false
     App.PlayerController.set("model", null);
   }
 }
