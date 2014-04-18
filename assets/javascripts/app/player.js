@@ -52,11 +52,6 @@ App.PLAYER.play = function (episode) {
   }
 }
 
-App.PLAYER.getApi = function (episode) {
-  var api = App.PLAYER.APIS[episode.get('mediaApi')];
-  return api;
-}
-
 App.PLAYER.listened = function(episode) {
   "use strict";
   var url = "/api/episodes/" + episode.id + "/listened";
@@ -65,6 +60,12 @@ App.PLAYER.listened = function(episode) {
     ga('send', 'event', episode.get('mediaApi'), 'listened', 'listened episode');
   });
 };
+
+App.PLAYER.getApi = function (episode) {
+  var api = App.PLAYER.APIS[episode.get('mediaApi')];
+  return api || App.PLAYER.APIS['audio'];
+}
+
 
 // -- API AUDIO --
 App.PLAYER.APIS.audio.episodes = {};
