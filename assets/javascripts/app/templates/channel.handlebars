@@ -40,6 +40,8 @@
     <button id="reload" class="uk-button" {{action 'reloadChannel' id}}><i class="typcn typcn-refresh"></i></button>
   {{/if}}
 </h3>
+{{view App.LoadingView}}
+
 <ul class="episodes">
   {{#each episode in episodes}}
   {{episode-list-item episode=episode}}

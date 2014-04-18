@@ -14,14 +14,14 @@ $(document).ready(function(){
   $(window).on('resize', fixedSidebarHeight);
   $(document).on('click', '.more-info', showDescription);
   $(document).on('mouseenter mouseleave', '.unsubscribe', toggleHoverUnsubscribe);
-  $(document).on('click', '#toggle-screen', toggleScreen)
+  $(document).on('click', '#toggle-screen', toggleScreen);
 
 });
 
 var toggleScreen = function() {
   $("#content").toggleClass("nine-twelfth");
   $("#content").toggleClass("full");
-  $("#aside-wrapper").toggleClass("uk-hidden")
+  $("#aside-wrapper").toggleClass("uk-hidden");
 };
 
 var fixedSidebarHeight = function(){

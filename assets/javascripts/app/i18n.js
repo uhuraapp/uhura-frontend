@@ -46,7 +46,9 @@ var T = function() {
 
       "sidebar.home": "Home",
       "sidebar.channel_add": "Add Channel",
-      "sidebar.sign_out": "Sign Out"
+      "sidebar.sign_out": "Sign Out",
+
+      "loading.label": "Loading..."
     },
     pt: {
       "channel.status.loading": "Tentando buscar mais episódios",
@@ -81,6 +83,9 @@ var T = function() {
       "sidebar.home": "Inicio",
       "sidebar.channel_add": "Adicionar Canal",
       "sidebar.sign_out": "Sair",
+
+
+      "loading.label": "Carregando..."
     }
   }
 
@@ -102,7 +107,7 @@ T.prototype.change = function(language, withAlert) {
   $("#languages button").removeClass("current");
   $("#"+language).addClass("current");
   if(withAlert){
-    if(App.PLAYER.isPlaying) {
+    if(!App.PLAYER.isPlaying) {
       window.location.reload()
     } else {
       alert(this.get("i18n.changed"));

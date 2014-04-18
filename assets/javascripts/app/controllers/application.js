@@ -29,6 +29,8 @@ App.IndexRoute = Ember.Route.extend({
          data.channels[i] = c
       };
 
+      $("#loading-page").parent().remove()
+
       controller.set('channels', data.channels)
     });
   }

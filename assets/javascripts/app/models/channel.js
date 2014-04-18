@@ -6,7 +6,14 @@ App.Channel = DS.Model.extend({
   description:DS.attr(),
   copyright:  DS.attr(),
   subscribed: DS.attr(),
-  episodes:   DS.hasMany('episode', {async: true}),
+  episodes:   function(){
+    var _this = this;
+    jQuery.getJSON("/api/channels/"+this.get('id')+"/episodes").then(function(data){
+      _this.set('episodes', data.episodes);
+      $("#loading-page").parent().remove()
+    })
+    return [];
+  }.property("channel_id"),
   to_view:    DS.attr()
 });
 

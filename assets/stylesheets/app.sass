@@ -142,4 +142,35 @@ body
     a
       span
         font-size: 15px
+#loading-page
+  margin: 0 auto
+  text-align: center
+  padding: 5px 0
+  position: relative
+  font: normal 18px/1em 'Exo 2', Arial, sans-serif
+  text-transform: uppercase
+  color: #333
+  height: 30px
+  &:after
+    content: ''
+    border-radius: 2px
+    -webkit-animation: wormsPong .75s alternate-reverse infinite
+    animation: wormsPong .75s alternate-reverse infinite
+    background-color: #F0582C
+    position: absolute
+    bottom: 0
+    left: 0
+    width: 4px
+    height: 4px
 
+@-webkit-keyframes wormsPong
+  50%
+    width: 100%
+    left: auto
+    right: 0
+
+@keyframes wormsPong
+  50%
+    width: 100%
+    left: auto
+    right: 0
