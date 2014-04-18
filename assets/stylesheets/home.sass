@@ -50,19 +50,16 @@ header
     margin: 0 auto
     font-weight: 100
     color: #FFF
-
   h3
     font-size: 30px
     line-height: 1.5
     letter-spacing: 2px
     text-shadow: 0 2px 2px #333
     margin-bottom: 80px
-
   h4
     font-size: 15px
     color: #EEE
     text-shadow: 0 1px 1px #333
-
   form
     width: 547px
     margin: 20px auto
@@ -111,9 +108,6 @@ header
         padding: 0 3px
 
 
-#tour
-  margin: 50px 0
-  height: 1000px
 
 #sign-in, #sign-up, #success_reset_password
   .uk-modal-dialog
@@ -151,7 +145,6 @@ header
 #users
   background: #47505d
   overflow: none
-
   max-height: 100%
   form, #success_reset_password
     background: #F7F7F7
@@ -170,6 +163,31 @@ header
         background: #FFF
     button
       float: right
+
+@media screen and (max-width: 640px)
+  #home, #users
+    padding: 5px
+    header
+      margin-top: 50px
+    h3, h4, form, #success_reset_password
+      width: 100%
+    h3
+      font-size: 20px
+      margin-bottom: 40px
+    form
+      input
+        width: 100%
+      button
+        float: right
+      p#services
+        float: left
+        clear: both
+
+  #users
+    header
+      margin-top: 5px
+    form, #success_reset_password
+      margin: 5px auto
 
 #made-by
   //background: #3E4651
