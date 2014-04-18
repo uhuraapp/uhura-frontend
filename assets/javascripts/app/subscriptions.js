@@ -9,7 +9,7 @@ Subscriptions.subscribe = function(_id){
       c = route.controller.get('model');
     }
     c.set('subscribed', true);
-    route.store.push('channel', data.channel);
+    route.store.push('subscription', data.channel);
     $("#channel-"+id).show();
 
     ga('send', 'event', 'button', 'subscribe', 'subscribe channel');

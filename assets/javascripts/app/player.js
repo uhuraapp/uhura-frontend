@@ -60,8 +60,8 @@ App.PLAYER.play = function (episode) {
 App.PLAYER.listened = function(episode) {
   "use strict";
   var url = "/api/episodes/" + episode.id + "/listened";
+  episode.set("listened", true);
   $.post(url).then(function() {
-    episode.set("listened", true);
     ga('send', 'event', episode.get('mediaApi'), 'listened', 'listened episode');
   });
 };
