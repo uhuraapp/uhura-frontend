@@ -218,6 +218,10 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func AdsHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, BuildPage("ads", ""))
+}
+
 func ResetPassword(w http.ResponseWriter, r *http.Request) {
 	query := r.URL.Query()
 	if step, ok := query["step"]; ok && step[0] == "2" {
@@ -258,6 +262,7 @@ func main() {
 	r.StrictSlash(true)
 
 	r.HandleFunc("/", LandingHandler)
+	r.HandleFunc("/ads", AdsHandler)
 
 	// Auth Router
 	loginBuilder.Router(r)
