@@ -30,7 +30,8 @@ func DatabaseManager() {
 		var channels []Channel
 		database.Table("channels").Find(&channels)
 		for _, channel := range channels {
-			TouchChannel(int(channel.Id))
+			// TouchChannel(int(channel.Id))
+			go FetchColors(channel.Id, channel.ImageUrl)
 		}
 
 		var users []User

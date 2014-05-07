@@ -22,6 +22,7 @@ type Channel struct {
 	Language      string
 	Link          string
 	Loading       bool
+	Colors        string
 	helper.Uriable
 }
 

@@ -5,12 +5,14 @@ import (
 	"encoding/hex"
 	"fmt"
 	"io"
+	"net/http"
 	"os"
 	"strings"
 	"time"
 
 	charset "code.google.com/p/go-charset/charset"
 	_ "code.google.com/p/go-charset/data"
+	"github.com/dukex/image_colors"
 	rss "github.com/jteeuwen/go-pkg-rss"
 )
 
@@ -74,6 +76,26 @@ func FetchChannel(url string) {
 	go fetcher(url, 5)
 }
 
+func FetchColors(channelId int64, imageUrl string) {
+	resp, err := http.Get(imageUrl)
+	if err != nil {
+		return
+	}
+
+	defer func() {
+		resp.Body.Close()
+		if r := recover(); r != nil {
+			fmt.Println("Recovered in f", r)
+		}
+	}()
+
+	imageColors, _ := image_colors.New(resp.Body)
+
+	database.Table("channels").
+		Where("id = ?", channelId).
+		Update("colors", strings.Join(imageColors.TopColors(5, 0.7), "|"))
+}
+
 func fetcher(uri string, timeout int) {
 	feed := rss.New(timeout, true, channelFetchHandler, itemFetchHandler)
 
@@ -121,6 +143,8 @@ func channelFetchHandler(feed *rss.Feed, channels []*rss.Channel) {
 		channel.Uri = channel.MakeUri(channelData.Title)
 
 		database.Save(&channel)
+
+		go FetchColors(channel.Id, channel.ImageUrl)
 
 		if itunesCategory := channelData.Extensions[itunesExt]["category"]; itunesCategory != nil {
 			for _, category := range itunesCategory {

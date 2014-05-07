@@ -17,6 +17,7 @@ type ChannelEntity struct {
 	Copyright   string      `json:"copyright"`
 	Episodes    []int64     `json:"episodes"`
 	UpdatedAt   time.Time   `json:"updated_at"`
+	Colors      string      `json:"colors"`
 }
 
 func (ce *ChannelEntity) FixUri() string {
@@ -59,7 +60,6 @@ func getToView(channelId int64, userId string) int64 {
 	)
 
 	episodesIds := int64(len(getEpisodesIds(channelId)))
-
 
 	// listenedCache, err := CacheGet(key, listened)
 	// if err == nil  {
