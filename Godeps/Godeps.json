@@ -32,6 +32,10 @@
 			"Rev": "bc4af7603a3e0ce9d58009f82fca481555182e1c"
 		},
 		{
+			"ImportPath": "github.com/dukex/image_colors",
+			"Rev": "e0533f46c8e7f76f08588b84c87db49cf9560218"
+		},
+		{
 			"ImportPath": "github.com/dukex/login2",
 			"Rev": "6ff57dcc363cb679208871b5a3774c328b2ef2c7"
 		},
@@ -84,12 +88,20 @@
 			"Rev": "6c54219055243614d4eaffea55917c15bea2ba2f"
 		},
 		{
+			"ImportPath": "github.com/lucasb-eyer/go-colorful",
+			"Rev": "b97dece1bb8f8a7738c0c706cfc0130185e25a95"
+		},
+		{
 			"ImportPath": "github.com/mattbaird/elastigo/api",
 			"Rev": "48595f26603636cec754c1c805a0935a61686ede"
 		},
 		{
 			"ImportPath": "github.com/mattbaird/elastigo/core",
 			"Rev": "48595f26603636cec754c1c805a0935a61686ede"
+		},
+		{
+			"ImportPath": "github.com/nfnt/resize",
+			"Rev": "8aee0d995b6511c4b52187d9b5b7f4da05bbae0b"
 		},
 		{
 			"ImportPath": "github.com/rakyll/coop",
