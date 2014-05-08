@@ -17,7 +17,6 @@ type ChannelEntity struct {
 	Copyright   string      `json:"copyright"`
 	Episodes    []int64     `json:"episodes"`
 	UpdatedAt   time.Time   `json:"updated_at"`
-	Colors      string      `json:"colors"`
 }
 
 func (ce *ChannelEntity) FixUri() string {
