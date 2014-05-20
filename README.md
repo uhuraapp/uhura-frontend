@@ -2,7 +2,7 @@
 
 Hailing Frequencies Are Open!
 
-Uhura works with golang and emberjs
+Uhura works with **golang** and **emberjs**
 
 ![Screenshot](http://uhura.herokuapp.com/assets/uhura-home-0.2.png)
 
@@ -42,7 +42,8 @@ export ENV="development"
 ```
 
 ``` bash
-$ go run app.go
+$ go build
+$ ./uhura
 ```
 
 open [127.0.0.1:3002](http://127.0.0.1:3002)

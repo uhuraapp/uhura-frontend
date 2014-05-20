@@ -1,6 +1,6 @@
 {
 	"ImportPath": "github.com/dukex/uhura",
-	"GoVersion": "go1.2",
+	"GoVersion": "go1.2.1",
 	"Deps": [
 		{
 			"ImportPath": "code.google.com/p/go-charset/charset",
@@ -13,31 +13,35 @@
 			"Rev": "ebbeafdc430eb6c7e44e9a730a38eaff4c56ba3a"
 		},
 		{
+			"ImportPath": "code.google.com/p/go.crypto/bcrypt",
+			"Comment": "null-191",
+			"Rev": "7aa593ce8ceaf0199504fff27455bbb60eedabc7"
+		},
+		{
+			"ImportPath": "code.google.com/p/go.crypto/blowfish",
+			"Comment": "null-191",
+			"Rev": "7aa593ce8ceaf0199504fff27455bbb60eedabc7"
+		},
+		{
 			"ImportPath": "code.google.com/p/goauth2/oauth",
 			"Comment": "weekly-40",
 			"Rev": "5877582f0cb070bc21b199dab5e7d18fb546444a"
 		},
 		{
-			"ImportPath": "github.com/austinchau/go-mixpanel",
-			"Rev": "4e0c0d6f76663facb6414ed55b17bea1cc444715"
+			"ImportPath": "github.com/dchest/uniuri",
+			"Rev": "bc4af7603a3e0ce9d58009f82fca481555182e1c"
 		},
 		{
-			"ImportPath": "github.com/codegangsta/inject",
-			"Rev": "346a984957aa24276ebc5e7b16b3ac6a50fe8138"
+			"ImportPath": "github.com/dukex/image_colors",
+			"Rev": "e0533f46c8e7f76f08588b84c87db49cf9560218"
 		},
 		{
-			"ImportPath": "github.com/codegangsta/martini",
-			"Comment": "v0.1-72-g9eab46a",
-			"Rev": "9eab46a1e15cdc0c9644b0505ffbd2ca905ab997"
+			"ImportPath": "github.com/dukex/login2",
+			"Rev": "6ff57dcc363cb679208871b5a3774c328b2ef2c7"
 		},
 		{
-			"ImportPath": "github.com/codegangsta/martini-contrib/render",
-			"Comment": "v0.1-123-geb23f49",
-			"Rev": "eb23f4925fb85db43df94d992501513ad9265e6f"
-		},
-		{
-			"ImportPath": "github.com/dukex/buffer",
-			"Rev": "eb6176c61e1a91dc1158a0bd9152148ce2c612b5"
+			"ImportPath": "github.com/dustin/gomemcached",
+			"Rev": "3bc2b0e8fd5d0304d37f246b38cde753803cee41"
 		},
 		{
 			"ImportPath": "github.com/fiam/gounidecode/unidecode",
@@ -46,6 +50,14 @@
 		{
 			"ImportPath": "github.com/gorilla/context",
 			"Rev": "708054d61e5a2918b9f4e9700000ee611dcf03f5"
+		},
+		{
+			"ImportPath": "github.com/gorilla/handlers",
+			"Rev": "78515eaa93ac9fa1b864f61ef263804af16fb944"
+		},
+		{
+			"ImportPath": "github.com/gorilla/mux",
+			"Rev": "9ede152210fa25c1377d33e867cb828c19316445"
 		},
 		{
 			"ImportPath": "github.com/gorilla/securecookie",
@@ -60,16 +72,12 @@
 			"Rev": "71e7b37bdfd69432e00565a7483a3788fdc20eb7"
 		},
 		{
-			"ImportPath": "github.com/joeguo/sitemap",
-			"Rev": "785fecae7f8def06cf84825f9c0856534e063384"
-		},
-		{
 			"ImportPath": "github.com/jordan-wright/email",
 			"Rev": "dcd24f3acd808a4ec1c910214415c33ac4d59daf"
 		},
 		{
 			"ImportPath": "github.com/jteeuwen/go-pkg-rss",
-			"Rev": "937de70c03b3af6f78338755794385c6f74f7df1"
+			"Rev": "2b6dc03edeb0bb531e0d85dd973e8ac0d7187884"
 		},
 		{
 			"ImportPath": "github.com/jteeuwen/go-pkg-xmlx",
@@ -80,13 +88,28 @@
 			"Rev": "6c54219055243614d4eaffea55917c15bea2ba2f"
 		},
 		{
+			"ImportPath": "github.com/lucasb-eyer/go-colorful",
+			"Rev": "b97dece1bb8f8a7738c0c706cfc0130185e25a95"
+		},
+		{
+			"ImportPath": "github.com/mattbaird/elastigo/api",
+			"Rev": "48595f26603636cec754c1c805a0935a61686ede"
+		},
+		{
+			"ImportPath": "github.com/mattbaird/elastigo/core",
+			"Rev": "48595f26603636cec754c1c805a0935a61686ede"
+		},
+		{
+			"ImportPath": "github.com/nfnt/resize",
+			"Rev": "8aee0d995b6511c4b52187d9b5b7f4da05bbae0b"
+		},
+		{
 			"ImportPath": "github.com/rakyll/coop",
 			"Rev": "9f25699aa4d3e675cc377aeeb1e3c8cd113d36a6"
 		},
 		{
-			"ImportPath": "github.com/rakyll/martini-contrib/cors",
-			"Comment": "v0.1-126-g94f7509",
-			"Rev": "94f7509d03983ce19a1a803b2e707deeb7157976"
+			"ImportPath": "github.com/ugorji/go/codec",
+			"Rev": "cdeae7b76625959e4164eab9eb303087a794f2cc"
 		}
 	]
 }

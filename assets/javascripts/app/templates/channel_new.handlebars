@@ -1,0 +1,32 @@
+<div id="channel_new">
+  <h3>{{t 'channel_new.title'}}</h3>
+  <h4>{{t 'channel_new.subtitle'}}</h4>
+
+  <form id="add_channel" class="uk-form uk-form-stacked" {{action 'addChannel' on='submit' }} >
+    <label for="url" class="uk-form-label">{{t 'channel_new.podcast_url'}}</label>
+    <input class="uk-form-large" id="url" type="url" name="url" />
+    <button type="submit" class="uk-button uk-button-success">{{t 'channel_new.button.add'}}</button>
+  </form>
+
+  <form id="search_channel" class="uk-form uk-form-stacked" {{action 'searchChannel' on='submit' }} >
+    <label for="q" class="uk-form-label">{{t 'channel_new.search'}}</label>
+    <input class="uk-form-large" id="q" type="search" name="q" />
+    <button type="submit" class="uk-button uk-button-success">{{t 'channel_new.button.search'}}</button>
+  </form>
+
+  {{#if channels}}
+  <ul id="channels">
+    {{#each channel in channels}}
+    <li class="channel column three-twelfth">
+      <img {{bind-attr src=channel.image_url}} />
+      <h5>{{channel.title}}</h5>
+      {{#if channel.subscribed}}
+      <button class="uk-button uk-button-small unsubscribe fa fa-check" {{action 'unsubscribeChannel' channel.id}}>{{t 'channel_new.button.subscribed'}}</button>
+      {{else}}
+      <button class="uk-button uk-button-small uk-button-success subscribe" {{action 'subscribeChannel' channel.id}}>{{t 'channel_new.button.subscribe'}}</button>
+      {{/if}}
+    </li>
+    {{/each}}
+  </ul>
+  {{/if}}
+</div>

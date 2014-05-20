@@ -1,0 +1,27 @@
+<h2>{{t 'index.suggestions'}}</h2>
+
+{{view App.LoadingView}}
+
+<ul id="channels">
+  {{#each channel in channels}}
+    <li>
+      <h3><span class="typcn typcn-th-large-outline"></span>
+        {{#link-to 'channel' channel.id}}{{channel.title}}{{/link-to}}
+      </h3>
+      <ul class="episodes">
+        {{#each episode in channel.episodes}}
+          {{episode-list-item episode=episode}}
+        {{/each}}
+      </ul>
+    </li>
+  {{/each}}
+</ul>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- uhura-links-suggestions- -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:468px;height:15px"
+     data-ad-client="ca-pub-5957735818581866"
+     data-ad-slot="7678022638"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>

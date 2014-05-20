@@ -1,111 +1,115 @@
 package core
 
 import (
-	"encoding/json"
-	"github.com/gorilla/sessions"
 	"net/http"
 	"strconv"
-	"time"
+
+	"github.com/dchest/uniuri"
+	auth "github.com/dukex/login2"
 )
 
-var store = sessions.NewCookieStore([]byte("something-very-secret"))
+func UserExists(email string) bool {
+	var count int
 
-type TempUser struct {
-	Id         string
-	Name       string
-	GivenName  string
-	FamilyName string
-	Link       string
-	Picture    string
-	Gender     string
-	Locale     string
-	Email      string
+	database.Table("users").Where("email = ?", email).Count(&count)
+
+	return count > 0
 }
 
-type User struct {
-	Id          int
-	Name        string
-	GivenName   string
-	FamilyName  string
-	Link        string
-	Picture     string
-	Gender      string
-	Locale      string
-	GoogleId    string
-	Email       string
-	WelcomeMail bool
-	CreatedAt   time.Time
+func UserCreate(email, password string) (User, error) {
+	user := User{Email: email, Password: password, Provider: "email"}
+	err := database.Save(&user).Error
+
+	return user, err
 }
 
-func (u *User) IdString() string {
-	return strconv.Itoa(u.Id)
-}
-
-func createUser(tempUser TempUser) *User {
+func UserById(id string) (User, error) {
 	var user User
-
-	database.Where(User{GoogleId: tempUser.Id}).Attrs(User{CreatedAt: time.Now()}).Assign(User{Name: tempUser.Name, GivenName: tempUser.GivenName, FamilyName: tempUser.FamilyName, Link: tempUser.Link, Picture: tempUser.Picture, Gender: tempUser.Gender, Locale: tempUser.Locale, Email: tempUser.Email}).FirstOrCreate(&user)
-	if !user.WelcomeMail {
-		WelcomeMail(&user)
-	}
-	return &user
+	err := database.First(&user, id).Error
+	return user, err
 }
 
-func getUser(userId string) (*User, bool) {
+func UserByEmail(email string) (User, error) {
 	var user User
-
-	id, _ := strconv.Atoi(userId)
-
-	if id == 0 {
-		return nil, true
-	}
-
-	if database.First(&user, id).RecordNotFound() {
-		return nil, true
-	}
-
-	return &user, false
+	err := database.Where("email = ?", email).First(&user).Error
+	return user, err
 }
 
-func CurrentUser(request *http.Request) (*User, bool) {
-	session, _ := store.Get(request, "_uhura_session")
-	userId, ok := session.Values["user_id"].(string)
-	if ok {
-		user, err := getUser(userId)
-		return user, err
-	} else {
-		return nil, true
+func UserCreateFromOAuth(provider string, temp *auth.User) (int64, error) {
+	user := User{
+		Email:      temp.Email,
+		Password:   uniuri.NewLen(6),
+		Provider:   provider,
+		ProviderId: temp.Id,
+		Link:       temp.Link,
+		Picture:    temp.Picture,
+		Locale:     temp.Locale,
+		Name:       temp.Name,
 	}
-}
+	err := database.Save(&user).Error
 
-func SetReturnTo(request *http.Request, responseWriter http.ResponseWriter, url string) {
-	session, _ := store.Get(request, "_uhura_session")
-	session.Values["return_to"] = url
-	session.Save(request, responseWriter)
-}
-
-func GetReturnTo(request *http.Request) string {
-	session, _ := store.Get(request, "_uhura_session")
-	url, ok := session.Values["return_to"].(string)
-	if !ok {
-		url = "/dashboard"
-	}
-	return url
-}
-
-func CreateAndLoginUser(request *http.Request, responseWriter http.ResponseWriter, responseAuth *http.Response) (*User, bool) {
-	var tempUser TempUser
-	decoder := json.NewDecoder(responseAuth.Body)
-	err := decoder.Decode(&tempUser)
 	if err != nil {
-		panic(err)
+		return 0, err
 	}
 
-	user := createUser(tempUser)
+	go func() {
+		userId := strconv.Itoa(int(user.Id))
+		p := MIXPANEL.Identify(userId)
+		p.Track("sign up", map[string]interface{}{"from": provider})
+		p.Set(map[string]interface{}{"$email": user.Email, "gender": user.Gender})
+	}()
 
-	session, _ := store.Get(request, "_uhura_session")
-	session.Values["user_id"] = user.IdString()
+	return user.Id, err
+}
 
-	session.Save(request, responseWriter)
-	return user, false
+func UserPasswordByEmail(email string) (password string, ok bool) {
+	var user User
+	ok = false
+
+	err := database.Where("email = ? ", email).First(&user).Error
+
+	if err != nil {
+		return
+	}
+
+	password = user.Password
+	ok = true
+	return
+}
+
+func UserResetPassword(token string, email string) {
+	var user User
+	database.Table("users").Where("email = ? ", email).First(&user).Update("remember_token", token)
+	ResetPasswordEmail(&user)
+}
+
+func UserByRememberToken(hash string) (User, error) {
+	var user User
+	err := database.Table("users").Where("remember_token = ? AND remember_token <> '0'", hash).First(&user).Error
+	return user, err
+}
+
+func UserExistsByRememberToken(hash string) bool {
+	_, err := UserByRememberToken(hash)
+	return err == nil
+}
+
+func ChangePassword(w http.ResponseWriter, r *http.Request) {
+	password := r.FormValue("password")
+	password_confirmation := r.FormValue("password_confirmation")
+	hash := r.FormValue("hash")
+	if password != "" && password == password_confirmation {
+		user, err := UserByRememberToken(hash)
+		if err == nil {
+			hPassword, _ := auth.GenerateHash(password)
+			user.Password = hPassword
+			user.RememberToken = "0"
+			database.Save(&user)
+			http.Redirect(w, r, "/login/"+"?password=changed", http.StatusTemporaryRedirect)
+		} else {
+			http.Redirect(w, r, "/change_password/"+hash+"?password=error", http.StatusTemporaryRedirect)
+		}
+	} else {
+		http.Redirect(w, r, "/change_password/"+hash+"?password=dont_match", http.StatusTemporaryRedirect)
+	}
 }

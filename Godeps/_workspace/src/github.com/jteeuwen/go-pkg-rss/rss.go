@@ -50,7 +50,14 @@ func (this *Feed) readRss2(doc *xmlx.Document) (err error) {
 		ch.Links = make([]Link, len(list))
 
 		for i, v := range list {
-			ch.Links[i].Href = v.GetValue()
+			if v.Name.Space == "http://www.w3.org/2005/Atom" && v.Name.Local == "link" {
+				ch.Links[i].Href = v.As("", "href")
+				ch.Links[i].Rel = v.As("", "rel")
+				ch.Links[i].Type = v.As("", "type")
+				ch.Links[i].HrefLang = v.As("", "hreflang")
+			} else {
+				ch.Links[i].Href = v.GetValue()
+			}
 		}
 
 		ch.Description = node.S(ns, "description")
@@ -129,7 +136,15 @@ func (this *Feed) readRss2(doc *xmlx.Document) (err error) {
 			tl = item.SelectNodes(ns, "link")
 			for _, v := range tl {
 				lnk := new(Link)
-				lnk.Href = v.GetValue()
+				if v.Name.Space == "http://www.w3.org/2005/Atom" && v.Name.Local == "link" {
+					lnk.Href = v.As("", "href")
+					lnk.Rel = v.As("", "rel")
+					lnk.Type = v.As("", "type")
+					lnk.HrefLang = v.As("", "hreflang")
+				} else {
+					lnk.Href = v.GetValue()
+				}
+
 				i.Links = append(i.Links, lnk)
 			}
 

@@ -1,3 +1,9 @@
 cache.json
 *.DS_Store
 *.swp
+tmp/*
+.sass-cache
+cache*.json
+node_modules
+uhura
+output.txt
