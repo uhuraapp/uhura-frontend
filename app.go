@@ -11,6 +11,7 @@ import (
 	"time"
 
 	auth "github.com/dukex/login2"
+	"github.com/dukex/mixpanel"
 	"github.com/dukex/uhura/core"
 	"github.com/gorilla/context"
 	"github.com/gorilla/handlers"
@@ -24,7 +25,7 @@ var (
 	PORT           string
 	URL            string
 	loginBuilder   *auth.Builder
-	MIXPANEL       *core.Mixpanel
+	MIXPANEL       *mixpanel.Mixpanel
 	EMAIL          string
 	PAGES          map[string][]byte
 )
@@ -36,7 +37,7 @@ func userLogin(userId string) {
 		user, _ := core.UserById(userId)
 
 		people := MIXPANEL.Identify(userId)
-		people.Set(map[string]interface{}{
+		people.Update("$set", map[string]interface{}{
 			"$email":      user.Email,
 			"$last_login": time.Now(),
 			"$created":    user.CreatedAt,
@@ -69,7 +70,7 @@ func userCreate(email, password string, request *http.Request) (int64, error) {
 		userId := strconv.Itoa(int(user.Id))
 		p := MIXPANEL.Identify(userId)
 		p.Track("sign up", map[string]interface{}{"from": "email"})
-		p.Set(map[string]interface{}{"$email": user.Email, "gender": user.Gender})
+		p.Update("$set", map[string]interface{}{"$email": user.Email, "gender": user.Gender})
 	}()
 
 	return user.Id, err
@@ -250,7 +251,7 @@ func main() {
 	ENV = os.Getenv("ENV")
 	PORT = os.Getenv("PORT")
 	URL = os.Getenv("URL")
-	MIXPANEL = core.NewMixpanel(os.Getenv("MIXPANEL_TOKEN"))
+	MIXPANEL = mixpanel.NewMixpanel(os.Getenv("MIXPANEL_TOKEN"))
 
 	configAuth()
 
