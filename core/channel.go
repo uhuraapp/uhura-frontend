@@ -52,13 +52,9 @@ type ChannelResult struct {
 	UpdatedAt   time.Time   `json:"updated_at"`
 }
 
-func (c *Channel) AfterCreate() {
-	NewChannelTweet(c.Id)
-}
-
 func (c *Channel) ShareUrl() string {
 	id := strconv.Itoa(c.Id)
-	return "http://uhuraapp.com/channels/" + id
+	return "http://old.uhuraapp.com/channels/" + id
 }
 
 func (cr *ChannelResult) GetUri() string {

@@ -63,15 +63,6 @@ func (i *Item) BeforeCreate() {
 	i.Uri = i.SetUri()
 }
 
-func (i *Item) AfterCreate() {
-	nowMonth := time.Now().Month()
-	publishedMonth := i.PublishedAt.Month()
-
-	if publishedMonth >= (nowMonth - 1) {
-		NewEpisodeTweet(i.Id)
-	}
-}
-
 func (i *Item) SetUri() string {
 	re := regexp.MustCompile(`\W`)
 	uri := Unidecode(i.Title)

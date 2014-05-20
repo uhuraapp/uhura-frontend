@@ -24,45 +24,16 @@ const profileInfoURL = "https://www.googleapis.com/oauth2/v1/userinfo?alt=json"
 
 func emberAppHandler(r render.Render, req *http.Request) string {
 	var indexTemplate string
-	userAgent := strings.ToLower(req.UserAgent())
+	baseUrl := "http://old.uhuraapp.com"
 
-	fmt.Println("USER AGENT", userAgent)
-
-	if strings.Contains(userAgent, "structureddata") || strings.Contains(userAgent, "flipboard.com") || strings.Contains(userAgent, "newsme") || strings.Contains(userAgent, "bot") || strings.Contains(userAgent, "slurp") || strings.Contains(userAgent, "facebookexternalhit") {
-		url := os.Getenv("PRERENDER_SERVER") + "/" + "http://" + req.Host + req.URL.RequestURI()
-		fmt.Println(url)
-
-		res, err := http.Get(url)
-		defer res.Body.Close()
-		if err != nil {
-			fmt.Println("ERROR 1", err)
-		}
-
-		body, err := ioutil.ReadAll(res.Body)
-
-		if err != nil {
-			fmt.Println("ERROR 2", err)
-		}
-		indexTemplate = string(body)
-	} else {
-		baseUrl := "http://uhuraapp.com"
-		if os.Getenv("ENV") == "development" {
-			baseUrl = "http://127.0.0.1:3002"
-		}
-
-		itb, _ := ioutil.ReadFile("./templates/index.html")
-		indexTemplate = string(itb[:])
-		indexTemplate = strings.Replace(indexTemplate, "<% URL %>", baseUrl, -1)
-	}
+	itb, _ := ioutil.ReadFile("./templates/index.html")
+	indexTemplate = string(itb[:])
+	indexTemplate = strings.Replace(indexTemplate, "<% URL %>", baseUrl, -1)
 
 	return indexTemplate
 }
 
-//var MTrack *mixpanel.Mixpanel
-
 func main() {
-	// MTrack = mixpanel.NewMixpanel("bf01c5c21072fb671043a3bd17069b61", "45f460d04bc5d54dc516a54c9aff0036")
-
 	sids := strings.Split(os.Getenv("CHANNELS_HOME"), ",")
 	var ids = make([]int, 0)
 
@@ -100,7 +71,6 @@ func main() {
 	m.Use(martini.Static("assets"))
 	m.Use(martini.Static("fonts"))
 	m.Use(martini.Recovery())
-	m.Use(core.UhuraRecovery())
 
 	// API
 
@@ -135,7 +105,6 @@ func main() {
 				userId = 0
 			} else {
 				userId = user.Id
-				// MTrack.UserInfo(user.IdString())
 			}
 
 			channels, _ = core.AllChannels(userId, false, "")
@@ -157,8 +126,6 @@ func main() {
 			Channel core.Channel `json:"channel"`
 		}
 
-		// MTrack.UserInfo(user.IdString())
-
 		json.NewDecoder(request.Body).Decode(&channelJson)
 
 		channel := core.AddFeed(channelJson.Channel.Url, user.Id)
@@ -172,7 +139,6 @@ func main() {
 			userId = 0
 		} else {
 			userId = user.Id
-			// MTrack.UserInfo(user.IdString())
 		}
 
 		channels, episodes := core.AllChannels(userId, false, params["id"])
@@ -188,8 +154,6 @@ func main() {
 			return
 		}
 
-		// MTrack.UserInfo(user.IdString())
-
 		channel := core.SubscribeChannel(user.Id, params["id"])
 
 		r.JSON(200, map[string]interface{}{"channel": channel})
@@ -203,8 +167,6 @@ func main() {
 			return
 		}
 
-		// MTrack.UserInfo(user.IdString())
-
 		channel := core.UnsubscribeChannel(user.Id, params["id"])
 
 		r.JSON(200, map[string]interface{}{"channel": channel})
@@ -217,7 +179,6 @@ func main() {
 			r.Error(403)
 			return
 		}
-		// MTrack.UserInfo(user.IdString())
 
 		subscribes, channels := core.Subscriptions(user)
 		r.JSON(200, map[string]interface{}{"subscriptions": subscribes, "channels": channels})
@@ -236,7 +197,6 @@ func main() {
 			userId = 0
 		} else {
 			userId = user.Id
-			// MTrack.UserInfo(user.IdString())
 		}
 
 		episode, notFound := core.GetItem(params["slug"], userId)
@@ -255,8 +215,6 @@ func main() {
 			return
 		}
 
-		// MTrack.UserInfo(user.IdString())
-
 		episode, _ := core.GetItem(params["id"], user.Id)
 
 		r.JSON(200, map[string]interface{}{"episode": episode})
@@ -269,7 +227,6 @@ func main() {
 			r.Error(403)
 			return
 		}
-		// MTrack.UserInfo(user.IdString())
 
 		channels, episodes := core.AllChannels(user.Id, false, params["id"])
 		r.JSON(200, map[string]interface{}{"episodes": episodes, "channel": channels[0]})
@@ -292,8 +249,6 @@ func main() {
 			http.Redirect(w, request, url, http.StatusFound)
 			return ""
 		} else {
-			// MTrack.UserInfo(user.IdString())
-
 			return "<script>window.close();</script>"
 		}
 	})
@@ -308,18 +263,6 @@ func main() {
 		core.CreateAndLoginUser(request, responseWriter, responseAuth)
 
 		return "<script>window.close();</script>"
-	})
-
-	// API - DEV
-	m.Get("/api/dev/fetchall", func(r render.Render) {
-		if os.Getenv("ENV") == "development" {
-			core.FetchAllChannell()
-		}
-		r.JSON(202, "")
-	})
-
-	m.Get("/sitemap.xml", func() string {
-		return core.SiteMap()
 	})
 
 	m.Get("/**", emberAppHandler)
