@@ -33,12 +33,20 @@ $ make deps
 Dev env
 
 ``` bash
+export DATABASE_URL="postgres://$USER@localhost/uhura?sslmode=disable"
 export GOOGLE_CLIENT_ID="933623108791-imtedbq5d1vgfhotj15gq6493jl22j4m.apps.googleusercontent.com"
 export GOOGLE_CLIENT_SECRET="HjKW82HOb1jT-XyWgPFc9jW8"
-export GOOGLE_CALLBACK_URL="http://127.0.0.1:3002/auth/callback"
+export GOOGLE_CALLBACK_URL="http://127.0.0.1:3002/auth/callback/google"
+export FACEBOOK_CLIENT_ID="257036014466425"
+export FACEBOOK_CLIENT_SECRET="2a7500446b1e3a135b2fd5caf71ef375"
+export FACEBOOK_CALLBACK_URL="http://127.0.0.1:3002/auth/callback/facebook"
 export PORT=3002
 export DEBUG=true
 export ENV="development"
+export SEARCHBOX_URL="http://localhost:9200"
+export MEMCACHEDCLOUD_SERVERS="127.0.0.1:11211"
+export SEARCH_INDEX=false
+export URL="http://127.0.0.1:3002"
 ```
 
 ``` bash
