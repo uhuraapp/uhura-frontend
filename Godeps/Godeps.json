@@ -40,6 +40,10 @@
 			"Rev": "6ff57dcc363cb679208871b5a3774c328b2ef2c7"
 		},
 		{
+			"ImportPath": "github.com/dukex/mixpanel",
+			"Rev": "ce2b945926a66f25a18f47abbaf1492aff83ef1f"
+		},
+		{
 			"ImportPath": "github.com/dustin/gomemcached",
 			"Rev": "3bc2b0e8fd5d0304d37f246b38cde753803cee41"
 		},
