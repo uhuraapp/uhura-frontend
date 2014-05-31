@@ -89,7 +89,7 @@ func checkEnvVar(key string) {
 
 func checkVars() {
 	checkEnvVar("URL")
-	checkEnvVar("BUFFER_PROFILE")
+	//checkEnvVar("BUFFER_PROFILE")
 	checkEnvVar("SEARCHBOX_URL")
 	checkEnvVar("SEARCH_INDEX")
 	checkEnvVar("MIXPANEL_TOKEN")
