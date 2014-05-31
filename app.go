@@ -171,7 +171,7 @@ func BuildPage(page string, data string) string {
 
 	pageHTML := string(pageBytes[:])
 	pageHTML = strings.Replace(pageHTML, "<% EMAIL %>", EMAIL, -1)
-	pageHTML = strings.Replace(pageHTML, "<% URL %>", URL, -1)
+	pageHTML = strings.Replace(pageHTML, "<% URL %>", strings.Replace(URL, "http:", "", -1), -1)
 	pageHTML = strings.Replace(pageHTML, "<% ASSETS_VERSION %>", ASSETS_VERSION, -1)
 	pageHTML = strings.Replace(pageHTML, "<% DATA %>", data, -1)
 
@@ -228,7 +228,7 @@ func CanvasHandler(w http.ResponseWriter, r *http.Request) {
 
 	if ok {
 		if strings.Contains(r.Referer(), "apps.facebook.com") {
-			http.Redirect(w, r, URL+"/app", http.StatusFound)
+			http.Redirect(w, r, strings.Replace(URL, "http:", "https:", -1)+"/app", http.StatusFound)
 		} else {
 			http.Redirect(w, r, "https://apps.facebook.com/"+os.Getenv("FACEBOOK_CLIENT_ID")+"/", http.StatusFound)
 		}
