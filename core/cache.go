@@ -73,8 +73,8 @@ func init() {
 	CACHE, memcachedErr = memcache.Connect("tcp", memcachedUrl)
 
 	if memcachedErr != nil {
+		log.Println("Config:", memcachedUrl, memcachedPassword, memcachedUsername)
 		log.Panic("Memcached error", memcachedErr.Error())
-		log.Panic("Config:", memcachedUrl, memcachedPassword, memcachedUsername)
 	}
 
 	if memcachedPassword != "" {
