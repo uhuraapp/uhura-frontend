@@ -37,7 +37,7 @@
 		},
 		{
 			"ImportPath": "github.com/dukex/login2",
-			"Rev": "6ff57dcc363cb679208871b5a3774c328b2ef2c7"
+			"Rev": "b2ed41ab7d7831724fceb3a068a55ec1a204bfd6"
 		},
 		{
 			"ImportPath": "github.com/dukex/mixpanel",

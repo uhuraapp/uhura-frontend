@@ -220,12 +220,16 @@ func (b *Builder) Protected(fn func(string, http.ResponseWriter, *http.Request))
 		if ok {
 			fn(userID, w, r)
 		} else {
-			session, _ := store.Get(r, "_session")
-			session.Values["return_to"] = r.URL.String()
-			session.Save(r, w)
+			b.SetReturnTo(w, r, r.URL.String())
 			http.Redirect(w, r, b.URLS.SignIn, http.StatusTemporaryRedirect)
 		}
 	}
+}
+
+func (b *Builder) SetReturnTo(w http.ResponseWriter, r *http.Request, url string) {
+	session, _ := store.Get(r, "_session")
+	session.Values["return_to"] = url
+	session.Save(r, w)
 }
 
 func (b *Builder) ResetPassword() func(http.ResponseWriter, *http.Request) {
