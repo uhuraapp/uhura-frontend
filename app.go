@@ -223,6 +223,22 @@ func AdsHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, BuildPage("ads", ""))
 }
 
+func CanvasHandler(w http.ResponseWriter, r *http.Request) {
+	_, ok := loginBuilder.CurrentUser(r)
+
+	if ok {
+		if strings.Contains(r.Referer(), "apps.facebook.com") {
+			http.Redirect(w, r, URL+"/app", http.StatusFound)
+		} else {
+			http.Redirect(w, r, "https://apps.facebook.com/"+os.Getenv("FACEBOOK_CLIENT_ID")+"/", http.StatusFound)
+		}
+	} else {
+		loginBuilder.SetReturnTo(w, r, URL+"/canvas")
+		url := "/auth/facebook"
+		fmt.Fprintf(w, BuildPage("canvas_redirect", url))
+	}
+}
+
 func ResetPassword(w http.ResponseWriter, r *http.Request) {
 	query := r.URL.Query()
 	if step, ok := query["step"]; ok && step[0] == "2" {
@@ -295,6 +311,13 @@ func main() {
 	apiRouter.HandleFunc("/s/channels", loginBuilder.Protected(core.SearchChannels))
 
 	apiRouter.HandleFunc("/finder", loginBuilder.Protected(core.FindChannels))
+
+	// Canvas
+	r.HandleFunc("/canvas", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(200)
+	}).Methods("POST")
+
+	r.HandleFunc("/canvas", CanvasHandler).Methods("GET")
 
 	// App
 	appRouter := r.PathPrefix("/app").Subrouter()
