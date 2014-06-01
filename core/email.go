@@ -11,7 +11,7 @@ import (
 	"time"
 
 	"github.com/jordan-wright/email"
-	"github.com/rakyll/coop"
+	// "github.com/rakyll/coop"
 )
 
 const (
@@ -36,12 +36,12 @@ func init() {
 }
 
 func WelcomeMail(user *User) {
-	coop.After(DELAY_WELCOME_EMAIL, func() {
-		err := sendMail([]string{user.Email}, "dukekhaos@gmail.com", "Welcome to Uhura", renderEmail("welcome", user), false)
-		if err == nil {
-			database.Model(user).Update("WelcomeMail", true)
-		}
-	})
+	//coop.After(DELAY_WELCOME_EMAIL, func() {
+	err := sendMail([]string{user.Email}, "dukekhaos@gmail.com", "Welcome to Uhura", renderEmail("welcome", user), false)
+	if err == nil {
+		database.Model(user).Update("WelcomeMail", true)
+	}
+	//})
 }
 
 func ResetPasswordEmail(user *User) {
