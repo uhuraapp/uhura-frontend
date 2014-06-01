@@ -85,6 +85,6 @@ func sendMail(to []string, from string, subject string, body []byte, useHtml boo
 		e.Text = body
 	}
 	err := e.Send(SMTP_SERVER, smtp.PlainAuth("", from, SMTP_PASSWORD, SMTP_HOST))
-	log.Println(err)
+	log.Println("Error", err)
 	return err
 }
