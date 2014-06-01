@@ -2,7 +2,6 @@ package core
 
 import (
 	"os"
-	"strconv"
 
 	"github.com/jinzhu/gorm"
 	pq "github.com/lib/pq"
@@ -26,22 +25,7 @@ func init() {
 
 func DatabaseManager() {
 	if os.Getenv("SETUP_DATABASE") == "true" {
-		go func() {
-			var users []User
 
-			database.Find(&users)
-
-			for _, user := range users {
-				people := MIXPANEL.Identify(strconv.Itoa(int(user.Id)))
-				people.Update("$set", map[string]interface{}{
-					"$name":         user.Name,
-					"$email":        user.Email,
-					"$created":      user.CreatedAt,
-					"provider":      user.Provider,
-					"welcome_email": user.WelcomeMail,
-				})
-			}
-		}()
 		database.Where("title is NULL").Or("title = ''").Delete(&Channel{})
 
 		// var channels []Channel

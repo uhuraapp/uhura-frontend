@@ -37,7 +37,7 @@ func init() {
 
 func WelcomeMail(user *User) {
 	coop.After(DELAY_WELCOME_EMAIL, func() {
-		err := sendMail([]string{user.Email}, "duke@uhuraapp.com", "Welcome to Uhura", renderEmail("welcome", user), false)
+		err := sendMail([]string{user.Email}, "dukekhaos@gmail.com", "Welcome to Uhura", renderEmail("welcome", user), false)
 		if err == nil {
 			database.Model(user).Update("WelcomeMail", true)
 		}
