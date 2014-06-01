@@ -34,6 +34,7 @@ func DatabaseManager() {
 			for _, user := range users {
 				people := MIXPANEL.Identify(strconv.Itoa(int(user.Id)))
 				people.Update("$set", map[string]interface{}{
+					"$name":         user.Name,
 					"$email":        user.Email,
 					"$created":      user.CreatedAt,
 					"provider":      user.Provider,
