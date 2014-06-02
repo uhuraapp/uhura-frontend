@@ -69,8 +69,16 @@ App.PLAYER.listened = function(episode) {
 App.PLAYER.getApi = function (episode) {
   var api = App.PLAYER.APIS[episode.get('mediaApi')];
   return api || App.PLAYER.APIS['audio'];
-}
+};
 
+App.PLAYER.seek = function(e) {
+  var coords = App.PLAYER.APIS['audio']._getClickPosition(e),
+      loaderWidth = $(e.currentTarget).find('.loading').width(),
+      porcentage = (100 * coords.x) / loaderWidth,
+      position = (App.PLAYER.APIS['audio'].current.duration * porcentage) / 100;
+
+  App.PLAYER.APIS['audio'].current.setPosition(position);
+};
 
 // -- API AUDIO --
 App.PLAYER.APIS.audio.episodes = {};
@@ -138,7 +146,26 @@ App.PLAYER.APIS.audio.getAudio = function(id){
   return App.PLAYER.APIS.audio.episodes[id];
 };
 
+App.PLAYER.APIS['audio']._getClickPosition = function(e) {
+    var parentPosition = App.PLAYER.APIS['audio']._getElementPosition(e.currentTarget);
 
+    var x = e.clientX - parentPosition.x,
+        y = e.clientY - parentPosition.y;
+
+    return {x: x, y: y};
+}
+
+App.PLAYER.APIS['audio']._getElementPosition = function(element) {
+    var x = 0;
+    var y = 0;
+
+    while (element) {
+        x += (element.offsetLeft - element.scrollLeft + element.clientLeft);
+        y += (element.offsetTop - element.scrollTop + element.clientTop);
+        element = element.offsetParent;
+    }
+    return { x: x, y: y };
+}
 
 //\ -- API VIDEO --
 

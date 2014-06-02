@@ -15,7 +15,7 @@ $(document).ready(function(){
   $(document).on('click', '.more-info', showDescription);
   $(document).on('mouseenter mouseleave', '.unsubscribe', toggleHoverUnsubscribe);
   $(document).on('click', '#toggle-screen', toggleScreen);
-
+  $(document).on('click', '#player-loader',  App.PLAYER.seek);
 });
 
 var toggleScreen = function() {
