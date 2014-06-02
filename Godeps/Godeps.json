@@ -108,10 +108,6 @@
 			"Rev": "8aee0d995b6511c4b52187d9b5b7f4da05bbae0b"
 		},
 		{
-			"ImportPath": "github.com/rakyll/coop",
-			"Rev": "9f25699aa4d3e675cc377aeeb1e3c8cd113d36a6"
-		},
-		{
 			"ImportPath": "github.com/ugorji/go/codec",
 			"Rev": "cdeae7b76625959e4164eab9eb303087a794f2cc"
 		}
