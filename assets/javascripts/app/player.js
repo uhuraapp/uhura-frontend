@@ -116,7 +116,7 @@ App.PLAYER.APIS.audio.events.loading = function(){
 window.listenedWorker={}
 App.PLAYER.APIS.audio.events.playing = function(){
   var playing = (this.position * 100)/this.durationEstimate;
-  if (playing > 5 ) {
+  if (playing > 95 ) {
     var model = App.PLAYER.current;
     if (window.listenedWorker[model.id] !== true) {
       window.listenedWorker[model.id] = true;
