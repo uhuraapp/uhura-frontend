@@ -113,16 +113,17 @@ App.PLAYER.APIS.audio.events.loading = function(){
   $("#player-loader div.loading").css("width", percent+"%")
 };
 
+window.listenedWorker={}
 App.PLAYER.APIS.audio.events.playing = function(){
-  playing = (this.position * 100)/this.durationEstimate
+  var playing = (this.position * 100)/this.durationEstimate;
+  if (playing > 5 ) {
+    var model = App.PLAYER.current;
+    if (window.listenedWorker[model.id] !== true) {
+      window.listenedWorker[model.id] = true;
+      App.PLAYER.listened(model);
+    }
+  }
   $("#player-loader div.playing").css("width", playing+"%")
-};
-
-App.PLAYER.APIS.audio.events.onplay = function(){
-  this.onPosition(this.duration * 0.9, function(eventPosition) {
-    var model = App.PLAYER.current
-    App.PLAYER.listened(model);
-  });
 };
 
 App.PLAYER.APIS.audio.getAudio = function(id){
@@ -135,7 +136,6 @@ App.PLAYER.APIS.audio.getAudio = function(id){
       url: [audio.source_url],
       whileloading: App.PLAYER.APIS.audio.events.loading,
       whileplaying: App.PLAYER.APIS.audio.events.playing,
-      onplay:    App.PLAYER.APIS.audio.events.onplay,
       onfinish: function() {
         App.PLAYER.stopCurrent();
       },
