@@ -208,7 +208,7 @@ func EnterHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func AppHandler(userId string, w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, BuildPage("app", ""))
+	fmt.Fprintf(w, BuildPage("app", userId))
 }
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
