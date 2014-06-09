@@ -19,6 +19,7 @@ type User struct {
 	Provider      string `sql:"type:varchar(100);"`
 	ProviderId    string `sql:"type:varchar(50);"`
 	RememberToken string `sql:"type:varchar(100);"`
+	ApiToken      string `sql:"type:varchar(100);"`
 }
 
 func (u *User) AfterCreate() {
