@@ -38,7 +38,10 @@ func GetEpisodes(userId string, w http.ResponseWriter, request *http.Request) {
 	ids := query["ids[]"]
 
 	if len(ids) > 0 {
-		database.Table("items").Where("items.id in (?)", ids).Find(&episodes)
+		database.Table("items").
+			Where("items.id in (?)", ids).
+			Order("published_at DESC").
+			Find(&episodes)
 
 		database.Table("user_items").
 			Where("item_id in (?)", ids).
