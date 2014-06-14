@@ -31,7 +31,9 @@ func SubscribeChannel(userId string, w http.ResponseWriter, request *http.Reques
 
 	go func() {
 		p := MIXPANEL.Identify(userId)
-		p.Track("subscribed", map[string]interface{}{"Channel ID": id})
+		p.Track("subscribed", map[string]interface{}{
+			"Channel ID": id,
+		})
 	}()
 
 	go TouchChannel(channelId)
