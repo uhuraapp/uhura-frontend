@@ -50,10 +50,10 @@ func init() {
 
 	if os.Getenv("SEARCH_INDEX") == "true" {
 		var channels []ChannelES
-		var episodes []EpisodeES
+		// var episodes []EpisodeES
 
 		database.Table("channels").Find(&channels)
-		database.Table("items").Find(&episodes)
+		// database.Table("items").Find(&episodes)
 
 		go func() {
 			for _, channel := range channels {
@@ -61,11 +61,11 @@ func init() {
 			}
 		}()
 
-		go func() {
-			for _, episode := range episodes {
-				IndexEpisode(episode)
-			}
-		}()
+		// go func() {
+		// 	for _, episode := range episodes {
+		// 		IndexEpisode(episode)
+		// 	}
+		// }()
 	}
 }
 
