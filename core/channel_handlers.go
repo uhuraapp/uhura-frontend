@@ -30,10 +30,21 @@ func SubscribeChannel(userId string, w http.ResponseWriter, request *http.Reques
 	CacheUserSubscription(&userChannel)
 
 	go func() {
+		var channel ChannelEntity
 		p := MIXPANEL.Identify(userId)
-		p.Track("subscribed", map[string]interface{}{
-			"Channel ID": id,
-		})
+
+		err := database.Table("channels").Where("channels.id = ?", id).First(&channel).Error
+
+		if err != nil {
+			p.Track("subscribed", map[string]interface{}{
+				"Channel ID":    id,
+				"Channel Title": channel.Title,
+			})
+		} else {
+			p.Track("subscribed", map[string]interface{}{
+				"Channel ID": id,
+			})
+		}
 	}()
 
 	go TouchChannel(channelId)

@@ -118,7 +118,12 @@ func SearchChannels(userId string, w http.ResponseWriter, request *http.Request)
 		channels[i].SetSubscription(userId)
 	}
 
-	go MIXPANEL.Track(userId, "search", map[string]interface{}{"q": q})
+	go func() {
+		MIXPANEL.Track(userId, "search", map[string]interface{}{
+			"q":     q,
+			"found": len(channels),
+		})
+	}()
 
 	r.ResponseJSON(w, 200, map[string][]ChannelEntity{"channels": channels})
 }
