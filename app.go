@@ -158,8 +158,11 @@ func getVersion() string {
 }
 
 func BuildPage(page string, data string) string {
+	assets_sufix := ".min"
+
 	if ENV == "development" {
 		buildPageFromFile(page)
+		assets_sufix = ""
 	}
 
 	var pageBytes []byte
@@ -174,6 +177,7 @@ func BuildPage(page string, data string) string {
 	pageHTML = strings.Replace(pageHTML, "<% URL %>", strings.Replace(URL, "http:", "", -1), -1)
 	pageHTML = strings.Replace(pageHTML, "<% ASSETS_VERSION %>", ASSETS_VERSION, -1)
 	pageHTML = strings.Replace(pageHTML, "<% DATA %>", data, -1)
+	pageHTML = strings.Replace(pageHTML, "<% ASSETS_SUFIX %>", assets_sufix, -1)
 
 	return pageHTML
 }
