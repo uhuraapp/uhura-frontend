@@ -1,4 +1,4 @@
-<div id="aside-wrapper" class="column three-twelfth uk-hidden-small">
+<div id="aside-wrapper" class="uk-animation-fade column three-twelfth uk-hidden-small">
   <aside class="column three-twelfth ">
     <header>
       <hgroup>
@@ -9,7 +9,7 @@
       </hgroup>
     </header>
 
-    <ul>
+    <ul class="uk-animation-fade">
       <li>
         {{#link-to 'index' }}
           <span class="typcn typcn-home-outline"></span>{{t "sidebar.home"}}
@@ -105,10 +105,10 @@
   </div>
 </div>
 
-<a href="#sidebar-mobile" class="uk-navbar-toggle uk-visible-small" data-uk-offcanvas></a>
-<a id="toggle-screen" class="uk-navbar-toggle uk-hidden-small"></a>
+<a href="#sidebar-mobile" class="uk-navbar-toggle uk-visible-small uk-animation-fade" data-uk-offcanvas></a>
+<a id="toggle-screen" class="uk-navbar-toggle uk-hidden-small uk-animation-fade"></a>
 
-<div id="content" class="column nine-twelfth">
+<div id="content" class="column nine-twelfth uk-animation-fade">
   {{outlet}}
   {{view App.PlayerView}}
 </div>

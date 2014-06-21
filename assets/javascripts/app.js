@@ -19,9 +19,12 @@ $(document).ready(function(){
 });
 
 var toggleScreen = function() {
-  $("#content").toggleClass("nine-twelfth");
-  $("#content").toggleClass("full");
-  $("#aside-wrapper").toggleClass("uk-hidden");
+  $("#aside-wrapper").toggleClass("uk-animation-slide-left uk-animation-reverse");
+  setTimeout(function(){
+    $("#content").toggleClass("nine-twelfth");
+    $("#content").toggleClass("full");
+    $("#aside-wrapper").toggleClass("uk-hidden");
+  }, 100);
 };
 
 var fixedSidebarHeight = function(){
