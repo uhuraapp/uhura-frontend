@@ -27,6 +27,7 @@ $ export DATABASE_URL="postgres://$USER@localhost/uhura?sslmode=disable"
 $ cd $GOPATH/src
 $ git clone git@github.com:dukex/uhura.git github.com/dukex/uhura
 $ cd github.com/dukex/uhura
+$ make
 $ make deps
 ```
 
@@ -50,8 +51,7 @@ export URL="http://127.0.0.1:3002"
 ```
 
 ``` bash
-$ go build
-$ ./uhura
+$ make dev
 ```
 
 open [127.0.0.1:3002](http://127.0.0.1:3002)

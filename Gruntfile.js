@@ -23,11 +23,11 @@ module.exports = function (grunt) {
       },
       vendor_js: {
         files: ['assets/javascripts/vendor/*.js'],
-        tasks: ['concat:vendor', 'uglify:vendor', 'notify:watch']
+        tasks: ['concat:vendor', 'notify:watch']
       },
       home_css: {
-        files: ['assets/stylesheets/home.sass', 'notify:watch'],
-        tasks: ['sass:app']
+        files: ['assets/stylesheets/home.sass'],
+        tasks: ['sass:app', 'notify:watch']
       },
       stylesheets: {
         files: ['assets/stylesheets/**/*'],
@@ -38,26 +38,6 @@ module.exports = function (grunt) {
         tasks: ['emberTemplates', 'concat:app', 'notify:watch']
       }
     };
-
-  if(process.env.ENV != 'development'){
-    watchConfig.app_js.tasks.push('uglify:app');
-    watchConfig.emberTemplates.tasks.push('uglify:app');
-  }
-
-  var homeFiles = ['assets/javascripts/vendor/0_jquery-1.10.2.min.js', 'assets/javascripts/vendor/uikit.js', 'assets/javascripts/vendor/jquery.cookie.js', 'assets/javascripts/app/i18n.js', 'assets/javascripts/home.js'];
-  var appFiles = ['assets/javascripts/app.js', 'assets/javascripts/app/subscriptions.js',  'assets/javascripts/app/**/*.js'];
-
-
-  var concatFiles = {
-    "development": {
-      'public/assets/home.min.js': homeFiles,
-      'public/assets/app.min.js': appFiles
-    },
-    "production": {
-      'tmp/assets/home.js': homeFiles,
-      'tmp/assets/app.js': appFiles
-    }
-  };
 
   grunt.initConfig({
     envrioment: process.env.ENV || "development",
@@ -79,11 +59,14 @@ module.exports = function (grunt) {
     },
     concat: {
       app: {
-        files: concatFiles[process.env.ENV || "development"]
+        files: {
+          'public/assets/home.js': ['assets/javascripts/vendor/0_jquery-1.10.2.min.js', 'assets/javascripts/vendor/uikit.js', 'assets/javascripts/vendor/jquery.cookie.js', 'assets/javascripts/app/i18n.js', 'assets/javascripts/home.js'],
+          'public/assets/app.js': ['assets/javascripts/app.js', 'assets/javascripts/app/subscriptions.js',  'assets/javascripts/app/**/*.js']
+        }
       },
       vendor: {
         files: {
-          'tmp/assets/vendor.js': ['assets/javascripts/vendor/*.js'],
+          'public/assets/vendor.js': ['assets/javascripts/vendor/*.js'],
         }
       },
     },
@@ -95,7 +78,7 @@ module.exports = function (grunt) {
         files: [
           {
             expand: true,
-            cwd: 'tmp/assets/',
+            cwd: 'public/assets/',
             src: ['*.js', '!*vendor*'],
             dest: 'public/assets/',
             ext: '.min.js',
@@ -106,7 +89,7 @@ module.exports = function (grunt) {
         files: [
           {
             expand: true,
-            cwd: 'tmp/assets/',
+            cwd: 'public/assets/',
             src: ['vendor.js'],
             dest: 'public/assets/',
             ext: '.min.js',
@@ -138,6 +121,6 @@ module.exports = function (grunt) {
     },
   });
 
-  grunt.registerTask('default', ['emberTemplates', 'concat:vendor', 'uglify:vendor', 'concat:app', 'uglify:app', 'sass:app', 'watch']);
+  grunt.registerTask('default', ['emberTemplates', 'concat:vendor', 'concat:app', 'sass:app', 'watch']);
 };
 

@@ -7,3 +7,6 @@ cache*.json
 node_modules
 uhura
 output.txt
+public/assets/app.js
+public/assets/home.js
+public/assets/vendor.js
