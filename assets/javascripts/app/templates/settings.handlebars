@@ -1,0 +1,71 @@
+<div id="settings" class="page uk-animation-fade">
+  <h3>{{t 'settings.title'}}</h3>
+  <ul>
+    <li>
+      <form class="uk-form">
+          <fieldset>
+            <legend>Import from OPML</legend>
+            <div class="uk-form-row">
+              <div class="uk-form-file">
+                <button class="uk-button">Select File</button>
+                <input name="opml-file" type="file" id="opml-import-file" placeholder="">
+              </div>
+            </div>
+            {{#if importChannels}}
+              <div id="import-wrapper" class="uk-margin">
+                <div class="uk-alert" data-uk-alert>
+                  <p>
+                    Found {{importChannels.length}} Channels,
+                    <a data-uk-toggle="{target:'#import-channels', cls:'uk-hidden'}">
+                      see and edit
+                    </a>
+                  </p>
+                </div>
+
+                <ul id="import-channels" class="uk-hidden uk-animation-slide-up uk-list uk-list-striped">
+                  {{#each channel in importChannels}}
+                    <li {{bind-attr data-temp-id=channel.temp_id}}>
+                      {{channel.title}}
+                      <button {{action removeImportItem channel.temp_id}} class="uk-alert-close uk-close"></button>
+                    </li>
+                  {{/each}}
+                </ul>
+
+                <button class="uk-button uk-button-success" {{action importChannelsAndSubscribe}}>
+                  Import {{importChannels.length}} Channels
+                </button>
+              </div>
+            {{/if}}
+          </fieldset>
+      </form>
+    </li>
+    <li>
+      <form class="uk-form">
+          <fieldset>
+            <legend>Export to OPML</legend>
+            <button class="uk-button">Export</button>
+          </fieldset>
+      </form>
+    </li>
+    <li>
+     <div class="uk-form-select" data-uk-form-select>
+    <span></span>
+    <select>
+        <option value="">EN</option>
+        <option value="">PT</option>
+    </select>
+</div>
+    </li>
+    <li>
+      <form class="uk-form">
+          <fieldset>
+            <legend>Import OPML</legend>
+            <div class="uk-form-row">
+              <input type="file" placeholder="">
+            </div>
+            <button class="uk-button">Find Channels</button>
+          </fieldset>
+      </form>
+    </li>
+  </ul>
+</div>
