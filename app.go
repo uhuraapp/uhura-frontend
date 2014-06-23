@@ -318,8 +318,10 @@ func main() {
 
 	// API Search
 	apiRouter.HandleFunc("/s/channels", loginBuilder.Protected(core.SearchChannels))
-
 	apiRouter.HandleFunc("/finder", loginBuilder.Protected(core.FindChannels))
+
+	// API OPML
+	apiRouter.HandleFunc("/opml/import", loginBuilder.Protected(core.OPMLImportHandler))
 
 	// Canvas
 	r.HandleFunc("/canvas", func(w http.ResponseWriter, r *http.Request) {
