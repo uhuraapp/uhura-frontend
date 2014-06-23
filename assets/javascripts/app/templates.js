@@ -116,10 +116,10 @@ function program14(depth0,data) {
   return buffer;
   }
 
-  data.buffer.push("<div id=\"aside-wrapper\" class=\"column three-twelfth uk-hidden-small\">\n  <aside class=\"column three-twelfth \">\n    <header>\n      <hgroup>\n        ");
+  data.buffer.push("<div id=\"aside-wrapper\" class=\"uk-animation-fade column three-twelfth uk-hidden-small\">\n  <aside class=\"column three-twelfth \">\n    <header>\n      <hgroup>\n        ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "index", options) : helperMissing.call(depth0, "link-to", "index", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n      </hgroup>\n    </header>\n\n    <ul>\n      <li>\n        ");
+  data.buffer.push("\n      </hgroup>\n    </header>\n\n    <ul class=\"uk-animation-fade\">\n      <li>\n        ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "index", options) : helperMissing.call(depth0, "link-to", "index", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n      </li>\n      <li>\n        ");
@@ -155,7 +155,7 @@ function program14(depth0,data) {
   data.buffer.push("\n      </a>\n\n      <p>\n        ");
   stack1 = (helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "footer.contact", options) : helperMissing.call(depth0, "t", "footer.contact", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("<br />\n        <a href=\"mailto:dukekhaos@gmail.com\">dukekhaos@gmail.com</a>\n      </p>\n    </footer>\n  </div>\n</div>\n\n<a href=\"#sidebar-mobile\" class=\"uk-navbar-toggle uk-visible-small\" data-uk-offcanvas></a>\n<a id=\"toggle-screen\" class=\"uk-navbar-toggle uk-hidden-small\"></a>\n\n<div id=\"content\" class=\"column nine-twelfth\">\n  ");
+  data.buffer.push("<br />\n        <a href=\"mailto:dukekhaos@gmail.com\">dukekhaos@gmail.com</a>\n      </p>\n    </footer>\n  </div>\n</div>\n\n<a href=\"#sidebar-mobile\" class=\"uk-navbar-toggle uk-visible-small uk-animation-fade\" data-uk-offcanvas></a>\n<a id=\"toggle-screen\" class=\"uk-navbar-toggle uk-hidden-small uk-animation-fade\"></a>\n\n<div id=\"content\" class=\"column nine-twelfth uk-animation-fade\">\n  ");
   stack1 = helpers._triageMustache.call(depth0, "outlet", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n  ");
@@ -230,7 +230,7 @@ function program11(depth0,data) {
   return buffer;
   }
 
-  data.buffer.push("<div id=\"about\">\n  <div class=\"column four-twelfth\">\n    <img ");
+  data.buffer.push("<div id=\"about\" class=\"uk-animation-fade\">\n  <div class=\"column four-twelfth\">\n    <img ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'src': ("image_url")
   },hashTypes:{'src': "ID"},hashContexts:{'src': depth0},contexts:[],types:[],data:data})));
@@ -311,7 +311,7 @@ function program5(depth0,data) {
   return buffer;
   }
 
-  data.buffer.push("<div id=\"channel_new\">\n  <h3>");
+  data.buffer.push("<div id=\"channel_new\" class=\"uk-animation-fade page\">\n  <h3>");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "channel_new.title", options) : helperMissing.call(depth0, "t", "channel_new.title", options))));
   data.buffer.push("</h3>\n  <h4>");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "channel_new.subtitle", options) : helperMissing.call(depth0, "t", "channel_new.subtitle", options))));
@@ -347,7 +347,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 
   data.buffer.push("<li ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
-    'class': (":audio episode.listened episode.playing")
+    'class': (":audio episode.listened episode.playing :uk-animation-fade")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
   data.buffer.push(" ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
@@ -507,7 +507,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = '', stack1, helper, options;
-  data.buffer.push("\n    <li>\n      <h3><span class=\"typcn typcn-th-large-outline\"></span>\n        ");
+  data.buffer.push("\n    <li class=\"uk-animation-fade\">\n      <h3><span class=\"typcn typcn-th-large-outline\"></span>\n        ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(2, program2, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "channel", "channel.id", options) : helperMissing.call(depth0, "link-to", "channel", "channel.id", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n      </h3>\n      <ul class=\"episodes\">\n        ");
@@ -553,7 +553,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
 
 
-  data.buffer.push("<div id=\"loading-page\">\n");
+  data.buffer.push("<div id=\"loading-page\" class=\"uk-animation-fade\">\n");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "loading.label", options) : helperMissing.call(depth0, "t", "loading.label", options))));
   data.buffer.push("\n</div>\n");
   return buffer;
