@@ -18,11 +18,11 @@ module.exports = function (grunt) {
         tasks: ['jshint:app', 'notify:watch']
       },
       app_js: {
-        files: ['assets/javascripts/*.js', 'assets/javascripts/app/**/*.js'],
+        files: ['assets/javascripts/app/**/*.js'],
         tasks: ['jshint:app', 'emberTemplates', 'concat:app', 'notify:watch']
       },
       vendor_js: {
-        files: ['assets/javascripts/vendor/*.js'],
+        files: ['assets/javascripts/vendor/*.js', 'assets/javascripts/vendor/**/*.js'],
         tasks: ['concat:vendor', 'notify:watch']
       },
       home_css: {
@@ -54,19 +54,31 @@ module.exports = function (grunt) {
         src: ['Gruntfile.js']
       },
       app: {
-        src: ['assets/javascripts/*.js']
+        src: ['assets/javascripts/app/**/*.js']
       },
     },
     concat: {
       app: {
         files: {
-          'public/assets/home.js': ['assets/javascripts/vendor/0_jquery-1.10.2.min.js', 'assets/javascripts/vendor/uikit.js', 'assets/javascripts/vendor/jquery.cookie.js', 'assets/javascripts/app/i18n.js', 'assets/javascripts/home.js'],
-          'public/assets/app.js': ['assets/javascripts/app.js', 'assets/javascripts/app/subscriptions.js',  'assets/javascripts/app/**/*.js']
+          'public/assets/home.js': [
+                                      'assets/javascripts/vendor/0_jquery-1.10.2.min.js',
+                                      'assets/javascripts/vendor/uikit.js',
+                                      'assets/javascripts/vendor/jquery.cookie.js',
+                                      'assets/javascripts/app/i18n.js', 'assets/javascripts/home.js'
+                                   ],
+          'public/assets/app.js': [
+                                      'assets/javascripts/app.js',
+                                      'assets/javascripts/app/subscriptions.js',
+                                      'assets/javascripts/app/**/*.js'
+                                  ]
         }
       },
       vendor: {
         files: {
-          'public/assets/vendor.js': ['assets/javascripts/vendor/*.js'],
+          'public/assets/vendor.js': [
+                                        'assets/javascripts/vendor/*.js',
+                                        'assets/javascripts/vendor/**/*.js'
+                                     ],
         }
       },
     },
