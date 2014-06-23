@@ -4,10 +4,10 @@ App.ChannelRoute = Ember.Route.extend({
     return this.store.find('channel', params.channel_id);
   },
   activate: function(){
-    var title = this.modelFor('channel').get('title')
+    var title = this.modelFor('channel').get('title');
 
     $(document).attr('title', title);
-    $("[property='og:title']").attr('content', title)
+    $("[property='og:title']").attr('content', title);
   },
   actions: {
     subscribeChannel: Subscriptions.subscribe,

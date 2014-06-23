@@ -5,8 +5,8 @@ App.Auth = (function() {
   }
 
   Auth.prototype.isLogged = function() {
-    return $.cookie("logged") === "true"
-  }
+    return $.cookie("logged") === "true";
+  };
 
   Auth.prototype.withLoggedUser = function(callback) {
     callback();
@@ -15,4 +15,4 @@ App.Auth = (function() {
   return Auth;
 })();
 
-window.auth = new App.Auth()
+window.auth = new App.Auth();

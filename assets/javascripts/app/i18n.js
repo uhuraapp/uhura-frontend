@@ -3,12 +3,12 @@ var T = function() {
   }
 
   // Default vars
-  this.language = $.cookie("language") || "en"
+  this.language = $.cookie("language") || "en";
 
   // Helpers
   this.currentKeys = function() {
     return this.keys[this.current()];
-  }
+  };
 
   // Translation
   this.keys = {
@@ -87,7 +87,7 @@ var T = function() {
 
       "loading.label": "Carregando..."
     }
-  }
+  };
 
   return T();
 };
@@ -97,7 +97,7 @@ T.prototype.current = function() {
 };
 
 T.prototype.get = function(key) {
-  return this.currentKeys()[key]
+  return this.currentKeys()[key];
 };
 
 
@@ -108,17 +108,17 @@ T.prototype.change = function(language, withAlert) {
   $("#"+language).addClass("current");
   if(withAlert){
     if(!App.PLAYER.isPlaying) {
-      window.location.reload()
+      window.location.reload();
     } else {
       alert(this.get("i18n.changed"));
     }
   }
   ga('send', 'event', 'button', 'language', 'changed language');
-}
+};
 
 T.prototype.init = function() {
   this.change(this.language);
-}
+};
 
 window.t = t = new T();
 

@@ -16,30 +16,30 @@ App.Episode = DS.Model.extend({
     return this.get('mediaApi') === 'audio';
   }.property('type'),
   mediaApi: function() {
-    var type = this.get("type")
+    var type = this.get("type");
     if(type.length === 0) {
       return 'audio';
     }
-    media = type.split("/")[0]
+    media = type.split("/")[0];
     return media;
   }.property('type'),
   durationISO:     function(){
-    duration = this.get('duration')
+    duration = this.get('duration');
     if(typeof(duke) === "undefined") {
-      return ""
+      return "";
     }
 
     if(duration.split(":").length == 2) {
-      duration = "00:"+duration
+      duration = "00:"+duration;
     }
-    duration = moment.duration(duration)
+    duration = moment.duration(duration);
     return duration.toIsoString();
   }.property("duration"),
   channel:         function(){
     return this.store.findById('channel', this.get('channel_id'));
   }.property("channel_id"),
   url: function(){
-    host = window.location.host
-    return "http://"+host+"/app/" + this.get("channel_id") + "/" + this.get("id")
+    host = window.location.host;
+    return "http://"+host+"/app/" + this.get("channel_id") + "/" + this.get("id");
   }.property("channel_id", "id")
 });

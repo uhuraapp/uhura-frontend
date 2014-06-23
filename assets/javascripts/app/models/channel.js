@@ -13,9 +13,10 @@ App.Channel = DS.Model.extend({
 
       for (var i = data.episodes.length - 1; i >= 0; i--) {
         var episode = _this.store.push('episode', data.episodes[i]);
-        episodes.push(episode)
-      };
-      $("#loading-page").parent().remove()
+        episodes.push(episode);
+      }
+
+      $("#loading-page").parent().remove();
       _this.set('episodes', episodes);
     });
     return [];

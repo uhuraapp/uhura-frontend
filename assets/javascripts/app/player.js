@@ -1,11 +1,12 @@
 /* global App, $,soundManager */
+
 App.PLAYER = {};
 App.PLAYER.isPlaying = false;
-App.PLAYER.current = null
+App.PLAYER.current = null;
 App.PLAYER.APIS = {
   video: {},
   audio: {}
-}
+};
 
 App.PLAYER.playpause = function(episode){
   "use strict";
@@ -17,6 +18,8 @@ App.PLAYER.playpause = function(episode){
 };
 
 App.PLAYER.togglePause = function (episode) {
+    "use strict";
+
   var api = App.PLAYER.getApi(episode),
       newPlayingStatus = !App.PLAYER.isPlaying;
 
@@ -26,7 +29,7 @@ App.PLAYER.togglePause = function (episode) {
   api.togglePause(episode);
 
   App.PLAYER.isPlaying = newPlayingStatus;
-}
+};
 
 App.PLAYER.stopCurrent = function() {
   if(App.PLAYER.isPlaying) {
@@ -38,11 +41,11 @@ App.PLAYER.stopCurrent = function() {
     }catch(err) {
       ga('send', 'event', 'video', 'stop', 'stop episode');
     }
-    App.PLAYER.current = null
-    App.PLAYER.isPlaying = false
+    App.PLAYER.current = null;
+    App.PLAYER.isPlaying = false;
     App.PlayerController.set("model", null);
   }
-}
+};
 
 App.PLAYER.play = function (episode) {
   App.PLAYER.stopCurrent();
@@ -55,7 +58,7 @@ App.PLAYER.play = function (episode) {
     episode.set("playing", true);
     ga('send', 'event', episode.get('mediaApi'), 'play', 'play episode');
   }
-}
+};
 
 App.PLAYER.listened = function(episode) {
   "use strict";
@@ -68,16 +71,16 @@ App.PLAYER.listened = function(episode) {
 
 App.PLAYER.getApi = function (episode) {
   var api = App.PLAYER.APIS[episode.get('mediaApi')];
-  return api || App.PLAYER.APIS['audio'];
+  return api || App.PLAYER.APIS.audio;
 };
 
 App.PLAYER.seek = function(e) {
-  var coords = App.PLAYER.APIS['audio']._getClickPosition(e),
+  var coords = App.PLAYER.APIS.audio._getClickPosition(e),
       loaderWidth = $(e.currentTarget).find('.loading').width(),
       porcentage = (100 * coords.x) / loaderWidth,
-      position = (App.PLAYER.APIS['audio'].current.duration * porcentage) / 100;
+      position = (App.PLAYER.APIS.audio.current.duration * porcentage) / 100;
 
-  App.PLAYER.APIS['audio'].current.setPosition(position);
+  App.PLAYER.APIS.audio.current.setPosition(position);
 };
 
 // -- API AUDIO --
@@ -91,7 +94,7 @@ App.PLAYER.APIS.audio.play = function(episode) {
   App.PLAYER.APIS.audio.current.play();
 
   return true;
-}
+};
 
 App.PLAYER.APIS.audio.togglePause = function(episode) {
   "use strict";
@@ -108,12 +111,13 @@ App.PLAYER.APIS.audio.stop = function(episode) {
 App.PLAYER.APIS.audio.events = {};
 App.PLAYER.APIS.audio.events.loading = function(){
   var percent = (this.bytesLoaded * 100)/this.bytesTotal,
-      playing = (this.position * 100)/this.durationEstimate
+      playing = (this.position * 100)/this.durationEstimate;
 
-  $("#player-loader div.loading").css("width", percent+"%")
+  $("#player-loader div.loading").css("width", percent+"%");
 };
 
-window.listenedWorker={}
+window.listenedWorker={};
+
 App.PLAYER.APIS.audio.events.playing = function(){
   var playing = (this.position * 100)/this.durationEstimate;
   if (playing > 95 ) {
@@ -123,11 +127,12 @@ App.PLAYER.APIS.audio.events.playing = function(){
       App.PLAYER.listened(model);
     }
   }
-  $("#player-loader div.playing").css("width", playing+"%")
+  $("#player-loader div.playing").css("width", playing+"%");
 };
 
 App.PLAYER.APIS.audio.getAudio = function(id){
   "use strict";
+
   if(!App.PLAYER.APIS.audio.episodes[id]){
     var el = $("[data-id="+ id + "]"),
     audio = el.data(),
@@ -146,16 +151,16 @@ App.PLAYER.APIS.audio.getAudio = function(id){
   return App.PLAYER.APIS.audio.episodes[id];
 };
 
-App.PLAYER.APIS['audio']._getClickPosition = function(e) {
-    var parentPosition = App.PLAYER.APIS['audio']._getElementPosition(e.currentTarget);
+App.PLAYER.APIS.audio._getClickPosition = function(e) {
+    var parentPosition = App.PLAYER.APIS.audio._getElementPosition(e.currentTarget);
 
     var x = e.clientX - parentPosition.x,
         y = e.clientY - parentPosition.y;
 
     return {x: x, y: y};
-}
+};
 
-App.PLAYER.APIS['audio']._getElementPosition = function(element) {
+App.PLAYER.APIS.audio._getElementPosition = function(element) {
     var x = 0;
     var y = 0;
 
@@ -165,12 +170,12 @@ App.PLAYER.APIS['audio']._getElementPosition = function(element) {
         element = element.offsetParent;
     }
     return { x: x, y: y };
-}
+};
 
 //\ -- API VIDEO --
 
 App.PLAYER.APIS.video.play = function(episode) {
-  App.Router.router.transitionTo('episode', episode.get('channel_id'), episode.id)
+  App.Router.router.transitionTo('episode', episode.get('channel_id'), episode.id);
 };
 
 App.PLAYER.APIS.video.togglePause = function(episode) {
@@ -182,7 +187,7 @@ App.PLAYER.APIS.video.stop = function(episode) {
 App.PLAYER.APIS.video.init = function() {
   App.PLAYER.APIS.video.current = sublime.player($('video')[0]);
   App.PLAYER.APIS.video.listened = false;
-  App.PLAYER.APIS.current = Ember.Object.create({id: $('video').data('uid'), mediaApi: 'video'})
+  App.PLAYER.APIS.current = Ember.Object.create({id: $('video').data('uid'), mediaApi: 'video'});
 
   App.PLAYER.isPlaying = true;
 
@@ -190,7 +195,7 @@ App.PLAYER.APIS.video.init = function() {
     var p = (time * 100)/player.duration();
     if(p > 90 && !App.PLAYER.APIS.video.listened){
       App.PLAYER.APIS.video.listened = true;
-      App.PLAYER.listened(App.PLAYER.APIS.current)
+      App.PLAYER.listened(App.PLAYER.APIS.current);
     }
   });
 };
