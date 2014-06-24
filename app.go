@@ -106,6 +106,7 @@ func checkVars() {
 	checkEnvVar("FACEBOOK_CALLBACK_URL")
 	checkEnvVar("FACEBOOK_CLIENT_ID")
 	checkEnvVar("FACEBOOK_CLIENT_SECRET")
+	checkEnvVar("AMQP_URL")
 }
 
 func configAuth() {
