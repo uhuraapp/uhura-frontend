@@ -9,6 +9,12 @@ import (
 	"github.com/gorilla/mux"
 )
 
+func TouchChannel(id int) {
+	var channel Channel
+	database.First(&channel, id).Update("loading", true)
+	FetchChannel(channel.Url)
+}
+
 func ReloadChannel(userId string, w http.ResponseWriter, request *http.Request) {
 	vars := mux.Vars(request)
 	id := vars["id"]
