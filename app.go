@@ -324,6 +324,9 @@ func main() {
 	// API OPML
 	apiRouter.HandleFunc("/opml/import", loginBuilder.Protected(core.OPMLImportHandler))
 
+	// API Batch
+	apiRouter.HandleFunc("/batch/subscriptions-by-url", loginBuilder.Protected(core.BatchSubscriptionsByUrl))
+
 	// Canvas
 	r.HandleFunc("/canvas", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(200)
