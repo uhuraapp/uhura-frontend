@@ -108,6 +108,10 @@
 			"Rev": "8aee0d995b6511c4b52187d9b5b7f4da05bbae0b"
 		},
 		{
+			"ImportPath": "github.com/streadway/amqp",
+			"Rev": "cd63b80889a0b691dd44b3037756d951887713d5"
+		},
+		{
 			"ImportPath": "github.com/ugorji/go/codec",
 			"Rev": "cdeae7b76625959e4164eab9eb303087a794f2cc"
 		}
