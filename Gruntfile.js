@@ -54,7 +54,7 @@ module.exports = function (grunt) {
         src: ['Gruntfile.js']
       },
       app: {
-        src: ['assets/javascripts/app/**/*.js']
+        src: ['assets/javascripts/app/**/*.js', '!assets/javascripts/app/templates.js']
       },
     },
     concat: {
