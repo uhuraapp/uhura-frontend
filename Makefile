@@ -43,6 +43,6 @@ coverage:
 	rm coverage.out
 
 dev:
-	grunt &
+	grunt --force &
 	fresh
 
