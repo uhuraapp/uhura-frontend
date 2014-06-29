@@ -6,7 +6,6 @@ App.Category = DS.Model.extend({
       var channels = [];
 
       for (var i = data.channels.length - 1; i >= 0; i--) {
-        var channel = _this.store.push('channel', data.channels[i]);
         channels.push(channel);
       }
 
