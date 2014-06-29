@@ -26,6 +26,7 @@ var T = function() {
       "channel_new.button.subscribed": "Subscribed",
       "channel_new.button.unsubscribe": "Unsubscribed!",
       "channel_new.alert.not_found": "Channel not found",
+      "channel_new.by_categories": "By Category",
 
       "footer.follow_us": "Follow Us",
       "footer.like_us": "Like us page",
@@ -64,6 +65,7 @@ var T = function() {
       "channel_new.button.subscribed": "Assinado",
       "channel_new.button.unsubscribe": "Remover Assinaura!",
       "channel_new.alert.not_found": "Não foi encontrado nenhum canal",
+      "channel_new.by_categories": "Por Categoria",
 
       "footer.follow_us": "Siga-nos no",
       "footer.like_us": "Curta nossa página",
