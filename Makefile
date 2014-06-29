@@ -43,6 +43,8 @@ coverage:
 	rm coverage.out
 
 dev:
+	memcached &
+	rabbitmq-server &
 	grunt &
 	fresh
 

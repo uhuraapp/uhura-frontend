@@ -44,9 +44,12 @@ var T = function() {
       "error.?password.dont_match": "Password don't match",
       "error.?password.changed": "Password changed",
 
+      "settings.title": "Settings",
+
       "sidebar.home": "Home",
       "sidebar.channel_add": "Add Channel",
       "sidebar.sign_out": "Sign Out",
+      "sidebar.settings": "Settings",
 
       "loading.label": "Loading..."
     },
@@ -80,10 +83,12 @@ var T = function() {
       "error.?user.not_found": "Email não encontrado",
       "error.?user.exists": "Email já registrado, faça o login",
 
+      "settings.title": "Configurações",
+
       "sidebar.home": "Inicio",
       "sidebar.channel_add": "Adicionar Canal",
       "sidebar.sign_out": "Sair",
-
+      "sidebar.settings": "Configurações",
 
       "loading.label": "Carregando..."
     }

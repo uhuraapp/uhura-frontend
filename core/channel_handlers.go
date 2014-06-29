@@ -1,12 +1,19 @@
 package core
 
 import (
+	"log"
 	"net/http"
 	"strconv"
 
 	r "github.com/dukex/uhura/core/helper"
 	"github.com/gorilla/mux"
 )
+
+func TouchChannel(id int) {
+	var channel Channel
+	database.First(&channel, id).Update("loading", true)
+	FetchChannel(channel.Url)
+}
 
 func ReloadChannel(userId string, w http.ResponseWriter, request *http.Request) {
 	vars := mux.Vars(request)
@@ -16,14 +23,42 @@ func ReloadChannel(userId string, w http.ResponseWriter, request *http.Request) 
 	TouchChannel(idI)
 }
 
-func SubscribeChannel(userId string, w http.ResponseWriter, request *http.Request) {
+func BatchSubscriptionsByUrl(userId string, w http.ResponseWriter, request *http.Request) {
+	request.ParseForm()
+
+	channelQ, err := AMQPCONN.Channel()
+	if err != nil {
+		log.Println(err)
+		r.ResponseJSON(w, http.StatusInternalServerError, nil)
+		return
+	}
+	defer channelQ.Close()
+
+	managerT := &ManagerTask{Channel: channelQ}
+	task := new(SubscriptionsByUrl)
+
+	urls := request.Form["urls[]"]
+	for i, _ := range urls {
+		body := userId + "|" + urls[i]
+
+		err := managerT.PerformAsync(task, []byte(body))
+
+		if err != nil {
+			log.Println(err)
+			r.ResponseJSON(w, http.StatusInternalServerError, nil)
+			return
+		}
+	}
+
+	r.ResponseJSON(w, http.StatusAccepted, nil)
+
+}
+
+func SubscribeChannelHelper(userIdS, channelIdS string) {
 	var userChannel UserChannel
 
-	vars := mux.Vars(request)
-	id := vars["id"]
-
-	channelId, _ := strconv.Atoi(id)
-	userIdInt, _ := strconv.Atoi(userId)
+	channelId, _ := strconv.Atoi(channelIdS)
+	userIdInt, _ := strconv.Atoi(userIdS)
 
 	database.Table("user_channels").Where(UserChannel{ChannelId: int64(channelId), UserId: int64(userIdInt)}).FirstOrCreate(&userChannel)
 
@@ -31,22 +66,31 @@ func SubscribeChannel(userId string, w http.ResponseWriter, request *http.Reques
 
 	go func() {
 		var channel ChannelEntity
-		p := MIXPANEL.Identify(userId)
+		p := MIXPANEL.Identify(userIdS)
 
-		err := database.Table("channels").Where("channels.id = ?", id).First(&channel).Error
+		err := database.Table("channels").Where("channels.id = ?", channelIdS).First(&channel).Error
 
 		if err != nil {
 			p.Track("subscribed", map[string]interface{}{
-				"Channel ID":    id,
+				"Channel ID":    channelIdS,
 				"Channel Title": channel.Title,
 			})
 		} else {
 			p.Track("subscribed", map[string]interface{}{
-				"Channel ID": id,
+				"Channel ID": channelIdS,
 			})
 		}
 	}()
+}
 
+func SubscribeChannel(userId string, w http.ResponseWriter, request *http.Request) {
+
+	vars := mux.Vars(request)
+	id := vars["id"]
+
+	SubscribeChannelHelper(userId, id)
+
+	channelId, _ := strconv.Atoi(id)
 	go TouchChannel(channelId)
 
 	GetChannel(userId, w, request)

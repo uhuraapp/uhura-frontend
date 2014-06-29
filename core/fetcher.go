@@ -141,6 +141,7 @@ func channelFetchHandler(feed *rss.Feed, channels []*rss.Channel) {
 		channel.Url = feed.Url
 		channel.Link = channelData.Links[0].Href
 		channel.Uri = channel.MakeUri(channelData.Title)
+		channel.Loading = false
 
 		database.Save(&channel)
 

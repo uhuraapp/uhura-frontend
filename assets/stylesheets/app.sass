@@ -1,5 +1,6 @@
 @import "vendor/typicons"
 @import "vendor/uikit"
+@import "vendor/uikit-addons"
 @import "uhura/defaults"
 @import "vendor/grid"
 @import "uhura/dashboard"
@@ -86,6 +87,8 @@ body
       span
         margin-right: 5px
         color: #FFF
+        &.typcn
+          font-size: 1.5em
         &.title
           width: 70%
           margin: 0
@@ -99,7 +102,10 @@ body
         width: 10%
         float: right
         font-size: 10px
-
+    ul li
+      padding-bottom: 0
+      a
+        height: auto
   #channels-lists
     margin-top: 0
 

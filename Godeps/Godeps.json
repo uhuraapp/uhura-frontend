@@ -52,6 +52,11 @@
 			"Rev": "311ebb7422d3ff70cc1d064c5a297520ff5f304a"
 		},
 		{
+			"ImportPath": "github.com/gilliek/go-opml/opml",
+			"Comment": "v1.0.0-4-g279548d",
+			"Rev": "279548d83dbbcf188d8848fb660b1df56145c66a"
+		},
+		{
 			"ImportPath": "github.com/gorilla/context",
 			"Rev": "708054d61e5a2918b9f4e9700000ee611dcf03f5"
 		},
@@ -106,6 +111,10 @@
 		{
 			"ImportPath": "github.com/nfnt/resize",
 			"Rev": "8aee0d995b6511c4b52187d9b5b7f4da05bbae0b"
+		},
+		{
+			"ImportPath": "github.com/streadway/amqp",
+			"Rev": "cd63b80889a0b691dd44b3037756d951887713d5"
 		},
 		{
 			"ImportPath": "github.com/ugorji/go/codec",

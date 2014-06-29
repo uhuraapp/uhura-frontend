@@ -106,6 +106,7 @@ func checkVars() {
 	checkEnvVar("FACEBOOK_CALLBACK_URL")
 	checkEnvVar("FACEBOOK_CLIENT_ID")
 	checkEnvVar("FACEBOOK_CLIENT_SECRET")
+	checkEnvVar("AMQP_URL")
 }
 
 func configAuth() {
@@ -318,8 +319,13 @@ func main() {
 
 	// API Search
 	apiRouter.HandleFunc("/s/channels", loginBuilder.Protected(core.SearchChannels))
-
 	apiRouter.HandleFunc("/finder", loginBuilder.Protected(core.FindChannels))
+
+	// API OPML
+	apiRouter.HandleFunc("/opml/import", loginBuilder.Protected(core.OPMLImportHandler))
+
+	// API Batch
+	apiRouter.HandleFunc("/batch/subscriptions-by-url", loginBuilder.Protected(core.BatchSubscriptionsByUrl))
 
 	// Canvas
 	r.HandleFunc("/canvas", func(w http.ResponseWriter, r *http.Request) {
