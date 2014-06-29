@@ -16,6 +16,25 @@ func ReloadChannel(userId string, w http.ResponseWriter, request *http.Request) 
 	TouchChannel(idI)
 }
 
+func GetChannels(userId string, w http.ResponseWriter, request *http.Request) {
+	channels := make([]ChannelEntity, 0)
+	query := request.URL.Query()
+	ids := query["ids[]"]
+
+	if len(ids) > 0 {
+		database.Table("channels").
+			Where("channels.id in (?)", ids).
+			Order("title").
+			Find(&channels)
+
+		for i, _ := range channels {
+			channels[i].SetSubscription(userId)
+		}
+	}
+
+	r.ResponseJSON(w, 200, map[string]interface{}{"channels": channels})
+}
+
 func SubscribeChannel(userId string, w http.ResponseWriter, request *http.Request) {
 	var userChannel UserChannel
 
