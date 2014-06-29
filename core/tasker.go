@@ -2,6 +2,7 @@ package core
 
 import (
 	"log"
+	"time"
 
 	"github.com/streadway/amqp"
 )
@@ -24,10 +25,11 @@ func (m *ManagerTask) PerformAsync(t Tasker, data []byte) error {
 		amqp.Publishing{
 			ContentType: "text/plain",
 			Body:        data,
+			Timestamp:   time.Now(),
 		})
 }
 
-func TasksSet(tasks []Tasker) {
+func TaskerSet(tasks []Tasker) {
 	setupAMQP()
 
 	channelQ, err := AMQPCONN.Channel()

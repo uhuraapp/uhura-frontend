@@ -1,11 +1,29 @@
 package core
 
 import (
+	"log"
+	"os"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/streadway/amqp"
 )
+
+var (
+	AMQPCONN *amqp.Connection
+)
+
+func setupAMQP() {
+	var err error
+
+	url := os.Getenv("AMQP_URL")
+
+	AMQPCONN, err = amqp.Dial(url)
+	if err != nil {
+		log.Fatal("Failed to connect to RabbitMQ:", err)
+	}
+}
 
 type SubscriptionsByUrl struct {
 	Tasker
@@ -18,11 +36,15 @@ func (s *SubscriptionsByUrl) Perform(d amqp.Delivery) {
 	notFound := database.Table("channels").Where("url = ?", data[1]).First(&channel).RecordNotFound()
 
 	if notFound {
-		FetchChannel(data[1])
-		d.Nack(true, true)
+		if d.Redelivered && time.Since(d.Timestamp).Minutes() > 2 {
+			d.Ack(true)
+		} else {
+			FetchChannel(data[1])
+			d.Nack(true, true)
+		}
 	} else {
 		SubscribeChannelHelper(data[0], strconv.Itoa(int(channel.Id)))
-		d.Ack(false)
+		d.Ack(true)
 	}
 }
 
@@ -37,5 +59,5 @@ func init() {
 
 	tasks = append(tasks, new(SubscriptionsByUrl))
 
-	TasksSet(tasks)
+	go TaskerSet(tasks)
 }
