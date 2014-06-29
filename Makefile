@@ -2,6 +2,9 @@ ASSETS_DIR=public/assets
 
 build: clean deps_save test assets
 
+deploy: build
+	git push heroku master
+
 $(ASSETS_DIR)/app.js:
 	grunt emberTemplates concat:app
 
@@ -21,7 +24,7 @@ VERSION:
 	echo '$(shell git rev-parse --abbrev-ref HEAD)-$(shell git rev-parse HEAD)' > VERSION
 
 clean:
-	rm $(ASSETS_DIR)/*.js $(ASSETS_DIR)/*.css VERSION
+	rm -f $(ASSETS_DIR)/*.js $(ASSETS_DIR)/*.css VERSION
 
 deps:
 	go get github.com/pilu/fresh
