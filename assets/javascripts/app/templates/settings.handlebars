@@ -36,6 +36,14 @@
                 </button>
               </div>
             {{/if}}
+            {{#if imported}}
+                <div class="uk-alert uk-alert-success" data-uk-alert>
+                  <p>
+                    Importing channels...<br />
+                    This can take a few minutes
+                  </p>
+                </div>
+            {{/if}}
           </fieldset>
       </form>
     </li>
