@@ -8,11 +8,10 @@ Subscriptions.subscribe = function(_id){
     if(!c) {
       c = route.controller.get('model');
     }
-    c.set('subscribed', true);
     route.store.push('subscription', data.channel);
     $("#channel-"+id).show();
-
     ga('send', 'event', 'button', 'subscribe', 'subscribe channel');
+    if(c) {  c.set('subscribed', true); }
   },
   subscribeFn = function(){
     $.ajax({
@@ -32,9 +31,10 @@ Subscriptions.unsubscribe = function(_id){
     if(!c) {
       c = route.controller.get('model');
     }
-    c.set('subscribed', false);
     $("#channel-"+id).hide();
     ga('send', 'event', 'button', 'unsubscribe', 'channel');
+
+    if(c) { c.set('subscribed', false); }
   },
   unsubscribeFn = function(){
     $.ajax({

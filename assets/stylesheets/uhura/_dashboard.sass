@@ -129,30 +129,6 @@ ul.episodes
       float: right
   #channels
     padding: 0 5px
-  .channel
-    box-shadow: 0 0 1px #B3B3B3
-    padding: 5px
-    height: 235px
-    position: relative
-    &:nth-of-type(4n+1)
-      margin-left: 0
-    img
-      margin: 0 auto
-      display: block
-    h5
-      margin: 0
-      overflow: hidden
-      text-overflow: ellipsis
-      white-space: nowrap
-      font-size: 16px
-      position: absolute
-      bottom: 5px
-      width: 100%
-      font-weight: 500
-    button
-      position: absolute
-      top: 10px
-      right: 10px
 
 #loading
   border: 1px solid orange
@@ -212,6 +188,44 @@ ul.episodes
         margin: 0 2%
         display: block
         border: 1px solid #CCC
+
+#by-category
+  .channels
+    padding: 5px
+  .category
+    overflow: auto
+    border-bottom: 1px solid #333
+    margin-bottom: 25px
+    padding-bottom: 25px
+    > h5
+      font-size: 22px
+      font-weight: 700
+
+.channel-cover
+  box-shadow: 0 0 1px #B3B3B3
+  padding: 5px
+  height: 235px
+  position: relative
+  margin-bottom: 5px
+  &:nth-of-type(4n+1)
+    margin-left: 0
+  img
+    margin: 0 auto
+    display: block
+  h5
+    margin: 0
+    overflow: hidden
+    text-overflow: ellipsis
+    white-space: nowrap
+    font-size: 16px
+    position: absolute
+    bottom: 5px
+    width: 100%
+    font-weight: 500
+  button
+    position: absolute
+    top: 10px
+    right: 10px
 
 @-webkit-keyframes playing
   0%, 20%, 80%, 100%

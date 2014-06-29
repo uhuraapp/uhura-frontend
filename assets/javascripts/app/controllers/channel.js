@@ -33,6 +33,12 @@ App.ChannelController = Ember.ObjectController.extend({
 });
 
 App.ChannelNewRoute  = Ember.Route.extend({
+  setupController: function(controller) {
+    var _this = this;
+    this.store.find("category");
+    controller.set("categories", this.store.find("category"));
+
+  },
   deactivate: function(){
     this.controller.set('channels', null);
   },
@@ -68,8 +74,6 @@ App.ChannelNewRoute  = Ember.Route.extend({
         }
        });
       ga('send', 'event', 'form', 'add', 'add channel');
-    },
-    subscribeChannel: Subscriptions.subscribe,
-    unsubscribeChannel: Subscriptions.unsubscribe
+    }
   }
 });
