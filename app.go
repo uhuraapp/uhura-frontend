@@ -311,7 +311,7 @@ func main() {
 	apiRouter.HandleFunc("/episodes/{id}/listened", loginBuilder.Protected(core.SetEpisodeListened))
 	apiRouter.HandleFunc("/suggestions", loginBuilder.Protected(core.SugestionsEpisodes))
 	apiRouter.HandleFunc("/categories", loginBuilder.Protected(core.GetCategories))
-	apiRouter.HandleFunc("/channels", loginBuilder.Protected(core.GetChannels))
+	apiRouter.HandleFunc("/categories/{id}/channels", loginBuilder.Protected(core.GetCategoryChannels))
 
 	// API Native
 	apinativeRouter := apiRouter.PathPrefix("/native/v1").Subrouter()

@@ -1,4 +1,18 @@
 App.Category = DS.Model.extend({
   name: DS.attr(),
-  channels: DS.hasMany('channel', {async: true})
+  channels:   function(){
+    var _this = this;
+    jQuery.getJSON("/api/categories/"+this.get('id')+"/channels").then(function(data){
+      var channels = [];
+
+      for (var i = data.channels.length - 1; i >= 0; i--) {
+        var channel = _this.store.push('channel', data.channels[i]);
+        channels.push(channel);
+      }
+
+      $("#loading-page").parent().remove();
+      _this.set('channels', channels);
+    });
+    return [];
+  }.property("id")
 });

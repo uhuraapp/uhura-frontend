@@ -16,7 +16,7 @@ var T = function() {
       "channel.status.loading": "Trying find more episodes",
       "channel.message.loading": "Finding new episodes",
 
-      "channel_new.title": "Add Channel",
+      "channel_new.title": "Find Channel",
       "channel_new.podcast_url": "Podcast Feed URL:",
       "channel_new.search": "Search Podcast:",
       "channel_new.subtitle": "Add a new podcast or Search on Uhura database",
@@ -46,7 +46,7 @@ var T = function() {
       "error.?password.changed": "Password changed",
 
       "sidebar.home": "Home",
-      "sidebar.channel_add": "Channels",
+      "sidebar.channel_add": "Find Channels",
       "sidebar.sign_out": "Sign Out",
 
       "loading.label": "Loading..."
@@ -55,12 +55,12 @@ var T = function() {
       "channel.status.loading": "Tentando buscar mais episódios",
       "channel.message.loading": "Buscando novos episódios",
 
-      "channel_new.title": "Adicionar Canal",
+      "channel_new.title": "Buscar Canais",
       "channel_new.podcast_url": "URL Feed do Podcast:",
       "channel_new.search": "Buscar Podcasts:",
       "channel_new.subtitle": "Assine um novo podcast ou busque no nosso banco de dados",
       "channel_new.button.search": "Buscar",
-      "channel_new.button.add": "Canais",
+      "channel_new.button.add": "Adicionar",
       "channel_new.button.subscribe": "Assine!",
       "channel_new.button.subscribed": "Assinado",
       "channel_new.button.unsubscribe": "Remover Assinaura!",
@@ -83,7 +83,7 @@ var T = function() {
       "error.?user.exists": "Email já registrado, faça o login",
 
       "sidebar.home": "Inicio",
-      "sidebar.channel_add": "Adicionar Canal",
+      "sidebar.channel_add": "Buscar Canais",
       "sidebar.sign_out": "Sair",
 
 
