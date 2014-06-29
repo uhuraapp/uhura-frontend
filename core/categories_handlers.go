@@ -34,7 +34,7 @@ func GetCategoryChannels(userId string, w http.ResponseWriter, request *http.Req
 	vars := mux.Vars(request)
 	id := vars["id"]
 
-	database.Table("channel_categories").Select("channels.*").
+	database.Table("channel_categories").Select("DISTINCT(channels.id), channels.*").
 		Joins("LEFT JOIN channels on channels.id = channel_categories.channel_id").
 		Where("channel_categories.category_id = ?", id).
 		Order("title").
