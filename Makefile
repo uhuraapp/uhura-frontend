@@ -2,7 +2,7 @@ ASSETS_DIR=public/assets
 
 build: clean deps_save test assets
 
-deploy: build
+deploy: deps_save test assets
 	git push heroku master
 
 $(ASSETS_DIR)/app.js:
