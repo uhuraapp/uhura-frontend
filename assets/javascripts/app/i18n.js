@@ -45,7 +45,7 @@ var T = function() {
       "error.?password.changed": "Password changed",
 
       "sidebar.home": "Home",
-      "sidebar.channel_add": "Add Channel",
+      "sidebar.channel_add": "Channels",
       "sidebar.sign_out": "Sign Out",
 
       "loading.label": "Loading..."
@@ -59,7 +59,7 @@ var T = function() {
       "channel_new.search": "Buscar Podcasts:",
       "channel_new.subtitle": "Assine um novo podcast ou busque no nosso banco de dados",
       "channel_new.button.search": "Buscar",
-      "channel_new.button.add": "Adicionar",
+      "channel_new.button.add": "Canais",
       "channel_new.button.subscribe": "Assine!",
       "channel_new.button.subscribed": "Assinado",
       "channel_new.button.unsubscribe": "Remover Assinaura!",
