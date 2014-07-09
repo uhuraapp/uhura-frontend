@@ -46,6 +46,7 @@ coverage:
 	rm coverage.out
 
 dev:
+	memcached -vvv &
 	grunt --force &
 	fresh
 
