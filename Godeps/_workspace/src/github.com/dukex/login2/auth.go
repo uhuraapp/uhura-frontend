@@ -57,6 +57,33 @@ type URLS struct {
 	ResetPasswordSuccess string
 }
 
+// Builder is the app configuration, store providers and callbacks
+//
+// Follow the callbacks documentation:
+//
+// 	UserSetupFn         func(provider string, user *login2.User, rawResponse *http.Response) (int64, error)
+//
+// Called when user return from oauth provider, this method will send a provider
+// origin as string, some user information as ```login2.User``` and the raw
+// response from origin(login2 will make a request to ``` UserInfoURL```
+// configured on provider config). To sign in user the method expect the user
+// id as int64
+//
+//
+// 	UserCreateFn        func(email string, password string, request *http.Request) (int64, error)
+//
+// Called when user sign up by email/password, the method will send email and password as string, password // is encrypted hash, and expect the user id as int64
+//
+// 	UserIdByEmail       func(email string) (int64, error)
+//
+// Called when user sign in by email/password to get the user id by email after check the password with ```UserPasswordByEmail```, the method will send the user email as string and expect the user id as int64
+//
+// 	UserPasswordByEmail func(email string) (string, bool)
+//
+// Called when user sign in by email/password to get user password and check with inputed password, the method will send user email as string and expect the user password as string
+//
+// 	UserResetPasswordFn func(token string, email string)
+// TODO
 type Builder struct {
 	Providers           map[string]*builderConfig
 	UserSetupFn         func(provider string, user *User, rawResponde *http.Response) (int64, error)
@@ -122,7 +149,12 @@ func (b *Builder) Router(r *mux.Router) {
 
 // HTTP server
 
-// OAuthAuthorize Send user to Authorize on provider
+// OAuthAuthorize To authorize user on defined provider. Send provider name as params and method will return http handle
+//
+//	```
+//	GET   /auth/google     loginBuilder.OAuthAuthorize("google")
+//	GET   /auth/facebook   loginBuilder.OAuthAuthorize("facebook")
+//	```
 func (b *Builder) OAuthAuthorize(provider string) func(http.ResponseWriter, *http.Request) {
 	config := b.Providers[provider]
 
@@ -133,6 +165,12 @@ func (b *Builder) OAuthAuthorize(provider string) func(http.ResponseWriter, *htt
 	}
 }
 
+// OAuthLogin	The oauth endpoint callback, configured on provider, Send provider name as params and method will return http handle
+//
+//	```
+//	GET   /auth/callback/google     loginBuilder.OAuthLogin("google")
+//	GET   /auth/callback/facebook   loginBuilder.OAuthLogin("facebook")
+//	```
 func (b *Builder) OAuthLogin(provider string) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, request *http.Request) {
 		userId, err := b.OAuthCallback(provider, request)
@@ -145,7 +183,7 @@ func (b *Builder) OAuthLogin(provider string) func(http.ResponseWriter, *http.Re
 	}
 }
 
-// OAuthCallback receive code from provider and get user information on provider
+// OAuthCallback receive code params from provider and get user information
 func (b *Builder) OAuthCallback(provider string, r *http.Request) (int64, error) {
 	config := b.Providers[provider]
 	code := r.FormValue("code")
@@ -164,7 +202,11 @@ func (b *Builder) OAuthCallback(provider string, r *http.Request) (int64, error)
 	return b.UserSetupFn(provider, &user, responseAuth)
 }
 
-// SignUp Hanlder create and login user on database and redirecto to RedirectURL
+// SignUp Hanlder to sign up user, send a http POST with email and password params on body
+//
+//	```
+// 	POST   /users/sign_up   SignUp
+// 	```
 func (b *Builder) SignUp() func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, request *http.Request) {
 		email := request.FormValue("email")
@@ -184,6 +226,11 @@ func (b *Builder) SignUp() func(http.ResponseWriter, *http.Request) {
 	}
 }
 
+// SignIn Handler to sign in user, send a http POST with email and password params on body
+//
+//	```
+//	POST   /users/sign_in   SignIn
+//	```
 func (b *Builder) SignIn() func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		email := r.FormValue("email")
@@ -204,6 +251,11 @@ func (b *Builder) SignIn() func(http.ResponseWriter, *http.Request) {
 	}
 }
 
+// SignOut Handler Method to sign out user, send a http GET
+//
+//	```
+//	GET   /users/sign_out   SignOut
+//	```
 func (b *Builder) SignOut() func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		session, _ := store.Get(r, "_session")
@@ -214,6 +266,11 @@ func (b *Builder) SignOut() func(http.ResponseWriter, *http.Request) {
 	}
 }
 
+// Protected to be used on protected path, send the original http handle as params and if user is logged Protected will pass user to original handler else Protected will save URL and send user to Sign In. Protected send as first params the user id.
+//
+//	```
+//	GET   /dashboard   Protected(DashboardHandle)
+//	```
 func (b *Builder) Protected(fn func(string, http.ResponseWriter, *http.Request)) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		userID, ok := b.CurrentUser(r)
@@ -242,11 +299,16 @@ func (b *Builder) ResetPassword() func(http.ResponseWriter, *http.Request) {
 	}
 }
 
+func (b *Builder) Login(r *http.Request, userId string) *sessions.Session {
+	session, _ := store.Get(r, "_session")
+	session.Values["user_id"] = userId
+	return session
+}
+
 // helper
 
 func (b *Builder) login(r *http.Request, w http.ResponseWriter, userId string) {
-	session, _ := store.Get(r, "_session")
-	session.Values["user_id"] = userId
+	session := b.Login(r, userId)
 
 	var returnTo string
 	returnToSession := session.Values["return_to"]
@@ -262,6 +324,7 @@ func (b *Builder) login(r *http.Request, w http.ResponseWriter, userId string) {
 	http.Redirect(w, r, returnTo, 302)
 }
 
+// CurrentUser func expect you send the request(```http.Request```) and return the user id as string and bool true if is OK
 func (b *Builder) CurrentUser(r *http.Request) (id string, ok bool) {
 	session, _ := store.Get(r, "_session")
 	userId := session.Values["user_id"]
@@ -269,6 +332,7 @@ func (b *Builder) CurrentUser(r *http.Request) (id string, ok bool) {
 	return
 }
 
+// GenerateHash wrapper to bcrypt.GenerateFromPassword
 func GenerateHash(data string) (string, error) {
 	h, err := bcrypt.GenerateFromPassword([]byte(data), 0)
 	return string(h[:]), err

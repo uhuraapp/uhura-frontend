@@ -1,6 +1,6 @@
 {
 	"ImportPath": "github.com/dukex/uhura",
-	"GoVersion": "go1.2.1",
+	"GoVersion": "go1.3",
 	"Deps": [
 		{
 			"ImportPath": "code.google.com/p/go-charset/charset",
@@ -37,7 +37,7 @@
 		},
 		{
 			"ImportPath": "github.com/dukex/login2",
-			"Rev": "b2ed41ab7d7831724fceb3a068a55ec1a204bfd6"
+			"Rev": "81466b0404b9b7ad24054d2a26f6900b8b0f20a7"
 		},
 		{
 			"ImportPath": "github.com/dukex/mixpanel",
