@@ -28,6 +28,9 @@ var T = function() {
       "channel_new.alert.not_found": "Channel not found",
       "channel_new.by_categories": "By Category",
 
+      "donate.title": "Help me to keep Uhura App up!",
+      "donate.subtitle": "You can choose Paypal($) or PagSeguro(R$)",
+
       "footer.follow_us": "Follow Us",
       "footer.like_us": "Like us page",
       "footer.contact": "Found a bug? Tell me! <br /> Send a email to",
@@ -46,6 +49,7 @@ var T = function() {
       "error.?password.changed": "Password changed",
 
       "sidebar.home": "Home",
+      "sidebar.donate": "Make a Donation",
       "sidebar.channel_add": "Find Channels",
       "sidebar.sign_out": "Sign Out",
 
@@ -67,6 +71,9 @@ var T = function() {
       "channel_new.alert.not_found": "Não foi encontrado nenhum canal",
       "channel_new.by_categories": "Por Categoria",
 
+      "donate.title": "Me ajude a manter o Uhura App funcionando!",
+      "donate.subtitle": "Você pode escolher Paypal($) ou PagSeguro(R$)",
+
       "footer.follow_us": "Siga-nos no",
       "footer.like_us": "Curta nossa página",
       "footer.contact": "Encontrou um Problema? Diga me! <br /> Envie um email para",
@@ -83,6 +90,7 @@ var T = function() {
       "error.?user.exists": "Email já registrado, faça o login",
 
       "sidebar.home": "Inicio",
+      "sidebar.donate": "Faça uma doação",
       "sidebar.channel_add": "Buscar Canais",
       "sidebar.sign_out": "Sair",
 

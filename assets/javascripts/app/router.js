@@ -4,6 +4,7 @@ App.Router.map(function () {
   this.route('settings', {path: '/settings'});
   this.route('channel', {path: '/:channel_id'});
   this.route('episode', {path: '/:channel_id/:episode_id'});
+  this.route('donate')
 });
 
 App.Router.reopen({

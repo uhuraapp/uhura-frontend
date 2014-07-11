@@ -29,14 +29,23 @@ function program5(depth0,data) {
 
 function program7(depth0,data) {
   
+  var buffer = '', helper, options;
+  data.buffer.push("\n          <span class=\"typcn typcn-gift\"></span>");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "sidebar.donate", options) : helperMissing.call(depth0, "t", "sidebar.donate", options))));
+  data.buffer.push("\n        ");
+  return buffer;
+  }
+
+function program9(depth0,data) {
+  
   var buffer = '', stack1;
   data.buffer.push("\n        ");
-  stack1 = helpers['with'].call(depth0, "channel", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(8, program8, data),contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers['with'].call(depth0, "channel", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(10, program10, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n      ");
   return buffer;
   }
-function program8(depth0,data) {
+function program10(depth0,data) {
   
   var buffer = '', stack1, helper, options;
   data.buffer.push("\n        <li id=\"channel-");
@@ -46,12 +55,12 @@ function program8(depth0,data) {
     'class': ("to_view:new:ok")
   },hashTypes:{'class': "ID"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
   data.buffer.push(">\n          ");
-  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "channel", "id", options) : helperMissing.call(depth0, "link-to", "channel", "id", options));
+  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(11, program11, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "channel", "id", options) : helperMissing.call(depth0, "link-to", "channel", "id", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n        </li>\n        ");
   return buffer;
   }
-function program9(depth0,data) {
+function program11(depth0,data) {
   
   var buffer = '', stack1;
   data.buffer.push("\n            <img ");
@@ -62,12 +71,12 @@ function program9(depth0,data) {
   stack1 = helpers._triageMustache.call(depth0, "title", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("</span>\n            ");
-  stack1 = helpers['if'].call(depth0, "to_view", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(10, program10, data),contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers['if'].call(depth0, "to_view", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(12, program12, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n          ");
   return buffer;
   }
-function program10(depth0,data) {
+function program12(depth0,data) {
   
   var buffer = '', stack1;
   data.buffer.push("<i>");
@@ -77,16 +86,16 @@ function program10(depth0,data) {
   return buffer;
   }
 
-function program12(depth0,data) {
+function program14(depth0,data) {
   
   var buffer = '', stack1;
   data.buffer.push("\n        ");
-  stack1 = helpers['with'].call(depth0, "channel", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(13, program13, data),contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers['with'].call(depth0, "channel", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(15, program15, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n      ");
   return buffer;
   }
-function program13(depth0,data) {
+function program15(depth0,data) {
   
   var buffer = '', stack1, helper, options;
   data.buffer.push("\n          <li ");
@@ -94,12 +103,12 @@ function program13(depth0,data) {
     'class': ("to_view:new:ok")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
   data.buffer.push(">\n            ");
-  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(14, program14, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "channel", "id", options) : helperMissing.call(depth0, "link-to", "channel", "id", options));
+  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(16, program16, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "channel", "id", options) : helperMissing.call(depth0, "link-to", "channel", "id", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n          </li>\n        ");
   return buffer;
   }
-function program14(depth0,data) {
+function program16(depth0,data) {
   
   var buffer = '', stack1;
   data.buffer.push("\n              <img ");
@@ -110,7 +119,7 @@ function program14(depth0,data) {
   stack1 = helpers._triageMustache.call(depth0, "title", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("</span>\n              ");
-  stack1 = helpers['if'].call(depth0, "to_view", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(10, program10, data),contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers['if'].call(depth0, "to_view", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(12, program12, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n            ");
   return buffer;
@@ -125,10 +134,13 @@ function program14(depth0,data) {
   data.buffer.push("\n      </li>\n      <li>\n        ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(5, program5, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "channel.new", options) : helperMissing.call(depth0, "link-to", "channel.new", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n      </li>\n      <li class=\"donate\">\n        ");
+  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "donate", options) : helperMissing.call(depth0, "link-to", "donate", options));
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n      </li>\n      <li>\n        <a href=\"/users/sign_out\">\n          <span class=\"typcn typcn-power-outline\"></span>");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "sidebar.sign_out", options) : helperMissing.call(depth0, "t", "sidebar.sign_out", options))));
   data.buffer.push("\n        </a>\n      </li>\n    </ul>\n\n    <ol>\n      ");
-  stack1 = helpers.each.call(depth0, "channel", "in", "model", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
+  stack1 = helpers.each.call(depth0, "channel", "in", "model", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n    </ol>\n\n    <footer>\n      <a href=\"http://twitter.com/UhuraApp\">\n        <span class=\"typcn typcn-social-twitter\"></span>");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "footer.follow_us", options) : helperMissing.call(depth0, "t", "footer.follow_us", options))));
@@ -146,7 +158,7 @@ function program14(depth0,data) {
   data.buffer.push("\n      </li>\n      <li>\n        <a href=\"/users/sign_out\">\n          <span class=\"typcn typcn-power-outline\"></span>");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "sidebar.sign_out", options) : helperMissing.call(depth0, "t", "sidebar.sign_out", options))));
   data.buffer.push("\n        </a>\n      </li>\n      ");
-  stack1 = helpers.each.call(depth0, "channel", "in", "model", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(12, program12, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
+  stack1 = helpers.each.call(depth0, "channel", "in", "model", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(14, program14, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n    </ul>\n\n    <footer>\n      <a href=\"http://twitter.com/UhuraApp\">\n        <span class=\"typcn typcn-social-twitter\"> </span>");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "footer.follow_us", options) : helperMissing.call(depth0, "t", "footer.follow_us", options))));
@@ -444,6 +456,21 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   data.buffer.push(" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "playpause", "episode", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
   data.buffer.push(">\n</i>\n\n\n\n");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["donate"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
+
+
+  data.buffer.push("<div id=\"donate\" class=\"uk-animation-fade page\">\n  <h3 class=\"title\">");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "donate.title", options) : helperMissing.call(depth0, "t", "donate.title", options))));
+  data.buffer.push("</h3>\n  <h4 class=\"subtitle\">");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "donate.subtitle", options) : helperMissing.call(depth0, "t", "donate.subtitle", options))));
+  data.buffer.push("</h4>\n<div class=\"uk-grid\">\n  <form action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\" target=\"_top\" class=\"uk-width-1-2 uk-align-center paypal\">\n  <input type=\"hidden\" name=\"cmd\" value=\"_s-xclick\">\n  <input type=\"hidden\" name=\"encrypted\" value=\"-----BEGIN PKCS7-----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-----END PKCS7-----\n  \">\n  <input type=\"image\" src=\"https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif\" border=\"0\" name=\"submit\" alt=\"PayPal - The safer, easier way to pay online!\">\n  <img alt=\"\" border=\"0\" src=\"https://www.paypalobjects.com/pt_BR/i/scr/pixel.gif\" width=\"1\" height=\"1\">\n  </form>\n\n<!-- INICIO FORMULARIO BOTAO PAGSEGURO -->\n<form action=\"https://pagseguro.uol.com.br/checkout/v2/donation.html\" method=\"post\" class=\"uk-width-1-2 uk-align-center pagseguro\">\n<!-- NÃO EDITE OS COMANDOS DAS LINHAS ABAIXO -->\n<input type=\"hidden\" name=\"currency\" value=\"BRL\" />\n<input type=\"hidden\" name=\"receiverEmail\" value=\"duke.m16@gmail.com\" />\n<input type=\"image\" src=\"https://p.simg.uol.com.br/out/pagseguro/i/botoes/doacoes/120x53-doar.gif\" name=\"submit\" alt=\"Pague com PagSeguro - é rápido, grátis e seguro!\" />\n</form>\n<!-- FINAL FORMULARIO BOTAO PAGSEGURO -->\n</div>\n\n</div>\n");
   return buffer;
   
 });
