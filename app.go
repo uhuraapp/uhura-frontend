@@ -223,10 +223,6 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func AdsHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, BuildPage("ads", ""))
-}
-
 func CanvasHandler(w http.ResponseWriter, r *http.Request) {
 	_, ok := loginBuilder.CurrentUser(r)
 
@@ -283,7 +279,6 @@ func main() {
 	r.StrictSlash(true)
 
 	r.HandleFunc("/", LandingHandler)
-	r.HandleFunc("/ads", AdsHandler)
 
 	// Auth Router
 	loginBuilder.Router(r)

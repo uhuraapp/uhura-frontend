@@ -246,7 +246,7 @@ function program11(depth0,data) {
   data.buffer.push("\n    </h2>\n    ");
   stack1 = helpers._triageMustache.call(depth0, "description", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n    <iframe id=\"ads\" src=\"/ads\" scrolling=\"no\" frameborder=\"0\" style=\"text-align: center; width:100%; border: none;\"></iframe>\n  </div>\n</div>\n\n<h3>\n  Episodes\n  ");
+  data.buffer.push("\n  </div>\n</div>\n\n<h3>\n  Episodes\n  ");
   stack1 = helpers['if'].call(depth0, "loading", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(9, program9, data),fn:self.program(7, program7, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n</h3>\n");
@@ -588,7 +588,7 @@ function program4(depth0,data) {
   data.buffer.push("\n\n<ul id=\"channels\">\n  ");
   stack1 = helpers.each.call(depth0, "channel", "in", "channels", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n</ul>\n<script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>\n<!-- uhura-links-suggestions- -->\n<ins class=\"adsbygoogle\"\n     style=\"display:inline-block;width:468px;height:15px\"\n     data-ad-client=\"ca-pub-5957735818581866\"\n     data-ad-slot=\"7678022638\"></ins>\n<script>\n(adsbygoogle = window.adsbygoogle || []).push({});\n</script>\n");
+  data.buffer.push("\n</ul>\n");
   return buffer;
   
 });
