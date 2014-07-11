@@ -161,6 +161,7 @@ func BuildPage(page string, data string) string {
 	assets_sufix := ".min"
 
 	if ENV == "development" {
+		ASSETS_VERSION = time.Now().String()
 		buildPageFromFile(page)
 		assets_sufix = ""
 	}
