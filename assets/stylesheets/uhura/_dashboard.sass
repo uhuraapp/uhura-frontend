@@ -48,7 +48,7 @@ ul.episodes
       white-space: nowrap
       display: inline-block
       float: left
-  button.more-info, button.listened
+  button.more-info, button.listened, button.download
     border: none
     background: none
     float: right
@@ -59,6 +59,8 @@ ul.episodes
     outline: none
   button.more-info
     color: #F1714C
+  button.download
+    color: #333
   button.listened
     color: #CCC
     &:hover
@@ -213,9 +215,9 @@ ul.episodes
         height: 55px
         i
           margin-top: 30%
-      button.more-info, button.listened
+      button.more-info, button.listened, button.download
         text-align: center
-        width: 46%
+        width: 29%
         margin: 0 2%
         display: block
         border: 1px solid #CCC

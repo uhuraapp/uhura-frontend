@@ -99,6 +99,19 @@ func SetEpisodeListened(userId string, w http.ResponseWriter, request *http.Requ
 	r.ResponseJSON(w, 202, nil)
 }
 
+func EpisodeDownload(userId string, w http.ResponseWriter, request *http.Request) {
+	vars := mux.Vars(request)
+	id, _ := strconv.Atoi(vars["id"])
+
+	var episode EpisodeEntity
+	database.Table("items").First(&episode, id)
+
+	p := MIXPANEL.Identify(userId)
+	p.Track("download", map[string]interface{}{"Episode ID": id})
+
+	http.Redirect(w, request, episode.SourceUrl, http.StatusMovedPermanently)
+}
+
 func HasListened(listened []int64, episode int64) bool {
 	for _, t := range listened {
 		if t == episode {

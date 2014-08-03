@@ -305,6 +305,7 @@ func main() {
 	apiRouter.HandleFunc("/episodes", loginBuilder.Protected(core.GetEpisodes))
 	apiRouter.HandleFunc("/episodes/{id}", loginBuilder.Protected(core.GetEpisode))
 	apiRouter.HandleFunc("/episodes/{id}/listened", loginBuilder.Protected(core.SetEpisodeListened))
+	apiRouter.HandleFunc("/episodes/{id}/download", loginBuilder.Protected(core.EpisodeDownload))
 	apiRouter.HandleFunc("/suggestions", loginBuilder.Protected(core.SugestionsEpisodes))
 	apiRouter.HandleFunc("/categories", loginBuilder.Protected(core.GetCategories))
 	apiRouter.HandleFunc("/categories/{id}/channels", loginBuilder.Protected(core.GetCategoryChannels))
