@@ -1,6 +1,7 @@
 package core
 
 import (
+	"log"
 	"os"
 
 	"github.com/jinzhu/gorm"
@@ -10,8 +11,15 @@ import (
 var database gorm.DB
 
 func init() {
+	var err error
+
 	databaseUrl, _ := pq.ParseURL(os.Getenv("DATABASE_URL"))
-	database, _ = gorm.Open("postgres", databaseUrl)
+	database, err = gorm.Open("postgres", databaseUrl)
+
+	if err != nil {
+		log.Fatalln(err.Error())
+	}
+
 	database.LogMode(os.Getenv("DEBUG") == "true")
 
 	database.AutoMigrate(Channel{})
