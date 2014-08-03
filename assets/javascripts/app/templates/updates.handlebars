@@ -1,0 +1,15 @@
+<div class="statuses">
+  {{#each statuses}}
+  <div>
+    <h5 {{action 'open' this }}>{{title}}</h5>
+  </div>
+  {{/each}}
+</div>
+
+<div id="update-modal" class="uk-modal hide">
+  <div class="uk-modal-dialog">
+    <a class="uk-modal-close uk-close"></a>
+    <h3 class="js-modal__title"></h3>
+    <div class="js-modal__content"></div>
+  </div>
+</div>
