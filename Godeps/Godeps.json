@@ -41,7 +41,7 @@
 		},
 		{
 			"ImportPath": "github.com/dukex/mixpanel",
-			"Rev": "ce2b945926a66f25a18f47abbaf1492aff83ef1f"
+			"Rev": "353602d3c3d2779e4b1d73c6d86f33eee018cf4e"
 		},
 		{
 			"ImportPath": "github.com/dustin/gomemcached",
@@ -73,7 +73,7 @@
 		},
 		{
 			"ImportPath": "github.com/jinzhu/gorm",
-			"Rev": "71e7b37bdfd69432e00565a7483a3788fdc20eb7"
+			"Rev": "11bfaba497a2aa5752c30705ea528d18fe68c73d"
 		},
 		{
 			"ImportPath": "github.com/jordan-wright/email",
@@ -89,7 +89,7 @@
 		},
 		{
 			"ImportPath": "github.com/lib/pq",
-			"Rev": "6c54219055243614d4eaffea55917c15bea2ba2f"
+			"Rev": "dffddbcda422b88507795533be131d05e1a3dc71"
 		},
 		{
 			"ImportPath": "github.com/lucasb-eyer/go-colorful",

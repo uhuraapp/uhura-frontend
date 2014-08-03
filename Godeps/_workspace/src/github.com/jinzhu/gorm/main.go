@@ -2,34 +2,50 @@ package gorm
 
 import (
 	"database/sql"
-
-	"github.com/jinzhu/gorm/dialect"
 )
 
 type DB struct {
 	Value         interface{}
+	Error         error
+	RowsAffected  int64
+	callback      *callback
 	db            sqlCommon
 	parent        *DB
 	search        *search
-	Error         error
-	dialect       dialect.Dialect
+	logMode       int
+	logger        logger
+	dialect       Dialect
 	tagIdentifier string
 	singularTable bool
-	logger        logger
-	logMode       int
+	source        string
 }
 
-func Open(driver, source string) (db DB, err error) {
+func Open(driver, source string) (DB, error) {
+	var err error
+	db := DB{dialect: NewDialect(driver), tagIdentifier: "sql", logger: defaultLogger, callback: DefaultCallback, source: source}
 	db.db, err = sql.Open(driver, source)
-	db.dialect = dialect.New(driver)
-	db.tagIdentifier = "sql"
-	db.logger = defaultLogger
 	db.parent = &db
-	return
+	return db, err
+}
+
+func (s *DB) Close() error {
+	return s.parent.db.(*sql.DB).Close()
 }
 
 func (s *DB) DB() *sql.DB {
 	return s.db.(*sql.DB)
+}
+
+// Return the underlying sql.DB or sql.Tx instance.
+// Use of this method is discouraged. It's mainly intended to allow
+// coexistence with legacy non-GORM code.
+func (s *DB) CommonDB() sqlCommon {
+	return s.db
+}
+
+func (s *DB) Callback() *callback {
+	s.parent.callback = s.parent.callback.clone()
+	return s.parent.callback
 }
 
 func (s *DB) SetTagIdentifier(str string) {
@@ -109,30 +125,6 @@ func (s *DB) Unscoped() *DB {
 	return s.clone().search.unscoped().db
 }
 
-func (s *DB) First(out interface{}, where ...interface{}) *DB {
-	return s.clone().do(out).where(where...).first().db
-}
-
-func (s *DB) Last(out interface{}, where ...interface{}) *DB {
-	return s.clone().do(out).where(where...).last().db
-}
-
-func (s *DB) Find(out interface{}, where ...interface{}) *DB {
-	return s.clone().do(out).where(where...).query().db
-}
-
-func (s *DB) Row() *sql.Row {
-	return s.do(s.Value).row()
-}
-
-func (s *DB) Rows() (*sql.Rows, error) {
-	return s.do(s.Value).rows()
-}
-
-func (s *DB) Scan(dest interface{}) *DB {
-	return s.do(s.Value).query(dest).db
-}
-
 func (s *DB) Attrs(attrs ...interface{}) *DB {
 	return s.clone().search.attrs(attrs...).db
 }
@@ -141,22 +133,60 @@ func (s *DB) Assign(attrs ...interface{}) *DB {
 	return s.clone().search.assign(attrs...).db
 }
 
+func (s *DB) First(out interface{}, where ...interface{}) *DB {
+	scope := s.clone().NewScope(out)
+	scope.Search = scope.Search.clone().order(scope.TableName() + "." + scope.PrimaryKey()).limit(1)
+	return scope.inlineCondition(where...).callCallbacks(s.parent.callback.queries).db
+}
+
+func (s *DB) Last(out interface{}, where ...interface{}) *DB {
+	scope := s.clone().NewScope(out)
+	scope.Search = scope.Search.clone().order(scope.TableName() + "." + scope.PrimaryKey() + " DESC").limit(1)
+	return scope.inlineCondition(where...).callCallbacks(s.parent.callback.queries).db
+}
+
+func (s *DB) Find(out interface{}, where ...interface{}) *DB {
+	return s.clone().NewScope(out).inlineCondition(where...).callCallbacks(s.parent.callback.queries).db
+}
+
+func (s *DB) Row() *sql.Row {
+	return s.NewScope(s.Value).row()
+}
+
+func (s *DB) Rows() (*sql.Rows, error) {
+	return s.NewScope(s.Value).rows()
+}
+
+func (s *DB) Scan(dest interface{}) *DB {
+	scope := s.clone().NewScope(s.Value).Set("gorm:query_destination", dest)
+	Query(scope)
+	return scope.db
+}
+
 func (s *DB) FirstOrInit(out interface{}, where ...interface{}) *DB {
 	c := s.clone()
-	if c.First(out, where...).Error == RecordNotFound {
-		return c.do(out).where(where).initialize().db
-	} else if len(s.search.assignAttrs) > 0 {
-		return c.do(out).updateAttrs(s.search.assignAttrs).db
+	r := c.First(out, where...)
+	if r.Error != nil {
+		if !r.RecordNotFound() {
+			return r
+		}
+		c.NewScope(out).inlineCondition(where...).initialize()
+	} else {
+		c.NewScope(out).updatedAttrsWithValues(convertInterfaceToMap(s.search.AssignAttrs), false)
 	}
 	return c
 }
 
 func (s *DB) FirstOrCreate(out interface{}, where ...interface{}) *DB {
 	c := s.clone()
-	if c.First(out, where...).Error == RecordNotFound {
-		return c.do(out).where(where...).initialize().db.Save(out)
-	} else if len(s.search.assignAttrs) > 0 {
-		return c.do(out).updateAttrs(s.search.assignAttrs).update().db
+	r := c.First(out, where...)
+	if r.Error != nil {
+		if !r.RecordNotFound() {
+			return r
+		}
+		c.NewScope(out).inlineCondition(where...).initialize().callCallbacks(s.parent.callback.creates)
+	} else if len(c.search.AssignAttrs) > 0 {
+		c.NewScope(out).Set("gorm:update_interface", s.search.AssignAttrs).callCallbacks(s.parent.callback.updates)
 	}
 	return c
 }
@@ -165,32 +195,50 @@ func (s *DB) Update(attrs ...interface{}) *DB {
 	return s.Updates(toSearchableMap(attrs...), true)
 }
 
-func (s *DB) Updates(values interface{}, ignore_protected_attrs ...bool) *DB {
-	return s.clone().do(s.Value).begin().updateAttrs(values, ignore_protected_attrs...).update().commit_or_rollback().db
+func (s *DB) Updates(values interface{}, ignoreProtectedAttrs ...bool) *DB {
+	return s.clone().NewScope(s.Value).
+		Set("gorm:update_interface", values).
+		Set("gorm:ignore_protected_attrs", len(ignoreProtectedAttrs) > 0).
+		callCallbacks(s.parent.callback.updates).db
 }
 
 func (s *DB) UpdateColumn(attrs ...interface{}) *DB {
-	return s.UpdateColumns(toSearchableMap(attrs...), true)
+	return s.UpdateColumns(toSearchableMap(attrs...))
 }
 
-func (s *DB) UpdateColumns(values interface{}, ignore_protected_attrs ...bool) *DB {
-	return s.clone().do(s.Value).begin().updateColumns(values).commit_or_rollback().db
+func (s *DB) UpdateColumns(values interface{}) *DB {
+	return s.clone().NewScope(s.Value).
+		Set("gorm:update_interface", values).
+		Set("gorm:update_column", true).
+		callCallbacks(s.parent.callback.updates).db
 }
 
 func (s *DB) Save(value interface{}) *DB {
-	return s.clone().do(value).begin().save().commit_or_rollback().db
+	scope := s.clone().NewScope(value)
+	if scope.PrimaryKeyZero() {
+		return scope.callCallbacks(s.parent.callback.creates).db
+	} else {
+		return scope.callCallbacks(s.parent.callback.updates).db
+	}
+}
+
+func (s *DB) Create(value interface{}) *DB {
+	scope := s.clone().NewScope(value)
+	return scope.callCallbacks(s.parent.callback.creates).db
 }
 
 func (s *DB) Delete(value interface{}) *DB {
-	return s.clone().do(value).begin().delete().commit_or_rollback().db
+	return s.clone().NewScope(value).callCallbacks(s.parent.callback.deletes).db
 }
 
 func (s *DB) Raw(sql string, values ...interface{}) *DB {
-	return s.clone().search.setraw(true).where(sql, values...).db
+	return s.clone().search.raw(true).where(sql, values...).db
 }
 
 func (s *DB) Exec(sql string, values ...interface{}) *DB {
-	return s.clone().do(nil).raw(sql, values...).exec().db
+	scope := s.clone().NewScope(nil)
+	scope.Raw(scope.buildWhereCondition(map[string]interface{}{"query": sql, "args": values}))
+	return scope.Exec().db
 }
 
 func (s *DB) Model(value interface{}) *DB {
@@ -199,17 +247,16 @@ func (s *DB) Model(value interface{}) *DB {
 	return c
 }
 
-func (s *DB) Related(value interface{}, foreign_keys ...string) *DB {
-	old_data := s.Value
-	return s.do(value).related(old_data, foreign_keys...).db
+func (s *DB) Related(value interface{}, foreignKeys ...string) *DB {
+	return s.clone().NewScope(s.Value).related(value, foreignKeys...).db
 }
 
 func (s *DB) Pluck(column string, value interface{}) *DB {
-	return s.do(s.Value).pluck(column, value).db
+	return s.NewScope(s.Value).pluck(column, value).db
 }
 
 func (s *DB) Count(value interface{}) *DB {
-	return s.do(s.Value).count(value).db
+	return s.NewScope(s.Value).count(value).db
 }
 
 func (s *DB) Table(name string) *DB {
@@ -251,7 +298,7 @@ func (s *DB) Rollback() *DB {
 }
 
 func (s *DB) NewRecord(value interface{}) bool {
-	return s.clone().do(value).model.primaryKeyZero()
+	return s.clone().NewScope(value).PrimaryKeyZero()
 }
 
 func (s *DB) RecordNotFound() bool {
@@ -260,33 +307,38 @@ func (s *DB) RecordNotFound() bool {
 
 // Migrations
 func (s *DB) CreateTable(value interface{}) *DB {
-	return s.clone().do(value).createTable().db
+	return s.clone().NewScope(value).createTable().db
 }
 
 func (s *DB) DropTable(value interface{}) *DB {
-	return s.clone().do(value).dropTable().db
+	return s.clone().NewScope(value).dropTable().db
 }
 
 func (s *DB) AutoMigrate(value interface{}) *DB {
-	return s.clone().do(value).autoMigrate().db
+	return s.clone().NewScope(value).autoMigrate().db
 }
 
 func (s *DB) ModifyColumn(column string, typ string) *DB {
-	s.clone().do(s.Value).modifyColumn(column, typ)
+	s.clone().NewScope(s.Value).modifyColumn(column, typ)
 	return s
 }
 
 func (s *DB) DropColumn(column string) *DB {
-	s.do(s.Value).dropColumn(column)
+	s.clone().NewScope(s.Value).dropColumn(column)
 	return s
 }
 
-func (s *DB) AddIndex(column string, index_name ...string) *DB {
-	s.clone().do(s.Value).addIndex(column, index_name...)
+func (s *DB) AddIndex(indexName string, column ...string) *DB {
+	s.clone().NewScope(s.Value).addIndex(false, indexName, column...)
+	return s
+}
+
+func (s *DB) AddUniqueIndex(indexName string, column ...string) *DB {
+	s.clone().NewScope(s.Value).addIndex(true, indexName, column...)
 	return s
 }
 
 func (s *DB) RemoveIndex(column string) *DB {
-	s.clone().do(s.Value).removeIndex(column)
+	s.clone().NewScope(s.Value).removeIndex(column)
 	return s
 }

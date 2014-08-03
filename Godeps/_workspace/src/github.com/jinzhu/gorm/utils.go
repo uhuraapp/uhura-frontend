@@ -3,7 +3,11 @@ package gorm
 import (
 	"bytes"
 	"database/sql"
+	"fmt"
+	"os"
 	"reflect"
+	"regexp"
+	"runtime"
 	"strconv"
 	"strings"
 	"sync"
@@ -24,6 +28,29 @@ func (s *safeMap) Get(key string) string {
 	s.l.RLock()
 	defer s.l.RUnlock()
 	return s.m[key]
+}
+
+func FieldByName(name string, value interface{}, withAddr ...bool) (interface{}, bool) {
+	data := reflect.Indirect(reflect.ValueOf(value))
+	name = snakeToUpperCamel(name)
+
+	if data.Kind() == reflect.Struct {
+		if field := data.FieldByName(name); field.IsValid() {
+			if len(withAddr) > 0 && field.CanAddr() {
+				return field.Addr().Interface(), true
+			} else {
+				return field.Interface(), true
+			}
+		}
+	} else if data.Kind() == reflect.Slice {
+		elem := data.Type().Elem()
+		if elem.Kind() == reflect.Ptr {
+			return nil, reflect.New(data.Type().Elem().Elem()).Elem().FieldByName(name).IsValid()
+		} else {
+			return nil, reflect.New(data.Type().Elem()).Elem().FieldByName(name).IsValid()
+		}
+	}
+	return nil, false
 }
 
 func newSafeMap() *safeMap {
@@ -86,6 +113,16 @@ func toSearchableMap(attrs ...interface{}) (result interface{}) {
 	return
 }
 
+func fileWithLineNum() string {
+	for i := 1; i < 15; i++ {
+		_, file, line, ok := runtime.Caller(i)
+		if ok && (!regexp.MustCompile(`jinzhu/gorm/.*.go`).MatchString(file) || regexp.MustCompile(`jinzhu/gorm/.*test.go`).MatchString(file)) {
+			return fmt.Sprintf("%v:%v", strings.TrimPrefix(file, os.Getenv("GOPATH")+"src/"), line)
+		}
+	}
+	return ""
+}
+
 func setFieldValue(field reflect.Value, value interface{}) bool {
 	if field.IsValid() && field.CanAddr() {
 		switch field.Kind() {
@@ -109,4 +146,38 @@ func setFieldValue(field reflect.Value, value interface{}) bool {
 
 func isBlank(value reflect.Value) bool {
 	return reflect.DeepEqual(value.Interface(), reflect.Zero(value.Type()).Interface())
+}
+
+func convertInterfaceToMap(values interface{}) map[string]interface{} {
+	attrs := map[string]interface{}{}
+
+	switch value := values.(type) {
+	case map[string]interface{}:
+		for k, v := range value {
+			attrs[toSnake(k)] = v
+		}
+	case []interface{}:
+		for _, v := range value {
+			for key, value := range convertInterfaceToMap(v) {
+				attrs[key] = value
+			}
+		}
+	case interface{}:
+		reflectValue := reflect.ValueOf(values)
+
+		switch reflectValue.Kind() {
+		case reflect.Map:
+			for _, key := range reflectValue.MapKeys() {
+				attrs[toSnake(key.Interface().(string))] = reflectValue.MapIndex(key).Interface()
+			}
+		default:
+			scope := Scope{Value: values}
+			for _, field := range scope.Fields() {
+				if !field.IsBlank {
+					attrs[field.DBName] = field.Value
+				}
+			}
+		}
+	}
+	return attrs
 }

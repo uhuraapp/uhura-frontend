@@ -1,4 +1,4 @@
-package gorm
+package gorm_test
 
 import (
 	"database/sql"
@@ -6,7 +6,9 @@ import (
 	"errors"
 	"fmt"
 
+	testdb "github.com/erikstmartin/go-testdb"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/jinzhu/gorm"
 	_ "github.com/lib/pq"
 	_ "github.com/mattn/go-sqlite3"
 
@@ -17,24 +19,79 @@ import (
 	"time"
 )
 
+type IgnoredEmbedStruct struct {
+	Name string
+}
+
+type Num int64
+
+func (i *Num) Scan(src interface{}) error {
+	switch s := src.(type) {
+	case []byte:
+	case int64:
+		*i = Num(s)
+	default:
+		return errors.New("Cannot scan NamedInt from " + reflect.ValueOf(src).String())
+	}
+	return nil
+}
+
+type Company struct {
+	Id   int64
+	Name string
+}
+
+type Role struct {
+	Name string
+}
+
+func (role *Role) Scan(value interface{}) error {
+	role.Name = string(value.([]uint8))
+	return nil
+}
+
+func (role Role) Value() (driver.Value, error) {
+	return role.Name, nil
+}
+
+func (role Role) IsAdmin() bool {
+	return role.Name == "admin"
+}
+
 type User struct {
-	Id                int64     // Id: Primary key
-	Birthday          time.Time // Time
-	Age               int64
-	Name              string        `sql:"size:255"`
-	CreatedAt         time.Time     // CreatedAt: Time of record is created, will be insert automatically
-	UpdatedAt         time.Time     // UpdatedAt: Time of record is updated, will be updated automatically
-	DeletedAt         time.Time     // DeletedAt: Time of record is deleted, refer Soft Delete for more
-	Emails            []Email       // Embedded structs
-	BillingAddress    Address       // Embedded struct
-	BillingAddressId  sql.NullInt64 // Embedded struct's foreign key
-	ShippingAddress   Address       // Embedded struct
-	ShippingAddressId int64         // Embedded struct's foreign key
-	When              time.Time
-	CreditCard        CreditCard
-	Latitude          float64
+	Id                 int64 // Id: Primary key
+	Age                int64
+	UserNum            Num
+	Name               string             `sql:"size:255"`
+	Birthday           time.Time          // Time
+	CreatedAt          time.Time          // CreatedAt: Time of record is created, will be insert automatically
+	UpdatedAt          time.Time          // UpdatedAt: Time of record is updated, will be updated automatically
+	DeletedAt          time.Time          // DeletedAt: Time of record is deleted, refer Soft Delete for more
+	Emails             []Email            // Embedded structs
+	IgnoredEmbedStruct IgnoredEmbedStruct `sql:"-"`
+	BillingAddress     Address            // Embedded struct
+	BillingAddressId   sql.NullInt64      // Embedded struct's foreign key
+	ShippingAddress    Address            // Embedded struct
+	ShippingAddressId  int64              // Embedded struct's foreign key
+	When               time.Time
+	CreditCard         CreditCard
+	Latitude           float64
+	CompanyId          int64
+	Company
+	Role
 	PasswordHash      []byte
-	IgnoreMe          int64 `sql:"-"`
+	IgnoreMe          int64    `sql:"-"`
+	IgnoreStringSlice []string `sql:"-"`
+}
+
+type UserCompany struct {
+	Id        int64
+	UserId    int64
+	CompanyId int64
+}
+
+func (t UserCompany) TableName() string {
+	return "user_companies"
 }
 
 type CreditCard struct {
@@ -81,8 +138,21 @@ type Product struct {
 	AfterDeleteCallTimes  int64
 }
 
+type Animal struct {
+	Counter   int64 `primaryKey:"yes"`
+	Name      string
+	From      string //test reserved sql keyword as field name
+	CreatedAt time.Time
+	UpdatedAt time.Time
+}
+
+type Details struct {
+	Id   int64
+	Bulk gorm.Hstore
+}
+
 var (
-	db                 DB
+	db                 gorm.DB
 	t1, t2, t3, t4, t5 time.Time
 )
 
@@ -94,13 +164,13 @@ func init() {
 		// CREATE DATABASE gorm;
 		// GRANT ALL ON gorm.* TO 'gorm'@'localhost';
 		fmt.Println("testing mysql...")
-		db, err = Open("mysql", "gorm:gorm@/gorm?charset=utf8&parseTime=True")
-	case "sqlite":
-		fmt.Println("testing sqlite3...")
-		db, err = Open("sqlite3", "/tmp/gorm.db")
-	default:
+		db, err = gorm.Open("mysql", "gorm:gorm@/gorm?charset=utf8&parseTime=True")
+	case "postgres":
 		fmt.Println("testing postgres...")
-		db, err = Open("postgres", "user=gorm dbname=gorm sslmode=disable")
+		db, err = gorm.Open("postgres", "user=gorm dbname=gorm sslmode=disable")
+	default:
+		fmt.Println("testing sqlite3...")
+		db, err = gorm.Open("sqlite3", "/tmp/gorm.db")
 	}
 
 	// db.SetLogger(Logger{log.New(os.Stdout, "\r\n", 0)})
@@ -122,6 +192,14 @@ func init() {
 	db.Exec("drop table emails;")
 	db.Exec("drop table addresses")
 	db.Exec("drop table credit_cards")
+	db.Exec("drop table roles")
+	db.Exec("drop table companies")
+	db.Exec("drop table animals")
+	db.Exec("drop table user_companies")
+
+	if err = db.CreateTable(&Animal{}).Error; err != nil {
+		panic(fmt.Sprintf("No error should happen when create table, but got %+v", err))
+	}
 
 	if err = db.CreateTable(&User{}).Error; err != nil {
 		panic(fmt.Sprintf("No error should happen when create table, but got %+v", err))
@@ -143,17 +221,34 @@ func init() {
 		panic(fmt.Sprintf("No error should happen when create table, but got %+v", err))
 	}
 
+	if err = db.AutoMigrate(Company{}).Error; err != nil {
+		panic(fmt.Sprintf("No error should happen when create table, but got %+v", err))
+	}
+
+	if err = db.AutoMigrate(Role{}).Error; err != nil {
+		panic(fmt.Sprintf("No error should happen when create table, but got %+v", err))
+	}
+
+	if err = db.AutoMigrate(UserCompany{}).Error; err != nil {
+		panic(fmt.Sprintf("No error should happen when create table, but got %+v", err))
+	}
+
 	var shortForm = "2006-01-02 15:04:05"
 	t1, _ = time.Parse(shortForm, "2000-10-27 12:02:40")
 	t2, _ = time.Parse(shortForm, "2002-01-01 00:00:00")
 	t3, _ = time.Parse(shortForm, "2005-01-01 00:00:00")
 	t4, _ = time.Parse(shortForm, "2010-01-01 00:00:00")
 	t5, _ = time.Parse(shortForm, "2020-01-01 00:00:00")
-	db.Save(&User{Name: "1", Age: 18, Birthday: t1, When: time.Now()})
+	db.Save(&User{Name: "1", Age: 18, Birthday: t1, When: time.Now(), UserNum: Num(111)})
 	db.Save(&User{Name: "2", Age: 20, Birthday: t2})
 	db.Save(&User{Name: "3", Age: 22, Birthday: t3})
 	db.Save(&User{Name: "3", Age: 24, Birthday: t4})
 	db.Save(&User{Name: "5", Age: 26, Birthday: t4})
+
+	db.Save(&Animal{Name: "First", From: "hello"})
+	db.Save(&Animal{Name: "Amazing", From: "nerdz"})
+	db.Save(&Animal{Name: "Horse", From: "gorm"})
+	db.Save(&Animal{Name: "Last", From: "epic"})
 }
 
 func TestFirstAndLast(t *testing.T) {
@@ -164,13 +259,71 @@ func TestFirstAndLast(t *testing.T) {
 	db.Last(&user3)
 	db.Order("id desc").Find(&user4)
 	if user1.Id != user2.Id || user3.Id != user4.Id {
-		t.Errorf("First and Last should works correctly")
+		t.Errorf("First and Last should work correctly")
 	}
 
 	var users []User
 	db.First(&users)
 	if len(users) != 1 {
 		t.Errorf("Find first record as map")
+	}
+}
+
+func TestFindSliceOfPointers(t *testing.T) {
+	var users []User
+	db.Find(&users)
+
+	var userPointers []*User
+	db.Find(&userPointers)
+
+	if len(users) == 0 || len(users) != len(userPointers) {
+		t.Errorf("Find slice of pointers")
+	}
+}
+
+func TestFirstAndLastWithJoins(t *testing.T) {
+	var user1, user2, user3, user4 User
+	db.Joins("left join emails on emails.user_id = users.id").First(&user1)
+	db.Order("id").Find(&user2)
+
+	db.Joins("left join emails on emails.user_id = users.id").Last(&user3)
+	db.Order("id desc").Find(&user4)
+	if user1.Id != user2.Id || user3.Id != user4.Id {
+		t.Errorf("First and Last should work correctly with Joins")
+	}
+}
+
+func TestFirstAndLastForTableWithNoStdPrimaryKey(t *testing.T) {
+	var animal1, animal2, animal3, animal4 Animal
+	db.First(&animal1)
+	db.Order("counter").Find(&animal2)
+
+	db.Last(&animal3)
+	db.Order("counter desc").Find(&animal4)
+	if animal1.Counter != animal2.Counter || animal3.Counter != animal4.Counter {
+		t.Errorf("First and Last should work correctly")
+	}
+
+	var animals []Animal
+	db.First(&animals)
+	if len(animals) != 1 {
+		t.Errorf("Find first record as map")
+	}
+}
+
+func TestSaveCustomType(t *testing.T) {
+	var user, user1 User
+	db.First(&user, "name = ?", "1")
+	if user.UserNum != Num(111) {
+		t.Errorf("UserNum should be saved correctly")
+	}
+
+	user.UserNum = Num(222)
+	db.Save(&user)
+
+	db.First(&user1, "name = ?", "1")
+	if user1.UserNum != Num(222) {
+		t.Errorf("UserNum should be updated correctly")
 	}
 }
 
@@ -184,6 +337,7 @@ func TestPrecision(t *testing.T) {
 
 	var u User
 	db.First(&u, "name = ?", "Precision")
+
 	if u.Latitude != f {
 		t.Errorf("Float64 should not be changed after query")
 	}
@@ -193,24 +347,19 @@ func TestCreateAndUpdate(t *testing.T) {
 	name, name2, new_name := "update", "update2", "new_update"
 	user := User{Name: name, Age: 1, PasswordHash: []byte{'f', 'a', 'k', '4'}}
 
-	if !db.NewRecord(user) {
+	if !db.NewRecord(user) || !db.NewRecord(&user) {
 		t.Error("User should be new record")
 	}
 
-	if !db.NewRecord(&user) {
-		t.Error("User should be new record")
+	if count := db.Save(&user).RowsAffected; count != 1 {
+		t.Error("There should be one record be affected when create record")
 	}
 
-	db.Save(&user)
 	if user.Id == 0 {
 		t.Errorf("Should have ID after create")
 	}
 
-	if db.NewRecord(user) {
-		t.Error("User should not new record after save")
-	}
-
-	if db.NewRecord(&user) {
+	if db.NewRecord(user) || db.NewRecord(&user) {
 		t.Error("User should not new record after save")
 	}
 
@@ -220,11 +369,13 @@ func TestCreateAndUpdate(t *testing.T) {
 		t.Errorf("User's Password should be saved")
 	}
 
-	db.Save(&User{Name: name2, Age: 1})
+	if count := db.Save(&User{Name: name2, Age: 1}).RowsAffected; count != 1 {
+		t.Error("There should be one record be affected when update a record")
+	}
 
 	user.Name = new_name
 	db.Save(&user)
-	if db.Where("name = ?", name).First(&User{}).Error != RecordNotFound {
+	if db.Where("name = ?", name).First(&User{}).Error != gorm.RecordNotFound {
 		t.Errorf("Should raise RecordNotFound error when looking with an outdated name")
 	}
 
@@ -283,12 +434,8 @@ func TestWhere(t *testing.T) {
 	}
 
 	var users []User
-	if db.Where("name = ?", "none-noexisting").Find(&users).Error != nil {
-		t.Errorf("Shouldn't return error when looking for none existing records with find")
-	}
-
-	if len(users) != 0 {
-		t.Errorf("Users should be empty")
+	if !db.Where("name = ?", "none-noexisting").Find(&users).RecordNotFound() {
+		t.Errorf("Should get RecordNotFound error when looking for none existing records")
 	}
 }
 
@@ -490,11 +637,6 @@ func TestSelect(t *testing.T) {
 	if user.Name != "3" {
 		t.Errorf("Should got Name = 3 when searching with it, %+v", user.Id)
 	}
-
-	query := db.Where("name = ?", "3").Select("nam;e")
-	if query.Error == nil {
-		t.Errorf("Should got error with invalid select string")
-	}
 }
 
 func TestOrderAndPluck(t *testing.T) {
@@ -511,7 +653,7 @@ func TestOrderAndPluck(t *testing.T) {
 
 	db.Model(&User{}).Order("age desc").Pluck("age", &ages3).Order("age", true).Pluck("age", &ages4)
 	if reflect.DeepEqual(ages3, ages4) {
-		t.Errorf("Reorder should works")
+		t.Errorf("Reorder should work")
 	}
 
 	var names []string
@@ -528,7 +670,7 @@ func TestLimit(t *testing.T) {
 	db.Order("age desc").Limit(3).Find(&users1).Limit(5).Find(&users2).Limit(-1).Find(&users3)
 
 	if len(users1) != 3 || len(users2) != 5 || len(users3) <= 5 {
-		t.Errorf("Limit should works")
+		t.Errorf("Limit should work")
 	}
 }
 
@@ -537,7 +679,7 @@ func TestOffset(t *testing.T) {
 	db.Limit(100).Order("age desc").Find(&users1).Offset(3).Find(&users2).Offset(5).Find(&users3).Offset(-1).Find(&users4)
 
 	if (len(users1) != len(users4)) || (len(users1)-len(users2) != 3) || (len(users1)-len(users3) != 5) {
-		t.Errorf("Offset should works")
+		t.Errorf("Offset should work")
 	}
 }
 
@@ -554,7 +696,7 @@ func TestCount(t *testing.T) {
 	var users []User
 
 	if err := db.Where("name = ?", "1").Or("name = ?", "3").Find(&users).Count(&count).Error; err != nil {
-		t.Errorf("Count should works", err)
+		t.Errorf("Count should work", err)
 	}
 
 	if count != int64(len(users)) {
@@ -563,7 +705,7 @@ func TestCount(t *testing.T) {
 
 	db.Model(&User{}).Where("name = ?", "1").Count(&count1).Or("name = ?", "3").Count(&count2)
 	if count1 != 1 || count2 != 3 {
-		t.Errorf("Multiple count should works")
+		t.Errorf("Multiple count should work")
 	}
 }
 
@@ -623,7 +765,7 @@ func (s *Product) AfterFind() {
 	s.AfterFindCallTimes = s.AfterFindCallTimes + 1
 }
 
-func (s *Product) AfterCreate(db *DB) {
+func (s *Product) AfterCreate(db *gorm.DB) {
 	db.Model(s).UpdateColumn(Product{AfterCreateCallTimes: s.AfterCreateCallTimes + 1})
 }
 
@@ -681,7 +823,7 @@ func TestRunCallbacks(t *testing.T) {
 	var products []Product
 	db.Find(&products, "code = ?", "unique_code")
 	if products[0].AfterFindCallTimes != 2 {
-		t.Errorf("AfterFind callbacks should works with slice")
+		t.Errorf("AfterFind callbacks should work with slice")
 	}
 
 	db.Where("Code = ?", "unique_code").First(&p)
@@ -862,8 +1004,18 @@ func TestSetTableDirectly(t *testing.T) {
 func TestUpdate(t *testing.T) {
 	product1 := Product{Code: "123"}
 	product2 := Product{Code: "234"}
+	animal1 := Animal{Name: "Ferdinand"}
+	animal2 := Animal{Name: "nerdz"}
+
 	db.Save(&product1).Save(&product2).Update("code", "456")
+
 	if product2.Code != "456" {
+		t.Errorf("Record should be updated with update attributes")
+	}
+
+	db.Save(&animal1).Save(&animal2).Update("name", "Francis")
+
+	if animal2.Name != "Francis" {
 		t.Errorf("Record should be updated with update attributes")
 	}
 
@@ -871,6 +1023,11 @@ func TestUpdate(t *testing.T) {
 	db.First(&product2, product2.Id)
 	updated_at1 := product1.UpdatedAt
 	updated_at2 := product2.UpdatedAt
+
+	db.First(&animal1, animal1.Counter)
+	db.First(&animal2, animal2.Counter)
+	animalUpdated_at1 := animal1.UpdatedAt
+	animalUpdated_at2 := animal2.UpdatedAt
 
 	var product3 Product
 	db.First(&product3, product2.Id).Update("code", "456")
@@ -890,6 +1047,25 @@ func TestUpdate(t *testing.T) {
 		t.Errorf("Product 234 should be changed to 456")
 	}
 
+	var animal3 Animal
+	db.First(&animal3, animal2.Counter).Update("Name", "Robert")
+
+	if animalUpdated_at2.Format(time.RFC3339Nano) != animal2.UpdatedAt.Format(time.RFC3339Nano) {
+		t.Errorf("updated_at should not be updated if nothing changed")
+	}
+
+	if db.First(&Animal{}, "name = 'Ferdinand'").Error != nil {
+		t.Errorf("Animal 'Ferdinand' should not be updated")
+	}
+
+	if db.First(&Animal{}, "name = 'nerdz'").Error == nil {
+		t.Errorf("Animal 'nerdz' should be changed to 'Francis'")
+	}
+
+	if db.First(&Animal{}, "name = 'Robert'").Error != nil {
+		t.Errorf("Animal 'nerdz' should be changed to 'Robert'")
+	}
+
 	db.Table("products").Where("code in (?)", []string{"123"}).Update("code", "789")
 
 	var product4 Product
@@ -907,7 +1083,7 @@ func TestUpdate(t *testing.T) {
 	}
 
 	if db.First(&Product{}, "code = '789'").Error != nil {
-		t.Errorf("Product 456 should be changed to 789")
+		t.Errorf("Product 123 should be changed to 789")
 	}
 
 	if db.Model(product2).Update("CreatedAt", time.Now().Add(time.Hour)).Error != nil {
@@ -917,12 +1093,47 @@ func TestUpdate(t *testing.T) {
 	if db.Model(&product2).UpdateColumn("CreatedAt", time.Now().Add(time.Hour)).Error != nil {
 		t.Error("No error should raise when update_column with CamelCase")
 	}
+
+	db.Table("animals").Where("name in (?)", []string{"Ferdinand"}).Update("name", "Franz")
+
+	var animal4 Animal
+	db.First(&animal4, animal1.Counter)
+	if animalUpdated_at1.Format(time.RFC3339Nano) != animal4.UpdatedAt.Format(time.RFC3339Nano) {
+		t.Errorf("animalUpdated_at should be updated if something changed")
+	}
+
+	if db.First(&Animal{}, "name = 'Ferdinand'").Error == nil {
+		t.Errorf("Animal 'Ferdinand' should be changed to 'Franz'")
+	}
+
+	if db.First(&Animal{}, "name = 'Robert'").Error != nil {
+		t.Errorf("Animal 'Robert' should not be changed to 'Francis'")
+	}
+
+	if db.First(&Animal{}, "name = 'Franz'").Error != nil {
+		t.Errorf("Animal 'nerdz' should be changed to 'Franz'")
+	}
+
+	if db.Model(animal2).Update("CreatedAt", time.Now().Add(time.Hour)).Error != nil {
+		t.Error("No error should raise when update with CamelCase")
+	}
+
+	if db.Model(&animal2).UpdateColumn("CreatedAt", time.Now().Add(time.Hour)).Error != nil {
+		t.Error("No error should raise when update_column with CamelCase")
+	}
+
+	var animals []Animal
+	db.Find(&animals)
+	if count := db.Model(Animal{}).Update("CreatedAt", time.Now().Add(2*time.Hour)).RowsAffected; count != int64(len(animals)) {
+		t.Error("RowsAffected should be correct when do batch update")
+	}
 }
 
 func TestUpdates(t *testing.T) {
 	product1 := Product{Code: "abc", Price: 10}
 	product2 := Product{Code: "cde", Price: 20}
-	db.Save(&product1).Save(&product2).Updates(map[string]interface{}{"code": "edf", "price": 100})
+	db.Save(&product1).Save(&product2)
+	db.Model(&product2).Updates(map[string]interface{}{"code": "edf", "price": 100})
 	if product2.Code != "edf" || product2.Price != 100 {
 		t.Errorf("Record should be updated also with update attributes")
 	}
@@ -1074,7 +1285,7 @@ func TestFindOrInitialize(t *testing.T) {
 }
 
 func TestFindOrCreate(t *testing.T) {
-	var user1, user2, user3, user4, user5, user6, user7 User
+	var user1, user2, user3, user4, user5, user6, user7, user8 User
 	db.Where(&User{Name: "find or create", Age: 33}).FirstOrCreate(&user1)
 	if user1.Name != "find or create" || user1.Id == 0 || user1.Age != 33 {
 		t.Errorf("user should be created with search value")
@@ -1095,6 +1306,12 @@ func TestFindOrCreate(t *testing.T) {
 		t.Errorf("user should be created with search value and attrs")
 	}
 
+	updated_at1 := user4.UpdatedAt
+	db.Where(&User{Name: "find or create 3"}).Assign("age", 55).FirstOrCreate(&user4)
+	if updated_at1.Format(time.RFC3339Nano) == user4.UpdatedAt.Format(time.RFC3339Nano) {
+		t.Errorf("UpdateAt should be changed when update values with assign")
+	}
+
 	db.Where(&User{Name: "find or create 4"}).Assign(User{Age: 44}).FirstOrCreate(&user4)
 	if user4.Name != "find or create 4" || user4.Id == 0 || user4.Age != 44 {
 		t.Errorf("user should be created with search value and assigned attrs")
@@ -1113,6 +1330,15 @@ func TestFindOrCreate(t *testing.T) {
 	db.Where(&User{Name: "find or create"}).Find(&user7)
 	if user7.Name != "find or create" || user7.Id == 0 || user7.Age != 44 {
 		t.Errorf("user should be found and updated with assigned attrs")
+	}
+
+	db.Where(&User{Name: "find or create embedded struct"}).Assign(User{Age: 44, CreditCard: CreditCard{Number: "1231231231"}, Emails: []Email{{Email: "jinzhu@assign_embedded_struct.com"}, {Email: "jinzhu-2@assign_embedded_struct.com"}}}).FirstOrCreate(&user8)
+	if db.Where("email = ?", "jinzhu-2@assign_embedded_struct.com").First(&Email{}).RecordNotFound() {
+		t.Errorf("embedded struct email should be saved")
+	}
+
+	if db.Where("email = ?", "1231231231").First(&CreditCard{}).RecordNotFound() {
+		t.Errorf("embedded struct credit card should be saved")
 	}
 }
 
@@ -1249,6 +1475,13 @@ func TestSubStruct(t *testing.T) {
 	db.Save(&comment3)
 }
 
+func TestIgnoreAssociation(t *testing.T) {
+	user := User{Name: "ignore", IgnoredEmbedStruct: IgnoredEmbedStruct{Name: "IgnoreMe"}}
+	if err := db.Save(&user).Error; err != nil {
+		t.Errorf("Should have no error with ignored association, but got ", err)
+	}
+}
+
 func TestRelated(t *testing.T) {
 	user := User{
 		Name:            "jinzhu",
@@ -1277,10 +1510,17 @@ func TestRelated(t *testing.T) {
 	if len(emails) != 2 {
 		t.Errorf("Should have two emails")
 	}
+
+	var emails2 []Email
+	db.Model(&user).Where("email = ?", "jinzhu@example.com").Related(&emails2)
+	if len(emails2) != 1 {
+		t.Errorf("Should have two emails")
+	}
+
 	var user1 User
 	db.Model(&user).Related(&user1.Emails)
 	if len(user1.Emails) != 2 {
-		t.Errorf("Should have two emails")
+		t.Errorf("Should have only one email match related condition")
 	}
 
 	var address1 Address
@@ -1325,53 +1565,52 @@ func (c Cart) TableName() string {
 }
 
 func TestTableName(t *testing.T) {
-	db := db.clone()
-	if db.do(Order{}).table() != "orders" {
+	if db.NewScope(Order{}).TableName() != "orders" {
 		t.Errorf("Order's table name should be orders")
 	}
 
-	if db.do(&Order{}).table() != "orders" {
+	if db.NewScope(&Order{}).TableName() != "orders" {
 		t.Errorf("&Order's table name should be orders")
 	}
 
-	if db.do([]Order{}).table() != "orders" {
+	if db.NewScope([]Order{}).TableName() != "orders" {
 		t.Errorf("[]Order's table name should be orders")
 	}
 
-	if db.do(&[]Order{}).table() != "orders" {
+	if db.NewScope(&[]Order{}).TableName() != "orders" {
 		t.Errorf("&[]Order's table name should be orders")
 	}
 
 	db.SingularTable(true)
-	if db.do(Order{}).table() != "order" {
+	if db.NewScope(Order{}).TableName() != "order" {
 		t.Errorf("Order's singular table name should be order")
 	}
 
-	if db.do(&Order{}).table() != "order" {
+	if db.NewScope(&Order{}).TableName() != "order" {
 		t.Errorf("&Order's singular table name should be order")
 	}
 
-	if db.do([]Order{}).table() != "order" {
+	if db.NewScope([]Order{}).TableName() != "order" {
 		t.Errorf("[]Order's singular table name should be order")
 	}
 
-	if db.do(&[]Order{}).table() != "order" {
+	if db.NewScope(&[]Order{}).TableName() != "order" {
 		t.Errorf("&[]Order's singular table name should be order")
 	}
 
-	if db.do(&Cart{}).table() != "shopping_cart" {
+	if db.NewScope(&Cart{}).TableName() != "shopping_cart" {
 		t.Errorf("&Cart's singular table name should be shopping_cart")
 	}
 
-	if db.do(Cart{}).table() != "shopping_cart" {
+	if db.NewScope(Cart{}).TableName() != "shopping_cart" {
 		t.Errorf("Cart's singular table name should be shopping_cart")
 	}
 
-	if db.do(&[]Cart{}).table() != "shopping_cart" {
+	if db.NewScope(&[]Cart{}).TableName() != "shopping_cart" {
 		t.Errorf("&[]Cart's singular table name should be shopping_cart")
 	}
 
-	if db.do([]Cart{}).table() != "shopping_cart" {
+	if db.NewScope([]Cart{}).TableName() != "shopping_cart" {
 		t.Errorf("[]Cart's singular table name should be shopping_cart")
 	}
 	db.SingularTable(false)
@@ -1471,34 +1710,37 @@ func TestSqlNullValue(t *testing.T) {
 }
 
 func TestTransaction(t *testing.T) {
-	d := db.Begin()
+	tx := db.Begin()
 	u := User{Name: "transcation"}
-	if err := d.Save(&u).Error; err != nil {
+	if err := tx.Save(&u).Error; err != nil {
 		t.Errorf("No error should raise, but got", err)
 	}
 
-	if err := d.First(&User{}, "name = ?", "transcation").Error; err != nil {
+	if err := tx.First(&User{}, "name = ?", "transcation").Error; err != nil {
 		t.Errorf("Should find saved record, but got", err)
 	}
 
-	d.Rollback()
+	if sql_tx, ok := tx.CommonDB().(*sql.Tx); !ok || sql_tx == nil {
+		t.Errorf("Should return the underlying sql.Tx")
+	}
 
-	if err := d.First(&User{}, "name = ?", "transcation").Error; err == nil {
+	tx.Rollback()
+
+	if err := tx.First(&User{}, "name = ?", "transcation").Error; err == nil {
 		t.Errorf("Should not find record after rollback")
 	}
 
-	d2 := db.Begin()
+	tx2 := db.Begin()
 	u2 := User{Name: "transcation-2"}
-	if err := d2.Save(&u2).Error; err != nil {
+	if err := tx2.Save(&u2).Error; err != nil {
 		t.Errorf("No error should raise, but got", err)
 	}
-	d2.Update("age", 90)
 
-	if err := d2.First(&User{}, "name = ?", "transcation-2").Error; err != nil {
+	if err := tx2.First(&User{}, "name = ?", "transcation-2").Error; err != nil {
 		t.Errorf("Should find saved record, but got", err)
 	}
 
-	d2.Commit()
+	tx2.Commit()
 
 	if err := db.First(&User{}, "name = ?", "transcation-2").Error; err != nil {
 		t.Errorf("Should be able to find committed record")
@@ -1551,7 +1793,13 @@ func TestScan(t *testing.T) {
 	var res result
 	db.Table("users").Select("name, age").Where("name = ?", 3).Scan(&res)
 	if res.Name != "3" {
-		t.Errorf("Scan into struct should works")
+		t.Errorf("Scan into struct should work")
+	}
+
+	var doubleAgeRes result
+	db.Table("users").Select("age + age as age").Where("name = ?", 3).Scan(&doubleAgeRes)
+	if doubleAgeRes.Age != res.Age*2 {
+		t.Errorf("Scan double age as age")
 	}
 
 	var ress []result
@@ -1611,16 +1859,16 @@ func TestJoins(t *testing.T) {
 	}
 }
 
-func NameIn1And2(d *DB) *DB {
+func NameIn1And2(d *gorm.DB) *gorm.DB {
 	return d.Where("name in (?)", []string{"1", "2"})
 }
 
-func NameIn2And3(d *DB) *DB {
+func NameIn2And3(d *gorm.DB) *gorm.DB {
 	return d.Where("name in (?)", []string{"2", "3"})
 }
 
-func NameIn(names []string) func(d *DB) *DB {
-	return func(d *DB) *DB {
+func NameIn(names []string) func(d *gorm.DB) *gorm.DB {
+	return func(d *gorm.DB) *gorm.DB {
 		return d.Where("name in (?)", names)
 	}
 }
@@ -1665,10 +1913,76 @@ func TestHaving(t *testing.T) {
 	}
 }
 
+func TestAnonymousField(t *testing.T) {
+	user := User{Name: "anonymous_field", Company: Company{Name: "company"}}
+	db.Save(&user)
+
+	var user2 User
+	db.First(&user2, "name = ?", "anonymous_field")
+	db.Model(&user2).Related(&user2.Company)
+	if user2.Company.Name != "company" {
+		t.Errorf("Should be able to get anonymous field")
+	}
+}
+
+func TestAnonymousScanner(t *testing.T) {
+	user := User{Name: "anonymous_scanner", Role: Role{Name: "admin"}}
+	db.Save(&user)
+
+	var user2 User
+	db.First(&user2, "name = ?", "anonymous_scanner")
+	if user2.Role.Name != "admin" {
+		t.Errorf("Should be able to get anonymous scanner")
+	}
+
+	if !user2.IsAdmin() {
+		t.Errorf("Should be able to get anonymous scanner")
+	}
+}
+
 func TestExecRawSql(t *testing.T) {
 	db.Exec("update users set name=? where name in (?)", "jinzhu", []string{"1", "2", "3"})
-	if db.Where("name in (?)", []string{"1", "2", "3"}).First(&User{}).Error != RecordNotFound {
+	if db.Where("name in (?)", []string{"1", "2", "3"}).First(&User{}).Error != gorm.RecordNotFound {
 		t.Error("Raw sql should be able to parse argument")
+	}
+}
+
+func TestTimeWithZone(t *testing.T) {
+	var format = "2006-01-02 15:04:05 -0700"
+	var times []time.Time
+	GMT8, _ := time.LoadLocation("Asia/Shanghai")
+	times = append(times, time.Date(2013, 02, 19, 1, 51, 49, 123456789, GMT8))
+	times = append(times, time.Date(2013, 02, 18, 17, 51, 49, 123456789, time.UTC))
+
+	for index, vtime := range times {
+		name := "time_with_zone_" + strconv.Itoa(index)
+		user := User{Name: name, Birthday: vtime}
+		db.Save(&user)
+		if user.Birthday.UTC().Format(format) != "2013-02-18 17:51:49 +0000" {
+			t.Errorf("User's birthday should not be changed after save")
+		}
+
+		if user.DeletedAt.UTC().Format(format) != "0001-01-01 00:00:00 +0000" {
+			t.Errorf("User's deleted at should be zero")
+		}
+
+		var findUser, findUser2, findUser3 User
+		db.First(&findUser, "name = ?", name)
+		if findUser.Birthday.UTC().Format(format) != "2013-02-18 17:51:49 +0000" {
+			t.Errorf("User's birthday should not be changed after find")
+		}
+
+		if findUser.DeletedAt.UTC().Format(format) != "0001-01-01 00:00:00 +0000" {
+			t.Errorf("User's deleted at should be zero")
+		}
+
+		if db.Where("birthday >= ?", vtime.Add(-time.Minute)).First(&findUser2).RecordNotFound() {
+			t.Errorf("User should be found")
+		}
+
+		if !db.Where("birthday >= ?", vtime.Add(time.Minute)).First(&findUser3).RecordNotFound() {
+			t.Errorf("User should not be found")
+		}
 	}
 }
 
@@ -1710,5 +2024,109 @@ func BenchmarkRawSql(b *testing.B) {
 		db.Exec(update_sql, "new-"+e, time.Now(), id)
 		// Delete
 		db.Exec(delete_sql, id)
+	}
+}
+
+func TestSelectWithEscapedFieldName(t *testing.T) {
+	var names []string
+	db.Model(Animal{}).Where(&Animal{From: "nerdz"}).Pluck("\"name\"", &names)
+
+	if len(names) != 1 {
+		t.Errorf("Expected one name, but got: %d", len(names))
+	}
+}
+
+func TestIndices(t *testing.T) {
+	if err := db.Model(&UserCompany{}).AddIndex("idx_user_company_user", "user_id").Error; err != nil {
+		t.Errorf("Got error when tried to create index: %+v", err)
+	}
+	if err := db.Model(&UserCompany{}).RemoveIndex("idx_user_company_user").Error; err != nil {
+		t.Errorf("Got error when tried to remove index: %+v", err)
+	}
+
+	if err := db.Model(&UserCompany{}).AddIndex("idx_user_company_user_company", "user_id", "company_id").Error; err != nil {
+		t.Errorf("Got error when tried to create index: %+v", err)
+	}
+	if err := db.Model(&UserCompany{}).RemoveIndex("idx_user_company_user_company").Error; err != nil {
+		t.Errorf("Got error when tried to remove index: %+v", err)
+	}
+
+	if err := db.Model(&UserCompany{}).AddUniqueIndex("idx_user_company_user_company", "user_id", "company_id").Error; err != nil {
+		t.Errorf("Got error when tried to create index: %+v", err)
+	}
+}
+
+func TestHstore(t *testing.T) {
+	if dialect := os.Getenv("GORM_DIALECT"); dialect != "postgres" {
+		t.Skip()
+	}
+
+	if err := db.Exec("CREATE EXTENSION IF NOT EXISTS hstore").Error; err != nil {
+		fmt.Println("\033[31mHINT: Must be superuser to create hstore extension (ALTER USER gorm WITH SUPERUSER;)\033[0m")
+		panic(fmt.Sprintf("No error should happen when create hstore extension, but got %+v", err))
+	}
+
+	db.Exec("drop table details")
+
+	if err := db.CreateTable(&Details{}).Error; err != nil {
+		panic(fmt.Sprintf("No error should happen when create table, but got %+v", err))
+	}
+
+	bankAccountId, phoneNumber, opinion := "123456", "14151321232", "sharkbait"
+	bulk := map[string]*string{
+		"bankAccountId": &bankAccountId,
+		"phoneNumber":   &phoneNumber,
+		"opinion":       &opinion,
+	}
+	d := Details{Bulk: bulk}
+	db.Save(&d)
+
+	var d2 Details
+	if err := db.First(&d2).Error; err != nil {
+		t.Errorf("Got error when tried to fetch details: %+v", err)
+	}
+
+	for k := range bulk {
+		r, ok := d2.Bulk[k]
+		if !ok {
+			t.Errorf("Details should be existed")
+		}
+		if res, _ := bulk[k]; *res != *r {
+			t.Errorf("Details should be equal")
+		}
+	}
+
+}
+
+func TestCreate(t *testing.T) {
+	if err := db.Create(&UserCompany{Id: 10, UserId: 1, CompanyId: 1}).Error; err != nil {
+		t.Error("Should be able to create record with predefined Id")
+	}
+
+	if db.First(&UserCompany{}, 10).RecordNotFound() {
+		t.Error("Record created with predefined primary key not found")
+	}
+
+	if err := db.Create(&UserCompany{Id: 10, UserId: 10, CompanyId: 10}).Error; err == nil {
+		t.Error("Should not be able to create record with predefined duplicate Id")
+	}
+}
+
+func TestCompatibilityMode(t *testing.T) {
+	db, _ := gorm.Open("testdb", "")
+	testdb.SetQueryFunc(func(query string) (driver.Rows, error) {
+		columns := []string{"id", "name", "age"}
+		result := `
+		1,Tim,20
+		2,Joe,25
+		3,Bob,30
+		`
+		return testdb.RowsFromCSVString(columns, result), nil
+	})
+
+	var users []User
+	db.Find(&users)
+	if (users[0].Name != "Tim") || len(users) != 3 {
+		t.Errorf("Unexcepted result returned")
 	}
 }

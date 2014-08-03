@@ -19,6 +19,7 @@ type Fatalistic interface {
 func openTestConnConninfo(conninfo string) (*sql.DB, error) {
 	datname := os.Getenv("PGDATABASE")
 	sslmode := os.Getenv("PGSSLMODE")
+	timeout := os.Getenv("PGCONNECT_TIMEOUT")
 
 	if datname == "" {
 		os.Setenv("PGDATABASE", "pqgotest")
@@ -26,6 +27,10 @@ func openTestConnConninfo(conninfo string) (*sql.DB, error) {
 
 	if sslmode == "" {
 		os.Setenv("PGSSLMODE", "disable")
+	}
+
+	if timeout == "" {
+		os.Setenv("PGCONNECT_TIMEOUT", "20")
 	}
 
 	return sql.Open("postgres", conninfo)
@@ -103,7 +108,7 @@ func TestCommitInFailedTransaction(t *testing.T) {
 	}
 	err = txn.Commit()
 	if err != ErrInFailedTransaction {
-		t.Fatal("expected ErrInFailedTransaction; got %#v", err)
+		t.Fatalf("expected ErrInFailedTransaction; got %#v", err)
 	}
 }
 
@@ -515,11 +520,12 @@ func TestErrorOnQueryRowSimpleQuery(t *testing.T) {
 	}
 }
 
-// Test the QueryRow bug workaround in exec
+// Test the QueryRow bug workarounds in stmt.exec() and simpleQuery()
 func TestQueryRowBugWorkaround(t *testing.T) {
 	db := openTestConn(t)
 	defer db.Close()
 
+	// stmt.exec()
 	_, err := db.Exec("CREATE TEMP TABLE notnulltemp (a varchar(10) not null)")
 	if err != nil {
 		t.Fatal(err)
@@ -528,14 +534,87 @@ func TestQueryRowBugWorkaround(t *testing.T) {
 	var a string
 	err = db.QueryRow("INSERT INTO notnulltemp(a) values($1) RETURNING a", nil).Scan(&a)
 	if err == sql.ErrNoRows {
-		t.Errorf("expected constraint violation error; got: %v", err)
+		t.Fatalf("expected constraint violation error; got: %v", err)
 	}
 	pge, ok := err.(*Error)
 	if !ok {
-		t.Errorf("expected *Error; got: %#v", err)
+		t.Fatalf("expected *Error; got: %#v", err)
 	}
 	if pge.Code.Name() != "not_null_violation" {
-		t.Errorf("expected not_null_violation; got: %s (%+v)", pge.Code.Name(), err)
+		t.Fatalf("expected not_null_violation; got: %s (%+v)", pge.Code.Name(), err)
+	}
+
+	// Test workaround in simpleQuery()
+	tx, err := db.Begin()
+	if err != nil {
+		t.Fatalf("unexpected error %s in Begin", err)
+	}
+	defer tx.Rollback()
+
+	_, err = tx.Exec("SET LOCAL check_function_bodies TO FALSE")
+	if err != nil {
+		t.Fatalf("could not disable check_function_bodies: %s", err)
+	}
+	_, err = tx.Exec(`
+CREATE OR REPLACE FUNCTION bad_function()
+RETURNS integer
+-- hack to prevent the function from being inlined
+SET check_function_bodies TO TRUE
+AS $$
+	SELECT text 'bad'
+$$ LANGUAGE sql`)
+	if err != nil {
+		t.Fatalf("could not create function: %s", err)
+	}
+
+	err = tx.QueryRow("SELECT * FROM bad_function()").Scan(&a)
+	if err == nil {
+		t.Fatalf("expected error")
+	}
+	pge, ok = err.(*Error)
+	if !ok {
+		t.Fatalf("expected *Error; got: %#v", err)
+	}
+	if pge.Code.Name() != "invalid_function_definition" {
+		t.Fatalf("expected invalid_function_definition; got: %s (%+v)", pge.Code.Name(), err)
+	}
+
+	err = tx.Rollback()
+	if err != nil {
+		t.Fatalf("unexpected error %s in Rollback", err)
+	}
+
+	// Also test that simpleQuery()'s workaround works when the query fails
+	// after a row has been received.
+	rows, err := db.Query(`
+select
+	(select generate_series(1, ss.i))
+from (select gs.i
+      from generate_series(1, 2) gs(i)
+      order by gs.i limit 2) ss`)
+	if err != nil {
+		t.Fatalf("query failed: %s", err)
+	}
+	if !rows.Next() {
+		t.Fatalf("expected at least one result row; got %s", rows.Err())
+	}
+	var i int
+	err = rows.Scan(&i)
+	if err != nil {
+		t.Fatalf("rows.Scan() failed: %s", err)
+	}
+	if i != 1 {
+		t.Fatalf("unexpected value for i: %d", i)
+	}
+	if rows.Next() {
+		t.Fatalf("unexpected row")
+	}
+	pge, ok = rows.Err().(*Error)
+	if !ok {
+		t.Fatalf("expected *Error; got: %#v", err)
+	}
+	if pge.Code.Name() != "cardinality_violation" {
+		t.Fatalf("expected cardinality_violation; got: %s (%+v)", pge.Code.Name(), rows.Err())
 	}
 }
 
@@ -723,6 +802,10 @@ var envParseTests = []struct {
 		Env:      []string{"PGDATESTYLE=ISO, MDY"},
 		Expected: map[string]string{"datestyle": "ISO, MDY"},
 	},
+	{
+		Env:      []string{"PGCONNECT_TIMEOUT=30"},
+		Expected: map[string]string{"connect_timeout": "30"},
+	},
 }
 
 func TestParseEnviron(t *testing.T) {
@@ -885,6 +968,26 @@ func TestCommit(t *testing.T) {
 	}
 }
 
+func TestErrorClass(t *testing.T) {
+	db := openTestConn(t)
+	defer db.Close()
+
+	_, err := db.Query("SELECT int 'notint'")
+	if err == nil {
+		t.Fatal("expected error")
+	}
+	pge, ok := err.(*Error)
+	if !ok {
+		t.Fatalf("expected *pq.Error, got %#+v", err)
+	}
+	if pge.Code.Class() != "22" {
+		t.Fatalf("expected class 28, got %v", pge.Code.Class())
+	}
+	if pge.Code.Class().Name() != "data_exception" {
+		t.Fatalf("expected data_exception, got %v", pge.Code.Class().Name())
+	}
+}
+
 func TestParseOpts(t *testing.T) {
 	tests := []struct {
 		in       string
@@ -905,6 +1008,13 @@ func TestParseOpts(t *testing.T) {
 
 		// The parser ignores spaces after = and interprets the next set of non-whitespace characters as the value.
 		{"user= password=foo", values{"user": "password=foo"}, true},
+
+		// Backslash escapes next char
+		{`user=a\ \'\\b`, values{"user": `a '\b`}, true},
+		{`user='a \'b'`, values{"user": `a 'b`}, true},
+
+		// Incomplete escape
+		{`user=x\`, values{}, false},
 
 		// No '=' after the key
 		{"postgre://marko@internet", values{}, false},
@@ -959,6 +1069,10 @@ func TestRuntimeParameters(t *testing.T) {
 		{"client_encoding=UTF8", "client_encoding", "UTF8", ResultSuccess},
 		// test a runtime parameter not supported by libpq
 		{"work_mem='139kB'", "work_mem", "139kB", ResultSuccess},
+		// test fallback_application_name
+		{"application_name=foo fallback_application_name=bar", "application_name", "foo", ResultSuccess},
+		{"application_name='' fallback_application_name=bar", "application_name", "", ResultSuccess},
+		{"fallback_application_name=bar", "application_name", "bar", ResultSuccess},
 	}
 
 	for _, test := range tests {
@@ -967,6 +1081,11 @@ func TestRuntimeParameters(t *testing.T) {
 			t.Fatal(err)
 		}
 		defer db.Close()
+
+		// application_name didn't exist before 9.0
+		if test.param == "application_name" && getServerVersion(t, db) < 90000 {
+			continue
+		}
 
 		tryGetParameterValue := func() (value string, outcome RuntimeTestResult) {
 			defer func() {
@@ -1020,6 +1139,26 @@ func TestIsUTF8(t *testing.T) {
 	for _, test := range cases {
 		if g := isUTF8(test.name); g != test.want {
 			t.Errorf("isUTF8(%q) = %v want %v", test.name, g, test.want)
+		}
+	}
+}
+
+func TestQuoteIdentifier(t *testing.T) {
+	var cases = []struct {
+		input string
+		want  string
+	}{
+		{`foo`, `"foo"`},
+		{`foo bar baz`, `"foo bar baz"`},
+		{`foo"bar`, `"foo""bar"`},
+		{"foo\x00bar", `"foo"`},
+		{"\x00foo", `""`},
+	}
+
+	for _, test := range cases {
+		got := QuoteIdentifier(test.input)
+		if got != test.want {
+			t.Errorf("QuoteIdentifier(%q) = %v want %v", test.input, got, test.want)
 		}
 	}
 }
