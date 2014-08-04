@@ -20,10 +20,8 @@ type ChannelEntity struct {
 }
 
 func (ce *ChannelEntity) FixUri() string {
-	if ce.Uri == "" {
-		ch := Channel{Title: ce.Title, Id: ce.Id}
-		ce.Uri = ch.SetUri()
-	}
+	ch := Channel{Title: ce.Title, Id: ce.Id}
+	ce.Uri = ch.SetUri()
 	return ce.Uri
 }
 
