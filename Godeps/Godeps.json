@@ -76,6 +76,10 @@
 			"Rev": "11bfaba497a2aa5752c30705ea528d18fe68c73d"
 		},
 		{
+			"ImportPath": "github.com/joeguo/sitemap",
+			"Rev": "785fecae7f8def06cf84825f9c0856534e063384"
+		},
+		{
 			"ImportPath": "github.com/jordan-wright/email",
 			"Rev": "dcd24f3acd808a4ec1c910214415c33ac4d59daf"
 		},
