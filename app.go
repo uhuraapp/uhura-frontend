@@ -327,6 +327,7 @@ func main() {
 
 	r.HandleFunc("/canvas", CanvasHandler).Methods("GET")
 
+	r.HandleFunc("/sitemap.xml", core.SiteMapHandler)
 	// App
 	appRouter := r.PathPrefix("/app").Subrouter()
 	appRouter.StrictSlash(true)

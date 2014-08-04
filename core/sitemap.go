@@ -1,102 +1,110 @@
 package core
 
-// import (
-// 	"bytes"
-// 	// "fmt"
-// 	"github.com/joeguo/sitemap"
-// 	"io/ioutil"
-// 	"os"
-// 	"strconv"
-// 	"time"
-// )
+import (
+	"bytes"
+	"net/http"
+	// "fmt"
+	"io/ioutil"
+	"os"
+	//"strconv"
+	"time"
 
-// const (
-// 	header = `<?xml version="1.0" encoding="UTF-8"?>
-//   <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-//   xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
-//   xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`
-// 	footer = ` </urlset>`
-// )
+	"github.com/joeguo/sitemap"
+)
 
-// func generateSitemap() string {
-// 	channels, episodes := AllChannels(0, false, "")
-// 	var items []*sitemap.Item
+const (
+	header = `<?xml version="1.0" encoding="UTF-8"?>
+   <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
+   xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`
+	footer = ` </urlset>`
+)
 
-// 	item := sitemap.Item{
-// 		Loc:        "http://uhuraapp.com/",
-// 		LastMod:    time.Now(),
-// 		Priority:   0.8,
-// 		Changefreq: "daily",
-// 	}
-// 	items = append(items, &item)
+func generateSitemap() []byte {
+	var channels []Channel
+	database.Table("channels").Find(&channels)
 
-// 	items = append(items, &sitemap.Item{
-// 		Loc:        "http://uhuraapp.com/channels",
-// 		LastMod:    time.Now(),
-// 		Priority:   1,
-// 		Changefreq: "daily",
-// 	})
+	// 	channels, episodes := AllChannels(0, false, "")
+	var items []*sitemap.Item
 
-// 	for _, channel := range channels {
-// 		updatedAt := channel.UpdatedAt
+	item := sitemap.Item{
+		Loc:        "http://dashboard.uhuraapp.com/",
+		LastMod:    time.Now(),
+		Priority:   0.8,
+		Changefreq: "daily",
+	}
 
-// 		if updatedAt.Year() == 1 {
-// 			updatedAt = time.Now()
-// 		}
+	items = append(items, &item)
 
-// 		items = append(items, &sitemap.Item{
-// 			Loc:        "http://uhuraapp.com/channels/" + channel.Uri,
-// 			LastMod:    updatedAt,
-// 			Priority:   0.5,
-// 			Changefreq: "weekly",
-// 		})
-// 	}
+	for _, channel := range channels {
+		updatedAt := channel.UpdatedAt
 
-// 	for _, episode := range episodes {
-// 		updatedAt := episode.PublishedAt
+		channel.SetUri()
 
-// 		if updatedAt.Year() == 1 {
-// 			updatedAt = time.Now()
-// 		}
+		if updatedAt.Year() == 1 {
+			updatedAt = time.Now()
+		}
 
-// 		items = append(items, &sitemap.Item{
-// 			Loc:        "http://uhuraapp.com/channels/" + strconv.Itoa(episode.ChannelId) + "/" + episode.GetUri(),
-// 			LastMod:    updatedAt,
-// 			Priority:   0.2,
-// 			Changefreq: "monthly",
-// 		})
-// 	}
+		items = append(items, &sitemap.Item{
+			Loc:        "http://dashboard.uhuraapp.com/app/" + channel.Uri,
+			LastMod:    updatedAt,
+			Priority:   0.5,
+			Changefreq: "weekly",
+		})
+	}
 
-// 	var buffer bytes.Buffer
+	// 	for _, episode := range episodes {
+	// 		updatedAt := episode.PublishedAt
 
-// 	buffer.WriteString(header)
-// 	for _, item := range items {
-// 		buffer.WriteString(item.String())
-// 	}
-// 	buffer.WriteString(footer)
+	// 		if updatedAt.Year() == 1 {
+	// 			updatedAt = time.Now()
+	// 		}
 
-// 	go ioutil.WriteFile("tmp/sitemap", buffer.Bytes(), 0644)
+	// 		items = append(items, &sitemap.Item{
+	// 			Loc:        "http://uhuraapp.com/channels/" + strconv.Itoa(episode.ChannelId) + "/" + episode.GetUri(),
+	// 			LastMod:    updatedAt,
+	// 			Priority:   0.2,
+	// 			Changefreq: "monthly",
+	// 		})
+	// 	}
 
-// 	return buffer.String()
-// }
+	var buffer bytes.Buffer
 
-// func SiteMap() string {
-// 	fi, err := os.Stat("tmp/sitemap")
-// 	if err == nil {
-// 		fileDay := fi.ModTime().Day()
-// 		fileMonth := fi.ModTime().Month()
-// 		nowDay := time.Now().Day()
-// 		nowMonth := time.Now().Month()
+	buffer.WriteString(header)
+	for _, item := range items {
+		buffer.WriteString(item.String())
+	}
+	buffer.WriteString(footer)
 
-// 		if (fileDay == nowDay) && (fileMonth == nowMonth) {
-// 			cached, err := ioutil.ReadFile("tmp/sitemap")
-// 			if err != nil {
-// 				return generateSitemap()
-// 			}
-// 			return string(cached)
-// 		} else {
-// 			return generateSitemap()
-// 		}
-// 	}
-// 	return generateSitemap()
-// }
+	go ioutil.WriteFile("tmp/sitemap", buffer.Bytes(), 0644)
+
+	return buffer.Bytes()
+}
+
+func SiteMapHandler(w http.ResponseWriter, r *http.Request) {
+	fi, err := os.Stat("tmp/sitemap")
+	var data []byte
+
+	if err == nil {
+		fileDate := fi.ModTime()
+		nowDate := time.Now()
+
+		if fileDate.Month() == nowDate.Month() &&
+			fileDate.Day() == nowDate.Day() {
+			cached, err := ioutil.ReadFile("tmp/sitemap")
+			if err != nil {
+				data = generateSitemap()
+			} else {
+				data = cached
+			}
+		} else {
+			data = generateSitemap()
+		}
+	} else {
+		data = generateSitemap()
+	}
+
+	w.WriteHeader(200)
+	w.Write(data)
+	// 	return generateSitemap()
+}
