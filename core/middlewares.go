@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"net/url"
 	"os"
-	"strings"
 
 	"github.com/gorilla/sessions"
 )
@@ -37,23 +36,13 @@ func ApiNative(fn func(string, http.ResponseWriter, *http.Request)) func(http.Re
 func BotSupport(fn func(http.ResponseWriter, *http.Request)) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 
-		if isBot(r) {
+		if isABotRequest(r) {
 			session, _ := store.Get(r, "_session")
 			session.Values["user_id"] = "bot"
 			session.Save(r, w)
+			renderToBot(w, r)
+		} else {
+			fn(w, r)
 		}
-
-		fn(w, r)
 	}
-}
-
-func isBot(r *http.Request) bool {
-	userAgent := strings.ToLower(r.UserAgent())
-
-	return strings.Contains(userAgent, "structureddata") ||
-		strings.Contains(userAgent, "flipboard.com") ||
-		strings.Contains(userAgent, "newsme") ||
-		strings.Contains(userAgent, "bot") ||
-		strings.Contains(userAgent, "slurp") ||
-		strings.Contains(userAgent, "facebookexternalhit")
 }
