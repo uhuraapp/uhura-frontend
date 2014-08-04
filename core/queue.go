@@ -1,7 +1,7 @@
 package core
 
-func TouchChannel(id int) {
+func TouchChannel(uri string) {
 	var channel Channel
-	database.First(&channel, id).Update("loading", true)
+	database.Where("channels.uri = ?", uri).First(&channel).Update("loading", true)
 	FetchChannel(channel.Url)
 }

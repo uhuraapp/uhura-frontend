@@ -72,6 +72,15 @@ func GetEpisode(userId string, w http.ResponseWriter, request *http.Request) {
 		return
 	}
 
+	var userItems []int64
+	database.Table("user_items").
+		Where("item_id = ?", id).
+		Where("user_id = ?", userId).
+		Where("viewed = TRUE").
+		Pluck("item_id", &userItems)
+
+	episode.Listened = HasListened(userItems, episode.Id)
+
 	r.ResponseJSON(w, 200, map[string]interface{}{"episode": episode})
 }
 

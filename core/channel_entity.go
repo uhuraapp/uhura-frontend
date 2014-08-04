@@ -10,8 +10,8 @@ type ChannelEntity struct {
 	Description string      `json:"description"`
 	ImageUrl    string      `json:"image_url"`
 	Url         string      `json:"url"`
-	Id          int64       `json:"id"`
-	Uri         string      `json:"uri"`
+	Id          int64       `json:"raw_id"`
+	Uri         string      `json:"id"`
 	ToView      int64       `json:"to_view"`
 	Subscribed  interface{} `json:"subscribed"`
 	Copyright   string      `json:"copyright"`

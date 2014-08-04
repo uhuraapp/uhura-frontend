@@ -1,4 +1,5 @@
 App.Channel = DS.Model.extend({
+  raw_id:     DS.attr(),
   title:      DS.attr(),
   image_url:  DS.attr(),
   url:        DS.attr(),
@@ -26,6 +27,7 @@ App.Channel = DS.Model.extend({
 
 
 App.Subscription = DS.Model.extend({
+  raw_id:     DS.attr(),
   title:      DS.attr(),
   image_url:  DS.attr(),
   url:        DS.attr(),

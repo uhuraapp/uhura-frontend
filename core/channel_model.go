@@ -1,7 +1,6 @@
 package core
 
 import (
-	"strings"
 	"time"
 
 	"github.com/dukex/uhura/core/helper"
@@ -27,8 +26,7 @@ type Channel struct {
 }
 
 func (c *Channel) SetUri() string {
-	uri := c.Uriable.MakeUri(c.Title)
-	uri = strings.Replace(uri, "podcast", "", -1)
+	uri := c.MakeUri(c.Title)
 	database.Table("channels").Where(c.Id).Update("Uri", uri)
 
 	return uri

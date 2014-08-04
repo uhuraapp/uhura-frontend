@@ -26,7 +26,7 @@ App.IndexRoute = Ember.Route.extend({
 
       for (var i = data.channels.length - 1; i >= 0; i--) {
         c = data.channels[i];
-        episodes = _.where(data.episodes, {channel_id: c.id});
+        episodes = _.where(data.episodes, {channel_id: c.raw_id});
         c.episodes = _.map(episodes, pushEpisode);
         data.channels[i] = c;
       }
