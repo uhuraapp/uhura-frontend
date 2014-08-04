@@ -41,8 +41,9 @@ App.UpdatesController = Ember.ObjectController.extend({
 
       title.text('').text(update.title);
       content.html('').html(update.body);
-       //debugger;
       modal.show();
+
+      mixpanel.track("update_opened");
     }
   }
 }).create();
