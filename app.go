@@ -332,7 +332,7 @@ func main() {
 	appRouter := r.PathPrefix("/app").Subrouter()
 	appRouter.StrictSlash(true)
 	appRouter.HandleFunc("/", loginBuilder.Protected(AppHandler))
-	appRouter.HandleFunc("/{path:.+}", loginBuilder.Protected(AppHandler))
+	appRouter.HandleFunc("/{path:.+}", core.BotSupport(loginBuilder.Protected(AppHandler)))
 
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./public/")))
 
