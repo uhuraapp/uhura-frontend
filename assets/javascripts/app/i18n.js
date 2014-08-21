@@ -40,7 +40,7 @@ var T = function() {
       'index.suggestions': 'Suggestions',
 
       'episode.button.info': 'More Information',
-      'episode.button.listened': 'Make as Listened',
+      'episode.button.listened': 'Mark as Listened',
       'episode.button.download': 'Download Episode',
 
       'error.?user.no_match': 'Password or Email wrong',
