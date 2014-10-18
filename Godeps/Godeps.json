@@ -1,6 +1,6 @@
 {
 	"ImportPath": "github.com/dukex/uhura",
-	"GoVersion": "go1.3",
+	"GoVersion": "go1.3.1",
 	"Deps": [
 		{
 			"ImportPath": "code.google.com/p/go-charset/charset",
@@ -24,8 +24,8 @@
 		},
 		{
 			"ImportPath": "code.google.com/p/goauth2/oauth",
-			"Comment": "weekly-40",
-			"Rev": "5877582f0cb070bc21b199dab5e7d18fb546444a"
+			"Comment": "weekly-56",
+			"Rev": "afe77d958c701557ec5dc56f6936fcc194d15520"
 		},
 		{
 			"ImportPath": "github.com/dchest/uniuri",
@@ -53,7 +53,7 @@
 		},
 		{
 			"ImportPath": "github.com/gorilla/context",
-			"Rev": "708054d61e5a2918b9f4e9700000ee611dcf03f5"
+			"Rev": "14f550f51af52180c2eefed15e5fd18d63c0a64a"
 		},
 		{
 			"ImportPath": "github.com/gorilla/handlers",
@@ -93,7 +93,7 @@
 		},
 		{
 			"ImportPath": "github.com/lib/pq",
-			"Rev": "dffddbcda422b88507795533be131d05e1a3dc71"
+			"Rev": "c6325123e6d45115749734a8bc35060ebac74d0e"
 		},
 		{
 			"ImportPath": "github.com/lucasb-eyer/go-colorful",

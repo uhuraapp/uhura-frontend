@@ -69,6 +69,20 @@ func (s transactionStatus) String() string {
 	panic("not reached")
 }
 
+type Dialer interface {
+	Dial(network, address string) (net.Conn, error)
+	DialTimeout(network, address string, timeout time.Duration) (net.Conn, error)
+}
+
+type defaultDialer struct{}
+
+func (d defaultDialer) Dial(ntw, addr string) (net.Conn, error) {
+	return net.Dial(ntw, addr)
+}
+func (d defaultDialer) DialTimeout(ntw, addr string, timeout time.Duration) (net.Conn, error) {
+	return net.DialTimeout(ntw, addr, timeout)
+}
+
 type conn struct {
 	c         net.Conn
 	buf       *bufio.Reader
@@ -80,6 +94,10 @@ type conn struct {
 
 	saveMessageType   byte
 	saveMessageBuffer *readBuf
+
+	// If true, this connection is bad and all public-facing functions should
+	// return ErrBadConn.
+	bad bool
 }
 
 func (c *conn) writeBuf(b byte) *writeBuf {
@@ -89,7 +107,26 @@ func (c *conn) writeBuf(b byte) *writeBuf {
 }
 
 func Open(name string) (_ driver.Conn, err error) {
-	defer errRecover(&err)
+	return DialOpen(defaultDialer{}, name)
+}
+
+func DialOpen(d Dialer, name string) (_ driver.Conn, err error) {
+	defer func() {
+		// Handle any panics during connection initialization.  Note that we
+		// specifically do *not* want to use errRecover(), as that would turn
+		// any connection errors into ErrBadConns, hiding the real error
+		// message from the user.
+		e := recover()
+		if e == nil {
+			// Do nothing
+			return
+		}
+		var ok bool
+		err, ok = e.(error)
+		if !ok {
+			err = fmt.Errorf("pq: unexpected error: %#v", e)
+		}
+	}()
 
 	o := make(values)
 
@@ -159,7 +196,7 @@ func Open(name string) (_ driver.Conn, err error) {
 		}
 	}
 
-	c, err := dial(o)
+	c, err := dial(d, o)
 	if err != nil {
 		return nil, err
 	}
@@ -173,7 +210,7 @@ func Open(name string) (_ driver.Conn, err error) {
 	return cn, err
 }
 
-func dial(o values) (net.Conn, error) {
+func dial(d Dialer, o values) (net.Conn, error) {
 	ntw, addr := network(o)
 
 	timeout := o.Get("connect_timeout")
@@ -192,14 +229,14 @@ func dial(o values) (net.Conn, error) {
 		// establishment and set a deadline for doing the initial handshake.
 		// The deadline is then reset after startup() is done.
 		deadline := time.Now().Add(duration)
-		conn, err := net.DialTimeout(ntw, addr, duration)
+		conn, err := d.DialTimeout(ntw, addr, duration)
 		if err != nil {
 			return nil, err
 		}
 		err = conn.SetDeadline(deadline)
 		return conn, err
 	}
-	return net.Dial(ntw, addr)
+	return d.Dial(ntw, addr)
 }
 
 func network(o values) (string, string) {
@@ -350,12 +387,16 @@ func (cn *conn) isInTransaction() bool {
 
 func (cn *conn) checkIsInTransaction(intxn bool) {
 	if cn.isInTransaction() != intxn {
+		cn.bad = true
 		errorf("unexpected transaction status %v", cn.txnStatus)
 	}
 }
 
 func (cn *conn) Begin() (_ driver.Tx, err error) {
-	defer errRecover(&err)
+	if cn.bad {
+		return nil, driver.ErrBadConn
+	}
+	defer cn.errRecover(&err)
 
 	cn.checkIsInTransaction(false)
 	_, commandTag, err := cn.simpleExec("BEGIN")
@@ -372,7 +413,10 @@ func (cn *conn) Begin() (_ driver.Tx, err error) {
 }
 
 func (cn *conn) Commit() (err error) {
-	defer errRecover(&err)
+	if cn.bad {
+		return driver.ErrBadConn
+	}
+	defer cn.errRecover(&err)
 
 	cn.checkIsInTransaction(true)
 	// We don't want the client to think that everything is okay if it tries
@@ -400,7 +444,10 @@ func (cn *conn) Commit() (err error) {
 }
 
 func (cn *conn) Rollback() (err error) {
-	defer errRecover(&err)
+	if cn.bad {
+		return driver.ErrBadConn
+	}
+	defer cn.errRecover(&err)
 
 	cn.checkIsInTransaction(true)
 	_, commandTag, err := cn.simpleExec("ROLLBACK")
@@ -420,8 +467,6 @@ func (cn *conn) gname() string {
 }
 
 func (cn *conn) simpleExec(q string) (res driver.Result, commandTag string, err error) {
-	defer errRecover(&err)
-
 	b := cn.writeBuf('Q')
 	b.string(q)
 	cn.send(b)
@@ -430,16 +475,17 @@ func (cn *conn) simpleExec(q string) (res driver.Result, commandTag string, err 
 		t, r := cn.recv1()
 		switch t {
 		case 'C':
-			res, commandTag = parseComplete(r.string())
+			res, commandTag = cn.parseComplete(r.string())
 		case 'Z':
 			cn.processReadyForQuery(r)
 			// done
 			return
 		case 'E':
 			err = parseError(r)
-		case 'T', 'D':
+		case 'T', 'D', 'I':
 			// ignore any results
 		default:
+			cn.bad = true
 			errorf("unknown response for simple query: %q", t)
 		}
 	}
@@ -447,7 +493,7 @@ func (cn *conn) simpleExec(q string) (res driver.Result, commandTag string, err 
 }
 
 func (cn *conn) simpleQuery(q string) (res driver.Rows, err error) {
-	defer errRecover(&err)
+	defer cn.errRecover(&err)
 
 	st := &stmt{cn: cn, name: "", query: q}
 
@@ -458,13 +504,14 @@ func (cn *conn) simpleQuery(q string) (res driver.Rows, err error) {
 	for {
 		t, r := cn.recv1()
 		switch t {
-		case 'C':
+		case 'C', 'I':
 			// We allow queries which don't return any results through Query as
 			// well as Exec.  We still have to give database/sql a rows object
 			// the user can close, though, to avoid connections from being
 			// leaked.  A "rows" with done=true works fine for that purpose.
 			if err != nil {
-				errorf("unexpected CommandComplete in simple query execution")
+				cn.bad = true
+				errorf("unexpected message %q in simple query execution", t)
 			}
 			res = &rows{st: st, done: true}
 		case 'Z':
@@ -476,20 +523,22 @@ func (cn *conn) simpleQuery(q string) (res driver.Rows, err error) {
 			err = parseError(r)
 		case 'D':
 			if res == nil {
+				cn.bad = true
 				errorf("unexpected DataRow in simple query execution")
 			}
 			// the query didn't fail; kick off to Next
 			cn.saveMessage(t, r)
 			return
 		case 'T':
-			if res != nil {
-				errorf("unexpected RowDescription in simple query execution")
-			}
+			// res might be non-nil here if we received a previous
+			// CommandComplete, but that's fine; just overwrite it
 			res = &rows{st: st}
 			st.cols, st.rowTyps = parseMeta(r)
+
 			// To work around a bug in QueryRow in Go 1.2 and earlier, wait
 			// until the first DataRow has been received.
 		default:
+			cn.bad = true
 			errorf("unknown response for simple query: %q", t)
 		}
 	}
@@ -497,7 +546,7 @@ func (cn *conn) simpleQuery(q string) (res driver.Rows, err error) {
 }
 
 func (cn *conn) prepareTo(q, stmtName string) (_ *stmt, err error) {
-	defer errRecover(&err)
+	defer cn.errRecover(&err)
 
 	st := &stmt{cn: cn, name: stmtName, query: q}
 
@@ -519,7 +568,7 @@ func (cn *conn) prepareTo(q, stmtName string) (_ *stmt, err error) {
 		switch t {
 		case '1':
 		case 't':
-			nparams := int(r.int16())
+			nparams := r.int16()
 			st.paramTyps = make([]oid.Oid, nparams)
 
 			for i := range st.paramTyps {
@@ -535,6 +584,7 @@ func (cn *conn) prepareTo(q, stmtName string) (_ *stmt, err error) {
 		case 'E':
 			err = parseError(r)
 		default:
+			cn.bad = true
 			errorf("unexpected describe rows response: %q", t)
 		}
 	}
@@ -543,6 +593,10 @@ func (cn *conn) prepareTo(q, stmtName string) (_ *stmt, err error) {
 }
 
 func (cn *conn) Prepare(q string) (driver.Stmt, error) {
+	if cn.bad {
+		return nil, driver.ErrBadConn
+	}
+
 	if len(q) >= 4 && strings.EqualFold(q[:4], "COPY") {
 		return cn.prepareCopyIn(q)
 	}
@@ -550,7 +604,10 @@ func (cn *conn) Prepare(q string) (driver.Stmt, error) {
 }
 
 func (cn *conn) Close() (err error) {
-	defer errRecover(&err)
+	if cn.bad {
+		return driver.ErrBadConn
+	}
+	defer cn.errRecover(&err)
 
 	// Don't go through send(); ListenerConn relies on us not scribbling on the
 	// scratch buffer of this connection.
@@ -564,7 +621,10 @@ func (cn *conn) Close() (err error) {
 
 // Implement the "Queryer" interface
 func (cn *conn) Query(query string, args []driver.Value) (_ driver.Rows, err error) {
-	defer errRecover(&err)
+	if cn.bad {
+		return nil, driver.ErrBadConn
+	}
+	defer cn.errRecover(&err)
 
 	// Check to see if we can use the "simpleQuery" interface, which is
 	// *much* faster than going through prepare/exec
@@ -583,7 +643,10 @@ func (cn *conn) Query(query string, args []driver.Value) (_ driver.Rows, err err
 
 // Implement the optional "Execer" interface for one-shot queries
 func (cn *conn) Exec(query string, args []driver.Value) (_ driver.Result, err error) {
-	defer errRecover(&err)
+	if cn.bad {
+		return nil, driver.ErrBadConn
+	}
+	defer cn.errRecover(&err)
 
 	// Check to see if we can use the "simpleExec" interface, which is
 	// *much* faster than going through prepare/exec
@@ -639,6 +702,7 @@ func (cn *conn) sendSimpleMessage(typ byte) (err error) {
 // the message yourself.
 func (cn *conn) saveMessage(typ byte, buf *readBuf) {
 	if cn.saveMessageType != 0 {
+		cn.bad = true
 		errorf("unexpected saveMessageType %d", cn.saveMessageType)
 	}
 	cn.saveMessageType = typ
@@ -843,15 +907,16 @@ type stmt struct {
 	rowTyps   []oid.Oid
 	paramTyps []oid.Oid
 	closed    bool
-	lasterr   error
 }
 
 func (st *stmt) Close() (err error) {
 	if st.closed {
 		return nil
 	}
-
-	defer errRecover(&err)
+	if st.cn.bad {
+		return driver.ErrBadConn
+	}
+	defer st.cn.errRecover(&err)
 
 	w := st.cn.writeBuf('C')
 	w.byte('S')
@@ -862,12 +927,14 @@ func (st *stmt) Close() (err error) {
 
 	t, _ := st.cn.recv1()
 	if t != '3' {
+		st.cn.bad = true
 		errorf("unexpected close response: %q", t)
 	}
 	st.closed = true
 
 	t, r := st.cn.recv1()
 	if t != 'Z' {
+		st.cn.bad = true
 		errorf("expected ready for query, but got: %q", t)
 	}
 	st.cn.processReadyForQuery(r)
@@ -876,13 +943,20 @@ func (st *stmt) Close() (err error) {
 }
 
 func (st *stmt) Query(v []driver.Value) (r driver.Rows, err error) {
-	defer errRecover(&err)
+	if st.cn.bad {
+		return nil, driver.ErrBadConn
+	}
+	defer st.cn.errRecover(&err)
+
 	st.exec(v)
 	return &rows{st: st}, nil
 }
 
 func (st *stmt) Exec(v []driver.Value) (res driver.Result, err error) {
-	defer errRecover(&err)
+	if st.cn.bad {
+		return nil, driver.ErrBadConn
+	}
+	defer st.cn.errRecover(&err)
 
 	if len(v) == 0 {
 		// ignore commandTag, our caller doesn't care
@@ -897,7 +971,7 @@ func (st *stmt) Exec(v []driver.Value) (res driver.Result, err error) {
 		case 'E':
 			err = parseError(r)
 		case 'C':
-			res, _ = parseComplete(r.string())
+			res, _ = st.cn.parseComplete(r.string())
 		case 'Z':
 			st.cn.processReadyForQuery(r)
 			// done
@@ -905,6 +979,7 @@ func (st *stmt) Exec(v []driver.Value) (res driver.Result, err error) {
 		case 'T', 'D':
 			// ignore any results
 		default:
+			st.cn.bad = true
 			errorf("unknown exec response: %q", t)
 		}
 	}
@@ -913,6 +988,9 @@ func (st *stmt) Exec(v []driver.Value) (res driver.Result, err error) {
 }
 
 func (st *stmt) exec(v []driver.Value) {
+	if len(v) >= 65536 {
+		errorf("got %d parameters but PostgreSQL only supports 65535 parameters", len(v))
+	}
 	if len(v) != len(st.paramTyps) {
 		errorf("got %d parameters but the statement requires %d", len(v), len(st.paramTyps))
 	}
@@ -959,6 +1037,7 @@ func (st *stmt) exec(v []driver.Value) {
 			}
 			return
 		default:
+			st.cn.bad = true
 			errorf("unexpected bind response: %q", t)
 		}
 	}
@@ -978,16 +1057,19 @@ workaround:
 		switch t {
 		case 'E':
 			err = parseError(r)
-		case 'C', 'D':
+		case 'C', 'D', 'I':
 			// the query didn't fail, but we can't process this message
 			st.cn.saveMessage(t, r)
 			return
 		case 'Z':
 			if err == nil {
+				st.cn.bad = true
 				errorf("unexpected ReadyForQuery during extended query execution")
 			}
+			st.cn.processReadyForQuery(r)
 			panic(err)
 		default:
+			st.cn.bad = true
 			errorf("unexpected message during query execution: %q", t)
 		}
 	}
@@ -1001,7 +1083,7 @@ func (st *stmt) NumInput() int {
 // returns the number of rows affected (if applicable) and a string
 // identifying only the command that was executed, e.g. "ALTER TABLE".  If the
 // command tag could not be parsed, parseComplete panics.
-func parseComplete(commandTag string) (driver.Result, string) {
+func (cn *conn) parseComplete(commandTag string) (driver.Result, string) {
 	commandsWithAffectedRows := []string{
 		"SELECT ",
 		// INSERT is handled below
@@ -1028,6 +1110,7 @@ func parseComplete(commandTag string) (driver.Result, string) {
 	if affectedRows == nil && strings.HasPrefix(commandTag, "INSERT ") {
 		parts := strings.Split(commandTag, " ")
 		if len(parts) != 3 {
+			cn.bad = true
 			errorf("unexpected INSERT command tag %s", commandTag)
 		}
 		affectedRows = &parts[len(parts)-1]
@@ -1039,6 +1122,7 @@ func parseComplete(commandTag string) (driver.Result, string) {
 	}
 	n, err := strconv.ParseInt(*affectedRows, 10, 64)
 	if err != nil {
+		cn.bad = true
 		errorf("could not parse commandTag: %s", err)
 	}
 	return driver.RowsAffected(n), commandTag
@@ -1050,6 +1134,7 @@ type rows struct {
 }
 
 func (rs *rows) Close() error {
+	// no need to look at cn.bad as Next() will
 	for {
 		err := rs.Next(nil)
 		switch err {
@@ -1072,19 +1157,18 @@ func (rs *rows) Next(dest []driver.Value) (err error) {
 		return io.EOF
 	}
 
-	if rs.st.lasterr != nil {
-		return rs.st.lasterr
-	}
-
-	defer errRecover(&err)
-
 	conn := rs.st.cn
+	if conn.bad {
+		return driver.ErrBadConn
+	}
+	defer conn.errRecover(&err)
+
 	for {
 		t, r := conn.recv1()
 		switch t {
 		case 'E':
 			err = parseError(r)
-		case 'C':
+		case 'C', 'I':
 			continue
 		case 'Z':
 			conn.processReadyForQuery(r)
