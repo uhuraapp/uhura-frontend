@@ -1,16 +1,9 @@
-{{#if model}}
-<div id="player">
+<div id="player" {{bind-attr class="isPlaying::uk-hidden"}}>
   <div id="player-image">
-    {{play-pause-button episode=.}}
     <img {{bind-attr src=channel.image_url}}>
   </div>
-  <div id="player-info">
-    <h4>{{title}}</h4>
-    <h5>{{channel.title}}</h5>
-    <div id="player-loader">
-      <div class="loading"></div>
-      <div class="playing"></div>
-    </div>
+  <div class="audio-player">
+    <h2>{{title}} - {{channel.title}}</h2>
+    <audio id="audio-player" controls="controls"></audio>
   </div>
 </div>
-{{/if}}

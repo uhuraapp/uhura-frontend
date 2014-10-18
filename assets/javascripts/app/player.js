@@ -1,7 +1,7 @@
 /* global App, $,soundManager */
 
 App.PLAYER = {};
-App.PLAYER.isPlaying = false;
+App.PLAYER.isPlaying = true;
 App.PLAYER.current = null;
 App.PLAYER.APIS = {
   video: {},
@@ -56,6 +56,8 @@ App.PLAYER.play = function (episode) {
     App.PLAYER.isPlaying = true;
     App.PlayerController.set("model", episode);
     episode.set("playing", true);
+    App.PlayerController.set("isPlaying", true);
+    window.setTimeout(api.postPlay, 1000);
     ga('send', 'event', episode.get('mediaApi'), 'play', 'play episode');
   }
 };
@@ -74,102 +76,78 @@ App.PLAYER.getApi = function (episode) {
   return api || App.PLAYER.APIS.audio;
 };
 
-App.PLAYER.seek = function(e) {
-  var coords = App.PLAYER.APIS.audio._getClickPosition(e),
-      loaderWidth = $(e.currentTarget).find('.loading').width(),
-      porcentage = (100 * coords.x) / loaderWidth,
-      position = (App.PLAYER.APIS.audio.current.duration * porcentage) / 100;
-
-  App.PLAYER.APIS.audio.current.setPosition(position);
-};
-
 // -- API AUDIO --
-App.PLAYER.APIS.audio.episodes = {};
 
 App.PLAYER.APIS.audio.play = function(episode) {
   "use strict";
-
-  var audio = App.PLAYER.APIS.audio.getAudio(episode.id);
-  App.PLAYER.APIS.audio.current = audio;
-  App.PLAYER.APIS.audio.current.play();
-
+  var el = App.PLAYER.APIS.audio.el()[0];
+  if(el.player && el.player.media.paused) {
+    episode.set("playing", true);
+    App.PLAYER.isPlaying  = true;
+    App.PLAYER.APIS.audio.el()[0].player.media.play();
+  } else {
+    App.PLAYER.APIS.audio.setSrc(episode.get("source_url"));
+  }
   return true;
 };
 
 App.PLAYER.APIS.audio.togglePause = function(episode) {
   "use strict";
-  App.PLAYER.APIS.audio.current.togglePause();
+  var fn = App.PLAYER.isPlaying ? App.PLAYER.APIS.audio.pause : App.PLAYER.APIS.audio.play;
+  fn(episode);
 };
 
 App.PLAYER.APIS.audio.stop = function(episode) {
   "use strict";
-  App.PLAYER.APIS.audio.current.destruct();
-  App.PLAYER.APIS.audio.current = null;
+  App.PLAYER.APIS.audio.el().stop();
 };
 
-// private
-App.PLAYER.APIS.audio.events = {};
-App.PLAYER.APIS.audio.events.loading = function(){
-  var percent = (this.bytesLoaded * 100)/this.bytesTotal,
-      playing = (this.position * 100)/this.durationEstimate;
-
-  $("#player-loader div.loading").css("width", percent+"%");
+App.PLAYER.APIS.audio.pause = function(episode) {
+  App.PLAYER.isPlaying  = false;
+  episode.set("playing", false);
+  App.PLAYER.APIS.audio.el()[0].player.media.pause();
 };
 
-window.listenedWorker={};
+window.listenedWorker = {};
 
-App.PLAYER.APIS.audio.events.playing = function(){
-  var playing = (this.position * 100)/this.durationEstimate;
-  if (playing > 95 ) {
-    var model = App.PLAYER.current;
-    if (window.listenedWorker[model.id] !== true) {
-      window.listenedWorker[model.id] = true;
-      App.PLAYER.listened(model);
+App.PLAYER.APIS.audio.postPlay = function(){
+  App.PLAYER.APIS.audio.el().mediaelementplayer({
+    alwaysShowControls: true,
+    audioVolume: 'horizontal',
+    features: ['playpause','progress','volume'],
+    success: function(media, node, player) {
+      media.addEventListener('timeupdate', function (e) {
+        var playing = Math.round(100 * media.currentTime / media.duration);
+        if (playing > 95 ) {
+          var model = App.PLAYER.current;
+          if (window.listenedWorker[model.id] !== true) {
+            window.listenedWorker[model.id] = true;
+            App.PLAYER.listened(model);
+          }
+        }
+      }, false);
+
+      media.addEventListener('pause', function(e) {
+        App.PLAYER.isPlaying  = false;
+        App.PLAYER.current.set("playing", false);
+      }, false);
+
+      media.addEventListener('play', function(e) {
+        App.PLAYER.isPlaying  = true;
+        App.PLAYER.current.set("playing", true);
+      }, false);
     }
-  }
-  $("#player-loader div.playing").css("width", playing+"%");
+  });
+  App.PLAYER.APIS.audio.el()[0].play();
 };
 
-App.PLAYER.APIS.audio.getAudio = function(id){
+App.PLAYER.APIS.audio.setSrc = function(source_url){
   "use strict";
-
-  if(!App.PLAYER.APIS.audio.episodes[id]){
-    var el = $("[data-id="+ id + "]"),
-    audio = el.data(),
-    sound = soundManager.createSound({
-      id: "e" + audio.id,
-      url: [audio.source_url],
-      whileloading: App.PLAYER.APIS.audio.events.loading,
-      whileplaying: App.PLAYER.APIS.audio.events.playing,
-      onfinish: function() {
-        App.PLAYER.stopCurrent();
-      },
-      autoLoad: true
-    });
-    App.PLAYER.APIS.audio.episodes[id] = sound;
-  }
-  return App.PLAYER.APIS.audio.episodes[id];
+  App.PLAYER.APIS.audio.el().attr("src", source_url);
 };
 
-App.PLAYER.APIS.audio._getClickPosition = function(e) {
-    var parentPosition = App.PLAYER.APIS.audio._getElementPosition(e.currentTarget);
-
-    var x = e.clientX - parentPosition.x,
-        y = e.clientY - parentPosition.y;
-
-    return {x: x, y: y};
-};
-
-App.PLAYER.APIS.audio._getElementPosition = function(element) {
-    var x = 0;
-    var y = 0;
-
-    while (element) {
-        x += (element.offsetLeft - element.scrollLeft + element.clientLeft);
-        y += (element.offsetTop - element.scrollTop + element.clientTop);
-        element = element.offsetParent;
-    }
-    return { x: x, y: y };
+App.PLAYER.APIS.audio.el = function() {
+  return $("#audio-player");
 };
 
 //\ -- API VIDEO --
@@ -182,6 +160,8 @@ App.PLAYER.APIS.video.togglePause = function(episode) {
 };
 
 App.PLAYER.APIS.video.stop = function(episode) {
+};
+App.PLAYER.APIS.video.postPlay = function(episode) {
 };
 
 App.PLAYER.APIS.video.init = function() {
@@ -199,20 +179,3 @@ App.PLAYER.APIS.video.init = function() {
     }
   });
 };
-
-soundManager.setup({
-  url: "/swf",
-  flashVersion: 9,
-  useHTML5Audio: true,
-  preferFlash: false,
-  waitForWindowLoad: true,
-  debugMode: true,
-  useFlashBlock: false,
-  autoLoad: false,
-  useHighPerformance: true,
-  allowScriptAccess: 'always'
-});
-
-soundManager.ontimeout(function(status) {
-  window.location.reload();
-});
