@@ -146,6 +146,8 @@ App.PLAYER.APIS.audio.postPlay = function(){
         App.PLAYER.isPlaying  = true;
         App.PLAYER.current.set("playing", true);
       }, false);
+
+      media.addEventListener('ended', App.PLAYER.APIS.audio.nextTrack);
     }
   });
   App.PLAYER.APIS.audio.el()[0].play();
@@ -158,6 +160,10 @@ App.PLAYER.APIS.audio.setSrc = function(source_url){
 
 App.PLAYER.APIS.audio.el = function() {
   return $("#audio-player");
+};
+
+App.PLAYER.APIS.audio.nextTrack = function () {
+  setTimeout(function() { $(".audio:not(.listened)").first().find("i").click(); }, 1500);
 };
 
 //\ -- API VIDEO --
