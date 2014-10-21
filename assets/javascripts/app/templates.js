@@ -365,7 +365,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = '', helper, options;
-  data.buffer.push("\n<button class=\"uk-button uk-button-small unsubscribe fa fa-check\" ");
+  data.buffer.push("\n  <button class=\"uk-button uk-button-small unsubscribe fa fa-check\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "unsubscribeChannel", "channel.id", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
   data.buffer.push(">");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "channel_new.button.subscribed", options) : helperMissing.call(depth0, "t", "channel_new.button.subscribed", options))));
@@ -376,7 +376,7 @@ function program1(depth0,data) {
 function program3(depth0,data) {
   
   var buffer = '', helper, options;
-  data.buffer.push("\n<button class=\"uk-button uk-button-small uk-button-success subscribe\" ");
+  data.buffer.push("\n  <button class=\"uk-button uk-button-small uk-button-success subscribe\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "subscribeChannel", "channel.id", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
   data.buffer.push(">");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "channel_new.button.subscribe", options) : helperMissing.call(depth0, "t", "channel_new.button.subscribe", options))));
@@ -388,7 +388,11 @@ function program3(depth0,data) {
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'src': ("channel.image_url")
   },hashTypes:{'src': "ID"},hashContexts:{'src': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(" />\n<h5>");
+  data.buffer.push(" data-uk-tooltip=\"{pos:'top'}\" ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'title': ("channel.description")
+  },hashTypes:{'title': "ID"},hashContexts:{'title': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(" />\n\n<h5>");
   stack1 = helpers._triageMustache.call(depth0, "channel.title", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("</h5>\n");
