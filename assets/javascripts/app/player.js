@@ -163,7 +163,10 @@ App.PLAYER.APIS.audio.el = function() {
 };
 
 App.PLAYER.APIS.audio.nextTrack = function () {
-  setTimeout(function() { $(".audio:not(.listened)").first().find("i").click(); }, 1500);
+  setTimeout(function() {
+    var el = $(".js-episode-item").siblings("li").find(".audio:not(.listened)").last();
+    el.find("i").click();
+  }, 1000);
 };
 
 //\ -- API VIDEO --

@@ -1,5 +1,7 @@
 App.EpisodeListItemComponent = Ember.Component.extend({
   layoutName: "component/episode-list-item",
+  tagName: "li",
+  classNames: "js-episode-item",
   click: function(e){
     var element  = $(e.toElement);
     if(element.is("button.listened")) {

@@ -1,4 +1,4 @@
-<li {{bind-attr class=":audio episode.listened episode.playing"}} {{bind-attr data-id=episode.id}} {{bind-attr data-source_url=episode.source_url}}>
+<div {{bind-attr class=":audio episode.listened episode.playing"}} {{bind-attr data-id=episode.id}} {{bind-attr data-source_url=episode.source_url}}>
   {{play-pause-button episode=episode}}
   <div class="title uk-animation-fade">
     <span>
@@ -14,4 +14,4 @@
   <div class="description">
     {{{episode.description}}}
   </div>
-</li>
+</div>
