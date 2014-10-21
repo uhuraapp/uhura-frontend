@@ -80,10 +80,15 @@ App.PLAYER.getApi = function (episode) {
 
 App.PLAYER.APIS.audio.play = function(episode) {
   "use strict";
+
   var el = App.PLAYER.APIS.audio.el()[0];
   if(el.player && el.player.media.paused) {
     episode.set("playing", true);
     App.PLAYER.isPlaying  = true;
+    if (App.PLAYER.current.id != episode.id) {
+      App.PLAYER.APIS.audio.setSrc(episode.get("source_url"));
+    }
+
     App.PLAYER.APIS.audio.el()[0].player.media.play();
   } else {
     App.PLAYER.APIS.audio.setSrc(episode.get("source_url"));
@@ -93,7 +98,12 @@ App.PLAYER.APIS.audio.play = function(episode) {
 
 App.PLAYER.APIS.audio.togglePause = function(episode) {
   "use strict";
+
   var fn = App.PLAYER.isPlaying ? App.PLAYER.APIS.audio.pause : App.PLAYER.APIS.audio.play;
+  if (App.PLAYER.current.id != episode.id) {
+    App.PLAYER.APIS.audio.setSrc(episode.get("source_url"));
+  }
+
   fn(episode);
 };
 
