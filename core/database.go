@@ -9,6 +9,7 @@ import (
 )
 
 var database gorm.DB
+var DB gorm.DB
 
 func init() {
 	var err error
@@ -29,11 +30,12 @@ func init() {
 	database.AutoMigrate(UserItem{})
 	database.AutoMigrate(Category{})
 	database.AutoMigrate(ChannelCategories{})
+
+	DB = database
 }
 
 func DatabaseManager() {
 	if os.Getenv("SETUP_DATABASE") == "true" {
-
 		database.Where("title is NULL").Or("title = ''").Delete(&Channel{})
 
 		// var channels []Channel
