@@ -4,6 +4,7 @@ App.ChannelRoute = Ember.Route.extend({
     return this.store.find('channel', params.channel_id);
   },
   activate: function(){
+    $(".uk-tooltip").hide();
     var title = this.modelFor('channel').get('title');
 
     $(document).attr('title', title);

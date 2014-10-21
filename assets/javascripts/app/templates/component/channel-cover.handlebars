@@ -1,4 +1,6 @@
+{{#link-to 'channel' channel.id}}
 <img {{bind-attr src=channel.image_url}} data-uk-tooltip="{pos:'top'}" {{bind-attr title=channel.description}} />
+{{/link-to}}
 
 <h5>{{channel.title}}</h5>
 {{#if channel.subscribed}}
