@@ -1,3 +1,46 @@
-<h2 id='title'>Welcome to Ember.js</h2>
+<div id="aside-wrapper" class="uk-animation-fade uk-width-3-10 uk-hidden-small">
+  <aside class="uk-width-3-10">
+    <header>
+      <hgroup>
+        {{#link-to 'index'}}
+          <h1>Uhura</h1>
+          <h2>Podcast Manager</h2>
+        {{/link-to}}
+      </hgroup>
+    </header>
+
+    <ul class="uk-animation-fade">
+      <li>
+        {{#link-to 'index' }}
+          <span class="typcn typcn-home-outline"></span>{{t "sidebar.home"}}
+        {{/link-to}}
+      </li>
+      <li>
+        {{#link-to 'channel.new' }}
+          <span class="typcn typcn-document-add"></span>{{t "sidebar.channel_add"}}
+        {{/link-to}}
+      </li>
+      <li class="donate">
+        {{#link-to 'donate' }}
+          <span class="typcn typcn-gift"></span>{{t "sidebar.donate"}}
+        {{/link-to}}
+      </li>
+      <li>
+        <a href="/users/sign_out">
+          <span class="typcn typcn-power-outline"></span>{{t "sidebar.sign_out"}}
+        </a>
+      </li>
+    </ul>
+
+  </aside>
+</div>
+
 
 {{outlet}}
+
+<script>
+  $(document).ready(function(){
+    window.fixSidebarHeight();
+  })
+</script>
+

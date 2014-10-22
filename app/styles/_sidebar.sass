@@ -1,0 +1,102 @@
+#aside-wrapper
+  overflow: hidden
+  zoom: 1
+  &::after
+    content: " uhura "
+    display: block
+
+  p
+    color: #FFF
+    font-weight: 500
+    a
+      color: #FFF
+      text-decoration: underline
+      font-weight: 100
+  .new a
+    font-weight: 500
+
+aside
+  position: fixed
+  overflow: auto
+  display: block
+  background-color: #3E4651
+  box-shadow: inset -2px 0 3px #222
+  > *
+    width: 90%
+    margin-left: auto
+    margin-right: auto
+
+  li
+    padding: 0 0 0 20px
+    padding-bottom: 10px
+    a
+      font-weight: 200
+      font-size: .9em
+      display: inline-block
+      height: 15px
+
+#sidebar-mobile
+  footer p
+    color: #FFF
+  li
+    max-height: 35px
+    overflow: hidden
+    a .title
+      height: 18px
+
+aside, #sidebar-mobile
+  li
+    overflow: hidden
+    &.donate
+      a, span
+        color: #FC6E44
+        font-weight: 700
+    a
+      margin: 0
+      overflow: hidden
+      width: 100%
+      color: #FFF
+      line-height: 15px
+    img
+      height: 15px
+      width: 15px
+      margin: 0 5px 0 0
+      float: left
+    span
+      margin-right: 5px
+      color: #FFF
+      &.title
+        width: 70%
+        margin: 0
+        display: block
+        float: left
+        white-space: nowrap
+        overflow: hidden
+        text-overflow: ellipsis
+    i
+      font-weight: 700
+      width: 10%
+      float: right
+      font-size: 10px
+
+#channels-lists
+  margin-top: 0
+
+header
+  margin-bottom: 25px
+  &::after
+    content: " "
+    display: block
+    overflow: hidden
+    clear: both
+  h1, h2
+    text-align: center
+    letter-spacing: 1px
+  h2
+    color: #FFF
+  hgroup
+    width: 125px
+    margin: 0 auto
+    overflow: hidden
+    border-radius: 0 0 2px 2px
+
