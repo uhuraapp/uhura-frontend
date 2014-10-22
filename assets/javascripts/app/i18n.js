@@ -26,7 +26,7 @@ var T = function() {
       'channel_new.button.subscribed': 'Subscribed',
       'channel_new.button.unsubscribe': 'Unsubscribed!',
       'channel_new.alert.not_found': 'Channel not found',
-      'channel_new.by_categories': 'By Category',
+      'channel_new.by_categories': 'All By Category',
 
       'donate.title': 'Help me to keep Uhura App up!',
       'donate.subtitle': 'You can choose Paypal($) or PagSeguro(R$)',
@@ -70,7 +70,7 @@ var T = function() {
       'channel_new.button.subscribed': 'Assinado',
       'channel_new.button.unsubscribe': 'Remover Assinaura!',
       'channel_new.alert.not_found': 'Não foi encontrado nenhum canal',
-      'channel_new.by_categories': 'Por Categoria',
+      'channel_new.by_categories': 'Todos por Categoria',
 
       'donate.title': 'Me ajude a manter o Uhura App funcionando!',
       'donate.subtitle': 'Você pode escolher Paypal($) ou PagSeguro(R$)',
