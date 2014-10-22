@@ -28,6 +28,13 @@ func FindChannels(userId string, w http.ResponseWriter, request *http.Request) {
 		// channels = FetchTempChannelFromLinks(findLinks(pageR.Body))
 	}
 
+	go func() {
+		MIXPANEL.Track(userId, "find", map[string]interface{}{
+			"url":   url,
+			"found": len(channels),
+		})
+	}()
+
 	r.ResponseJSON(w, 200, map[string]interface{}{"channels": channels})
 }
 
