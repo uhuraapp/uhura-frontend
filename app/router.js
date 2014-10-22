@@ -6,6 +6,8 @@ var Router = Ember.Router.extend({
 });
 
 Router.map(function() {
+  this.route('channel.new');
+  this.route('donate');
 });
 
 export default Router;
