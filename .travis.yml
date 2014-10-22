@@ -1,18 +1,16 @@
-language: go
-go:
- - 1.2
- - 1.1.2
- - 1.1.1
- - 1.1
- - tip
+---
+language: node_js
 
-before_script:
-  - psql -c 'create database uhura_test;' -U postgres
+sudo: false
+
+cache:
+  directories:
+    - node_modules
 
 install:
- - export PATH=$HOME/gopath/bin:$PATH
- - export DATABASE_URL="postgres://postgres@localhost/uhura_test?sslmode=disable"
- - make install
+  - npm install -g bower
+  - npm install
+  - bower install
 
 script:
- - go test -v ./...
+  - npm test
