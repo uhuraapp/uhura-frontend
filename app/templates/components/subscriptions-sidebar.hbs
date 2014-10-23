@@ -1,0 +1,14 @@
+<ol>
+  {{#each channel in subscriptions}}
+    {{#with channel}}
+    <li id="channel-{{unbound id}}" {{bind-attr class=to_view:new:ok}}>
+      {{#link-to 'channel' id}}
+        <img {{bind-attr src=image_url}} />
+        <span class="title">{{title}}</span>
+        {{#if to_view}}<i>{{to_view}}</i>{{/if}}
+      {{/link-to}}
+    </li>
+    {{/with}}
+  {{/each}}
+</ol>
+
