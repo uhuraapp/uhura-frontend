@@ -66,7 +66,7 @@ i18n.keys = {
       'donate.title': 'Me ajude a manter o Uhura App funcionando!',
       'donate.subtitle': 'Você pode escolher Paypal($) ou PagSeguro(R$)',
 
-      'footer.follow_us': 'Siga-nos no',
+      'footer.follow_us': 'Siga',
       'footer.like_us': 'Curta nossa página',
       'footer.contact': 'Encontrou um Problema? Diga me! <br /> Envie um email para',
 
@@ -101,7 +101,7 @@ var get = function (key) {
 export function t(key) {
   var value;
   value = get(key);
-  return value;
+  return new Ember.Handlebars.SafeString(value);
 }
 
 export default Ember.Handlebars.makeBoundHelper(t);
