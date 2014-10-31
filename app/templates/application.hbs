@@ -1,4 +1,4 @@
-<div id="aside-wrapper" class="uk-animation-fade uk-width-3-10 uk-hidden-small">
+<div id="aside-wrapper" class="uk-float-left uk-animation-fade uk-width-3-10 uk-hidden-small">
   <aside class="uk-width-3-10">
     <header>
       <hgroup>
@@ -49,12 +49,12 @@
   </aside>
 </div>
 
-
-{{outlet}}
+<div id="content" class="uk-float-right uk-margin-left uk-animation-fade uk-width-7-10">
+  {{outlet}}
+</div>
 
 <script>
   $(document).ready(function(){
     window.fixSidebarHeight();
   })
 </script>
-
