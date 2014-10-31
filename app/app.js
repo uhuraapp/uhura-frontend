@@ -13,17 +13,14 @@ var App = Ember.Application.extend({
   Resolver: Resolver
 });
 
-
 loadInitializers(App, config.modulePrefix);
 
 Ember.Handlebars.registerBoundHelper('t', tHelper);
-
 
 $(document).ready(function(){
   'use strict';
   $(window).on('resize', fixSidebarHeight);
 });
-
 
 var fixSidebarHeight;
 window.fixSidebarHeight = fixSidebarHeight = function(){
@@ -31,6 +28,5 @@ window.fixSidebarHeight = fixSidebarHeight = function(){
   $('aside').css('height', window.innerHeight + 'px');
   $('#aside-wrapper').css('height', window.innerHeight + 'px');
 };
-
 
 export default App;
