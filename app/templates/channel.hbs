@@ -1,1 +1,18 @@
-<h1> {{title}} </h1>
+<div id="channel-profile">
+  <div class="about">
+    <div class="image">
+      <img {{bind-attr src=image_url}} />
+
+      {{subscribe-button}}
+    </div>
+
+    <div class="info">
+      <h1>{{title}}</h1>
+      <div class="description">{{description}}</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    {{copyrigth}}
+  </div>
+</div>
