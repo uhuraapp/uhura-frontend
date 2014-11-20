@@ -1,0 +1,12 @@
+=respond-to($breakpoint)
+  @if $breakpoint == "small"
+    @media (min-device-width: 767px)
+      @content
+
+  @else if $breakpoint == "medium"
+    @media (min-device-width: 992px)
+      @content
+
+  @else if $breakpoint == "large"
+    @media (min-device-width: 1200px)
+      @content

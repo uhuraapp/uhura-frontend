@@ -1,12 +1,11 @@
 <div id="channel-profile">
-  <div class="about">
-    <div class="image">
+  <div class="about uk-grid" data-uk-grid-margin>
+    <div class="uk-width-small-1-1 uk-width-medium-3-10 uk-float-left">
       <img {{bind-attr src=image_url}} />
-
       {{subscribe-button}}
     </div>
 
-    <div class="info">
+    <div class="info uk-width-small-1-1 uk-width-medium-7-10 uk-float-right">
       <h1>{{title}}</h1>
       <div class="description">{{description}}</div>
     </div>
