@@ -20,6 +20,7 @@ Ember.Handlebars.registerBoundHelper('t', tHelper);
 $(document).ready(function(){
   'use strict';
   $(window).on('resize', fixSidebarHeight);
+  window.scrollTo(0,1);
 });
 
 var fixSidebarHeight;
