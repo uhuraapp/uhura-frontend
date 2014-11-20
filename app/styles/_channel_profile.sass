@@ -1,14 +1,36 @@
 #channel-profile
   .about
+    text-align: center
+    img
+      width: 50%
+      border-radius: 100%
+      margin: 20px auto
+      box-shadow: 0px 1px 2px #333
+      display: block
     h1
-      margin-top: 0
-    div
-      float: left
-      &.image
-        max-width: 20%
-        margin-right: 20px
-      &.info
-        max-width: 75%
+      font-size: 25px
+      line-height: 1.5
+
++respond-to(medium)
+  #channel-profile
+    .about
+      h1
+        margin-top: 20px
+        font-size: 40px
+        line-height: 50px
+      img
         width: 100%
-    .subscribe-button
-      margin-top: 10px
+
+//  .about
+    //h1
+      //margin-top: 0
+    //div
+      //float: left
+      //&.image
+        //max-width: 20%
+        //margin-right: 20px
+      //&.info
+        //max-width: 75%
+        //width: 100%
+    //.subscribe-button
+      //margin-top: 10px
