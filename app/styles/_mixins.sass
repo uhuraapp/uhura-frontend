@@ -10,3 +10,7 @@
   @else if $breakpoint == "large"
     @media (min-device-width: 1200px)
       @content
+
+  @else if $breakpoint == "onlysmall"
+    @media (max-device-width: 767px)
+      @content

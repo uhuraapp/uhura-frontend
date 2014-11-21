@@ -1,14 +1,17 @@
-<div id="channel-profile">
-  <div class="about uk-grid" data-uk-grid-margin>
-    <div class="uk-width-small-1-1 uk-width-medium-3-10 uk-float-left">
-      <img {{bind-attr src=image_url}} />
-      {{subscribe-button}}
-    </div>
+<div id="channel-profile" class="about uk-grid" data-uk-grid-margin>
+  <div class="image-subscribe-button uk-width-small-1-1 uk-width-medium-3-10 uk-float-left">
+    <img {{bind-attr src=image_url}} />
+    {{subscribe-button}}
+  </div>
 
-    <div class="info uk-width-small-1-1 uk-width-medium-7-10 uk-float-right">
-      <h1>{{title}}</h1>
-      <div class="description">{{description}}</div>
-    </div>
+  <div class="info uk-width-small-1-1 uk-width-medium-7-10 uk-float-right">
+    <h1>{{title}}</h1>
+    <div class="description">{{description}}</div>
+  </div>
+
+  <h2 class="uk-clearfix">Episodes</h2>
+  <div class="uk-width-1-1 episodes-list">
+    {{episodes-list episodes=episodes}}
   </div>
 
   <div class="footer">
