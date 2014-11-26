@@ -41,7 +41,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-    ENV.API_URL = "http://api.uhuraapp.com"
+    ENV.API_URL = "http://uhura-api.herokuapp.com"
   }
 
   return ENV;
