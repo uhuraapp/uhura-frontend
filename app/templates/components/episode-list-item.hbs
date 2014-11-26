@@ -3,15 +3,20 @@
   {{title}}
 </h3>
 <div class="actions">
-  <button {{bind-attr class=":typcn :uk-width-1-4 episode.playing:typcn-media-pause:typcn-media-play"}} {{action "playpause" episode}}>
-  </button>
+  <div class="uk-float-left">
+    <button {{action "playpause" episode}}>
+      PLAY
+    </button>
+    <button data-uk-tooltip="{pos:'bottom'}" title="{{t "episode.button.info"}}" class="more-info">
+      INFO
+    </button>
+  </div>
 
-   <button {{bind-attr data-id=episode.id}} data-uk-tooltip="{pos:'bottom'}" title="{{t "episode.button.listened"}}" {{bind-attr class=":typcn :listened :uk-width-1-4 episode.listened:typcn-tick:typcn-tick-outline"}}>
-   </button>
+  <div class="uk-float-right">
+    <button {{bind-attr data-id=episode.id}} data-uk-tooltip="{pos:'bottom'}" title="{{t "episode.button.listened"}}" {{bind-attr class=":typcn :listened episode.listened:typcn-tick:typcn-tick-outline"}}></button>
 
-   <button data-uk-tooltip="{pos:'bottom'}" title="{{t "episode.button.info"}}" class="uk-width-1-4 more-info typcn typcn-info-large"> </button>
-
-   <button {{bind-attr data-id=episode.id}} data-uk-tooltip="{pos:'bottom'}" title="{{t "episode.button.download"}}" class="typcn typcn-download download uk-width-1-4"></button>
+    <button {{bind-attr data-id=episode.id}} data-uk-tooltip="{pos:'bottom'}" title="{{t "episode.button.download"}}" class="typcn typcn-download download"></button>
+  </div>
  </div>
 {{/with}}
 

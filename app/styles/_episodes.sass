@@ -2,24 +2,28 @@ ul.episodes
   padding: 0 5px
 
 li.episode
-  box-shadow: 0 0 1px #333
-  border-bottom: 1px solid #ADADAD
+  max-width: 100%
+  box-shadow: 0 0 3px #333, 0 1px 1px #CCC
   margin-bottom: 10px
+  border-radius: 2px
+  overflow: hidden
   h3.title
     padding: 10px
     margin: 0
     font-weight: 500
-    font-size: 15px
+    font-size: 18px
+    line-height: 1.5
   .actions
-    background: #F7F7F7
+    background: #FFF
+    border-top: 1px solid #CCC
     overflow: auto
+    padding: 0 5px
     button
       background: transparent
       display: block
       float: left
       margin: 0
-      font-size: 25px
+      font-size: 14px
+      text-transform: capitalize
+      padding: 10px
       border: 0
-      border-right: 1px solid #CCC
-      &:last-child
-        border-right: 0
