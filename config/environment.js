@@ -41,7 +41,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-
+    ENV.API_URL = "http://api.uhuraapp.com"
   }
 
   return ENV;
