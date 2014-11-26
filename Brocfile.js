@@ -3,6 +3,8 @@
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 var compileSass = require('broccoli-sass');
 
+var writeManifest = require('broccoli-manifest');
+var mergeTrees = require('broccoli-merge-trees');
 
 var app = new EmberApp();
 
@@ -27,6 +29,8 @@ app.import("bower_components/font-awesome/fonts/fontawesome-webfont.eot", {destD
 
 
 var tree = app.toTree();
-module.exports = tree;
+
 
 compileSass([tree], 'assets/app.sass', 'assets/app.css');
+
+module.exports = mergeTrees([tree, writeManifest(tree)], {overwrite: true});
