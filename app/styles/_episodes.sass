@@ -22,6 +22,7 @@ li.episode
     overflow: auto
     padding: 0 5px
     button
+      outline: none
       background: transparent
       display: block
       float: left
@@ -30,5 +31,8 @@ li.episode
       text-transform: capitalize
       padding: 10px
       border: 0
+      cursor: pointer
+      &.highlight
+        color: #ff5722
       &.active
-        color: red
+        color: #CCC
