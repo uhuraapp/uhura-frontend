@@ -1,32 +1,40 @@
 <div id="sidebar-mobile" class="uk-offcanvas">
   <div class="uk-offcanvas-bar">
     <ul class="uk-nav uk-nav-offcanvas" data-uk-nav>
-      <li>
-        {{#link-to 'index' }}
-          <span class="typcn typcn-home-outline"></span>{{t "sidebar.home"}}
-        {{/link-to}}
-      </li>
-      <li>
-        {{#link-to 'channel.new' }}
-          <span class="typcn typcn-document-add"></span>{{t "sidebar.channel_add"}}
-        {{/link-to}}
-      </li>
-      <li>
-        <a href="/users/sign_out">
-          <span class="typcn typcn-power-outline"></span>{{t "sidebar.sign_out"}}
-        </a>
-      </li>
-      {{#each channel in model}}
-        {{#with channel}}
-          <li {{bind-attr class="to_view:new:ok" }}>
-            {{#link-to 'channel' id}}
-              <img {{bind-attr src=image_url}} />
-              <span class="title">{{title}}</span>
-              {{#if to_view}}<i>{{to_view}}</i>{{/if}}
+      <li class="nav-group">
+        <ul>
+          <li>
+            {{#link-to 'index' }}
+              <span class="typcn typcn-home-outline"></span>{{t "sidebar.home"}}
             {{/link-to}}
           </li>
-        {{/with}}
-      {{/each}}
+          <li>
+            {{#link-to 'channel.new' }}
+              <span class="typcn typcn-document-add"></span>{{t "sidebar.channel_add"}}
+            {{/link-to}}
+          </li>
+          <li>
+            <a href="/users/sign_out">
+              <span class="typcn typcn-power-outline"></span>{{t "sidebar.sign_out"}}
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-group">
+        <ul>
+          {{#each channel in model}}
+            {{#with channel}}
+              <li {{bind-attr class="to_view:new:ok" }}>
+                {{#link-to 'channel' id}}
+                  <img {{bind-attr src=image_url}} />
+                  <span class="title">{{title}}</span>
+                  {{#if to_view}}<i>{{to_view}}</i>{{/if}}
+                {{/link-to}}
+              </li>
+            {{/with}}
+          {{/each}}
+        </ul>
+      </li>
     </ul>
 
     <footer>
