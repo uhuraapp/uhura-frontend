@@ -1,0 +1,9 @@
+{{#if model}}
+<div id="player">
+  <img {{bind-attr src=model.image_url}}>
+  <div class="audio-player">
+    <h2>{{model.title}} - {{model.channel.title}}</h2>
+    <audio id="audio-player" controls="controls"></audio>
+  </div>
+</div>
+{{/if}}
