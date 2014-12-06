@@ -1,6 +1,8 @@
 <div id="player">
-  <img {{bind-attr src=channel.image_url}} class="channel-img">
-  <h2>{{channel.title}} {{title}}</h2>
+  <img {{bind-attr src=channel.image_url}} class="channel-img" />
+  <button {{action 'playpause'}} {{bind-attr class=":typcn playing:typcn-media-pause:typcn-media-play :playpause"}}></button>
+  <h2>{{title}}</h2>
+  <h3>{{channel.title}}</h3>
 
   <div class="uk-hidden">
     <audio id="audio-player" controls="controls" style="width: 100%"></audio>
