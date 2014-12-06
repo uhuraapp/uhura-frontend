@@ -19,6 +19,15 @@ module.exports = function(environment) {
     }
   };
 
+
+  ENV.contentSecurityPolicy = {
+    'img-src': "'self' *",
+    'media-src': "'self' *",
+    'content-src': "'self' *",
+    'font-src': "'self' http://fonts.gstatic.com",
+    'style-src': "'self' 'unsafe-inline' http://fonts.googleapis.com",
+  }
+
   if (environment === 'development') {
     ENV.APP.LOG_RESOLVER = true;
     ENV.APP.LOG_ACTIVE_GENERATION = false;
