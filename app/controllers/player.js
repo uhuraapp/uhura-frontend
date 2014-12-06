@@ -6,6 +6,13 @@ export default Ember.ObjectController.extend({
     model.set('playing', this.get('playing'));
   }.observes('playing'),
 
+  modelWillChanges: function() {
+    var model;
+    if(model = this.get('model')) {
+      model.set('playing', false);
+    }
+  }.observesBefore('model'),
+
   actions: {
     playpause: function () {
       var audio = this.get('audio');
