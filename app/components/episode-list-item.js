@@ -1,5 +1,6 @@
 /* global $ */
 import Ember from 'ember';
+import Config from '../config/environment';
 
 export default Ember.Component.extend({
   tagName: "li",
@@ -14,6 +15,10 @@ export default Ember.Component.extend({
       var player = this.container.lookup('controller:Player');
       player.set('model', this.get('episode'));
       player.send('playpause');
+    },
+    download: function() {
+      var url = Config.API_URL + "/api/v2/episodes/" +this.get('episode').id + "/download";
+      donwloadPage = window.open(url,'','');
     }
   }
 });
