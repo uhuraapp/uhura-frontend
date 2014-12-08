@@ -2,13 +2,13 @@ import Ember from 'ember';
 
 export default Ember.View.extend({
   hasModel: false,
-  classNameBindings: ['hasModel::uk-hidden'],
+  classNameBindings: ['hasModel::uk-hidden', 'controller.miniPlayer:player-mini:player-full'],
   classNames: ["the-player"],
   contentDidChange: function() {
     var controller = this.get('controller');
     var model = controller.get('model');
     if(model){
-      controller.set('loading', true);
+      controller.set('loaded', false);
       var audio = this.$('audio');
       audio.attr('src', model.get('source_url'));
       audio.mediaelementplayer({
@@ -33,7 +33,7 @@ export default Ember.View.extend({
       }, false);
 
       media.addEventListener('loadeddata', function() {
-        controller.set('loading', false);
+        controller.set('loaded', true);
       })
 
       /*
@@ -50,7 +50,5 @@ export default Ember.View.extend({
       media.addEventListener('ended', App.PLAYER.APIS.audio.nextTrack);
       */
     };
-  },
-  mediaOptions: {
   }
 });

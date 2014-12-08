@@ -1,7 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
-  loading: true,
+  loaded: true,
+  miniPlayer: true,
   playerChanges: function() {
     var model = this.get('model');
     model.set('playing', this.get('playing'));
@@ -19,6 +20,9 @@ export default Ember.ObjectController.extend({
       var audio = this.get('audio');
       this.get('playing') ? audio.pause() : audio.play();
       this.set('playing', !this.get('playing'));
+    },
+    togglePlayer: function() {
+      this.set('miniPlayer', !this.get('miniPlayer'));
     }
   }
 });
