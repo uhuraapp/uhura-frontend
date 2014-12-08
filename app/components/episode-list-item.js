@@ -19,6 +19,9 @@ export default Ember.Component.extend({
     download: function() {
       var url = Config.API_URL + "/api/v2/episodes/" +this.get('episode').id + "/download";
       donwloadPage = window.open(url,'','');
+    },
+    listened: function() {
+      this.get('episode').set('listened', true);
     }
   }
 });

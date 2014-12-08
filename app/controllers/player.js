@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import Config from '../config/environment';
 
 export default Ember.ObjectController.extend({
   playerChanges: function() {
@@ -14,26 +13,11 @@ export default Ember.ObjectController.extend({
     }
   }.observesBefore('model'),
 
-  listenedChanges: function() {
-    var model = this.get('model');
-    if (this.get('playing')) {
-      this.send('listened', model.id)
-    }
-  }.observes('model.listened'),
-
   actions: {
     playpause: function () {
       var audio = this.get('audio');
       this.get('playing') ? audio.pause() : audio.play();
       this.set('playing', !this.get('playing'));
-    },
-    listened: function(modelId) {
-      $.get(
-        Config.API_URL +
-        '/api/v2/episodes/' +
-        modelId +
-        '/listened'
-      )
     }
   }
 });

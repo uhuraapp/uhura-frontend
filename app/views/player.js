@@ -22,13 +22,13 @@ export default Ember.View.extend({
     }
   }.observes('controller.model'),
   successCallback: function(_this){
-    return function(media, node, player) {
+    return function(media) {
       var controller = _this.get('controller');
 
-      media.addEventListener('timeupdate', function (e) {
+      media.addEventListener('timeupdate', function () {
         var playing = Math.round(100 * media.currentTime / media.duration);
         if (playing > 95) {
-          controller.get('model').set('listened', true)
+          controller.get('model').set('listened', true);
         }
       }, false);
 
@@ -45,7 +45,7 @@ export default Ember.View.extend({
 
       media.addEventListener('ended', App.PLAYER.APIS.audio.nextTrack);
       */
-    }
+    };
   },
   mediaOptions: {
   }
