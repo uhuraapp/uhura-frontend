@@ -8,6 +8,7 @@ export default Ember.View.extend({
     var controller = this.get('controller');
     var model = controller.get('model');
     if(model){
+      controller.set('loading', true);
       var audio = this.$('audio');
       audio.attr('src', model.get('source_url'));
       audio.mediaelementplayer({
@@ -17,7 +18,6 @@ export default Ember.View.extend({
         success: this.successCallback(this)
       });
       controller.set('audio', audio[0]);
-      controller.set('loading', false);
       this.set('hasModel', true);
     }
   }.observes('controller.model'),
@@ -31,6 +31,10 @@ export default Ember.View.extend({
           controller.get('model').set('listened', true);
         }
       }, false);
+
+      media.addEventListener('loadeddata', function() {
+        controller.set('loading', false);
+      })
 
       /*
       media.addEventListener('pause', function(e) {

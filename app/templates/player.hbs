@@ -1,6 +1,6 @@
 <div id="player">
   {{#if loading}}
-    Loading....
+    <div class="player-loading">Loading...</div>
   {{else}}
     <img {{bind-attr src=channel.image_url}} class="channel-img" />
     <button {{action 'playpause'}} {{bind-attr class=":typcn playing:typcn-media-pause:typcn-media-play :playpause"}}></button>

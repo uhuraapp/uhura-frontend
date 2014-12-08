@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
+  loading: true,
   playerChanges: function() {
     var model = this.get('model');
     model.set('playing', this.get('playing'));
