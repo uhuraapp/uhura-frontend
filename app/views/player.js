@@ -4,6 +4,11 @@ export default Ember.View.extend({
   hasModel: false,
   classNameBindings: ['hasModel::uk-hidden', 'controller.miniPlayer:player-mini:player-full'],
   classNames: ["the-player"],
+  click: function(e) {
+    if(!$(e.target).is(".playpause")) {
+      this.controller.send('togglePlayer')
+    }
+  },
   contentDidChange: function() {
     var controller = this.get('controller');
     var model = controller.get('model');

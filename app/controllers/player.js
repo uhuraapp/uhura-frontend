@@ -22,7 +22,9 @@ export default Ember.ObjectController.extend({
       this.set('playing', !this.get('playing'));
     },
     togglePlayer: function() {
-      this.set('miniPlayer', !this.get('miniPlayer'));
+      var miniPlayer = this.get('miniPlayer');
+      this.set('miniPlayer', !miniPlayer);
+      Ember.$('body').css('overflow', !miniPlayer ? "auto" : "hidden");
     }
   }
 });

@@ -1,7 +1,3 @@
-{{#if loaded}}
-  <button {{action togglePlayer}} class="player-toggle typcn typcn-arrow-sorted-up"></button>
-{{/if}}
-
 <div id="player">
   {{#if loaded}}
     <img {{bind-attr src=channel.image_url}} class="channel-img" />
@@ -12,8 +8,7 @@
     <div class="player-loading">Loading...</div>
   {{/if}}
 
-  <div class="uk-hidden">
+  <div class="player-audio-element">
     <audio id="audio-player" controls="controls" style="width: 100%"></audio>
   </div>
-
 </div>
