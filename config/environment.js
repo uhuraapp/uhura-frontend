@@ -20,6 +20,8 @@ module.exports = function(environment) {
   };
 
 
+  ENV.API_URL = "http://uhura-api.herokuapp.com"
+
   ENV.contentSecurityPolicy = {
     'img-src': "'self' *",
     'media-src': "'self' *",
@@ -34,7 +36,6 @@ module.exports = function(environment) {
     ENV.APP.LOG_TRANSITIONS = true;
     ENV.APP.LOG_TRANSITIONS_INTERNAL = false;
     ENV.APP.LOG_VIEW_LOOKUPS = false;
-    ENV.API_URL = "http://127.0.0.1:3000"
   }
 
   if (environment === 'test') {
@@ -50,7 +51,6 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-    ENV.API_URL = "http://uhura-api.herokuapp.com"
   }
 
   return ENV;
