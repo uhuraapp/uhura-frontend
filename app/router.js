@@ -9,6 +9,7 @@ Router.map(function() {
   this.route('channel.new');
   this.route('channel', {path: "/:channel_id"});
   this.route('donate');
+  this.resource('settings', function() { });
 });
 
 export default Router;
