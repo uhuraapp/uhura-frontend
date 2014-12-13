@@ -3,7 +3,7 @@ import Ember from 'ember';
 import Resolver from 'ember/resolver';
 import loadInitializers from 'ember/load-initializers';
 import config from './config/environment';
-import tHelper from './helpers/t';
+import i18n from 'i18n';
 
 Ember.MODEL_FACTORY_INJECTIONS = true;
 
@@ -13,9 +13,9 @@ var App = Ember.Application.extend({
   Resolver: Resolver
 });
 
-loadInitializers(App, config.modulePrefix);
+Ember.Handlebars.registerBoundHelper('t', i18n.t);
 
-Ember.Handlebars.registerBoundHelper('t', tHelper);
+loadInitializers(App, config.modulePrefix);
 
 $(document).ready(function(){
   'use strict';
