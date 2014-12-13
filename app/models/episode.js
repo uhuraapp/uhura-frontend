@@ -1,3 +1,4 @@
+/* global $ */
 import DS from 'ember-data';
 import Config from '../config/environment';
 

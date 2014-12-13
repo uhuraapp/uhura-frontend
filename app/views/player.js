@@ -1,3 +1,4 @@
+/* global $ */
 import Ember from 'ember';
 
 export default Ember.View.extend({
@@ -6,7 +7,7 @@ export default Ember.View.extend({
   classNames: ["the-player"],
   click: function(e) {
     if(!$(e.target).is(".playpause") && this.controller.get('miniPlayer')) {
-      this.controller.send('togglePlayer')
+      this.controller.send('togglePlayer');
     }
   },
   contentDidChange: function() {
@@ -39,7 +40,7 @@ export default Ember.View.extend({
 
       media.addEventListener('loadeddata', function() {
         controller.set('loaded', true);
-      })
+      });
 
       /*
       media.addEventListener('pause', function(e) {

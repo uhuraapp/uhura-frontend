@@ -18,7 +18,8 @@ export default Ember.ObjectController.extend({
   actions: {
     playpause: function () {
       var audio = this.get('audio');
-      this.get('playing') ? audio.pause() : audio.play();
+      var fn = this.get('playing') ? audio.pause : audio.play;
+      fn();
       this.set('playing', !this.get('playing'));
     },
     togglePlayer: function() {
