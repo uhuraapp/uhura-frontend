@@ -1,5 +1,9 @@
 {{#if subscribed}}
-  <button class="uk-button uk-button-success fa fa-check" {{action 'unsubscribeChannel' id}}>Subscribed</button>
+<button class="uk-button uk-button-success fa fa-check" {{action 'unsubscribeChannel' id}}>
+  {{t 'components.subscribe_button.subscribed'}}
+</button>
 {{else}}
-  <button class="uk-button uk-button-primary" {{action 'subscribeChannel' id}}>Subscribe!</button>
+<button class="uk-button uk-button-primary" {{action 'subscribeChannel' id}}>
+  {{t 'components.subscribe_button.subscribe'}}
+</button>
 {{/if}}

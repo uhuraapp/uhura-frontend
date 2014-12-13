@@ -11,13 +11,13 @@
   <div class="uk-float-left">
     <button {{action "playpause"}} class="highlight">
       {{#if playing}}
-      PAUSE
+      {{t 'components.episode_list_item.pause'}}
       {{else}}
-      PLAY
+      {{t 'components.episode_list_item.play'}}
       {{/if}}
     </button>
     <button {{action "info"}} data-uk-tooltip="{pos:'bottom'}" class="more-info">
-      INFO
+      {{t 'components.episode_list_item.info'}}
     </button>
   </div>
 
