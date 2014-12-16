@@ -6,10 +6,14 @@ var Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.route('channel.new');
-  this.route('channel', {path: "/:channel_id"});
+  this.resource('channels');
+  this.route('channel', {path: "/channels/:channel_id"});
   this.route('donate');
-  this.resource('settings', function() { });
+  this.route('login');
+
+  this.route('users', function(){
+    this.resource('settings');
+  });
 });
 
 export default Router;

@@ -20,7 +20,7 @@ module.exports = function(environment) {
   };
 
 
-  ENV.API_URL = "http://uhura-api.herokuapp.com"
+  ENV.API_URL = "http://127.0.0.1:3000"
 
   ENV.contentSecurityPolicy = {
     'img-src': "'self' *",
