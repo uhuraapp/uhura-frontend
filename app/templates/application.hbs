@@ -1,9 +1,25 @@
-{{partial "partials/sidebar-web"}}
-{{partial "partials/sidebar-mobile"}}
+{{#if session.isAuthenticated}}
+  {{partial "partials/sidebar-web"}}
+  {{partial "partials/sidebar-mobile"}}
 
-<div id="content" class="uk-float-right uk-animation-fade uk-width-large-7-10 uk-width-small-1-1">
-  {{outlet}}
-</div>
+  <div id="content" class="uk-float-right uk-animation-fade uk-width-large-7-10 uk-width-small-1-1">
+    {{outlet}}
+  </div>
+{{else}}
+    <header class="home">
+      <hgroup>
+        {{#link-to 'index'}}
+          <h1>Uhura</h1>
+          <h2>Podcast Manager</h2>
+        {{/link-to}}
+      </hgroup>
+    </header>
+
+  <div id="content" class="uk-float-right uk-animation-fade uk-width-large-1-1 uk-width-small-1-1">
+    {{outlet}}
+  </div>
+{{/if}}
+
 
 {{render 'player'}}
 

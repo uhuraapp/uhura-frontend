@@ -30,6 +30,11 @@ module.exports = function(environment) {
     'style-src': "'self' 'unsafe-inline' http://fonts.googleapis.com",
   }
 
+  ENV['simple-auth'] = {
+    authorizer: 'authorizer:uhura',
+    crossOriginWhitelist: [ENV.API_URL]
+  }
+
   if (environment === 'development') {
     ENV.APP.LOG_RESOLVER = false;
     ENV.APP.LOG_ACTIVE_GENERATION = false;

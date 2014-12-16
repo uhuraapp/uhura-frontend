@@ -19,6 +19,7 @@
     "typicons": "~2.0.6",
     "font-awesome": "~4.2.0",
     "mediaelement": "~2.16.2",
-    "uhura-i18n": "git@github.com:uhuraapp/uhura-i18n.git"
+    "uhura-i18n": "git@github.com:uhuraapp/uhura-i18n.git",
+    "ember-simple-auth": "0.7.2"
   }
 }
