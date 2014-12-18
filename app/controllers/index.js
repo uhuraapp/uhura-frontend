@@ -12,11 +12,8 @@ export default Ember.Controller.extend({
         try {
           if(loginWindow.closed) {
             clearInterval(timer);
-            UserUtils.getUser().then(function(user){
-              _this.get('session').authenticate('authenticator:uhura', user);
-              _this.set('loading', false);
-            }, function(){ alert("error"); });
-
+            _this.get('session').authenticate('authenticator:uhura');
+            _this.set('loading', false);
           }
         } catch(e){
           console.log(e);
