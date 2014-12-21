@@ -1,14 +1,52 @@
+import Ember from 'ember';
 import Base from 'simple-auth/authenticators/base';
-import UserUtils from '../utils/user';
+import ENV from '../config/environment';
 
 export default Base.extend({
-  restore: function(data) {
-    debugger
+  authURLForProvider: function(provider){
+    return ENV.API_URL + "/v2/auth/" + provider;
   },
-  authenticate: function(options) {
-    return UserUtils.getUser();
+  getUserData: function(){
+    return Ember.$.ajax({
+      url: ENV.API_URL + "/v2/user",
+      type: "GET",
+      xhrFields: {
+        withCredentials: true
+      }
+    });
   },
-  invalidate: function(data) {
-    debugger
-  }
+  restore: function(properties) {
+    var propertiesObject = Ember.Object.create(properties);
+    return new Ember.RSVP.Promise(function(resolve, reject) {
+      if (!Ember.isEmpty(propertiesObject.get('token'))) {
+        resolve(properties)
+      } else {
+        reject()
+      }
+    });
+  },
+  authenticate: function(provider) {
+    var _this = this;
+    return new Ember.RSVP.Promise(function(resolve, reject) {
+      var loginWindow = window.open(_this.authURLForProvider(provider));
+      var checkLogin = function(){
+        try {
+          if(loginWindow.closed) {
+            _this.getUserData().then(function(data) {
+              Ember.run(function() { resolve(data); });
+            }, function(xhr, status, error) {
+              Ember.run(function() { reject(xhr.responseJSON || xhr.responseText); });
+            });
+          } else {
+            window.setTimeout(checkLogin, 500);
+          }
+        } catch(e){
+          Ember.run(function() { reject(e); });
+        }
+      };
+
+      window.setTimeout(checkLogin, 500);
+    });
+  },
+  invalidate: function(data) {   debugger  }
 });
