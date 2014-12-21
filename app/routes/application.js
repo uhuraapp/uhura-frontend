@@ -12,7 +12,6 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
       });
     });
   },
-
   activate: function(){
     var title = "Dashboard - Uhura App";
 
