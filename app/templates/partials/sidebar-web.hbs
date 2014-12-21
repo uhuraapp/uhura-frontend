@@ -27,15 +27,10 @@
         {{/link-to}}
       </li>
       {{/if}}
-      <li class="donate">
-        {{#link-to 'donate' }}
-          <span class="typcn typcn-gift"></span>{{t "sidebar.donate"}}
-        {{/link-to}}
-      </li>
       <li>
       {{#if session.isAuthenticated}}
-        <a href="/users/sign_out">
-          <span class="typcn typcn-power-outline"></span>{{t "sidebar.sign_out"}}
+        <a {{ action 'invalidateSession' }}>
+           <span class="typcn typcn-power-outline"></span>{{t "sidebar.sign_out"}}
         </a>
       {{else}}
         {{#link-to 'login' }}
