@@ -48,5 +48,18 @@ export default Base.extend({
       window.setTimeout(checkLogin, 500);
     });
   },
-  invalidate: function(data) {   debugger  }
+  invalidate: function(data) {
+    return new Ember.RSVP.Promise(function(resolve, reject) {
+      Ember.$.ajax({
+        url: ENV.API_URL + "/v2/user/logout",
+        type: "GET",
+        xhrFields: {
+          withCredentials: true
+        }
+      }).always(function(){
+        document.cookie = "_session=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        resolve();
+      });
+    });
+  }
 });
