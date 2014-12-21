@@ -6,7 +6,7 @@ export default Ember.View.extend({
   classNameBindings: ['hasModel::uk-hidden', 'controller.miniPlayer:player-mini:player-full'],
   classNames: ["the-player"],
   click: function(e) {
-    if(!$(e.target).is(".playpause") && this.controller.get('miniPlayer')) {
+    if((!$(e.target).is(".playpause") && this.controller.get('miniPlayer')) || ($(e.target).is(".close"))) {
       this.controller.send('togglePlayer');
     }
   },

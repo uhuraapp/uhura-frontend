@@ -6,6 +6,8 @@
   position: fixed
   bottom: 5px
   height: 70px
+  .close
+    display: none
   .player-audio-element
     display: none
   #player
@@ -69,6 +71,11 @@
     left: 0
     right: 0
     background-color: #3E4651
+    .close
+      position: absolute
+      top: 0
+      right: 0
+      display: block
     .player-audio-element
       display: block
     #player
@@ -195,7 +202,6 @@
   height: 14px
   top: -1px
   background: url('handle-sm.png') no-repeat
-
 .audio-player, .audio-player div, .audio-player h2, .audio-player a, .audio-player span, .audio-player button
     margin: 0
     padding: 0
