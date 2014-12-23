@@ -68,7 +68,6 @@
     height: 100%
     bottom: 0
     top: 0
-    left: 0
     right: 0
     background-color: #3E4651
     .close
@@ -119,6 +118,9 @@
         .mejs-time
           width: 100%
           padding: 0
+    +respond-to(400px)
+      max-width: 300px
+
 
 .mejs-controls div.mejs-time-rail
   width: 100%

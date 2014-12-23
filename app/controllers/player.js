@@ -24,7 +24,6 @@ export default Ember.ObjectController.extend({
     togglePlayer: function() {
       var miniPlayer = this.get('miniPlayer');
       this.set('miniPlayer', !miniPlayer);
-      Ember.$('body').css('overflow', !miniPlayer ? "auto" : "hidden");
     }
   }
 });
