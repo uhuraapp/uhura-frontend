@@ -53,8 +53,17 @@ export default Ember.View.extend({
         App.PLAYER.current.set("playing", true);
       }, false);
 
-      media.addEventListener('ended', App.PLAYER.APIS.audio.nextTrack);
       */
+      media.addEventListener('ended', function(){
+        var episodes = Ember.$('li.episode').get().reverse();
+        for (var i = 0; i <= episodes.length; i++) {
+          var episode = $(episodes[i]);
+          if(episode.find('button.typcn-tick').length === 0) {
+            episode.find('.play').click();
+            break;
+          }
+        }
+      });
     };
   }
 });
