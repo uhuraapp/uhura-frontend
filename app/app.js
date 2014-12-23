@@ -13,13 +13,17 @@ var App = Ember.Application.extend({
   Resolver: Resolver
 });
 
+// TODO: add i18n to a initializer
 Ember.Handlebars.registerBoundHelper('t', i18n.t);
 
 loadInitializers(App, config.modulePrefix);
 
+
+// TODO: add fixSidebar to a external lib
 $(document).ready(function(){
   'use strict';
   $(window).on('resize', fixSidebarHeight);
+  setTimeout(fixSidebarHeight, 5);
 });
 
 var fixSidebarHeight;

@@ -1,3 +1,17 @@
+EMBER_CLI_VERSION = 1.4.0
+
+upgrade:
+	npm uninstall -g ember-cli
+	npm cache clean
+	bower cache clean
+	npm install -g ember-cli
+	rm -rf node_modules bower_components dist tmp
+	npm install --save-dev ember-cli#$(EMBER_CLI_VERSION)
+	npm install
+	bower install
+	ember init
+
+
 ASSETS_DIR=public/assets
 
 build: clean deps_save test assets

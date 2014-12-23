@@ -19,9 +19,9 @@ export default Base.extend({
     var propertiesObject = Ember.Object.create(properties);
     return new Ember.RSVP.Promise(function(resolve, reject) {
       if (!Ember.isEmpty(propertiesObject.get('token'))) {
-        resolve(properties)
+        resolve(properties);
       } else {
-        reject()
+        reject();
       }
     });
   },
@@ -34,7 +34,7 @@ export default Base.extend({
           if(loginWindow.closed) {
             _this.getUserData().then(function(data) {
               Ember.run(function() { resolve(data); });
-            }, function(xhr, status, error) {
+            }, function(xhr) {
               Ember.run(function() { reject(xhr.responseJSON || xhr.responseText); });
             });
           } else {
@@ -48,8 +48,8 @@ export default Base.extend({
       window.setTimeout(checkLogin, 500);
     });
   },
-  invalidate: function(data) {
-    return new Ember.RSVP.Promise(function(resolve, reject) {
+  invalidate: function() {
+    return new Ember.RSVP.Promise(function(resolve) {
       Ember.$.ajax({
         url: ENV.API_URL + "/v2/user/logout",
         type: "GET",
