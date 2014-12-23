@@ -1,7 +1,10 @@
 import Ember from 'ember';
 
-import LoginControllerMixin from 'simple-auth/mixins/login-controller-mixin';
-
-export default Ember.Controller.extend(LoginControllerMixin, {
-  authenticator: 'authenticator:uhura'
+export default Ember.Controller.extend({
+  authenticator: 'authenticator:uhura',
+  actions: {
+    authenticate: function (provider) {
+      this.get('session').authenticate('authenticator:uhura', provider);
+    }
+  }
 });
