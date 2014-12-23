@@ -1,16 +1,15 @@
-{{#with episode}}
 <h3 class="title">
-  {{title}}
+  {{episode.title}}
 </h3>
 
 <div class="description uk-hidden">
-  {{description}}
+  {{episode.description}}
 </div>
 
 <div class="actions">
   <div class="uk-float-left">
     <button {{action "playpause"}} class="highlight">
-      {{#if playing}}
+      {{#if episode.playing}}
       {{t 'components.episode_list_item.pause'}}
       {{else}}
       {{t 'components.episode_list_item.play'}}
@@ -22,9 +21,8 @@
   </div>
 
   <div class="uk-float-right">
-    <button {{action 'listened'}} {{bind-attr data-id=id}} data-uk-tooltip="{pos:'bottom'}" {{bind-attr class=":typcn :icon :listened listened:typcn-tick:typcn-tick-outline"}}></button>
+    <button {{action 'listened'}} {{bind-attr data-id=episode.id}} data-uk-tooltip="{pos:'bottom'}" {{bind-attr class=":typcn :icon :listened episode.listened:typcn-tick:typcn-tick-outline"}}></button>
 
-    <button {{action 'download'}} {{bind-attr data-id=id}} data-uk-tooltip="{pos:'bottom'}" class="typcn icon typcn-download download"></button>
+    <button {{action 'download'}} {{bind-attr data-id=episode.id}} data-uk-tooltip="{pos:'bottom'}" class="typcn icon typcn-download download"></button>
   </div>
 </div>
-{{/with}}

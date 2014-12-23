@@ -6,14 +6,17 @@ export default DS.Model.extend({
   title: DS.attr('string'),
   description: DS.attr('string'),
   source_url: DS.attr('string'),
+  listened: DS.attr(),
   channel: DS.belongsTo('channel'),
 
   listenedDidChange: function(){
-    $.get(
+    if(this.get('listened')) {
+      $.get(
         Config.API_URL +
-        '/api/v2/episodes/' +
+        '/v2/episodes/' +
         this.id +
         '/listened'
       );
+    }
   }.observes('listened')
 });

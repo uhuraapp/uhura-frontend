@@ -23,15 +23,13 @@
       <li class="nav-group">
         <ul>
           {{#each channel in model}}
-            {{#with channel}}
-              <li {{bind-attr class="to_view:new:ok" }}>
-                {{#link-to 'channel' id}}
-                  <img {{bind-attr src=image_url}} />
-                  <span class="title">{{title}}</span>
-                  {{#if to_view}}<i>{{to_view}}</i>{{/if}}
-                {{/link-to}}
-              </li>
-            {{/with}}
+            <li {{bind-attr class="channel.to_view:new:ok" }}>
+              {{#link-to 'channel' channel.id}}
+                <img {{bind-attr src=channel.image_url}} />
+                <span class="title">{{channel.title}}</span>
+                {{#if channel.to_view}}<i>{{channel.to_view}}</i>{{/if}}
+              {{/link-to}}
+            </li>
           {{/each}}
         </ul>
       </li>

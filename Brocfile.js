@@ -8,8 +8,6 @@ var mergeTrees = require('broccoli-merge-trees');
 
 var app = new EmberApp();
 
-app.import("bower_components/jquery.cookie/jquery.cookie.js");
-
 app.import("bower_components/uikit/scss/uikit.scss");
 app.import("bower_components/uikit/js/uikit.js");
 

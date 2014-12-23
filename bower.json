@@ -1,7 +1,7 @@
 {
   "name": "uhuraapp",
   "dependencies": {
-    "handlebars": "~1.3.0",
+    "handlebars": "2.0.0",
     "jquery": "^1.11.1",
     "ember": "1.9.0",
     "ember-data": "1.0.0-beta.12",
