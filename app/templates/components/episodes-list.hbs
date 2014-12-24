@@ -1,3 +1,7 @@
 {{#each episode in episodes}}
  {{episode-list-item episode=episode}}
 {{/each}}
+
+{{#infinite-scroll content=episodes hasMore=hasMore}}
+  <span>Loading...</span>
+{{/infinite-scroll}}
