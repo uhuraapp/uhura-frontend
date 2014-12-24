@@ -1,0 +1,16 @@
+<div id="settings">
+  <h3>{{t 'titles.settings'}}</h3>
+  <ul>
+    <li>
+      <div class="uk-form-select" data-uk-form-select>
+        <span>Language: </span>
+        {{view "select"
+          content=languages
+          optionValuePath="content.key"
+          optionLabelPath="content.name"
+          selectionBinding="selectedLanguage"
+          value=currentLanguage}}
+      </div>
+    </li>
+  </ul>
+</div>
