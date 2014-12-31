@@ -1,6 +1,5 @@
 /* global fixSidebarHeight */
 import Ember from 'ember';
-import ChannelService from '../services/channel';
 
 export default Ember.Route.extend({
   activate: function() {
@@ -14,8 +13,5 @@ export default Ember.Route.extend({
       var controllerA = this.container.lookup("controller:application");
       routeA.model().then(function(data){ controllerA.set("model", data); });
     }
-  },
-  model: function() {
-    return (new ChannelService).top();
   }
 });
