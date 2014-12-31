@@ -7,7 +7,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
     'use strict';
     var _this = this;
     return new Ember.RSVP.Promise( function (resolve) {
-      _this.store.find('users/subscription').then(resolve, function(){
+      _this.store.find('subscription').then(resolve, function(){
         resolve([]);
       });
     });
