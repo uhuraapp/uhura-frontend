@@ -1,13 +1,15 @@
-/* global $ */
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  activate: function () {
-    var title = this.modelFor('channel').get('title');
+  setupController: function (controller, model) {
+    this._super(controller, model);
 
-    $(document).attr('title', title);
-    $("[property='og:title']").attr('content', title);
+    var title = model.get('title');
 
-    $.UIkit.offcanvas.hide(true);
+    Ember.$("meta[name='description']").attr('value', model.get('description'));
+    Ember.$("[property='og:image']").attr('content', model.get('image_url'));
+    Ember.$("[property='og:title']").attr('content', title);
+    Ember.$(document).attr('title', title);
+    Ember.$.UIkit.offcanvas.hide(true);
   }
 });
