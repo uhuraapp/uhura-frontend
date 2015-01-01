@@ -8,6 +8,7 @@ export default DS.Model.extend({
   source_url: DS.attr('string'),
   listened: DS.attr(),
   channel: DS.belongsTo('channel'),
+  published_at: DS.attr('string'),
 
   listenedDidChange: function(){
     if(this.get('listened')) {
