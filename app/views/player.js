@@ -6,8 +6,10 @@ export default Ember.View.extend({
   classNameBindings: ['hasModel::uk-hidden', 'controller.miniPlayer:player-mini:player-full'],
   classNames: ["the-player"],
   click: function(e) {
-    if((!$(e.target).is(".playpause") && this.controller.get('miniPlayer')) || ($(e.target).is(".close"))) {
-      this.controller.send('togglePlayer');
+    var controller = this.get('controller');
+
+    if((!$(e.target).is(".playpause") && controller.get('miniPlayer')) || ($(e.target).is(".close"))) {
+      controller.send('togglePlayer');
     }
   },
   contentDidChange: function() {
@@ -18,6 +20,9 @@ export default Ember.View.extend({
       var audio = this.$('audio');
       audio.attr('src', model.get('source_url'));
       audio.mediaelementplayer({
+        pluginPath: 'assets/',
+        enablePluginDebug: true,
+        plugins: ['flash','silverlight'],
         alwaysShowControls: true,
         audioVolume: 'vertical',
         features: ['playpause','progress','volume', 'current'],
@@ -33,27 +38,13 @@ export default Ember.View.extend({
 
       media.addEventListener('timeupdate', function () {
         var playing = Math.round(100 * media.currentTime / media.duration);
-        if (playing > 95) {
-          controller.get('model').set('listened', true);
-        }
+        if (playing > 95) { controller.get('model').set('listened', true); }
       }, false);
 
       media.addEventListener('loadeddata', function() {
         controller.set('loaded', true);
       });
 
-      /*
-      media.addEventListener('pause', function(e) {
-        App.PLAYER.isPlaying  = false;
-        App.PLAYER.current.set("playing", false);
-      }, false);
-
-      media.addEventListener('play', function(e) {
-        App.PLAYER.isPlaying  = true;
-        App.PLAYER.current.set("playing", true);
-      }, false);
-
-      */
       media.addEventListener('ended', function(){
         var episodes = Ember.$('li.episode').get().reverse();
         for (var i = 0; i <= episodes.length; i++) {
