@@ -19,7 +19,7 @@ export default Ember.View.extend({
       audio.attr('src', model.get('source_url'));
       audio.mediaelementplayer({
         alwaysShowControls: true,
-        audioVolume: 'horizontal',
+        audioVolume: 'vertical',
         features: ['playpause','progress','volume', 'current'],
         success: this.successCallback(this)
       });
