@@ -6,5 +6,6 @@ export default DS.Model.extend({
   description: DS.attr('string'),
   copyrigth: DS.attr('string'),
   episodes: DS.hasMany('episode'),
-  raw_id: DS.attr('string')
+  raw_id: DS.attr('string'),
+  subscribed: DS.attr()
 });

@@ -1,8 +1,7 @@
 <div id="channel-profile" class="about uk-grid" data-uk-grid-margin>
   <div class="image-subscribe-button uk-width-small-1-1 uk-width-medium-3-10 uk-float-left">
     <img {{bind-attr src=image_url}} />
-    {{subscribe-button}}
-
+    {{subscribe-button channel=model}}
   </div>
 
   <div class="info uk-width-small-1-1 uk-width-medium-7-10 uk-float-right">

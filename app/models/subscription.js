@@ -6,5 +6,6 @@ export default DS.Model.extend({
   image_url:  DS.attr(),
   url:        DS.attr(),
   uri:        DS.attr(),
-  to_view:    DS.attr()
+  to_view:    DS.attr(),
+  channel_id: DS.attr()
 });
