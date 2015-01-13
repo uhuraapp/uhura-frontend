@@ -4,11 +4,6 @@
       <li class="nav-group">
         <ul>
           <li>
-            {{#link-to 'index' }}
-              <span class="typcn typcn-home-outline"></span>{{t "sidebar.home"}}
-            {{/link-to}}
-          </li>
-          <li>
             {{#link-to 'channels' }}
               <span class="typcn typcn-document-add"></span>{{t "sidebar.channels"}}
             {{/link-to}}
@@ -25,7 +20,6 @@
           {{#each channel in model}}
             <li {{bind-attr class="channel.to_view:new:ok" }}>
               {{#link-to 'channel' channel.id}}
-                <img {{bind-attr src=channel.image_url}} />
                 <span class="title">{{channel.title}}</span>
                 {{#if channel.to_view}}<i>{{channel.to_view}}</i>{{/if}}
               {{/link-to}}
