@@ -23,6 +23,7 @@
     "nanoscroller": "~0.8.4"
   },
   "resolutions": {
-    "ember": "beta"
+    "ember": "beta",
+    "handlebars": "2.0.0"
   }
 }
