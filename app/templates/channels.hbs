@@ -1,2 +1,11 @@
-
-ddasd
+<ul id="categories" class="uk-grid uk-grid-preserve" data-uk-grid-margin>
+  {{#each category in categories}}
+  <li class="uk-width-medium-1-5 ">
+    <a class="uk-panel uk-panel-hover" >
+      <img {{bind-attr src=category.thumb_url}} />
+      <div class="overlay"></div>
+      <h3>{{category.name}}</h3>
+    </a>
+  </li>
+  {{/each}}
+</ul>
