@@ -16,6 +16,7 @@ app.import("bower_components/mediaelement/build/mediaelementplayer.css");
 
 app.import("bower_components/mediaelement/build/flashmediaelement.swf", {destDir: 'assets'});
 app.import("bower_components/mediaelement/build/silverlightmediaelement.xap", {destDir: 'assets'});
+
 app.import("bower_components/mediaelement/build/controls.svg", {destDir: 'assets'});
 app.import("bower_components/mediaelement/build/controls.fw.png", {destDir: 'assets'});
 app.import("bower_components/mediaelement/build/controls.png", {destDir: 'assets'});
