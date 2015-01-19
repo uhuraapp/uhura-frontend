@@ -1,10 +1,9 @@
 <h2>{{t 'titles.categories'}} </h2>
-<ul id="categories" class="uk-grid uk-grid-preserve" data-uk-grid-margin>
+<ul id="categories">
   {{#each category in categories}}
-  <li class="uk-width-medium-1-5 ">
-    <a class="uk-panel uk-panel-hover" >
+  <li class="">
+    <a class="">
       <img {{bind-attr src=category.thumb_url}} />
-      <div class="overlay"></div>
       <h3>{{category.name}}</h3>
     </a>
   </li>
