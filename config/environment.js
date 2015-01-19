@@ -26,13 +26,10 @@ module.exports = function(environment) {
     'media-src': "'self' *",
     'content-src': "'self' *",
     'font-src': "'self' http://fonts.gstatic.com",
-    'style-src': "'self' 'unsafe-inline' http://fonts.googleapis.com",
+    'style-src': "'self' 'unsafe-inline' http://fonts.googleapis.com"
   }
 
-  ENV['simple-auth'] = {
-    authorizer: 'authorizer:uhura',
-    crossOriginWhitelist: [ENV.API_URL]
-  }
+
 
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
@@ -58,6 +55,11 @@ module.exports = function(environment) {
 
   if (environment === 'production') {
 
+  }
+
+  ENV['simple-auth'] = {
+    authorizer: 'authorizer:uhura',
+    crossOriginWhitelist: [ENV.API_URL]
   }
 
   return ENV;
