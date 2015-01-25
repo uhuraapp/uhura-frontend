@@ -2,6 +2,13 @@ EMBER_VERSION = beta
 EMBER_DATA_VERSION = 1.0.0-beta.15
 EMBER_CLI_VERSION = 0.2.0-beta-1
 
+build:
+	adb shell pm uninstall -k io.uhura.app
+	ember cordova:build --platform=android
+	cd cordova && cordova run android
+
+
+
 upgrade:
 	npm uninstall -g ember-cli
 	npm cache clean
