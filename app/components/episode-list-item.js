@@ -4,7 +4,11 @@ import Config from '../config/environment';
 
 export default Ember.Component.extend({
   tagName: "li",
-  classNames: ["episode"],
+  classNames: ['episode'],
+  classNameBindings: ["isListened"],
+  isListened: function() {
+    return this.get('episode.listened');
+  }.property('episode.listened'),
   actions: {
     info: function() {
       var t = $(event.target);
