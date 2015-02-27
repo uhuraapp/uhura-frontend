@@ -3,10 +3,10 @@ import Base from 'simple-auth/authenticators/base';
 import ENV from '../config/environment';
 
 export default Base.extend({
-  authURLForProvider: function(provider){
+  __authURLForProvider: function(provider){
     return ENV.API_URL + "/v2/auth/" + provider;
   },
-  getUserData: function(){
+  __getUserData: function() {
     return Ember.$.ajax({
       url: ENV.API_URL + "/v2/user",
       type: "GET",
@@ -15,6 +15,28 @@ export default Base.extend({
       }
     });
   },
+  __checkLogin: function(loginWindow, resolve, reject) {
+    var _this = this;
+    return function () {
+      try {
+        if (loginWindow.closed) {
+          _this.__checkCredentials(resolve, reject);
+        } else {
+          window.setTimeout(_this.__checkLogin(loginWindow, resolve, reject), 500);
+        }
+      } catch(e) {
+        Ember.run(function() { reject(e); });
+      }
+    };
+  },
+  __checkCredentials: function(resolve, reject) {
+    this.__getUserData().then(function(data){
+      Ember.run(function () { resolve(data); });
+    }, function(xhr) {
+      Ember.run(function (){ reject(xhr.responseJSON || xhr.responseText); });
+    });
+  },
+
   restore: function(properties) {
     var propertiesObject = Ember.Object.create(properties);
     return new Ember.RSVP.Promise(function(resolve, reject) {
@@ -28,24 +50,15 @@ export default Base.extend({
   authenticate: function(provider) {
     var _this = this;
     return new Ember.RSVP.Promise(function(resolve, reject) {
-      var loginWindow = window.open(_this.authURLForProvider(provider));
-      var checkLogin = function(){
-        try {
-          if(loginWindow.closed) {
-            _this.getUserData().then(function(data) {
-              Ember.run(function() { resolve(data); });
-            }, function(xhr) {
-              Ember.run(function() { reject(xhr.responseJSON || xhr.responseText); });
-            });
-          } else {
-            window.setTimeout(checkLogin, 500);
-          }
-        } catch(e){
-          Ember.run(function() { reject(e); });
-        }
-      };
+      var loginWindow = window.open(_this.__authURLForProvider(provider), '_blank', '');
+      window.setTimeout(_this.__checkLogin(loginWindow, resolve, reject), 500);
 
-      window.setTimeout(checkLogin, 500);
+      loginWindow.addEventListener('loadstop', function (event) {
+        if(event.url.match(provider + "/callback")) {
+          loginWindow.close();
+          _this.__checkCredentials(resolve, reject);
+        }
+      });
     });
   },
   invalidate: function() {
