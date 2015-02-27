@@ -5,7 +5,8 @@ module.exports = function(environment) {
     modulePrefix: 'uhuraapp',
     environment: environment,
     baseURL: '/',
-    locationType: 'auto',
+    defaultLocationType: 'auto',
+    locationType: 'hash',
     EmberENV: {
       FEATURES: {
       //  'ember-htmlbars': true
