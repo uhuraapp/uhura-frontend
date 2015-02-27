@@ -1,6 +1,6 @@
 EMBER_VERSION = beta
-EMBER_DATA_VERSION = 1.0.0-beta.12
-EMBER_CLI_VERSION = 0.1.5
+EMBER_DATA_VERSION = 1.0.0-beta.15
+EMBER_CLI_VERSION = 0.2.0-beta-1
 
 upgrade:
 	npm uninstall -g ember-cli
