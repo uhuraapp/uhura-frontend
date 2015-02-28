@@ -48,7 +48,7 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     ENV.APP.LOG_VIEW_LOOKUPS = true;
 
-    ENV.API_URL = "http://127.0.0.1:3000"
+    ENV.API_URL = "http://api.uhura.dev"
   }
 
   if (environment === 'test') {
