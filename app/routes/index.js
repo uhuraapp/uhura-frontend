@@ -1,10 +1,6 @@
-/* global fixSidebarHeight */
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  activate: function() {
-    setTimeout(fixSidebarHeight, 20);
-  },
   beforeModel: function() {
     if(!this.get('session.isAuthenticated')) {
       this.transitionTo("login");
