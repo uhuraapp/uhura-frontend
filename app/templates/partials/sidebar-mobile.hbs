@@ -5,44 +5,23 @@
         <ul>
           <li>
             {{#link-to 'channels' }}
-              <span class="typcn typcn-document-add"></span>{{t "sidebar.channels"}}
+            <span class="typcn typcn-document-add"></span>{{t "sidebar.channels"}}
             {{/link-to}}
           </li>
           <li>
-            <a href="/users/sign_out">
+            {{#link-to 'users.settings' }}
+            <span class="typcn typcn-cog-outline"></span>{{t "sidebar.settings"}}
+            {{/link-to}}
+          </li>
+          <li>
+            <a {{ action 'invalidateSession' }}>
               <span class="typcn typcn-power-outline"></span>{{t "sidebar.sign_out"}}
             </a>
           </li>
         </ul>
       </li>
-      <li class="nav-group">
-        <ul>
-          {{#each channel in model}}
-            <li {{bind-attr class="channel.to_view:new:ok" }}>
-              {{#link-to 'channel' channel.id}}
-                <span class="title">{{channel.title}}</span>
-                {{#if channel.to_view}}<i>{{channel.to_view}}</i>{{/if}}
-              {{/link-to}}
-            </li>
-          {{/each}}
-        </ul>
-      </li>
+      {{subscriptions-sidebar subscriptions=model}}
     </ul>
-
-    <footer>
-      <a href="http://twitter.com/UhuraApp">
-        <span class="typcn typcn-social-twitter"> </span>{{t "footer.follow_us"}}
-      </a>
-      <br />
-      <a href="https://www.facebook.com/uhuraapp">
-        <span class="typcn typcn-social-facebook"></span>{{t "footer.like_us"}}
-      </a>
-
-      <p>
-        {{{t "footer.contact"}}}<br />
-        <a href="mailto:dukekhaos@gmail.com">dukekhaos@gmail.com</a>
-      </p>
-    </footer>
   </div>
 </div>
 
