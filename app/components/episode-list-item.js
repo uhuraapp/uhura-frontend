@@ -25,7 +25,11 @@ export default Ember.Component.extend({
       window.open(url,'','');
     },
     listened: function() {
-      this.get('episode').set('listened', true);
+      var url = Config.API_URL + '/v2/episodes/' + this.get('episode').id + '/listened';
+      var __this = this;
+      $.get(url).then(function(){
+        __this.get('episode').set('listened', true);
+      })
     }
   }
 });
