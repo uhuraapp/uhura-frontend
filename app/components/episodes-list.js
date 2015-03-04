@@ -7,10 +7,11 @@ export default Ember.Component.extend({
   page: 1,
   actions: {
     fetchMore: function(callback) {
-      var episodes = this.get('episodes').content;
+      var episodes = this.get('episodes');
 
+      // TODO: use meta
       var promise = this.get('store').find("episode", {
-        since: episodes[ episodes.length - 1 ].get('published_at'),
+        since: episodes.currentState[ episodes.length - 1 ].get('published_at'),
         channel_id: this.get('channel.raw_id'),
         per_page: 20
       });
