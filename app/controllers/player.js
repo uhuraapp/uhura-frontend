@@ -18,7 +18,15 @@ export default Ember.ObjectController.extend({
   actions: {
     playpause: function () {
       var audio = this.get('audio');
-      if(this.get('playing')){ audio.pause(); } else { audio.play(); }
+      if(this.get('playing')){ audio.pause(); } else {
+        this.get('db').playing.query( 'episode_id' )
+          .only( this.get('model.id') )
+          .execute()
+          .then( function ( results ) {
+            if(results[0]) { audio.setCurrentTime(results[0].currentTime); }
+            audio.play();
+          });
+      }
       this.set('playing', !this.get('playing'));
     },
     togglePlayer: function() {

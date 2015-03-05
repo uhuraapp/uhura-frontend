@@ -34,11 +34,17 @@ export default Ember.View.extend({
   }.observes('controller.model'),
   successCallback: function(_this){
     return function(media) {
-      var controller = _this.get('controller');
+      var controller = _this.get('controller'),
+          db = controller.get('db');
 
       media.addEventListener('timeupdate', function () {
         var playing = Math.round(100 * media.currentTime / media.duration);
         if (playing > 95) { controller.get('model').set('listened', true); }
+
+        db.playing.update({
+          currentTime: media.currentTime,
+          episodeId: controller.get('model.id')
+        });
       }, false);
 
       media.addEventListener('loadeddata', function() {
