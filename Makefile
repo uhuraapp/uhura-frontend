@@ -3,8 +3,8 @@ EMBER_DATA_VERSION = 1.0.0-beta.15
 EMBER_CLI_VERSION = 0.2.0-beta-1
 
 build:
-	adb shell pm uninstall -k io.uhura.app
-	ember cordova:build --platform=android
+	adb shell pm uninstall -k io.uhuraapp.app
+	ember cordova:build --platform=android --environment=production
 	cd cordova && cordova run android
 
 
