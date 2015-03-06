@@ -19,7 +19,7 @@ export default Ember.ObjectController.extend({
     playpause: function () {
       var audio = this.get('audio');
       if(this.get('playing')){ audio.pause(); } else {
-        this.get('db').playing.query( 'episode_id' )
+        this.get('db').playing.query( 'episodeId' )
           .only( this.get('model.id') )
           .execute()
           .then( function ( results ) {
