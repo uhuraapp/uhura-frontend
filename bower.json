@@ -19,6 +19,7 @@
     "mediaelement": "~2.16.3",
     "uhura-i18n": "uhuraapp/uhura-i18n#master",
     "ember-simple-auth": "0.7.2",
-    "nanoscroller": "~0.8.4"
+    "nanoscroller": "~0.8.4",
+    "db.js": "~0.10.1"
   }
 }
