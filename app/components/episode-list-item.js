@@ -25,9 +25,10 @@ export default Ember.Component.extend({
       window.open(url,'','');
     },
     listened: function() {
-      var url = Config.API_URL + '/v2/episodes/' + this.get('episode').id + '/listened';
       var episode = this.get('episode');
-      ( episode.get('listened') ? $.ajax({url:url, type: "DELETE"}) : $.post(url) ).then(function(){
+      var url = Config.API_URL + '/v2/episodes/' + episode.id + '/listened',
+          method = this.get('episode') ? "POST" : "DELETE";
+      $.ajax({ url:url, type: method }).then(function(){
         episode.set('listened', !episode.get('listened'));
       });
     }
