@@ -1,9 +1,12 @@
 #channel-profile
   margin: 0
 
-  .image-subscribe-button, .info
-    text-align: center
+  .image-subscribe-button, .info, h2, .all-listened, .episodes-list
     margin-bottom: 20px
+
+  .image-subscribe-button
+    text-align: center
+
   img
     width: 50%
     border-radius: 100%
@@ -15,10 +18,8 @@
     font-size: 25px
     line-height: 1.5
 
-  h2, .all-listened, .episodes-list
-    margin-top: 20px
-
-  .all-listened
+  h3
+    text-align: left
 
 +respond-to(medium)
   #channel-profile
@@ -26,6 +27,7 @@
       margin-top: 20px
       font-size: 40px
       line-height: 50px
+
     img
       width: 100%
       max-width: 250px
