@@ -6,7 +6,11 @@ var compileSass = require('broccoli-sass');
 var writeManifest = require('broccoli-manifest');
 var mergeTrees = require('broccoli-merge-trees');
 
-var app = new EmberApp();
+var app = new EmberApp({
+  fingerprint: {
+    exclude: "uhura120.png"
+  }
+});
 
 app.import("bower_components/uikit/scss/uikit.scss");
 app.import("bower_components/uikit/js/uikit.js");
