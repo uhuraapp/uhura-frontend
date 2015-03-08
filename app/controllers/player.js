@@ -13,6 +13,8 @@ export default Ember.ObjectController.extend({
     if(model = this.get('model')) {
       model.set('playing', false);
     }
+
+    this.set('miniPlayer', true);
   }.observesBefore('model'),
 
   actions: {
