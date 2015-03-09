@@ -1,14 +1,23 @@
 /* global $ */
 import Ember from 'ember';
-import Config from '../config/environment';
+import config from '../config/environment';
 
 export default Ember.Component.extend({
   tagName: "li",
   classNames: ['episode'],
-  classNameBindings: ["isListened"],
+  classNameBindings: ["isListened", "isDownloaded"],
   isListened: function() {
     return this.get('episode.listened');
   }.property('episode.listened'),
+  isDownloaded: function() {
+    return this.get('episode.downloaded');
+  }.property('episode.downloaded'),
+  episodeDidChange: function() {
+    if(this.get('episode')) {
+      var downloader = this.container.lookup('controller:downloader');
+      downloader.check(this.get('episode'));
+    }
+  }.observes('episode').on('init'),
   actions: {
     info: function() {
       var t = $(event.target);
@@ -21,12 +30,17 @@ export default Ember.Component.extend({
       player.send('playpause');
     },
     download: function() {
-      var url = Config.API_URL + "/api/v2/episodes/" +this.get('episode').id + "/download";
-      window.open(url,'','');
+      var episode = this.get('episode'),
+          downloader = this.container.lookup('controller:downloader');
+      if(episode.get('downloaded')){
+        downloader.remove(episode);
+      } else {
+        downloader.start(episode);
+      }
     },
     listened: function() {
-      var episode = this.get('episode');
-      var url = Config.API_URL + '/v2/episodes/' + episode.id + '/listened',
+      var episode = this.get('episode'),
+          url = config.API_URL + '/v2/episodes/' + episode.id + '/listened',
           method = this.get('episode') ? "POST" : "DELETE";
       $.ajax({ url:url, type: method }).then(function(){
         episode.set('listened', !episode.get('listened'));

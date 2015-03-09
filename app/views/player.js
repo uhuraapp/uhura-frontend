@@ -18,7 +18,7 @@ export default Ember.View.extend({
     if(model){
       controller.set('loaded', false);
       var audio = this.$('audio');
-      audio.attr('src', model.get('source_url'));
+      audio.attr('src', model.get('downloaded') ? model.get('offline_url') : model.get('source_url'));
       audio.mediaelementplayer({
         pluginPath: 'assets/',
         enablePluginDebug: true,

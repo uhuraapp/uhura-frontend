@@ -1,3 +1,4 @@
+/* global db, Ember */
 export function initialize(container, application ) {
   application.deferReadiness();
 
@@ -15,9 +16,9 @@ export function initialize(container, application ) {
   } ).then( function ( db ) {
     application.register('app:database', db, { instantiate: false });
 
-    Ember.A(['route', 'controller', 'view']).forEach(function(scope){
+    Ember.A(['route', 'controller', 'view', 'component']).forEach(function(scope){
       application.inject(scope, 'db', 'app:database');
-    })
+    });
 
     application.advanceReadiness();
   } );

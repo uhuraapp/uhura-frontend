@@ -1,3 +1,4 @@
+/* global $ */
 export default function fixSidebarHeight() {
   'use strict';
   $('aside').css('height', window.innerHeight + 'px');

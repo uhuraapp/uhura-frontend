@@ -7,7 +7,7 @@ export default Ember.View.extend({
     this._super();
     Ember.run.scheduleOnce('afterRender', this, function(){
       $("#loading").fadeOut();
-      fixSidebarHeight()
+      fixSidebarHeight();
       $(window).on('resize', fixSidebarHeight);
     });
   }
