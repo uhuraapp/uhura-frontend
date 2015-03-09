@@ -50,11 +50,11 @@ export default Base.extend({
   authenticate: function(provider) {
     var _this = this;
     return new Ember.RSVP.Promise(function(resolve, reject) {
-      var loginWindow = window.open(_this.__authURLForProvider(provider), '_blank', '');
+      var loginWindow = window.open(_this.__authURLForProvider(provider), '_blank', 'location=no,toolbar=no');
       window.setTimeout(_this.__checkLogin(loginWindow, resolve, reject), 500);
 
       loginWindow.addEventListener('loadstop', function (event) {
-        if(event.url.match(provider + "/callback")) {
+        if(event.url.indexOf(_this.__authURLForProvider(provider) + "/callback") === 0) {
           loginWindow.close();
           _this.__checkCredentials(resolve, reject);
         }

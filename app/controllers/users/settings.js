@@ -16,9 +16,7 @@ export default Ember.Controller.extend({
   languageChanged: function() {
     if(this.get('selectedLanguage') && this.get('selectedLanguage').key !== this.i18n.currentLanguage) {
       this.i18n.setLang(this.get('selectedLanguage').key);
-      if(confirm(this.i18n.t("messages.reload_settings"))){
-        window.location.reload();
-      }
+      window.location.reload();
     }
   }.observes('selectedLanguage')
 });
