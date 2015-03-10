@@ -27,6 +27,10 @@
                         {
                             "xml": "<feature name=\"LocalNotification\"><param name=\"android-package\" value=\"de.appplant.cordova.plugin.localnotification.LocalNotification\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"NetworkStatus\"><param name=\"android-package\" value=\"org.apache.cordova.networkinformation.NetworkManager\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -37,6 +41,10 @@
                         {
                             "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
                             "count": 2
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
+                            "count": 1
                         }
                     ],
                     "/manifest/application": [
@@ -90,6 +98,9 @@
             "PACKAGE_NAME": "io.uhuraapp.app"
         },
         "de.appplant.cordova.plugin.local-notification": {
+            "PACKAGE_NAME": "io.uhuraapp.app"
+        },
+        "org.apache.cordova.network-information": {
             "PACKAGE_NAME": "io.uhuraapp.app"
         }
     },
