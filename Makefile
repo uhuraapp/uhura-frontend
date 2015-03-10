@@ -3,10 +3,21 @@ EMBER_DATA_VERSION = 1.0.0-beta.15
 EMBER_CLI_VERSION = 0.2.0-beta-1
 
 build:
-	ember cordova:build --platform=android --environment=production
+	ember cordova:build --platform=android
 	adb shell pm uninstall -k io.uhuraapp.app
 	ember cordova run android
 
+
+
+cordova/platforms/android/key-release.keystore:
+	keytool -genkey -v -keystore key-release.keystore -alias uhura -keyalg RSA -keysize 2048 -validity 10000
+
+store: cordova/platforms/android/key-release.keystore
+	ember cordova:build --platform=android --environment=production
+	cd cordova/platforms/android
+	jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore key-release.keystore ant-build/CordovaApp-release-unsigned.apk Uhura
+	jarsigner -verify -verbose -certs ant-build/CordovaApp-release-unsigned.apk
+	zipalign -v 4 ant-build/CordovaApp-release-unsigned.apk Uhura-store.apk
 
 
 upgrade:
