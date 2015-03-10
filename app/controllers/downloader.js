@@ -2,25 +2,6 @@
 import Ember from 'ember';
 import config from '../config/environment';
 
-var clamp = function(n, min, max) {
-  if (n < min) { return min; }
-  if (n > max) { return max; }
-  return n;
-};
-
-var inc = function(amount, n) {
-  if (typeof amount !== 'number') {
-    amount = (1 - n) * clamp(Math.random() * n, 0.1, 0.95);
-  }
-
-  n = clamp(n + amount, 0, 0.994);
-  return n;
-};
-
-var incProgress = function(n) {
-  return inc(Math.random() * 0.00002, n);
-};
-
 export default Ember.Controller.extend({
   downloaded: function(episode){
     return function(entry){
@@ -33,34 +14,49 @@ export default Ember.Controller.extend({
     return cordova.file.externalDataDirectory || cordova.file.dataDirectory;
   },
   download: function(episode){
-    var _this = this;
-    return function(){
-      var fileTransfer = new FileTransfer();
+    return () => {
       episode.set('progress', 0);
-      fileTransfer.onprogress = function(progressEvent) {
-          if (progressEvent.lengthComputable) {
-            episode.set('progress', progressEvent.loaded / progressEvent.total);
-          } else {
-            episode.set('progress', incProgress(episode.get('progress')));
-          }
-      };
-      var assetURL = config.API_URL + '/v2/episodes/' + episode.id + '/download';
-      fileTransfer.download(assetURL, _this.storePath() + episode.id,
-                               _this.downloaded(episode),
-                              function(err) {
-                                console.log("Error");
-                                console.dir(err);
-                                episode.set('progress', 0);
-                              });
+      this.__downloadFile(episode).then(  this.downloaded(episode),
+                                          function(err) {
+                                            console.log("Error");
+                                            console.dir(err);
+                                            episode.set('progress', 0);
+                                          }
+                                       );
     };
   },
   start: function(episode) {
-    window.resolveLocalFileSystemURL(this.storePath() + episode.id, this.downloaded(episode), this.download(episode));
+    this.__checkFile(episode).then(this.downloaded(episode), this.download(episode));
   },
   check: function(episode) {
-    window.resolveLocalFileSystemURL(this.storePath() + episode.id, this.downloaded(episode), function(){});
+    this.__checkFile(episode).then(this.downloaded(episode));
   },
   remove: function(episode) {
     // TODO: remove episodes
+  },
+
+  __checkFile: function (episode) {
+    return new Ember.RSVP.Promise( (resolve, reject) => {
+      if(window.cordova) {
+        window.resolveLocalFileSystemURL(this.storePath() + episode.id, resolve, reject);
+      } else {
+        console.log("TODO __checkFile");
+        reject();
+      }
+    });
+  },
+
+  __downloadFile: function (episode) {
+    return new Ember.RSVP.Promise( (resolve, reject) => {
+      var assetURL = config.API_URL + '/v2/episodes/' + episode.id + '/download';
+
+      if(window.cordova) {
+        var fileTransfer = new FileTransfer();
+        fileTransfer.download(assetURL, this.storePath() + episode.id, resolve, reject);
+      } else {
+        console.log("TODO __downloadFile");
+        reject();
+      }
+    });
   }
 });

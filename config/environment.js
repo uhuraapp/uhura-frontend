@@ -47,8 +47,6 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     ENV.APP.LOG_VIEW_LOOKUPS = true;
-
-    ENV.API_URL = "http://api.uhura.dev"
   }
 
   if (environment === 'test') {
