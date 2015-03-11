@@ -1,7 +1,7 @@
-import DS from 'ember-data';
 import ENV from '../config/environment';
+import RESTAdapter from '../adapters/offline-rest';
 
-export default DS.RESTAdapter.extend({
+export default RESTAdapter.extend({
   namespace: 'v2',
   host: ENV.API_URL,
   pathForType: function(type){
