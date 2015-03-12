@@ -8,20 +8,20 @@ export default DS.RESTAdapter.extend({
   init: function() {
     db.open( {
       server: 'uhura',
-      version: 1,
+      version: 2,
       schema: {
         subscriptions: {
-          key: { keyPath: 'id' , autoIncrement: true },
+          key: { keyPath: 'id' },
           indexes: {
           }
         },
         channels: {
-          key: { keyPath: 'id' , autoIncrement: true },
+          key: { keyPath: 'id' },
           indexes: {
           }
         },
         episodes: {
-          key: { keyPath: 'id' , autoIncrement: true },
+          key: { keyPath: 'id' },
           indexes: {
           }
         },
