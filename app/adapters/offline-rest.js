@@ -37,20 +37,18 @@ export default DS.RESTAdapter.extend({
     } );
   },
   findAll: function (store, type, sinceToken) {
-    return this.__callSuper(this._super, store, type, sinceToken)
+    return this.__callSuper(this._super, [store, type, sinceToken])
   },
   find: function (store, type, id, record) {
-    return this.__callSuper(this._super, store, type, id, record)
+    return this.__callSuper(this._super, [store, type, id, record])
   },
-  __callSuper: function() {
-    var options = Array.prototype.slice.call(arguments);
-    var superFn = options.shift();
-
-
-    return superFn.apply(this, options).then( data => {
-      this.__saveOffline(data);
-      return data;
-    });
+  __callSuper: function(superFn, options) {
+    return new Ember.RSVP.Promise((resolve, reject) => {
+       superFn.apply(this, options).then( data => {
+        this.__saveOffline(data);
+        resolve(data);
+      }, reject);
+    })
 
   },
   __saveOffline: function(data) {
