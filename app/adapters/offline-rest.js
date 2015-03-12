@@ -53,10 +53,14 @@ export default DS.RESTAdapter.extend({
   },
   __saveOffline: function(data) {
     for (var table in data) {
-      console.log(table, data )
-      Ember.makeArray(data[table]).forEach((record) => {
-        this.server[ pluralize(table) ].update(record);
-      });
+      var database = this.server[ pluralize(table) ];
+      if (database) {
+        Ember.makeArray(data[table]).forEach((record) => {
+          database.update(record);
+        });
+      } else {
+        console.warn(pluralize(table), 'table not found');
+      }
     }
   }
 });
