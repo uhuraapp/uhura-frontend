@@ -25,6 +25,12 @@ export default DS.RESTAdapter.extend({
           indexes: {
           }
         },
+        categories: {
+          key: { keyPath: 'id' },
+          indexes: {
+          }
+        },
+
       }
     } ).then(  ( s ) => {
       this.server = s;
