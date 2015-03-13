@@ -15,8 +15,13 @@ export default Ember.View.extend({
   contentDidChange: function() {
     var controller = this.get('controller');
     var model = controller.get('model');
+
     if(model){
+      if(!cordova.plugins.backgroundMode.isEnabled()){
+        cordova.plugins.backgroundMode.enable();
+      }
       controller.set('loaded', false);
+
       var audio = this.$('audio');
       audio.attr('src', model.get('downloaded') ? model.get('offline_url') : model.get('source_url'));
       audio.mediaelementplayer({
@@ -43,9 +48,16 @@ export default Ember.View.extend({
 
       media.addEventListener('loadeddata', function() {
         controller.set('loaded', true);
+        cordova.plugins.backgroundMode.onactivate = function () {
+          cordova.plugins.backgroundMode.configure({
+            title: controller.get('model.title'),
+            text: controller.get('model.channel.title')
+          });
+        };
       });
 
       media.addEventListener('ended', function(){
+        cordova.plugins.backgroundMode.disable();
         var episodes = Ember.$('li.episode').get().reverse();
         for (var i = 0; i <= episodes.length; i++) {
           var episode = $(episodes[i]);
