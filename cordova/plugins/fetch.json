@@ -30,5 +30,12 @@
             "type": "registry",
             "id": "org.apache.cordova.network-information"
         }
+    },
+    "de.appplant.cordova.plugin.background-mode": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/katzer/cordova-plugin-background-mode.git",
+            "subdir": "."
+        }
     }
 }
