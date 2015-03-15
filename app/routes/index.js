@@ -10,7 +10,7 @@ export default Ember.Route.extend({
         if(data.get('length') > 0){
           controllerA.set("model", data);
         } else {
-          __this.transitionTo('channels');
+          // __this.transitionTo('channels');
         }
       });
     } else {
