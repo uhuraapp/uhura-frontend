@@ -51,6 +51,8 @@ app.import("bower_components/uhura-i18n/dist/i18n.amd.js", {
   }
 });
 
+app.import("bower_components/ember-indexeddb-adapter/dist/ember_indexeddb_adapter.js");
+
 var tree = app.toTree();
 
 compileSass([tree], 'assets/app.sass', 'assets/app.css');

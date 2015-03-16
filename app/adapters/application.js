@@ -1,13 +1,13 @@
 import DS from 'ember-data';
-import ENV from '../config/environment';
 
-export default DS.RESTAdapter.extend({
-  namespace: 'v2',
-  host: ENV.API_URL,
-  pathForType: function(type){
-    return (this.__isUserPath(type) ? "users/" : "") + this._super(type);
-  },
-  __isUserPath: function(type) {
-    return ['subscription', 'suggestion'].indexOf(type) > -1;
+export default DS.IndexedDBAdapter.extend({
+  databaseName: 'uhura_database',
+  version: 12,
+
+  migrations: function() {
+    this.addModel('channel');
+    this.addModel('episode');
+    this.addModel('subscription');
+    this.addModel('emberSyncQueueModel');
   }
 });

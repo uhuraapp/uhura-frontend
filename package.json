@@ -40,5 +40,8 @@
     "ember-infinite-scroll": "^0.1.4",
     "express": "^4.8.5",
     "glob": "^4.0.5"
+  },
+  "dependencies": {
+    "ember-sync": "git://github.com/kurko/ember-sync#master"
   }
 }
