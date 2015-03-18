@@ -40,8 +40,6 @@ app.import("bower_components/font-awesome/fonts/fontawesome-webfont.ttf", {destD
 app.import("bower_components/font-awesome/fonts/fontawesome-webfont.woff", {destDir: 'fonts'});
 app.import("bower_components/font-awesome/fonts/fontawesome-webfont.eot", {destDir: 'fonts'});
 
-app.import("bower_components/db.js/src/db.js");
-
 app.import("bower_components/uhura-i18n/dist/i18n.amd.js", {
   exports: {
     "i18n": [
