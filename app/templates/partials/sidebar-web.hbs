@@ -10,11 +10,6 @@
     </header>
 
     <ul class="uk-animation-fade">
-      <li>
-        {{#link-to 'channels' }}
-          <span class="typcn typcn-document-add"></span>{{t "sidebar.channels"}}
-        {{/link-to}}
-      </li>
       {{#if session.isAuthenticated}}
       <li>
         {{#link-to 'users.settings' }}
