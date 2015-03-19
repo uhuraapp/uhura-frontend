@@ -12,8 +12,8 @@ var app = new EmberApp({
   }
 });
 
-app.import("bower_components/uikit/scss/uikit.scss");
-app.import("bower_components/uikit/js/uikit.js");
+app.import("bower_components/uikit/dist/scss/uikit.scss");
+app.import("bower_components/uikit/dist/js/uikit.js");
 
 app.import("bower_components/mediaelement/build/mediaelement-and-player.js");
 app.import("bower_components/mediaelement/build/mediaelementplayer.css");
