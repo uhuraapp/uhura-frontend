@@ -12,8 +12,8 @@ var app = new EmberApp({
   }
 });
 
-app.import("bower_components/uikit/scss/uikit.scss");
-app.import("bower_components/uikit/js/uikit.js");
+app.import("bower_components/uikit/dist/scss/uikit.scss");
+app.import("bower_components/uikit/dist/js/uikit.js");
 
 app.import("bower_components/mediaelement/build/mediaelement-and-player.js");
 app.import("bower_components/mediaelement/build/mediaelementplayer.css");
@@ -40,8 +40,6 @@ app.import("bower_components/font-awesome/fonts/fontawesome-webfont.ttf", {destD
 app.import("bower_components/font-awesome/fonts/fontawesome-webfont.woff", {destDir: 'fonts'});
 app.import("bower_components/font-awesome/fonts/fontawesome-webfont.eot", {destDir: 'fonts'});
 
-app.import("bower_components/db.js/src/db.js");
-
 app.import("bower_components/uhura-i18n/dist/i18n.amd.js", {
   exports: {
     "i18n": [
@@ -50,6 +48,8 @@ app.import("bower_components/uhura-i18n/dist/i18n.amd.js", {
     ],
   }
 });
+
+app.import("bower_components/ember-indexeddb-adapter/dist/ember_indexeddb_adapter.js");
 
 var tree = app.toTree();
 
