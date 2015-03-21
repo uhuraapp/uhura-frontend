@@ -7,12 +7,7 @@ build:
 	adb shell pm uninstall -k io.uhuraapp.app
 	ember cordova run android
 
-
-
-cordova/platforms/android/key-release.keystore:
-	keytool -genkey -v -keystore key-release.keystore -alias uhura -keyalg RSA -keysize 2048 -validity 10000
-
-store: cordova/platforms/android/key-release.keystore
+store:
 	ember cordova:build --platform=android --environment=production
 	cd cordova/platforms/android
 	jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore key-release.keystore ant-build/CordovaApp-release-unsigned.apk Uhura
