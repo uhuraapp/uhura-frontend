@@ -9,6 +9,7 @@ export default Ember.Controller.extend({
       this.set('loginError', false);
 
       this.get('session').authenticate('authenticator:uhura', provider).then(function(){
+        _this.container.lookup('route:application').refresh();
         _this.set('loading', false);
       }, function(){
         _this.set('loginError', true);
