@@ -4,7 +4,7 @@ EMBER_CLI_VERSION = 0.2.0-beta-1
 
 build:
 	ember cordova:build --platform=android
-	adb shell pm uninstall -k io.uhuraapp.app
+	adb shell pm uninstall -k io.uhura.app
 	ember cordova run android
 
 store:
