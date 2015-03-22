@@ -72,6 +72,7 @@ export default Base.extend({
       }).always(function(){
         document.cookie = "_session=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
         resolve();
+        window.location.reload()
       });
     });
   }
