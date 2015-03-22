@@ -1,5 +1,4 @@
 export function initialize(/* container, application */) {
-  // application.inject('route', 'foo', 'service:foo');
   document.addEventListener('deviceready', function () {
     cordova.plugins.backgroundMode.setDefaults({
       title: 'Processsing...',
