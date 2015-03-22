@@ -14,7 +14,7 @@ export default Ember.Controller.extend({
     if(window.cordova){
       return cordova.file.externalDataDirectory || cordova.file.dataDirectory;
     } else {
-      return "/"
+      return "/";
     }
   },
   download: function(episode){
@@ -35,7 +35,7 @@ export default Ember.Controller.extend({
   check: function(episode) {
     this.__checkFile(episode).then(this.downloaded(episode));
   },
-  remove: function(episode) {
+  remove: function(/* episode */) {
     // TODO: remove episodes
   },
 

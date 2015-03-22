@@ -1,4 +1,4 @@
-/* global $ */
+/* global $, cordova */
 import Ember from 'ember';
 
 export default Ember.View.extend({

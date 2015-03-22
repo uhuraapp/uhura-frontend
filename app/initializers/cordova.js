@@ -1,3 +1,4 @@
+/* globals cordova */
 export function initialize(/* container, application */) {
   document.addEventListener('deviceready', function () {
     cordova.plugins.backgroundMode.setDefaults({

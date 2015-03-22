@@ -13,7 +13,7 @@ var restAdapter = DS.RESTAdapter.extend({
 });
 
 var OnlineStore = DS.Store.extend({
-  adapterFor: function(type) {
+  adapterFor: function() {
     return this.container.lookup('adapter:_online_adapter');
   }
 });
