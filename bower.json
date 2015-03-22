@@ -20,6 +20,7 @@
     "uhura-i18n": "uhuraapp/uhura-i18n#master",
     "ember-simple-auth": "0.7.2",
     "nanoscroller": "~0.8.4",
-    "ember-indexeddb-adapter": "kurko/ember-indexeddb-adapter#master"
+    "ember-indexeddb-adapter": "kurko/ember-indexeddb-adapter#master",
+    "es6-shim": "~0.27.1"
   }
 }
