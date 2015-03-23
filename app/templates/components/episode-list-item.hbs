@@ -2,6 +2,8 @@
   {{episode.title}}
 </h3>
 
+<span class="progress">{{episode.progress}}%</span>
+
 <div class="description uk-hidden">
   {{episode.description}}
 </div>
@@ -22,7 +24,10 @@
 
   <div class="uk-float-right">
     <button {{action 'listened'}} {{bind-attr data-id=episode.id}} {{bind-attr class=":typcn :icon :listened episode.listened:typcn-tick:typcn-tick-outline"}} {{bind-attr data-listened=episode.listened}}></button>
-
-    <button {{action 'download'}} {{bind-attr data-id=episode.id}} {{bind-attr class=":typcn :icon episode.downloaded:typcn-trash:typcn-download :download"}}></button>
+    {{#if episode.downloading}}
+      <img class="downloading" src="/assets/loading-download.gif" />
+    {{else}}
+      <button {{action 'download'}} {{bind-attr data-id=episode.id}} {{bind-attr class=":typcn :icon episode.downloaded:typcn-trash:typcn-download :download"}}></button>
+    {{/if}}
   </div>
 </div>

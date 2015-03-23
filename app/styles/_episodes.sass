@@ -7,12 +7,11 @@ li.episode
   margin-bottom: 10px
   border-radius: 2px
   overflow: hidden
+  position: relative
   &.is-listened
     opacity: .5
   &.is-downloaded
-    box-shadow: 0 0 3px #030, 0 1px 1px #0C0
-
-
+    box-shadow: 0 0 3px #0C0, 0 1px 1px #0C0
 
   h3.title
     padding: 10px
@@ -20,6 +19,11 @@ li.episode
     font-weight: 500
     font-size: 18px
     line-height: 1.5
+  .progress
+    background: #DBDBDB
+    position: absolute
+    top: 0
+    right: 0
   .description
     padding: 5px 10px 20px 10px
     border-top: 1px solid #CCC
@@ -30,6 +34,11 @@ li.episode
     border-top: 1px solid #CCC
     overflow: auto
     padding: 0 5px
+    .downloading
+      box-shadow: none
+      float: left
+      margin: 10px 0
+      width: auto
     button
       outline: none
       background: transparent
