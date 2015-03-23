@@ -37,5 +37,11 @@
             "url": "https://github.com/katzer/cordova-plugin-background-mode.git",
             "subdir": "."
         }
+    },
+    "com.knowledgecode.cordova.websocket": {
+        "source": {
+            "type": "registry",
+            "id": "com.knowledgecode.cordova.websocket"
+        }
     }
 }

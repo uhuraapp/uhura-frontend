@@ -35,6 +35,10 @@
                         {
                             "xml": "<preference name=\"KeepRunning\" value=\"true\" />",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"WebSocket\"><param name=\"android-package\" value=\"com.knowledgecode.cordova.websocket.WebSocket\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -48,6 +52,10 @@
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.INTERNET\" />",
                             "count": 1
                         }
                     ],
@@ -77,6 +85,9 @@
         },
         "de.appplant.cordova.plugin.background-mode": {
             "PACKAGE_NAME": "io.uhuraapp.app"
+        },
+        "com.knowledgecode.cordova.websocket": {
+            "PACKAGE_NAME": "io.uhura.app"
         }
     },
     "dependent_plugins": {

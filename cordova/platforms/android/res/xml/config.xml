@@ -31,4 +31,7 @@
     <access origin="*" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="Orientation" value="portrait" />
+    <feature name="WebSocket">
+        <param name="android-package" value="com.knowledgecode.cordova.websocket.WebSocket" />
+    </feature>
 </widget>

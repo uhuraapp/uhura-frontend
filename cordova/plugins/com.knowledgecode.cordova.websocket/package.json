@@ -1,0 +1,22 @@
+{
+    "version": "0.8.3",
+    "name": "com.knowledgecode.cordova.websocket",
+    "cordova_name": "WebSocket for Android",
+    "description": "Cordova WebSocket Plugin for Android",
+    "license": "Apache 2.0",
+    "keywords": [
+        "cordova",
+        "phonegap",
+        "websocket",
+        "android"
+    ],
+    "platforms": [
+        "android"
+    ],
+    "engines": [
+        {
+            "name": "cordova",
+            "version": ">=3.0.0"
+        }
+    ]
+}

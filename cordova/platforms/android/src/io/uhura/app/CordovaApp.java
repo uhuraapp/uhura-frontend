@@ -17,7 +17,7 @@
        under the License.
  */
 
-package io.uhuraapp.app;
+package io.uhura.app;
 
 import android.os.Bundle;
 import org.apache.cordova.*;
