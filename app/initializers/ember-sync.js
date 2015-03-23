@@ -7,6 +7,7 @@ export function initialize( container, application ) {
 
   application.inject('route', 'emberSync', "lib:emberSync");
   application.inject('controller', 'emberSync', "lib:emberSync");
+  application.inject('component', 'emberSync', "lib:emberSync");
 }
 
 export default {

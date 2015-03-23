@@ -11,7 +11,7 @@ export default Ember.Component.extend({
           lastEpisode = (episodes.currentState ? episodes.currentState : episodes)[ episodes.length - 1 ];
 
       // TODO: use meta
-      var promise = this.get('store').find("episode", {
+      var promise = this.emberSync.find("episode", {
         since: lastEpisode.get('published_at'),
         channel_id: this.get('channel.raw_id'),
         per_page: 20
