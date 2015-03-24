@@ -3,7 +3,6 @@
     <ul class="uk-nav uk-nav-offcanvas" data-uk-nav>
       <li class="nav-group">
         <ul>
-
           <li>
             {{#link-to 'users.settings' }}
             <span class="typcn typcn-cog-outline"></span>{{t "sidebar.settings"}}
@@ -21,4 +20,7 @@
   </div>
 </div>
 
-<a class="uk-navbar-toggle uk-hidden-large uk-link" data-uk-offcanvas="{target:'#sidebar-mobile'}"></a>
+<a class="uk-hidden-large uk-button" data-uk-offcanvas="{target:'#sidebar-mobile'}">
+  <i class="uk-icon-bars"></i>
+  MENU
+</a>
