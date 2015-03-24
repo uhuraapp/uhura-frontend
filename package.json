@@ -39,9 +39,7 @@
     "ember-export-application-global": "^1.0.2",
     "ember-infinite-scroll": "^0.1.4",
     "express": "^4.8.5",
-    "glob": "^4.0.5"
-  },
-  "dependencies": {
+    "glob": "^4.0.5",
     "ember-sync": "git://github.com/kurko/ember-sync#master"
   }
 }
