@@ -16,7 +16,7 @@ var app = new EmberApp({
 app.import("bower_components/es6-shim/es6-sham.js")
 app.import("bower_components/es6-shim/es6-shim.js")
 
-app.import("bower_components/filer/dist/filer.js");
+app.import("bower_components/filer.js/src/filer.js");
 
 app.import("bower_components/uikit/dist/scss/uikit.scss");
 app.import("bower_components/uikit/dist/js/uikit.js");
@@ -57,7 +57,6 @@ app.import("bower_components/uhura-i18n/dist/i18n.amd.js", {
 
 app.import("bower_components/ember-indexeddb-adapter/dist/ember_indexeddb_adapter.js");
 
-app.import("bower_components/filer.js/src/filer.js");
 
 var tree = app.toTree();
 
