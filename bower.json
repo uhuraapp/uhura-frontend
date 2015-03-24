@@ -23,5 +23,9 @@
     "ember-indexeddb-adapter": "kurko/ember-indexeddb-adapter#master",
     "filer.js": "dukex/filer.js#master",
     "es6-shim": "~0.27.1"
+  },
+  "resolutions": {
+    "jquery": "^1.11.1",
+    "ember-data": "1.0.0-beta.15"
   }
 }
