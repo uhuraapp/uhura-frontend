@@ -1,7 +1,6 @@
 /* global require, module */
 
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
-var compileSass = require('broccoli-sass');
 
 var writeManifest = require('broccoli-manifest');
 var mergeTrees = require('broccoli-merge-trees');
@@ -54,12 +53,9 @@ app.import("bower_components/uhura-i18n/dist/i18n.amd.js", {
     ],
   }
 });
-
 app.import("bower_components/ember-indexeddb-adapter/dist/ember_indexeddb_adapter.js");
 
 
 var tree = app.toTree();
-
-compileSass([tree], 'assets/app.sass', 'assets/app.css');
 
 module.exports = mergeTrees([tree, writeManifest(tree)], {overwrite: true});
