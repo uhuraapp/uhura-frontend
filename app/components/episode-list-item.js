@@ -41,7 +41,7 @@ export default Ember.Component.extend({
     listened: function() {
       var episode = this.get('episode'),
           url = config.API_URL + '/v2/episodes/' + episode.id + '/listened',
-          method = this.get('episode') ? "POST" : "DELETE";
+          method = !this.get('episode.listened') ? "POST" : "DELETE";
       $.ajax({ url:url, type: method }).then(function(){
         episode.set('listened', !episode.get('listened'));
       });

@@ -18,9 +18,9 @@ export default Ember.ObjectController.extend({
 
   actions: {
     markAllAsListened: function () {
-      var i, episodes = this.get('model.episodes').content;
+      var i, episodes = this.get('episodesFiltered');
       for(i = 0; i < episodes.length; i++) {
-        episodes[i].set ('listened', true);
+        $(".listened[data-id='" + episodes[i].id + "']").trigger('click');
       }
     }
   }
