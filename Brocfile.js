@@ -9,7 +9,7 @@ var mergeTrees = require('broccoli-merge-trees');
 var app = new EmberApp({
   fingerprint: {
     exclude: ["uhura120.png"]
-  }
+  },
 });
 
 

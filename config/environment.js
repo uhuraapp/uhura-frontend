@@ -34,12 +34,6 @@ module.exports = function(environment) {
     'style-src': "'self' 'unsafe-inline' http://fonts.googleapis.com"
   }
 
-  ENV.sassOptions = {
-    inputFile: "app.sass"
-  }
-
-
-
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     ENV.APP.LOG_ACTIVE_GENERATION = true;
