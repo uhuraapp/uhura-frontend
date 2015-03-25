@@ -17,7 +17,7 @@ export default Ember.View.extend({
     var model = controller.get('model');
 
     if(model){
-      if(!cordova.plugins.backgroundMode.isEnabled()){
+      if(window.cordova && !cordova.plugins.backgroundMode.isEnabled()){
         cordova.plugins.backgroundMode.enable();
       }
       controller.set('loaded', false);
@@ -48,16 +48,18 @@ export default Ember.View.extend({
 
       media.addEventListener('loadeddata', function() {
         controller.set('loaded', true);
-        cordova.plugins.backgroundMode.onactivate = function () {
-          cordova.plugins.backgroundMode.configure({
-            title: controller.get('model.title'),
-            text: controller.get('model.channel.title')
-          });
-        };
+        if(window.cordova) {
+          cordova.plugins.backgroundMode.onactivate = function () {
+            cordova.plugins.backgroundMode.configure({
+              title: controller.get('model.title'),
+              text: controller.get('model.channel.title')
+            });
+          };
+        }
       });
 
       media.addEventListener('ended', function(){
-        cordova.plugins.backgroundMode.disable();
+        if(window.cordova){ cordova.plugins.backgroundMode.disable(); }
         var episodes = Ember.$('li.episode').get().reverse();
         for (var i = 0; i <= episodes.length; i++) {
           var episode = $(episodes[i]);
