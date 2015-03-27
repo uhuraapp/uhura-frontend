@@ -29,7 +29,9 @@ export default Ember.ObjectController.extend({
     },
     togglePlayer: function() {
       var miniPlayer = this.get('miniPlayer');
-      this.set('miniPlayer', !miniPlayer);
+      if(this.get('loaded')) {
+        this.set('miniPlayer', !miniPlayer);
+      }
     }
   }
 });
