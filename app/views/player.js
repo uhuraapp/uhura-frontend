@@ -34,6 +34,11 @@ export default Ember.View.extend({
         success: this.successCallback(this)
       });
       controller.set('audio', audio[0]);
+      setTimeout(function () {
+        if(!controller.get('loaded')) {
+          alert("Problems to play audio");
+        }
+      }, 4000);
       this.set('hasModel', true);
     }
   }.observes('controller.model'),
