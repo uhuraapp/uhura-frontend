@@ -1,5 +1,7 @@
 # Uhuraapp [![devDependency Status](https://david-dm.org/uhuraapp/uhura-dashboard/dev-status.svg)](https://david-dm.org/uhuraapp/uhura-dashboard#info=devDependencies)
 
+[![Join the chat at https://gitter.im/uhuraapp/uhura-dashboard](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/uhuraapp/uhura-dashboard?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 This README outlines the details of collaborating on this Ember application.
 A short introduction of this app could easily go here.
 
