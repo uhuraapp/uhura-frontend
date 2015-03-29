@@ -1,6 +1,5 @@
 /* global $ */
 import Ember from 'ember';
-import config from '../config/environment';
 
 export default Ember.Component.extend({
   tagName: "li",
@@ -26,8 +25,7 @@ export default Ember.Component.extend({
     },
     playpause: function() {
       var player = this.container.lookup('controller:Player');
-      player.set('model', this.get('episode'));
-      player.send('playpause');
+      player.playpause(this.get('episode'));
     },
     download: function() {
       var episode = this.get('episode'),
@@ -39,12 +37,7 @@ export default Ember.Component.extend({
       }
     },
     listened: function() {
-      var episode = this.get('episode'),
-          url = config.API_URL + '/v2/episodes/' + episode.id + '/listened',
-          method = !this.get('episode.listened') ? "POST" : "DELETE";
-      $.ajax({ url:url, type: method }).then(function(){
-        episode.set('listened', !episode.get('listened'));
-      });
+      this.get('episode').set('makeListened', new Date);
     }
   }
 });
