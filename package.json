@@ -1,6 +1,6 @@
 {
   "name": "uhuraapp",
-  "version": "0.0.0",
+  "version": "0.0.3-alpha",
   "private": true,
   "directories": {
     "doc": "doc",
