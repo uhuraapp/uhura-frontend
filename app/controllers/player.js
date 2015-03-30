@@ -1,4 +1,4 @@
-/* globals $ */
+/* globals $, cordova */
 import Ember from 'ember';
 import config from '../config/environment';
 
@@ -32,6 +32,7 @@ export default Ember.ObjectController.extend({
   },
 
   playerLoadedData: function () {
+    this.get('player').setCurrentTime(this.get('model.stopped_at'));
     this.set('loaded', true);
   },
 
@@ -69,7 +70,7 @@ export default Ember.ObjectController.extend({
       $.ajax({
         url: config.API_URL + '/v2/episodes/' + episode.id + '/listen',
         type: "PUT",
-        data: { at: at*1000 }
+        data: { at: at }
       }).always(() => {
         this.set('_locked', false);
       });

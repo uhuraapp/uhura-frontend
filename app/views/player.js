@@ -76,7 +76,7 @@ export default Ember.View.extend({
 
   __playerTimeUpdate: function () {
     if(this.__isPingTime(this.get('media'))) {
-      this.get('controller').get('model').set("stopped_at", parseInt(this.get('media').currentTime, 10))
+      this.get('controller').get('model').set("stopped_at", parseInt(this.get('media').currentTime, 10));
     }
     if(this.__isConsideredListened(this.get('media'))) {
       this.get('controller').playerTimeUpdate();
