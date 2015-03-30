@@ -1,6 +1,9 @@
+/* globals $ */
 import Ember from 'ember';
+import config from '../config/environment';
 
 export default Ember.ObjectController.extend({
+  _locked: false,
   playing: false,
   episodeLoaded: false,
   loaded: false,
@@ -56,6 +59,22 @@ export default Ember.ObjectController.extend({
       cordova.plugins.backgroundMode.enable();
     }
   },
+
+  stoppedAtChanged: function () {
+    var episode = this.get('model'),
+        at = episode.get('stopped_at');
+
+    if(at && !this.get('_locked')) {
+      this.set('_locked', true);
+      $.ajax({
+        url: config.API_URL + '/v2/episodes/' + episode.id + '/listen',
+        type: "PUT",
+        data: { at: at*1000 }
+      }).always(() => {
+        this.set('_locked', false);
+      });
+    }
+  }.observes('model.stopped_at'),
 
   actions: {
     playpause: function () {

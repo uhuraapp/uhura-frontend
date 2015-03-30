@@ -1,6 +1,5 @@
 /* global $ */
 import DS from 'ember-data';
-import config from '../config/environment';
 
 export default DS.Model.extend({
   title: DS.attr('string'),
@@ -20,6 +19,7 @@ export default DS.Model.extend({
       this.set('listened', !this.get('listened'));
     });
   }.observes('makeListened'),
+  stopped_at: DS.attr('number'),
   init: function () {
     this._super();
     this.set('progress', 0);

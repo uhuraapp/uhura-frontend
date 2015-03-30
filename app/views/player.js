@@ -75,6 +75,9 @@ export default Ember.View.extend({
   },
 
   __playerTimeUpdate: function () {
+    if(this.__isPingTime(this.get('media'))) {
+      this.get('controller').get('model').set("stopped_at", parseInt(this.get('media').currentTime, 10))
+    }
     if(this.__isConsideredListened(this.get('media'))) {
       this.get('controller').playerTimeUpdate();
     }
@@ -109,5 +112,9 @@ export default Ember.View.extend({
   __isConsideredListened: function (media) {
     var played = 100 * media.currentTime / media.duration;
     return played > this.CONSIDERED_LISTENED_PERCENT;
+  },
+
+  __isPingTime: function (media) {
+    return parseInt(media.currentTime, 10) % 5 === 0;
   }
 });

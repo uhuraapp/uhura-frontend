@@ -37,7 +37,7 @@ export default Ember.Component.extend({
       }
     },
     listened: function() {
-      this.get('episode').set('makeListened', new Date);
+      this.get('episode').set('makeListened', new Date());
     }
   }
 });
