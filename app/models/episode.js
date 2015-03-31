@@ -7,7 +7,6 @@ export default DS.Model.extend({
   description: DS.attr('string'),
   source_url: DS.attr('string'),
   listened: DS.attr(),
-  channel: DS.belongsTo('channel'),
   published_at: DS.attr('date'),
   source: function () {
     return this.get('source_url');

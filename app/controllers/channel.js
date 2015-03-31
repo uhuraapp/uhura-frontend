@@ -10,8 +10,6 @@ export default Ember.ObjectController.extend({
     var removeListened = this.get('removeListened');
     var episodes = this.get('model.episodes').sortBy('published_at').reverse();
 
-    this.set('lastEpisodes', episodes);
-
     return episodes.filter( (episode) => {
       return !(removeListened && episode.get('listened'));
     });

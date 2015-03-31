@@ -22,7 +22,8 @@
     "nanoscroller": "~0.8.4",
     "ember-indexeddb-adapter": "dukex/ember-indexeddb-adapter#master",
     "filer.js": "dukex/filer.js#master",
-    "es6-shim": "~0.27.1"
+    "es6-shim": "~0.27.1",
+    "moment": "~2.9.0"
   },
   "resolutions": {
     "jquery": "^1.11.1",
