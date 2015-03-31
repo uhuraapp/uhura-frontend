@@ -13,7 +13,7 @@ export default Ember.ObjectController.extend({
     return episodes.filter( (episode) => {
       return !(removeListened && episode.get('listened'));
     });
-  }.property('model.episodes.@each', 'removeListened'),
+  }.property('model.episodes.@each.listened', 'removeListened'),
 
   actions: {
     markAllAsListened: function () {
