@@ -1,11 +1,19 @@
 /* global $ */
 import Ember from 'ember';
 
+var uniqueBy = function(by, array) {
+    var o = {}, i, l = array.length, r = [];
+    for(i=0; i<l;i+=1) o[array[i][by]] = array[i];
+    for(i in o) r.push(o[i]);
+    return r;
+};
+
+
 export default Ember.ObjectController.extend({
  removeListened: true,
 
  filterEpisodes: function(filter) {
-   var episodes = this.get('model.episodes').sortBy('published_at').reverse();
+   var episodes = uniqueBy('id', this.get('model.episodes').toArray()).sortBy('published_at').reverse();
    return episodes.filter(filter);
  },
 
