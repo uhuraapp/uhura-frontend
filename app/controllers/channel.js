@@ -1,13 +1,6 @@
 /* global $ */
 import Ember from 'ember';
-
-var uniqueBy = function(by, array) {
-    var o = {}, i, l = array.length, r = [];
-    for(i=0; i<l;i+=1) o[array[i][by]] = array[i];
-    for(i in o) r.push(o[i]);
-    return r;
-};
-
+import uniqueBy from '../utils/unique-by';
 
 export default Ember.ObjectController.extend({
  removeListened: true,
