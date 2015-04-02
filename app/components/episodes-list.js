@@ -12,14 +12,6 @@ export default Ember.Component.extend({
 
       var since = moment.utc(lastEpisode.get('published_at')).format();
 
-      this.emberSync.offlineStore.findQuery('episode', {
-        channel_id: lastEpisode.get('channel_id')
-      }).then( (snapshot) => {
-        if(snapshot && snapshot.content) {
-          this.episodes.pushObjects(snapshot.content);
-        }
-      });
-
       // TODO: use meta
       var promise = this.emberSync.find("episode", {
         since: since,

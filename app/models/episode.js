@@ -3,12 +3,10 @@ import DS from 'ember-data';
 import config from '../config/environment';
 
 export default DS.Model.extend({
-  channel_id: DS.attr(),
   title: DS.attr('string'),
   description: DS.attr('string'),
   source_url: DS.attr('string'),
   listened: DS.attr(),
-  channel: DS.belongsTo('channel'),
   published_at: DS.attr('date'),
   source: function () {
     return this.get('source_url');
