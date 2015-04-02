@@ -93,6 +93,10 @@ export default Ember.View.extend({
   },
 
   __ended: function () {
+    this.get('controller').playerEnded();
+    this.set('miniPlayer', true);
+    this.set('hasModel', false);
+
     var episodesElements = $('li.episode').get().reverse();
     for (var i = 0; i <= episodesElements.length; i++) {
       var episodeElement = $(episodesElements[i]);
@@ -101,8 +105,6 @@ export default Ember.View.extend({
         break;
       }
     }
-
-    this.get('controller').playerEnded();
   },
 
   __isToggleButton: function (e) {

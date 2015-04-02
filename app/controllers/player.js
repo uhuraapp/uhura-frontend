@@ -41,6 +41,9 @@ export default Ember.Controller.extend({
   },
 
   playerEnded: function () {
+    this.get('model').set('playing', false)
+    this.set('loaded', false);
+    this.set('playing', false);
     if(window.cordova){ cordova.plugins.backgroundMode.disable(); }
   },
 
