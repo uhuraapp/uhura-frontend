@@ -54,6 +54,7 @@ app.import("bower_components/moment/min/moment-with-locales.js");
 
 app.import("bower_components/slideout/dist/slideout.js");
 
+app.import("bower_components/fastclick/lib/fastclick.js")
 
 var tree = app.toTree();
 
