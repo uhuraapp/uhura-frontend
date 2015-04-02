@@ -5,6 +5,7 @@ export default Ember.View.extend({
   CONSIDERED_LISTENED_PERCENT: 95,
   hasModel: false,
   miniPlayer: true,
+  templateName: 'player',
   classNameBindings: ['hasModel::uk-hidden', 'miniPlayer:player-mini:player-full'],
   classNames: ["the-player"],
   click: function(e) {
