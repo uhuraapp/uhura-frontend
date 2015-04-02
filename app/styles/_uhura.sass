@@ -23,14 +23,26 @@
     margin-bottom: 15px
   ol
     border-top: 1px solid rgb(63, 63, 63)
+    li a
+      border-top: darken(#1D1F20, 2%) 1px solid
+      border-bottom: lighten(#1D1F20, 20%) 1px solid
+      &:hover
+        background:  lighten(#1D1F20, 10%)
+        text-decoration: none
+
+    li:first-child a
+        border-top: none
+
   a
     color: #FFF
-    padding: 5px 10px
+    padding: 7px 10px
     font-size: 14px
     display: block
     white-space: nowrap
     overflow: hidden
     text-overflow: ellipsis
+
+
 
 #content
   background: #FFF
