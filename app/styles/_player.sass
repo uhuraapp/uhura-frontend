@@ -13,8 +13,9 @@
     -moz-user-select: none
     -ms-user-select: none
     user-select: none
-    &:focus
-      outline: 0
+    &:focus, &:active
+      outline: none !important
+
   .close
     display: none
     font-size: 30px
