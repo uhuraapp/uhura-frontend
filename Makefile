@@ -1,6 +1,6 @@
-EMBER_VERSION = beta
-EMBER_DATA_VERSION = 1.0.0-beta.15
-EMBER_CLI_VERSION = 0.2.1
+EMBER_VERSION = 1.11.0
+EMBER_DATA_VERSION = 1.0.0-beta.16.1
+EMBER_CLI_VERSION = 0.2.2
 
 build:
 	ember cordova:build --platform=android

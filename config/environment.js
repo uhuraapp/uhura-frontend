@@ -8,7 +8,6 @@ module.exports = function(environment) {
     defaultLocationType: 'auto',
     EmberENV: {
       FEATURES: {
-      //  'ember-htmlbars': true
       }
     },
 
