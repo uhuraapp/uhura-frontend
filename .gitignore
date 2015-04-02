@@ -43,3 +43,7 @@ cordova/platforms/wp8/.staging
 cordova/platforms/wp8/*.suo
 cordova/platforms/wp8/*.csproj.user
 cordova/www
+
+# ubuntu
+cordova/platforms/ubuntu/www
+cordova/platforms/ubuntu/**/www

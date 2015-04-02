@@ -1,0 +1,7 @@
+{PACKAGE_NAME} ({PACKAGE_VERSION}) trusty; urgency=medium
+
+  [ {MAINTAINER_NAME} ]
+  * upstream release
+
+ -- {MAINTAINER_NAME} <{MAINTAINER_EMAIL}>  Thu, 30 Aug 2014 06:06:06 +0000
+

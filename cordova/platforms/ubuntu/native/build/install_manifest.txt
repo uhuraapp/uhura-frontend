@@ -1,0 +1,10 @@
+/home/duke/src/uhura-dashboard/cordova/platforms/ubuntu/native/prefix/cordova-ubuntu
+/home/duke/src/uhura-dashboard/cordova/platforms/ubuntu/native/prefix/www/libcoreplugins.so
+/home/duke/src/uhura-dashboard/cordova/platforms/ubuntu/native/prefix/www/cordova.js
+/home/duke/src/uhura-dashboard/cordova/platforms/ubuntu/native/prefix/qml/main.qml
+/home/duke/src/uhura-dashboard/cordova/platforms/ubuntu/native/prefix/CordovaUbuntu.4.0/qmldir
+/home/duke/src/uhura-dashboard/cordova/platforms/ubuntu/native/prefix/CordovaUbuntu.4.0/libcordovaubuntuplugin.so
+/home/duke/src/uhura-dashboard/cordova/platforms/ubuntu/native/prefix/CordovaUbuntu.4.0/cordova_wrapper.js
+/home/duke/src/uhura-dashboard/cordova/platforms/ubuntu/native/prefix/CordovaUbuntu.4.0/CordovaViewInternal.qml
+/home/duke/src/uhura-dashboard/cordova/platforms/ubuntu/native/prefix/CordovaUbuntu.4.0/escape.js
+/home/duke/src/uhura-dashboard/cordova/platforms/ubuntu/native/prefix/CordovaUbuntu.4.0/CordovaView.qml

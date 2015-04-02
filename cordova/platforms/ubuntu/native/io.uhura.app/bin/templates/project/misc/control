@@ -1,0 +1,17 @@
+Source: {PACKAGE_NAME}
+Section: devel
+Priority: optional
+Maintainer: {MAINTAINER_NAME} <{MAINTAINER_EMAIL}>
+Build-Depends: ubuntu-sdk,
+         qtfeedback5-dev,
+         qtmultimedia5-dev,
+         qtpim5-dev,
+         libqt5sensors5-dev,
+         qtsystems5-dev,
+         qtlocation5-dev,
+         libicu-dev
+
+Package: {PACKAGE_NAME}
+Architecture: any
+Description: {PACKAGE_DESCRIPTION}
+Depends: ubuntu-sdk-libs

@@ -1,0 +1,27 @@
+#!/usr/bin/make -f
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+export CFLAGS := $(shell dpkg-buildflags --get CFLAGS) $(shell dpkg-buildflags --get CPPFLAGS)
+export CXXFLAGS := $(shell dpkg-buildflags --get CXXFLAGS) $(shell dpkg-buildflags --get CPPFLAGS)
+export LDFLAGS := $(shell dpkg-buildflags --get LDFLAGS) -Wl,--as-needed
+export QT_SELECT := qt5
+
+DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+
+# -----------------------------------
+
+%:
+	dh $@ --fail-missing
+
+override_dh_auto_configure:
+	dh_auto_configure -- -DCMAKE_INSTALL_PREFIX=/opt/{PACKAGE_NAME}
+
+override_dh_auto_install:
+	dh_auto_install --destdir=debian/tmp
+	cp -R $(CURDIR)/www/* $(CURDIR)/debian/tmp/opt/{PACKAGE_NAME}/www
+	cp -R $(CURDIR)/debian/config.xml $(CURDIR)/debian/tmp/opt/{PACKAGE_NAME}/
+	cp -R $(CURDIR)/qml/* $(CURDIR)/debian/tmp/opt/{PACKAGE_NAME}/qml
+	mkdir -p $(CURDIR)/debian/tmp/usr/share/applications/
+	cp -R $(CURDIR)/debian/cordova.desktop $(CURDIR)/debian/tmp/usr/share/applications/{PACKAGE_NAME}.desktop

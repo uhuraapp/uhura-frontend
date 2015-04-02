@@ -1,0 +1,45 @@
+{
+    "name": "cordova-ubuntu",
+    "version": "4.0.0",
+    "description": "Cordova tooling for the Ubuntu platform.",
+    "main": "bin/create",
+    "repository": {
+        "type": "git",
+        "url": "https://git-wip-us.apache.org/repos/asf/cordova-ubuntu.git"
+    },
+    "engineStrict": "true",
+    "engines": {
+        "node": ">=0.10.0"
+    },
+    "dependencies": {
+        "colors": "0.6.2",
+        "optimist": "0.6.0",
+        "q": "2.0.*",
+        "shelljs": "0.2.6",
+        "elementtree": "*"
+    },
+    "bundledDependencies": [
+        "colors",
+        "optimist",
+        "q",
+        "shelljs",
+        "elementtree"
+    ],
+    "keywords": [
+        "ubuntu",
+        "cordova",
+        "apache"
+    ],
+    "author": "Apache Software Foundation",
+    "contributors": [
+        {
+            "name": "Maxim Ermilov",
+            "email": "maxim.ermilov@canonical.com"
+        },
+        {
+            "name": "Jean-Francois Moy",
+            "email": "jean-francois.moy@canonical.com"
+        }
+    ],
+    "license": "Apache Version 2.0"
+}

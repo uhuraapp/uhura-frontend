@@ -1,0 +1,8 @@
+# Hashes of file build rules.
+1cab4af39fd7afd6499fb7494e2666ce CMakeFiles/copy_wwwqmlxml
+e551df826f43b1e819fb2e16782da8eb CMakeFiles/cordova-ubuntu_automoc
+e7619d72b02394ff6299aa408ae76bd9 CMakeFiles/cordovaubuntuplugin_automoc
+2e60772266412f898d110b6d9a59475a CMakeFiles/coreplugins_automoc
+1bef9986d3313ee7b86f9df634e17d15 CordovaUbuntu.4.0
+87cac87232e1776a54db69d700e9767b qml
+d081c124748771e96f1e7b616207c357 xml

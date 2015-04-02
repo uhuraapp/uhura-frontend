@@ -1,0 +1,12 @@
+ dpkg-buildpackage -rfakeroot -d -us -uc
+dpkg-buildpackage: source package io.uhura.app
+dpkg-buildpackage: source version 0.0.3-alpha
+dpkg-buildpackage: source distribution trusty
+dpkg-buildpackage: source changed by Duke Khaos <dukekhaos@gmail.com>
+ dpkg-source --before-build io.uhura.app
+dpkg-buildpackage: host architecture amd64
+ fakeroot debian/rules clean
+dh clean --fail-missing
+make: dh: Command not found
+make: *** [clean] Error 127
+dpkg-buildpackage: error: fakeroot debian/rules clean gave error exit status 2

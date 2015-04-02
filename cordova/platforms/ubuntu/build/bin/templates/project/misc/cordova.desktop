@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name={PACKAGE_TITLE}
+Exec=/opt/{PACKAGE_NAME}/cordova-ubuntu
+Terminal=false
+Type=Application
+X-Ubuntu-Touch=true
+Icon={PACKAGE_ICON}
