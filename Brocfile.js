@@ -52,6 +52,8 @@ app.import("bower_components/ember-indexeddb-adapter/dist/ember_indexeddb_adapte
 
 app.import("bower_components/moment/min/moment-with-locales.js");
 
+app.import("bower_components/slideout/dist/slideout.js");
+
 
 var tree = app.toTree();
 

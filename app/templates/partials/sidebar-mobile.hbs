@@ -1,26 +1,21 @@
-<div id="sidebar-mobile" class="uk-offcanvas">
-  <div class="uk-offcanvas-bar">
-    <ul class="uk-nav uk-nav-offcanvas" data-uk-nav>
-      <li class="nav-group">
-        <ul>
-          <li>
-            {{#link-to 'users.settings' }}
-            <span class="typcn typcn-cog-outline"></span>{{t "sidebar.settings"}}
-            {{/link-to}}
-          </li>
-          <li>
-            <a {{ action 'invalidateSession' }}>
-              <span class="typcn typcn-power-outline"></span>{{t "sidebar.sign_out"}}
-            </a>
-          </li>
-        </ul>
-      </li>
-      {{subscriptions-sidebar subscriptions=model}}
-    </ul>
-  </div>
-</div>
+<nav id="menu">
+  <ul>
+    <li>
+      <ul>
+        <li>
+          {{#link-to 'users.settings' }}
+          <span class="typcn typcn-cog-outline"></span>{{t "sidebar.settings"}}
+          {{/link-to}}
+        </li>
+        <li>
+          <a {{ action 'invalidateSession' }}>
+            <span class="typcn typcn-power-outline"></span>{{t "sidebar.sign_out"}}
+          </a>
+        </li>
+      </ul>
+    </li>
+    {{subscriptions-sidebar subscriptions=model}}
+  </ul>
+</nav>
 
-<a id="hamburger-menu" class="uk-hidden-large uk-button" data-uk-offcanvas="{target:'#sidebar-mobile'}">
-  <i class="uk-icon-bars"></i>
-  MENU
-</a>
+
