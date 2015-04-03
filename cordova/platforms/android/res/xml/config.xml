@@ -28,8 +28,9 @@
     <description>
     </description>
     <author email="dukekhaos@gmail.com" href="http://dukex.io">
-      Duke Khaos
+      Duke X
     </author>
+    <icon src="www/assets/uhura120.png" />
     <content src="index.html" />
     <access origin="*" />
     <preference name="DisallowOverscroll" value="true" />

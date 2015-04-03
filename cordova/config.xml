@@ -9,7 +9,7 @@
     <author email="dukekhaos@gmail.com" href="http://dukex.io">
       Duke X
     </author>
-    <icon src="assets/uhura120.png" />
+    <icon src="www/assets/uhura120.png" />
     <content src="index.html" />
     <access origin="*" />
     <preference name="DisallowOverscroll" value="true" />
