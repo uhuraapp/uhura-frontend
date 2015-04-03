@@ -67,7 +67,6 @@ export default Ember.View.extend({
 
   __playerBindEvents: function (media) {
     this.set('media', media);
-    this.get('controller').playerBindEvents();
     media.addEventListener('timeupdate', $.proxy(this.__playerTimeUpdate, this));
     media.addEventListener('loadeddata', $.proxy(this.__loadedData, this));
     media.addEventListener('play',       $.proxy(this.__playorpause, this));

@@ -3,12 +3,13 @@ import Ember from 'ember';
 import config from '../config/environment';
 
 export default Ember.Controller.extend({
-  _locked: false,
+  _locked: true,
   playing: false,
   episodeLoaded: false,
   loaded: false,
   player: null,
   playpause: function (episode) {
+    this.set('_locked', true);
     if(this.get('model') && episode.id === this.get('model').id) {
       var action = this.get('playing') ? 'pause' : 'play';
       this.get('player').media[action]();
@@ -34,6 +35,7 @@ export default Ember.Controller.extend({
   playerLoadedData: function () {
     this.get('player').setCurrentTime(this.get('model.stopped_at'));
     this.set('loaded', true);
+    this.set('_locked', false);
   },
 
   playerPlayOrPause: function () {
@@ -41,26 +43,21 @@ export default Ember.Controller.extend({
   },
 
   playerEnded: function () {
-    this.get('model').set('playing', false)
+    this.get('model').set('playing', false);
     this.set('loaded', false);
     this.set('playing', false);
     if(window.cordova){ cordova.plugins.backgroundMode.disable(); }
   },
 
-  playerBindEvents: function () {
-    if(window.cordova) {
+  updateAudio: function () {
+    if(window.cordova){
+      cordova.plugins.backgroundMode.enable();
       cordova.plugins.backgroundMode.onactivate = () => {
         cordova.plugins.backgroundMode.configure({
           title: this.get('model.title'),
           text:  this.get('model.channel.title')
         });
       };
-    }
-  },
-
-  updateAudio: function () {
-    if(window.cordova && !cordova.plugins.backgroundMode.isEnabled()){
-      cordova.plugins.backgroundMode.enable();
     }
   },
 

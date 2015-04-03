@@ -1,4 +1,4 @@
-/* global $, Slideout */
+/* global $ */
 import Ember from 'ember';
 import fixSidebarHeight from '../utils/fix-sidebar-height';
 

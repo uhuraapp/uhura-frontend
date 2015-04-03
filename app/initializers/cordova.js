@@ -5,7 +5,6 @@ export function initialize(/* container, application */) {
       title: 'Processsing...',
       text:'Processsing...'
     });
-    window.open = cordova.InAppBrowser.open;
   }, false);
 }
 
