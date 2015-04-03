@@ -9,9 +9,11 @@
     <author email="dukekhaos@gmail.com" href="http://dukex.io">
       Duke X
     </author>
-    <icon src="www/assets/uhura120.png" />
+    <icon src="www/assets/uhura.png" />
     <content src="index.html" />
     <access origin="*" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="Orientation" value="portrait" />
+    <preference name="SplashScreenDelay" value="5000"/>
+    <preference name="android-minSdkVersion" value="15" />
 </widget>
