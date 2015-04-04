@@ -1,7 +1,0 @@
-[Desktop Entry]
-Name=Uhura
-Exec=/opt/io.uhura.app/cordova-ubuntu
-Terminal=false
-Type=Application
-X-Ubuntu-Touch=true
-Icon=/opt/io.uhura.app/www/assets/uhura120.png
