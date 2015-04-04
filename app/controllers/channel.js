@@ -2,7 +2,7 @@
 import Ember from 'ember';
 import uniqueBy from '../utils/unique-by';
 
-export default Ember.ObjectController.extend({
+export default Ember.Controller.extend({
   removeListened: true,
 
   filterEpisodes: function(filter) {
