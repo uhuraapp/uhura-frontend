@@ -27,6 +27,8 @@ module.exports = function(environment) {
 
   ENV.contentSecurityPolicy = {
     'img-src': "'self' *",
+    'default-src': "'self' *",
+    'connect-src': "'self' http://api.uhura.io",
     'media-src': "'self' *",
     'content-src': "'self' *",
     'font-src': "'self' http://fonts.gstatic.com",
