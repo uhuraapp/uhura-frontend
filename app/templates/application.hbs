@@ -1,27 +1,7 @@
 {{#if session.isAuthenticated}}
-  {{partial "partials/sidebar-web"}}
-  {{partial "partials/sidebar-mobile"}}
-
-  <div id="content" class="uk-float-right uk-animation-fade uk-width-large-7-10 uk-width-small-1-1">
-    <a class="uk-hidden-large uk-button" id="hamburger-menu" {{action "toggleMenu"}}>
-      <i class="uk-icon-bars"></i>
-      MENU
-    </a>
-    {{outlet}}
-  </div>
+  {{partial "authenticated"}}
 {{else}}
-    <header class="home">
-      <hgroup>
-        {{#link-to 'index'}}
-          <h1>Uhura</h1>
-          <h2>Podcast Manager</h2>
-        {{/link-to}}
-      </hgroup>
-    </header>
-
-  <div id="content" class="unlogged uk-float-right uk-animation-fade uk-width-large-1-1 uk-width-small-1-1">
-    {{outlet}}
-  </div>
+  {{partial "unauthenticated"}}
 {{/if}}
 
-{{render 'player'}}
+{{!render 'player'}}

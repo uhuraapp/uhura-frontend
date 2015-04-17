@@ -1,40 +1,5 @@
 <div id="new-user">
-<h2>
-  Enjoy, Listen and Share your favorites podcasts now!
-</h2>
-
-<div class="enter-container">
-  <p> Create a free account </p>
-  <div class="connect-services">
-    <a {{action 'authenticate' 'google'}}>
-      <img src="https://developers.google.com/accounts/images/sign-in-with-google.png" />
-    </a>
-    <a {{action 'authenticate' 'facebook'}}>
-      <img src="http://i.stack.imgur.com/pZzc4.png" />
-    </a>
-  </div>
-  {{#if loginError}}
-    <div class="error-login uk-alert uk-alert-danger">{{t 'errors.login'}}</div>
-  {{else}}
-  {{#if loading}}
-    <div class="loading"><i class="loading uk-icon-spinner uk-icon-spin"></i></div>
-  {{/if}}
-  {{/if}}
-  <!--  <span>or</span>
-  <form>
-    <input type="email" placeholder="Email" />
-  </form>
-  -->
-</div>
-
-<!--
-<div class="demonstrate_container">
-  <span> Sync what your listened on all your devices </span>
-  <span> Download episodes if your prefer </span>
-  <span> Share episodes with your friends </span>
-  <span> Play everywhere </span>
-  <span> Find your favorites channels and keep it sync </span>
-  <img src="http://placehold.it/600x600">
-</div>
--->
+  <h2>
+    Enjoy your favorites podcasts <strong>wherever you are, wherever you'll go!</strong>
+  </h2>
 </div>

@@ -15,4 +15,11 @@ export default Router.map(function() {
   this.route('users', function() {
     this.route('settings');
   });
+  this.route('explore');
+  this.route('explore.category', {
+    path: '/explore/c/:uri'
+  });
+  this.route('channel_by_url', {
+    path: '/c/*url'
+  });
 });

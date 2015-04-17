@@ -1,0 +1,22 @@
+<h2>Your favorites podcasts with you everywhere!</h2>
+
+<form class="uk-form" {{action 'search' on='submit'}}>
+  <fieldset data-uk-margin>
+    <div class="uk-form-icon uk-width-1-1">
+      <i class="uk-icon-search"></i>
+      {{input class="uk-form-large uk-width-1-1" type="text" name="q" value=q placeholder="Search with Feed URL or a Topic"}}
+    </div>
+  </fieldset>
+</form>
+
+<!--ul id="">
+{{#each category in model}}
+<li>
+  <h3>
+    {{#link-to 'explore.category'}}
+    {{category.name}}
+    {{/link-to}}
+  </h3>
+</li>
+{{/each}}
+</ul-->

@@ -1,35 +1,103 @@
+body.explore
+  padding: 10px
+
+  header
+    margin-top: 0
+    h2
+      display: none
+
+  header, #content
+    max-width: 1024px
+    margin-left: auto
+    margin-right: auto
+    overflow: hidden
+
+  header hgroup
+    float: left
+    a
+      margin: 0
+      height: auto
+      width: auto
+
+  #content
+    padding: 0
+    h2
+      display: none
+      text-align: center
+      font-weight: 600
+      font-size: 27px
+      font-weight: 200
+      line-height: 1.5
+      letter-spacing: 2px
+      margin: 0 auto
+      margin-bottom: 30px
+      max-width: 600px
+
+  form
+    margin-bottom: 20px
+    input, label
+      width: 100%
+      max-width: 550px
+      margin: 0 auto
+      display: block
+
+    input
+      font-size: 15px
+      padding: 10px
+      line-height: 30px
+      border-radius: 3px
+      &:focus
+        outline-color: red
+
+
+  ul
+    margin-top: 50px
+    width: 100%
+    overflow: auto
+    li
+      position: relative
+      text-align: center
+      float: left
+      width: 20%
+      &::before
+        content: ""
+        display: block
+        padding-top: 100%
+      h3
+        color: #000
+        overflow: hidden
+        text-align: center
+        position: absolute
+        transform: translateY(-50%)
+        left: 0
+        bottom: 0
+        top: 50%
+        right: 0
+        font-size: 19px
+        padding: 0 10px
+
+
+
 #new-user
   h2
-    text-align: center
-    font-size: 27px
-    font-weight: 200
-    line-height: 1.5
-    letter-spacing: 2px
-    margin: 0 auto
-    margin-bottom: 30px
-    max-width: 500px
 
   .enter-container
     margin: 0 auto
-    max-width: 500px
+    max-width: 900px
     .connect-services
+      text-align: center
       overflow: hidden
     p
       text-align: center
       font-weight: 600
     a
-      display: block
-      // float: left
+      display: inline-block
       max-width: 250px
-      margin: 0 auto
     span
       text-align: center
       display: block
     form
-      //margin-top: 15px
       input
-        //padding: 10px
-        //font-size: 16px
         border: 1px solid #CCC
         margin: 0 auto
         border-radius: 3px 0 0 3px
@@ -44,9 +112,6 @@
     h2
       margin-top: 20px
       margin-bottom: 60px
-    .enter-container
-      a
-        float: left
 
 +respond-to(medium)
   #new-user
@@ -62,14 +127,3 @@
         margin-bottom: 20px
       span
         margin: 20px 0
-
-
-.unlogged
-  max-width: 700px
-  margin: 0 auto
-  float: none
-  background: #FFF
-  border: 1px solid #ccc
-  box-shadow: 0 0 2px #aaa
-  #channel-profile
-    margin: 0 0 0 -25px
