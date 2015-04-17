@@ -3,9 +3,6 @@
 import Ember from 'ember';
 
 export default Ember.Object.extend({
-  init: function () {
-    this.__withOpenedFS();
-  },
   write: function (filePath, data) {
     return new Ember.RSVP.Promise( (resolve, reject) => {
       this.__withOpenedFS().then( () => {

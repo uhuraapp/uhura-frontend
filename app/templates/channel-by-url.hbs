@@ -1,0 +1,9 @@
+{{#with model.channel as channel}}
+<h3>{{channel.title}}</h3>
+
+<ul>
+  {{#each episode in channel.episodes}}
+  <li>{{episode.title}}</li>
+  {{/each}}
+</ul>
+{{/with}}

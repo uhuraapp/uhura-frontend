@@ -1,0 +1,23 @@
+  <div class="enter-container">
+    <p> Create a free account </p>
+    <div class="connect-services">
+      <a {{action 'authenticate' 'google'}}>
+        <img src="https://developers.google.com/accounts/images/sign-in-with-google.png" />
+      </a>
+      <a {{action 'authenticate' 'facebook'}}>
+        <img src="http://i.stack.imgur.com/pZzc4.png" />
+      </a>
+    </div>
+    {{#if loginError}}
+    <div class="error-login uk-alert uk-alert-danger">{{t 'errors.login'}}</div>
+    {{else}}
+    {{#if loading}}
+    <div class="loading"><i class="loading uk-icon-spinner uk-icon-spin"></i></div>
+    {{/if}}
+    {{/if}}
+    <!--  <span>or</span>
+    <form>
+      <input type="email" placeholder="Email" />
+    </form>
+    -->
+  </div>
