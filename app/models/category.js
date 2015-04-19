@@ -21,8 +21,5 @@ var imageResizedURL = function(imageURL) {
 export default DS.Model.extend({
   name: DS.attr(),
   uri: DS.attr(),
-  channel: DS.attr(),
-  thumb_url: function(){
-    return imageResizedURL(this.get('channel.image_url'));
-  }.property('channel')
+  channels: DS.hasMany('channel'),
 });
