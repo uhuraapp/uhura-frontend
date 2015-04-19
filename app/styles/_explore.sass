@@ -1,5 +1,15 @@
 body.explore
   padding: 5px 30px 10px 30px
+  color: #FFF
+
+  background: rgb(14,21,22);
+  background: -moz-linear-gradient(-45deg,  rgba(14,21,22,1) 0%, rgba(23,61,66,1) 100%)
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(14,21,22,1)), color-stop(100%,rgba(23,61,66,1)))
+  background: -webkit-linear-gradient(-45deg,  rgba(14,21,22,1) 0%,rgba(23,61,66,1) 100%)
+  background: -o-linear-gradient(-45deg,  rgba(14,21,22,1) 0%,rgba(23,61,66,1) 100%)
+  background: -ms-linear-gradient(-45deg,  rgba(14,21,22,1) 0%,rgba(23,61,66,1) 100%)
+  background: linear-gradient(135deg,  rgba(14,21,22,1) 0%,rgba(23,61,66,1) 100%)
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0e1516', endColorstr='#173d42',GradientType=1 )
 
   header
     text-align: center
@@ -8,10 +18,61 @@ body.explore
       font-size: 45px
 
   h2
-    margin-top: 40px
+    margin-top: 10%
+    line-height: 1.5
     font-size: 25px
     text-align: center
-    font-weight: 600
+    color: #fff
 
   form
+    padding: 5px
     margin-top: 40px
+    margin-bottom: 200px
+    input
+      border-radius: 3px
+      font-weight: 900
+
+  ul#categories
+    padding: 0
+    margin: 0
+    list-style: none
+    ul
+      list-style: circle
+      padding: 0
+      max-height: 150px
+      overflow: hidden
+    h3
+      font-weight: 800
+      margin: 0
+      overflow: hidden
+      a
+        float: left
+        white-space: nowrap
+        text-overflow: ellipsis
+        overflow: hidden
+        max-width: 100%
+      .more
+        float: right
+        text-align: right
+        list-style: none
+        text-decoration: underline
+        font-size: 13px
+        line-height: 24px
+    a
+      display: block
+      color: #FFF
+    > li
+      padding: 0
+      margin-bottom: 40px
+      li
+        padding: 0 0 0 10px
+        border-left: 1px solid #BBB
+        margin: 0
+        a
+          text-overflow: ellipsis
+          white-space: nowrap
+          overflow: hidden
+          line-height: 2
+          font-size: 18px
+
+

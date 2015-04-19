@@ -1,22 +1,32 @@
 <h2>Your favorites podcasts with you everywhere!</h2>
 
-<form class="uk-form" {{action 'search' on='submit'}}>
+<form class="uk-form uk-container-center uk-width-medium-1-2" {{action 'search' on='submit'}}>
   <fieldset data-uk-margin>
     <div class="uk-form-icon uk-width-1-1">
       <i class="uk-icon-search"></i>
-      {{input class="uk-form-large uk-width-1-1" type="text" name="q" value=q placeholder="Search with Feed URL or a Topic"}}
+      {{input class="uk-form-large uk-width-1-1" type="text" name="q" value=q placeholder="Feed URL or a Channel Title"}}
     </div>
   </fieldset>
 </form>
 
-<!--ul id="">
-{{#each category in model}}
-<li>
-  <h3>
-    {{#link-to 'explore.category'}}
-    {{category.name}}
-    {{/link-to}}
-  </h3>
-</li>
-{{/each}}
-</ul-->
+<ul id="categories" class="uk-list uk-grid-width-small-1-1 uk-grid-width-medium-1-3 uk-grid-width-large-1-4 uk-width-xlarge-1-5">
+  {{#each category in model}}
+  <li >
+    <h3>
+      {{#link-to 'explore.category' category}}
+      {{category.name}}
+      {{/link-to}}
+
+      {{#link-to 'explore.category' category class="more"}}view more{{/link-to}}
+    </h3>
+    <ul>
+      {{#each channel in category.channels}}
+      <li>{{#link-to 'channel' channel}}
+        {{channel.title}}
+        {{/link-to}}
+      </li>
+      {{/each}}
+    </ul>
+  </li>
+  {{/each}}
+</ul>
