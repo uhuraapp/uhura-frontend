@@ -24,7 +24,8 @@
     "filer.js": "dukex/filer.js#master",
     "es6-shim": "~0.27.1",
     "moment": "~2.9.0",
-    "slideout": "https://github.com/Mango/slideout.git#~0.1.5"
+    "slideout": "https://github.com/Mango/slideout.git#~0.1.5",
+    "lunr.js": "~0.5.8"
   },
   "resolutions": {
     "jquery": "^1.11.1",
