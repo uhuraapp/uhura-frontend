@@ -17,7 +17,7 @@ export default Router.map(function() {
   });
   this.route('explore');
   this.route('explore.category', {
-    path: '/explore/c/:uri'
+    path: '/explore/c/:category_id'
   });
   this.route('channel_by_url', {
     path: '/c/*url'

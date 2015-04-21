@@ -4,12 +4,26 @@
   <fieldset data-uk-margin>
     <div class="uk-form-icon uk-width-1-1">
       <i class="uk-icon-search"></i>
-      {{input class="uk-form-large uk-width-1-1" type="text" name="q" value=q placeholder="Feed URL or a Channel Title"}}
+      {{input class="uk-form-large uk-width-1-1" type="text" name="query" value=query placeholder="Feed URL or a Channel Title"}}
     </div>
   </fieldset>
 </form>
 
-<ul id="categories" class="uk-list uk-grid-width-small-1-1 uk-grid-width-medium-1-3 uk-grid-width-large-1-4 uk-width-xlarge-1-5">
+{{#if results}}
+<div id="search-results">
+  <h3>Results for "{{q}}"</h3>
+  <ul id="search-channels" class="uk-grid">
+    {{#each channel in results}}
+    <li class=" uk-width-small-1-2 uk-width-medium-1-4 uk-width-large-1-5 uk-width-xlarge-1-6 ">
+      <img data-layzr="{{channel.image_url}}" src="assets/channel-placeholder.png" alt="{{channel.name}} image" />
+      {{channel.name}}
+    </li>
+    {{/each}}
+  </ul>
+</div>
+{{/if}}
+
+<ul id="categories" class="uk-list uk-grid-width-small-1-1 uk-grid-width-medium-1-3 uk-grid-width-large-1-4 uk-grid-width-xlarge-1-5">
   {{#each category in model}}
   <li >
     <h3>
@@ -30,3 +44,4 @@
   </li>
   {{/each}}
 </ul>
+
