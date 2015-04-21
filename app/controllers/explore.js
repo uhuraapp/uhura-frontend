@@ -23,7 +23,7 @@ export default Ember.Controller.extend({
 
   actions: {
     search: function () {
-      isURL(this.query) ? this.transitionToRoute('channel_by_url', {url: this.q}); :  this.set('q', this.query);
+      isURL(this.query) ? this.transitionToRoute('channel_by_url', {url: this.q}) : this.set('q', this.query)
     }
   }
 });
