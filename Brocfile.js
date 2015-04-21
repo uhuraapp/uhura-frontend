@@ -21,6 +21,8 @@ var app = new EmberApp({
   app.import("bower_components/uikit/js/components/grid.js");
 
   app.import("bower_components/lunr.js/lunr.js");
+
+  app.import("bower_components/layzr.js/dist/layzr.js");
   //
   // app.import("bower_components/mediaelement/build/mediaelement-and-player.js");
   // app.import("bower_components/mediaelement/build/mediaelementplayer.css");
