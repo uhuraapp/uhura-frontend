@@ -16,7 +16,7 @@
     {{#each channel in results}}
     <li class=" uk-width-small-1-2 uk-width-medium-1-4 uk-width-large-1-5 uk-width-xlarge-1-6 ">
       {{#link-to 'channel' channel}}
-      <img data-layzr="{{channel.image_url}}" src="assets/channel-placeholder.png" alt="{{channel.name}} image" />
+      <img data-layzr="{{channel.image_url}}" data-fallback="assets/channel-placeholder.png" src="assets/channel-placeholder-loading.jpg" />
       <span>{{channel.title}}</span>
       {{/link-to}}
     </li>
