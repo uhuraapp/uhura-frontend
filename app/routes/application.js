@@ -12,10 +12,11 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
   },
   model: function(){
     'use strict';
-    var _this = this;
-    return new Ember.RSVP.Promise( function (resolve) {
-      _this.emberSync.find('subscription').then(resolve, ()=> { resolve([]); });
-    });
+    if(this.get('session.isAuthenticated')) {
+      return this.emberSync.find('subscription');
+    } else {
+      return [];
+    }
   },
   activate: function(){
     var title = "Dashboard - Uhura App";
