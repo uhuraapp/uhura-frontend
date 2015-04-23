@@ -25,9 +25,9 @@
 </div>
 {{/if}}
 
-<ul id="categories" class="uk-list uk-grid-width-small-1-1 uk-grid-width-medium-1-3 uk-grid-width-large-1-4 uk-grid-width-xlarge-1-5">
+<ul id="categories" class="uk-list uk-grid" data-uk-grid-margin>
   {{#each category in model}}
-  <li >
+  <li class="uk-width-small-1-1 uk-width-medium-1-3 uk-width-large-1-4 uk-width-xlarge-1-5">
     <h3>
       {{#link-to 'explore.category' category}}
       {{category.name}}
