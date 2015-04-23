@@ -1,5 +1,7 @@
 import DS from 'ember-data';
 
+var IMAGE_HOST = "http://arcane-forest-5063.herokuapp.com";
+
 export default DS.Model.extend({
   title: DS.attr('string'),
   image_url: DS.attr('string'),
@@ -8,5 +10,12 @@ export default DS.Model.extend({
   episodes: DS.hasMany('episode'),
   raw_id: DS.attr('string'),
   subscribed: DS.attr(),
-  to_view: DS.attr()
+  to_view: DS.attr(),
+  imageURL: function () {
+    var url = this.get('image_url');
+    if(url !== "") {
+      return IMAGE_HOST + "/resolve?url=" + this.get('image_url');
+    }
+    return url;
+  }.property('image_url')
 });
