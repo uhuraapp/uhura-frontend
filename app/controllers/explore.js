@@ -8,7 +8,10 @@ export default Ember.Controller.extend({
   searching: false,
 
   queryChanges: function () {
-    if(!this.q){ return; }
+    if(!this.q || this.q == ""){
+      this.set('results', []);
+      return;
+    }
 
     this.set('query', this.q);
 
