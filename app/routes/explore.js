@@ -3,20 +3,21 @@ import Ember from 'ember';
 export default Ember.Route.extend({
   model: function () {
     return new Ember.RSVP.Promise((resolve) => {
-      this.emberSync.find('category').then((categories) => {
-        this.__indexChannels(categories);
-        resolve(categories);
-      });
+      // early resolve
+      resolve(this.store.all('category'));
+      this.onlineStore.fetchAll('category')
+        .then((categories) => { this.__index(categories.toArray()); });
     });
   },
-  __indexChannels: function (__categories) {
-    var categories = __categories.toArray();
+  __index: function (categories) {
     for (var i = 0, l = categories.length; i < l; i ++) {
       var category = categories[i].get('_data');
-      for (var j = 0, l1 = category.channels.length; j < l1; j ++) {
+      for (var j = 0, h = category.channels.length; j < h; j ++) {
         var channel = category.channels[j].get('_data');
         this.lunr.add(channel);
+        this.store.push('channel', channel);
       }
+      this.store.push('category', category);
     }
     this.lunr.index();
   }

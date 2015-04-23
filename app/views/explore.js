@@ -19,8 +19,8 @@ export default Ember.View.extend({
     var layzr = new Layzr({
       selector: '[data-layzr]',
       callback: function (node) {
-        if(!this.complete) {  this.onload = this.onerror = function () { check(this); };
-        } else { check(this); }
+        if (!this.complete) {  this.onload = this.onerror = function () { check(this); }; }
+        else { check(this); }
       }
     });
   }
