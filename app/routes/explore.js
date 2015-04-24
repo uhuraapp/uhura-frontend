@@ -19,5 +19,6 @@ export default Ember.Route.extend({
       this.store.push('category', category);
     }
     this.lunr.index();
+    this.controller.set('ready', true);
   }
 });
