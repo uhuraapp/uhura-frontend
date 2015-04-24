@@ -1,23 +1,11 @@
-p.not_found
-  text-align: center
-  font-size: 17px
-  border: 1px solid #e28327
-  border-radius: 3px
-
 ul.episodes
   padding: 0 5px
-
-li.episode
-  max-width: 100%
-  box-shadow: 0 0 3px #333, 0 1px 1px #CCC
-  margin-bottom: 10px
-  border-radius: 2px
-  overflow: hidden
-  position: relative
-  &.is-listened
-    opacity: .5
-  &.is-downloaded
-    box-shadow: 0 0 3px #0C0, 0 1px 1px #0C0
+  li.episode
+    max-width: 100%
+    box-shadow: 0 0 2px #333, 0 1px 1px #CCC
+    margin-bottom: 10px
+    overflow: hidden
+    border-radius: 2px
 
   h3.title
     padding: 10px
@@ -25,41 +13,60 @@ li.episode
     font-weight: 500
     font-size: 18px
     line-height: 1.5
-  .progress
-    background: #DBDBDB
-    position: absolute
-    top: 0
-    right: 0
+
   .description
     padding: 5px 10px 20px 10px
     border-top: 1px solid #CCC
-  .typcn-tick
-    color: green
+
   .actions
     background: #FFF
     border-top: 1px solid #CCC
     overflow: auto
     padding: 0 5px
-    .downloading
-      box-shadow: none
-      float: left
-      margin: 10px 0
-      width: auto
-    button
-      outline: none
-      background: transparent
-      display: block
-      float: left
-      margin: 0
-      font-size: 14px
-      text-transform: uppercase
-      padding: 10px
-      border: 0
-      cursor: pointer
-      &.highlight
-        color: #ff5722
-      &.active
-        color: #CCC
-      &.icon
-        font-size: 20px
-        padding: 5px 10px
+
+  button
+    outline: none
+    background: transparent
+    display: block
+    float: left
+    margin: 0
+    font-size: 14px
+    text-transform: uppercase
+    padding: 10px
+    border: 0
+    cursor: pointer
+    &.highlight
+      color: #ff5722
+    &.active
+      color: #CCC
+    &.icon
+      font-size: 20px
+      padding: 5px 10px
+
+//
+  p.not_found
+    text-align: center
+    font-size: 17px
+    border: 1px solid #e28327
+    border-radius: 3px
+  li.episode
+    position: relative
+    &.is-listened
+      opacity: .5
+    &.is-downloaded
+      box-shadow: 0 0 3px #0C0, 0 1px 1px #0C0
+    .progress
+      background: #DBDBDB
+      position: absolute
+      top: 0
+      right: 0
+
+    .typcn-tick
+      color: green
+    .actions
+      .downloading
+        box-shadow: none
+        float: left
+        margin: 10px 0
+        width: auto
+

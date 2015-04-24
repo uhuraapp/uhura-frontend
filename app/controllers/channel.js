@@ -17,11 +17,15 @@ export default Ember.Controller.extend({
     });
   }.property('model.episodes.@each.listened', 'removeListened'),
 
-  showMarkAllAsListened: function () {
-    return this.filterEpisodes( (episode) => {
+  allListenedButton: function () {
+    return this.get('session.isAuthenticated') && this.filterEpisodes( (episode) => {
       return !episode.get('listened');
     }).length > 0;
   }.property('model.episodes.@each.listened'),
+
+  removeListenedButton: function () {
+    return this.get('session.isAuthenticated');
+  }.property('session.isAuthenticated'),
 
   actions: {
     markAllAsListened: function () {

@@ -1,7 +1,7 @@
 {{#each episode in episodesFiltered}}
- {{episode-list-item episode=episode}}
+  {{episode-list-item episode=episode}}
 {{else}}
-<p class="uk-alert uk-alert-warning not_found">{{t 'views.channel.episodes_not_found'}}</p>
+  <p class="uk-alert uk-alert-warning not_found">{{t 'views.channel.episodes_not_found'}}</p>
 {{/each}}
 
 {{#infinite-scroll content=episodes hasMore=hasMore}}

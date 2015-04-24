@@ -1,33 +1,44 @@
-#channel-profile
-  margin: 0
+body.channel
+  header
+    margin-bottom: 30px
 
-  .image-subscribe-button, .info, h2, .all-listened, .episodes-list, label
-    margin-bottom: 20px
-
+#profile
   .image-subscribe-button
     text-align: center
 
-  img.channel-image
-    width: 50%
-    border-radius: 100%
-    margin: 20px auto
-    box-shadow: 0px 1px 2px #333
-    display: block
+  .image-subscribe-button, .info, h2
+    margin-bottom: 20px
 
   h1
     font-size: 25px
     line-height: 1.5
+    font-weight: 900
 
-  h3
-    text-align: left
+  h2
+    font-size: 20px
 
-+respond-to(medium)
+  img
+    width: 75%
+    border-radius: 50%
+    margin: 20px auto
+    box-shadow: 0px 1px 2px #333
+    display: block
+
+@import 'episodes'
+
+///
   #channel-profile
-    h1
-      margin-top: 20px
-      font-size: 40px
-      line-height: 50px
-
-    img
-      width: 100%
-      max-width: 250px
+    margin: 0
+    .image-subscribe-button, .info, h2, .all-listened, .episodes-list, label
+      margin-bottom: 20px
+    h3
+      text-align: left
+  +respond-to(medium)
+    #channel-profile
+      h1
+        margin-top: 20px
+        font-size: 40px
+        line-height: 50px
+      img
+        width: 100%
+        max-width: 250px
