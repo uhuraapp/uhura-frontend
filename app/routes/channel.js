@@ -2,9 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   model: function (params) {
-    return new Ember.RSVP.Promise(  (resolve) => {
-      resolve(this.emberSync.find('channel', params.channel_id));
-    });
+    return this.store.find('channel', params.channel_id);
   },
   setupController: function (controller, model) {
     this._super(controller, model);
@@ -15,6 +13,5 @@ export default Ember.Route.extend({
     Ember.$("[property='og:image']").attr('content', model.get('image_url'));
     Ember.$("[property='og:title']").attr('content', title);
     Ember.$(document).attr('title', title);
-    Ember.$.UIkit.offcanvas.hide(true);
   }
 });

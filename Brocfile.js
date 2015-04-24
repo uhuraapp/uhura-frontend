@@ -15,7 +15,6 @@ app.import("bower_components/uikit/js/uikit.js");
 app.import("bower_components/uikit/js/components/grid.js");
 app.import("bower_components/lunr.js/lunr.js");
 app.import("bower_components/layzr.js/dist/layzr.js");
-app.import("bower_components/ember-indexeddb-adapter/dist/ember_indexeddb_adapter.js");
 app.import("bower_components/moment/min/moment-with-locales.js");
 app.import("bower_components/fastclick/lib/fastclick.js")
 app.import("bower_components/mediaelement/build/mediaelement-and-player.js");

@@ -20,7 +20,6 @@
     "uhura-i18n": "uhuraapp/uhura-i18n#9905b08",
     "ember-simple-auth": "0.7.2",
     "nanoscroller": "~0.8.4",
-    "ember-indexeddb-adapter": "dukex/ember-indexeddb-adapter#master",
     "filer.js": "dukex/filer.js#master",
     "es6-shim": "~0.27.1",
     "moment": "~2.9.0",

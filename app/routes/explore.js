@@ -3,9 +3,8 @@ import Ember from 'ember';
 export default Ember.Route.extend({
   model: function () {
     return new Ember.RSVP.Promise((resolve) => {
-      // early resolve
       resolve(this.store.all('category'));
-      this.onlineStore.fetchAll('category')
+      this.store.fetchAll('category')
         .then((categories) => { this.__index(categories.toArray()); });
     });
   },

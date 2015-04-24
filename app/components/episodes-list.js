@@ -16,7 +16,7 @@ export default Ember.Component.extend({
         var since = moment.utc(lastEpisode.get('published_at')).format();
 
         // TODO: use meta
-        promise = this.emberSync.find("episode", {
+        promise = this.store.find("episode", {
           since: since,
           channel_id: this.get('channel.raw_id'),
           per_page: 20
