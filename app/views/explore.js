@@ -1,27 +1,9 @@
 import Ember from 'ember';
+import LazyImageViewMixin from '../mixins/lazy-image-view-mixin';
 
-export default Ember.View.extend({
-  grid: function () {
-    Ember.run.scheduleOnce("afterRender", this.__loadLazyImages);
-  }.on("didInsertElement"),
 
+export default Ember.View.extend(LazyImageViewMixin, {
   resultsChanges: function () {
-    Ember.run.scheduleOnce("afterRender", this.__loadLazyImages);
-  }.observes('controller.results'),
-
-  __loadLazyImages: function () {
-    var check = function (img) {
-      if (typeof img.naturalWidth !== "undefined" && img.naturalWidth === 0) {
-        img.setAttribute("src", img.getAttribute('data-fallback'))
-      }
-    };
-
-    var layzr = new Layzr({
-      selector: '[data-layzr]',
-      callback: function (node) {
-        if (!this.complete) {  this.onload = this.onerror = function () { check(this); }; }
-        else { check(this); }
-      }
-    });
-  }
+    Ember.run.scheduleOnce("afterRender", this.loadLazyImages);
+  }.observes('controller.results')
 });
