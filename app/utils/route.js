@@ -1,3 +1,5 @@
+import Ember from 'ember';
+
 export default function route() {
   Ember.Route.reopen({
     activate: function() {

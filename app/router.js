@@ -6,7 +6,6 @@ var Router = Ember.Router.extend({
 });
 
 export default Router.map(function() {
-  // this.route('channels');
   this.route('channel', {
     path: '/channels/:channel_id'
   });

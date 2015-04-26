@@ -10,7 +10,7 @@ export default Ember.Controller.extend({
 
   categoriesFiltered: function () {
     var categories = this.get('model').toArray().map(function (category) {
-      var channels = category.get('channels').toArray()
+      var channels = category.get('channels').toArray();
       category.channels = channels.splice(0, 5);
       return category;
     });
@@ -36,7 +36,11 @@ export default Ember.Controller.extend({
 
   actions: {
     search: function () {
-      isURL(this.query) ? this.transitionToRoute('channel_by_url', {url: this.q}) : this.set('q', this.query);
+      if(isURL(this.query)) {
+        this.transitionToRoute('channel_by_url', {url: this.q});
+      } else {
+        this.set('q', this.query);
+      }
     }
   }
 });

@@ -14,7 +14,8 @@ var App = Ember.Application.extend({
   Resolver: Resolver
 });
 
-routeUtil()
+routeUtil();
+
 loadInitializers(App, config.modulePrefix);
 
 $(function() {

@@ -9,7 +9,7 @@ export default Ember.Component.extend({
   actions: {
     fetchMore: function(callback) {
       var episodes = this.get('episodes'),
-        promise = Promise.resolve(),
+        promise = Ember.RSVP.Promise.resolve(),
         lastEpisode = (episodes.currentState ? episodes.currentState : episodes)[ episodes.length - 1 ];
 
       if(lastEpisode) {
