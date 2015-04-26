@@ -1,8 +1,19 @@
 /// TODO: remove from a general file
 
-body
+html, body
+  min-height: 100%
+  background: #f7f7f7
+
+html
+  background: rgb(247,247,247)
+  background: linear-gradient(to bottom,  rgba(247,247,247,1) 0%,rgba(255,255,255,1) 100%)
+  text-shadow: 0 1px 1px #FFF;
+
+body, h1, h2, h3, h4, h6, p
   font-family: 'Exo 2', sans-serif
   font-weight: 400
+
+body
   padding: 5px 10px
   header
     text-align: center
@@ -13,14 +24,6 @@ body
 body.explore
   padding: 5px 30px 10px 30px
   color: #FFF
-  background: rgb(14,21,22);
-  background: -moz-linear-gradient(-45deg,  rgba(14,21,22,1) 0%, rgba(23,61,66,1) 100%)
-  background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(14,21,22,1)), color-stop(100%,rgba(23,61,66,1)))
-  background: -webkit-linear-gradient(-45deg,  rgba(14,21,22,1) 0%,rgba(23,61,66,1) 100%)
-  background: -o-linear-gradient(-45deg,  rgba(14,21,22,1) 0%,rgba(23,61,66,1) 100%)
-  background: -ms-linear-gradient(-45deg,  rgba(14,21,22,1) 0%,rgba(23,61,66,1) 100%)
-  background: linear-gradient(135deg,  rgba(14,21,22,1) 0%,rgba(23,61,66,1) 100%)
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0e1516', endColorstr='#173d42',GradientType=1 )
   header h1 a
     font-size: 45px
 
@@ -29,7 +32,7 @@ body.explore
     line-height: 1.5
     font-size: 25px
     text-align: center
-    color: #fff
+    color: #000
 
   form
     padding: 5px
@@ -41,7 +44,7 @@ body.explore
 
   div#search-results
     h3, span
-      color: #FFF
+      color: #000
     a
       text-decoration: none
     ul#search-channels
@@ -60,32 +63,19 @@ body.explore
     margin-top: 150px
     padding: 0
     list-style: none
-    ul
-      list-style: circle
-      padding: 0
-      max-height: 150px
-      overflow: hidden
     h3
-      font-weight: 800
+      font-weight: 700
       margin: 0
       overflow: hidden
       font-size: 15px
-      a
-        float: left
-        white-space: nowrap
-        text-overflow: ellipsis
-        overflow: hidden
-        max-width: 100%
-      .more
-        float: right
-        text-align: right
-        list-style: none
-        text-decoration: underline
-        font-size: 13px
-        line-height: 24px
     a
       display: block
-      color: #FFF
+      color: #3E99A6
       text-decoration: underline
+      font-weight: 700
+      white-space: nowrap
+      text-overflow: ellipsis
+      overflow: hidden
+      max-width: 100%
     li
       margin-bottom: 10px
