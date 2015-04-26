@@ -1,7 +1,7 @@
 <div id="player">
   <a class="close uk-close uk-close-alt"></a>
   {{#if loaded}}
-  <img {{bind-attr src=model.channel.image_url}} class="channel-img" />
+  <img {{bind-attr src=model.channel.imageURL}} class="channel-img" />
   <button {{action 'playpause'}} {{bind-attr class=":typcn playing:typcn-media-pause:typcn-media-play :playpause"}}></button>
   <h2>{{model.title}}</h2>
   <h3>{{model.channel.title}}</h3>
