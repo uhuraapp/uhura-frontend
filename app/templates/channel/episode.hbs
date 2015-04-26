@@ -1,0 +1,23 @@
+<div class="uk-modal" id="episode-{{model.id}}">
+  <div class="uk-modal-dialog">
+    <a href="" class="uk-modal-close uk-close uk-close-alt"></a>
+    <div class="uk-modal-header">
+      <h2>{{model.title}}</h2>
+    </div>
+    <button {{action "playpause" bubbles=true}} class="highlight play">
+      {{#if model.playing}}
+      {{t 'components.episode_list_item.pause'}}
+      {{else}}
+      {{t 'components.episode_list_item.play'}}
+      {{/if}}
+    </button>
+    <div class="description">{{model.description}}</div>
+    <button {{action "playpause" bubbles=true}} class="highlight play">
+      {{#if model.playing}}
+      {{t 'components.episode_list_item.pause'}}
+      {{else}}
+      {{t 'components.episode_list_item.play'}}
+      {{/if}}
+    </button>
+  </div>
+</div>
