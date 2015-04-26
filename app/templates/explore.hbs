@@ -32,17 +32,7 @@
       {{#link-to 'explore.category' category}}
       {{category.name}}
       {{/link-to}}
-
-      {{#link-to 'explore.category' category class="more"}}view more{{/link-to}}
     </h3>
-    <ul>
-      {{#each channel in category.channels}}
-      <li>{{#link-to 'channel' channel}}
-        {{channel.title}}
-        {{/link-to}}
-      </li>
-      {{/each}}
-    </ul>
   </li>
   {{else}}
   <li class=""> Loading Categories... </li>
