@@ -2,10 +2,13 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   model: function (params) {
-    this.store.fetchById('channel', params.channel_id);
-    return this.store.find('channel', params.channel_id);
+    return this.store.find('channel', params.channel_id)
   },
   setupController: function (controller, model) {
+    if(model.get('episodes').length === 0){
+      model.reload();
+    }
+
     this._super(controller, model);
 
     var title = model.get('title');
