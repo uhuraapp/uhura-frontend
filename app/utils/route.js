@@ -5,6 +5,7 @@ export default function route() {
     activate: function() {
       var cssClass = this.cssClass();
       Ember.$('body').addClass(cssClass);
+      window.scrollTo(0, 0);
     },
     deactivate: function() {
       Ember.$('body').removeClass(this.cssClass());
