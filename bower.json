@@ -26,7 +26,8 @@
     "slideout": "https://github.com/Mango/slideout.git#~0.1.5",
     "lunr.js": "~0.5.8",
     "layzr.js": "https://github.com/callmecavs/layzr.js.git",
-    "fastclick": "~1.0.6"
+    "fastclick": "~1.0.6",
+    "jquery.adaptive-backgrounds.js": "git@github.com:briangonzalez/jquery.adaptive-backgrounds.js.git#~1.0.1"
   },
   "resolutions": {
     "jquery": "^1.11.1",

@@ -1,17 +1,21 @@
 ul.episodes
-  padding: 0 5px
+  margin: 0
+  padding: 0
   li.episode
     max-width: 100%
-    box-shadow: 0 0 2px #333, 0 1px 1px #CCC
+    box-shadow: 0 0 2px #000
     margin-bottom: 10px
     overflow: hidden
-    border-radius: 2px
+    border-radius: 3px
+    background: #FFF
+    color: #333
 
   h3.title
     padding: 10px
     margin: 0
     font-weight: 500
     font-size: 18px
+    color: inherit
     line-height: 1.5
 
   .description
@@ -19,7 +23,6 @@ ul.episodes
     border-top: 1px solid #CCC
 
   .actions
-    background: #FFF
     border-top: 1px solid #CCC
     overflow: auto
     padding: 0 5px
@@ -36,7 +39,7 @@ ul.episodes
     border: 0
     cursor: pointer
     &.highlight
-      color: #ff5722
+      color: #F44336
     &.active
       color: #CCC
     &.icon
@@ -60,7 +63,6 @@ ul.episodes
       position: absolute
       top: 0
       right: 0
-
     .typcn-tick
       color: green
     .actions

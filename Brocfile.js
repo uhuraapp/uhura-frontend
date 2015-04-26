@@ -18,12 +18,14 @@ app.import("bower_components/layzr.js/dist/layzr.js");
 app.import("bower_components/moment/min/moment-with-locales.js");
 app.import("bower_components/fastclick/lib/fastclick.js")
 app.import("bower_components/mediaelement/build/mediaelement-and-player.js");
+app.import("bower_components/jquery.adaptive-backgrounds.js/src/jquery.adaptive-backgrounds.js");
 
 app.import("bower_components/mediaelement/build/mediaelementplayer.css");
 
 app.import("bower_components/uhura-i18n/dist/i18n.amd.js", {
   exports: { "i18n": [ "default", "lang/pt" ] }
 });
+
 
 //
 // app.import("bower_components/slideout/dist/slideout.js");

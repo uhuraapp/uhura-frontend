@@ -10,8 +10,10 @@ export default Ember.Mixin.create({
     if (typeof img.naturalWidth !== "undefined" && img.naturalWidth === 0) {
       img.setAttribute("src", img.getAttribute('data-fallback'));
     }
+    this.lazyImageCallback();
   },
 
+  lazyImageCallback: function () {},
   loadLazyImages: function () {
     var __this = this;
     new Layzr({

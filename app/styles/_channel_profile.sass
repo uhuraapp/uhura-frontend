@@ -1,21 +1,41 @@
 body.channel
+  padding: 0
   header
-    margin-bottom: 30px
+    margin: 0
+    padding: 5px
+    background: #FFF
 
 #profile
+  transition: all 0.5s ease
+  padding: 0 10px
+  //position: relative
+  // overflow: hidden
+  div
+    position: relative
+    z-index: 2
+
+  .description
+    line-height: 2
+    font-size: 18px
+
   .image-subscribe-button
     text-align: center
 
-  .image-subscribe-button, .info, h2
+  .image-subscribe-button, h2, #channel-header
     margin-bottom: 20px
+
+  .info
+    padding-top: 20px
 
   h1
     font-size: 25px
     line-height: 1.5
     font-weight: 900
+    color: inherit
 
   h2
     font-size: 20px
+    color: inherit
 
   img
     width: 75%
