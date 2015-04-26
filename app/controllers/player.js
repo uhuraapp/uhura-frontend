@@ -62,18 +62,19 @@ export default Ember.Controller.extend({
   },
 
   stoppedAtChanged: function () {
-    var episode = this.get('model'),
-        at = episode.get('stopped_at');
-
-    if(at && !this.get('_locked')) {
-      this.set('_locked', true);
-      $.ajax({
-        url: config.API_URL + '/v2/episodes/' + episode.id + '/listen',
-        type: "PUT",
-        data: { at: at }
-      }).always(() => {
-        this.set('_locked', false);
-      });
+    if(this.get('session.isAuthenticated')) {
+      var episode = this.get('model'),
+          at = episode.get('stopped_at');
+      if(at && !this.get('_locked')) {
+        this.set('_locked', true);
+        $.ajax({
+          url: config.API_URL + '/v2/episodes/' + episode.id + '/listen',
+          type: "PUT",
+          data: { at: at }
+        }).always(() => {
+          this.set('_locked', false);
+        });
+      }
     }
   }.observes('model.stopped_at'),
 
