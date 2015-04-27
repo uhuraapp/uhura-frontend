@@ -19,10 +19,10 @@ export default Router.map(function() {
     this.route('settings');
   });
   this.route('explore');
-  this.route('explore.category', {
-    path: '/explore/c/:category_id'
-  });
   this.route('channel_by_url', {
     path: '/c/*url'
+  });
+  this.route('category', {
+    path: '/category/:category_id'
   });
 });

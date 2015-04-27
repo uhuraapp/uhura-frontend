@@ -2,11 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   model: function () {
-    return new Ember.RSVP.Promise((resolve) => {
-      resolve(this.store.all('category'));
-      this.store.fetchAll('category')
-        .then((categories) => { this.__index(categories.toArray()); });
-    });
+    return this.store.find('category');
   },
   __index: function (categories) {
     for (var i = 0, l = categories.length; i < l; i ++) {

@@ -1,56 +1,29 @@
-#categories
-  li
-    float: left
-    width: 50%
-    padding: 2px
-    vertical-align: top
-    &:nth-child(2n+1)
-      clear: both
-  a
-    overflow: hidden
-    display: block
-    position: relative
-    min-height: 50px
-    border: 1px solid #CCC
-    &:hover
-      h3
-        background: rgba(0, 0, 0, .8)
-      img
-        opacity: .8
-
-  h3
-    position: absolute
-    top: 0
-    left: 0
-    right: 0
+body.category
+  padding: 0
+  header
     margin: 0
-    font-size: 16px
-    background: rgba(0, 0, 0, .6)
-    padding: 10px
-    color: #FFF
-    font-weight: 700
-    transition: background 0.28s cubic-bezier(0.4, 0, 0.2, 1)
+    padding: 5px
+    background: #F7F7F7
 
+  #content
+    padding: 0 10px
+    h2
+      font-size: 25px
+      margin-top: 25px
+    a
+      text-decoration: none
+      line-height: 2
+      font-size: 15px
+
+ul.categories
+  padding: 0
+  margin-bottom: 100px
+  list-style: none
+  li
+    margin-bottom: 15px
   img
-    max-width: 100%
-    opacity: .9
-    border-bottom: 1px solid #CCC
-    transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1)
-
-
-+respond-to(small)
-  #categories li
-    width: 33%
-    &:nth-child(2n+1)
-      clear: none
-    &:nth-child(3n+1)
-      clear: both
-
-+respond-to(medium)
-  #categories li
-    width: 20%
-    &:nth-child(3n+1)
-      clear: none
-    &:nth-child(5n+1)
-      clear: both
+    width: 100%
+    min-height: 230px
+    border-radius: 5px
+    box-shadow: 0 0 2px #080808
 

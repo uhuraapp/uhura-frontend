@@ -2,17 +2,38 @@
 @import 'bower_components/uikit/scss/uikit'
 @import "bower_components/typicons/src/font/typicons"
 
+html, body
+  min-height: 100%
+  background: #f7f7f7
+
+html
+  background: rgb(247,247,247)
+  background: linear-gradient(to bottom,  rgba(247,247,247,1) 0%,rgba(255,255,255,1) 100%)
+  text-shadow: 0 1px 1px #FFF;
+
+body, h1, h2, h3, h4, h6, p
+  font-family: 'Exo 2', sans-serif
+  font-weight: 400
+
+body
+  padding: 5px 10px
+  header
+    text-align: center
+    margin-top: 20px
+  a
+    color: #3E99A6
+
 @import 'logo'
 @import 'explore'
 @import 'mixins'
 @import 'channel_profile'
 @import 'player'
+@import 'categories'
 
 //@import 'defaults'
 //@import 'sidebar'
 //@import 'settings'
 //@import 'new_user'
-//@import 'categories'
 //@import 'welcome'
 //@import 'slide'
 

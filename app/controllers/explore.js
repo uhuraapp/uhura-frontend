@@ -8,15 +8,6 @@ export default Ember.Controller.extend({
   searching: false,
   ready: false,
 
-  categoriesFiltered: function () {
-    var categories = this.get('model').toArray().map(function (category) {
-      var channels = category.get('channels').toArray();
-      category.channels = channels.splice(0, 5);
-      return category;
-    });
-    return categories;
-  }.property('model.length'),
-
   queryChanges: function () {
     if(!this.q || this.q === ""){
       this.set('results', []);
@@ -31,7 +22,6 @@ export default Ember.Controller.extend({
     }).then((channels) => {
       this.set('results', channels.toArray());
     });
-
   }.observes('q', 'ready'),
 
   actions: {
