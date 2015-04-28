@@ -27,7 +27,7 @@ export default Ember.Controller.extend({
   actions: {
     search: function () {
       if(isURL(this.query)) {
-        this.transitionToRoute('channel_by_url', {url: this.q});
+        this.transitionToRoute('channel_by_url', {url: this.query});
       } else {
         this.set('q', this.query);
       }
