@@ -4,17 +4,16 @@ export default Ember.Route.extend({
   model: function () {
     return this.store.find('category');
   },
+  afterModel: function (model) {
+    this.__index(model.toArray());
+  },
   __index: function (categories) {
-    for (var i = 0, l = categories.length; i < l; i ++) {
-      var category = categories[i].get('_data');
-      for (var j = 0, h = category.channels.length; j < h; j ++) {
-        var channel = category.channels[j].get('_data');
-        this.lunr.add(channel);
-        this.store.push('channel', channel);
-      }
-      this.store.push('category', category);
-    }
+    categories.forEach( (_category) => {
+      var category = _category.get('_data');
+      category.channels.forEach( (channel) => {
+        this.lunr.add(channel.get('_data'));
+      });
+    });
     this.lunr.index();
-    this.controller.set('ready', true);
   }
 });
