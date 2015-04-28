@@ -1,16 +1,27 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  model: function (data) {
-    var resourceURL = this.__adapter().buildURL('parser');
-    return Ember.$.get(resourceURL + "/" + data.url);
-  },
-  afterModel: function (model) {
-    if(model.url) {
-      window.location.reload();
+  model: function (_, transition) {
+    var data = { url: transition.queryParams.url };
+    if(data.url) {
+      return this.__request(data);
+    } else {
+      return {};
     }
   },
-  __adapter: function() {
+  setupController: function (controller, model) {
+    if(!controller.url) {
+      this.transitionTo('explore');
+    }
+    this._super(controller, model);
+  },
+  __adapter: function () {
     return this.store.adapterFor('channel');
+  },
+  __resourceURL: function () {
+    return this.__adapter().buildURL('parser');
+  },
+  __request: function (data) {
+    return Ember.$.get(this.__resourceURL(), data);
   }
 });
