@@ -1,6 +1,5 @@
 /* global $ */
 export default function fixSidebarHeight() {
   'use strict';
-  $('aside').css('height', window.innerHeight + 'px');
-  $('#aside-wrapper').css('height', window.innerHeight + 'px');
+  $('body').css('min-height', window.innerHeight + 'px');
 }
