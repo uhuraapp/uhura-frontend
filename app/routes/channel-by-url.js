@@ -13,6 +13,11 @@ export default Ember.Route.extend({
     if(!controller.url) {
       this.transitionTo('explore');
     }
+
+    if(model.uhura_id && model.uhura_id != "") {
+      this.replaceWith('channel', model.uhura_id);
+      return
+    }
     this._super(controller, model);
   },
   __adapter: function () {
