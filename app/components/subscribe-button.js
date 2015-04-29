@@ -5,11 +5,15 @@ export default Ember.Component.extend({
   actions: {
     subscribe: function() {
       var model = this.get('channel');
-      this.get('targetObject.store').createRecord('subscription', {
-        channel_id: model.id
-      }).save().then(function(){
-        model.set('subscribed', true);
-      });
+      if(this.get('byURL')) {
+        // TODO: subscribe by URL
+      } else {
+        this.get('targetObject.store').createRecord('subscription', {
+          channel_id: model.id
+        }).save().then(function(){
+          model.set('subscribed', true);
+        });
+      }
     },
     unsubscribe: function() {
       var model = this.get('channel');

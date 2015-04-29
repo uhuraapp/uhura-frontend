@@ -22,6 +22,12 @@ export default Ember.Route.extend({
     return this.__adapter().buildURL('parser');
   },
   __request: function (data) {
-    return Ember.$.get(this.__resourceURL(), data);
+    return Ember.$.get(this.__resourceURL(), data).then(function (data) {
+      var channel = Ember.Object.create(data.channel);
+      channel.set('episodes',  channel.get('episodes').map(function (episode) {
+        return Ember.Object.create(episode);
+      }));
+      return channel;
+    });
   }
 });

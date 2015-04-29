@@ -1,12 +1,20 @@
-{{#with model.channel as channel}}
+<div id="profile" class="uk-grid" data-uk-grid-margin>
+  <div class="image-subscribe-button uk-width-small-1-1 uk-width-medium-3-10">
+    <img data-adaptive-background='1' data-layzr="{{model.image_url}}" data-fallback="assets/channel-placeholder.png" src="assets/channel-placeholder-loading.jpg" />
+    {{subscribe-button channel=model byURL=true}}
+  </div>
+  <div class="info uk-width-small-1-1 uk-width-medium-7-10 uk-float-right">
+    <h1>{{model.title}}</h1>
+    <div class="description">{{model.description}}</div>
+  </div>
 
-<h2 class="uk-text-danger"> WIP: This page is unavailable </h2>
+  <h2 class="uk-width-small-1-1 uk-width-medium-6-10 uk-width-large-7-10">{{t 'titles.episodes'}}</h2>
 
-<h3>{{channel.title}}</h3>
+  <div class="uk-width-1-1 episodes-list">
+    {{episodes-list infinityScroll=false episodesFiltered=model.episodes episodes=model.episodes store=store model=channel}}
+  </div>
+</div>
 
-<ul>
-  {{#each episode in channel.episodes}}
-  <li>{{episode.title}}</li>
-  {{/each}}
-</ul>
-{{/with}}
+
+
+
