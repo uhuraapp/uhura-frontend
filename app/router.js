@@ -22,7 +22,11 @@ export default Router.map(function() {
   this.route('channel_by_url', {
     path: '/c'
   });
+  this.route('search_by_url', {
+    path: '/s'
+  });
   this.route('category', {
     path: '/category/:category_id'
   });
+
 });
