@@ -3,7 +3,7 @@
 <ul id="found-channels" class="uk-grid parsed channels">
   {{#each channel in model.channels}}
   <li class=" uk-width-small-1-2 uk-width-medium-1-4 uk-width-large-1-5 uk-width-xlarge-1-6 ">
-    {{#link-to 'channel' channel}}
+    {{#link-to 'channel_by_url' channel (query-params url=controller.url)}}
     <img data-layzr="{{channel.imageURL}}" data-fallback="assets/channel-placeholder.png" src="assets/channel-placeholder-loading.jpg" />
     <span>{{channel.title}}</span>
     {{/link-to}}

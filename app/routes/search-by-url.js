@@ -1,20 +1,16 @@
 import Ember from 'ember';
-import ChannelByControllerMixin from '../mixins/channel-by-controller';
+import ParserControllerMixin from '../mixins/parser-controller';
 
-export default Ember.Route.extend(ChannelByControllerMixin, {
+export default Ember.Route.extend(ParserControllerMixin, {
   setupController: function (controller, model) {
     if(!controller.url) {
       this.transitionTo('explore');
     }
 
-    if(model.length === 1) {
-      // this.transitionTo('channel_by_url', controller.url);
+    if(model.channels.length === 1) {
+      this.transitionTo('channel_by_url', model.channels[0], {queryParams: controller});
     }
 
     this._super(controller, model);
   },
-
-  process: function (data) {
-    return {channels: data.channels.map(this.createChannelObject)};
-  }
 });
