@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Mixin.create({
-  model: function (query, transition) {
+  model: function (query) {
     if(query.url) {
       return this.__request(query);
     } else {

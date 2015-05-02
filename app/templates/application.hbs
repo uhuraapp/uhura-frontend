@@ -1,6 +1,7 @@
 {{#if session.isAuthenticated}}
   {{partial "authenticated"}}
 {{else}}
+  {{partial "partials/login"}}
   {{partial "unauthenticated"}}
 {{/if}}
 
