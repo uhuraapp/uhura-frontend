@@ -5,6 +5,23 @@ export default Ember.Component.extend({
   tagName: "li",
   classNames: ['episode'],
   classNameBindings: ["isListened", "isDownloaded"],
+  generateEpisodeURL: function () {
+    return window.location.origin + this.$("a.more-info").attr('href');
+  },
+  addShare: function () {
+    new Share("#share-button-" + this.get('episode.id'), {
+      url: this.generateEpisodeURL(),
+      ui: {
+        flyout: "top left",
+        button_text: ""
+      },
+      networks: {
+        pinterest: {
+          enabled: false
+        }
+      }
+    });
+  }.on('didInsertElement'),
   isListened: function() {
     return this.get('episode.listened');
   }.property('episode.listened'),

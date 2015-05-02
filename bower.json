@@ -27,7 +27,8 @@
     "lunr.js": "~0.5.8",
     "layzr.js": "https://github.com/callmecavs/layzr.js.git",
     "fastclick": "~1.0.6",
-    "jquery.adaptive-backgrounds.js": "https://github.com/briangonzalez/jquery.adaptive-backgrounds.js.git#~1.0.1"
+    "jquery.adaptive-backgrounds.js": "https://github.com/briangonzalez/jquery.adaptive-backgrounds.js.git#~1.0.1",
+    "share-button": "~0.5.0"
   },
   "resolutions": {
     "jquery": "^1.11.1",

@@ -38,7 +38,6 @@ ul.episodes
     max-width: 100%
     box-shadow: 0 0 2px #000
     margin-bottom: 10px
-    overflow: hidden
     border-radius: 3px
     background: #FFF
     color: #333
@@ -66,10 +65,21 @@ ul.episodes
 
   .actions
     border-top: 1px solid #CCC
-    overflow: auto
     padding: 0 5px
+    &::after
+      content: " "
+      display: block
+      clear: both
+    .share-button
+      width: 15px
+      .social.left
+        margin-left: -276px
+      label
+        background: none
+        padding: 0
+        margin: 0
 
-    button, a
+    button, a, .share-button
       +buttons-channel-episode
 
 //
