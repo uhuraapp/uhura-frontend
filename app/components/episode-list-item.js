@@ -18,11 +18,6 @@ export default Ember.Component.extend({
     }
   }.observes('episode').on('init'),
   actions: {
-    info: function() {
-      var t = $(event.target);
-      t.toggleClass('active');
-      t.parents('li').find('.description').toggleClass('uk-hidden');
-    },
     playpause: function() {
       var player = this.container.lookup('controller:Player');
       player.playpause(this.get('episode'));

@@ -9,6 +9,8 @@
   padding: 10px
   border: 0
   cursor: pointer
+  line-height: 1.4
+  color: #000
   &.highlight
     color: #F44336
   &.active
@@ -25,6 +27,7 @@ body.channel-episode
       margin: 0
     button
       +buttons-channel-episode
+      padding: 10px 0
     div.description
       clear: both
 
@@ -43,7 +46,6 @@ ul.episodes
 
   h3.title
     padding: 10px
-    padding-top: 5px
     margin: 0
     font-weight: 500
     font-size: 18px
@@ -52,8 +54,11 @@ ul.episodes
     time
       font-size: 12px
       font-style: italic
-      color: #5F5F5F
+      float: right
+      padding: 0 0 0 10px
       display: block
+      a
+        color: #5F5F5F
 
   .description
     padding: 5px 10px 20px 10px
@@ -64,8 +69,8 @@ ul.episodes
     overflow: auto
     padding: 0 5px
 
-  button
-    +buttons-channel-episode
+    button, a
+      +buttons-channel-episode
 
 //
   p.not_found

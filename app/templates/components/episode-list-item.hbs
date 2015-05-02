@@ -1,15 +1,15 @@
 <h3 class="title">
-  <time date={{episode.published_at}}>{{episode.publishedAt}}</time>
+  <time date={{episode.published_at}}>
+    {{#link-to 'channel.episode' episode class="more-info"}}
+    {{episode.publishedAt}}
+    {{/link-to}}
+  </time>
   {{episode.title}}
 </h3>
 
 {{#if session.isAuthenticated}}
-<span class="progress">{{episode.progress}}%</span>
+  <span class="progress">{{episode.progress}}%</span>
 {{/if}}
-
-<div class="description uk-hidden">
-  {{episode.description}}
-</div>
 
 <div class="actions">
   <div class="uk-float-left">
@@ -20,19 +20,20 @@
       {{t 'components.episode_list_item.play'}}
       {{/if}}
     </button>
-    <button {{action "info"}} class="more-info">
+    {{#link-to 'channel.episode' episode class="more-info"}}
       {{t 'components.episode_list_item.info'}}
-    </button>
+    {{/link-to}}
   </div>
 
   <div class="uk-float-right">
     {{#if session.isAuthenticated}}
-    <button {{action 'listened'}} {{bind-attr data-id=episode.id}} {{bind-attr class=":typcn :icon :listened episode.listened:typcn-tick:typcn-tick-outline"}} {{bind-attr data-listened=episode.listened}}></button>
-    {{#if episode.downloading}}
-      <img class="downloading" src="assets/loading-download.gif" />
-    {{else}}
-      <button {{action 'download'}} {{bind-attr data-id=episode.id}} {{bind-attr class=":typcn :icon episode.downloaded:typcn-trash:typcn-download :download"}}></button>
+      <button {{action 'listened'}} {{bind-attr data-id=episode.id}} {{bind-attr class=":typcn :icon :listened episode.listened:typcn-tick:typcn-tick-outline"}} {{bind-attr data-listened=episode.listened}}></button>
+      {{#if episode.downloading}}
+        <img class="downloading" src="assets/loading-download.gif" />
+      {{else}}
+        <button {{action 'download'}} {{bind-attr data-id=episode.id}} {{bind-attr class=":typcn :icon episode.downloaded:typcn-trash:typcn-download :download"}}></button>
+      {{/if}}
     {{/if}}
-    {{/if}}
+    <button class="typcn icon typcn-export-outline"></button>
   </div>
 </div>
