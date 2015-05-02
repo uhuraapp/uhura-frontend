@@ -1,4 +1,4 @@
-/* global $ */
+/* global Share */
 import Ember from 'ember';
 
 export default Ember.Component.extend({
@@ -8,9 +8,13 @@ export default Ember.Component.extend({
   generateEpisodeURL: function () {
     return window.location.origin + this.$("a.more-info").attr('href');
   },
+  shareDescription: function () {
+    return this.get('episode.title');
+  },
   addShare: function () {
     new Share("#share-button-" + this.get('episode.id'), {
       url: this.generateEpisodeURL(),
+      description: this.shareDescription(),
       ui: {
         flyout: "top left",
         button_text: ""
