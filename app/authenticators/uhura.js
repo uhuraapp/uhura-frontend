@@ -16,13 +16,12 @@ export default Base.extend({
     });
   },
   __checkLogin: function(loginWindow, resolve, reject) {
-    var _this = this;
-    return function () {
+    return () => {
       try {
         if (loginWindow.closed) {
-          _this.__checkCredentials(resolve, reject);
+          this.__checkCredentials(resolve, reject);
         } else {
-          window.setTimeout(_this.__checkLogin(loginWindow, resolve, reject), 500);
+          window.setTimeout(this.__checkLogin(loginWindow, resolve, reject), 500);
         }
       } catch(e) {
         Ember.run(function() { reject(e); });
@@ -48,15 +47,14 @@ export default Base.extend({
     });
   },
   authenticate: function(provider) {
-    var _this = this;
-    return new Ember.RSVP.Promise(function(resolve, reject) {
-      var loginWindow = window.open(_this.__authURLForProvider(provider), '_blank', 'location=no,toolbar=no');
-      window.setTimeout(_this.__checkLogin(loginWindow, resolve, reject), 500);
+    return new Ember.RSVP.Promise( (resolve, reject) => {
+      var loginWindow = window.open(this.__authURLForProvider(provider), '_blank', 'location=no,toolbar=no');
+      window.setTimeout(this.__checkLogin(loginWindow, resolve, reject), 500);
 
-      loginWindow.addEventListener('loadstop', function (event) {
-        if(event.url.indexOf(_this.__authURLForProvider(provider) + "/callback") === 0) {
+      loginWindow.addEventListener('loadstop', (event) => {
+        if(event.url.indexOf(this.__authURLForProvider(provider) + "/callback") === 0) {
           loginWindow.close();
-          _this.__checkCredentials(resolve, reject);
+          this.__checkCredentials(resolve, reject);
         }
       });
     });
