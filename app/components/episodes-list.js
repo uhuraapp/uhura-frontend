@@ -6,9 +6,10 @@ export default Ember.Component.extend({
   tagName: 'ul',
   hasMore: true,
   page: 1,
+  infiniteScroll: true,
   actions: {
     fetchMore: function(callback) {
-      var promise = Ember.RSVP.Promise.resolve();
+      var promise = Ember.RSVP.Promise.reject();
 
       if(this.get('infiniteScroll')) {
         var episodes = this.get('episodes'),
@@ -23,7 +24,6 @@ export default Ember.Component.extend({
           channel_id: this.get('channel.raw_id'),
           per_page: 20
         });
-
       }
 
       callback(promise);
