@@ -9,7 +9,7 @@ export default Ember.Component.extend({
     return window.location.origin + this.$("a.more-info").attr('href');
   },
   shareDescription: function () {
-    return this.get('episode.title');
+    return this.get('episode.title').replace("#", "%23");
   },
   addShare: function () {
     new Share("#share-button-" + this.get('episode.id'), {
