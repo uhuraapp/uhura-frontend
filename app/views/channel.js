@@ -9,6 +9,12 @@ export default Ember.View.extend(LazyImageViewMixin, {
     });
   },
   modelDidChanged: function () {
-    // this.container.lookup('controller:application').send('closeMenu');
-  }.observes('controller.model').on('didInsertElement')
+    this.container.lookup('controller:application').send('closeMenu');
+
+  }.observes('controller.model').on('didInsertElement'),
+  loadChannelImage: function () {
+    Ember.run.later(this, function () {
+      if(this.get('lazyIMG')) { this.get('lazyIMG').update(); }
+    }, 200);
+  }.observes('controller.model')
 });
