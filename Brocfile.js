@@ -20,6 +20,7 @@ app.import("bower_components/fastclick/lib/fastclick.js")
 app.import("bower_components/mediaelement/build/mediaelement-and-player.js");
 app.import("bower_components/jquery.adaptive-backgrounds.js/src/jquery.adaptive-backgrounds.js");
 app.import("bower_components/share-button/build/share.js");
+app.import("bower_components/slideout/dist/slideout.js");
 
 app.import("bower_components/mediaelement/build/mediaelementplayer.css");
 
@@ -29,7 +30,6 @@ app.import("bower_components/uhura-i18n/dist/i18n.amd.js", {
 
 
 //
-// app.import("bower_components/slideout/dist/slideout.js");
 //
 
 app.import("bower_components/typicons/src/font/typicons.css", {destDir: 'assets'});

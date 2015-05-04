@@ -20,16 +20,16 @@ export default Ember.ArrayController.extend({
         this.slideout = new Slideout({
           'panel': document.getElementById('content'),
           'menu': document.getElementById('menu'),
-          'padding': 256,
+          'padding': 280,
           'tolerance': 70
         });
       }
-    }
-  },
-  toggleMenu: function () {
-    if(this.slideout) {  this.slideout.toggle(); }
-  },
-  closeMenu: function () {
-    if(this.slideout) {  this.slideout.close(); }
+    },
+    toggleMenu: function () {
+      if(this.slideout) {  this.slideout.toggle(); }
+    },
+    closeMenu: function () {
+      if(this.slideout) {  this.slideout.close(); }
+    },
   }
 });

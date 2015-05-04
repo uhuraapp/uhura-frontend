@@ -1,105 +1,51 @@
-#aside-wrapper
+.slideout-open, .slideout-open body, .slideout-open #content
   overflow: hidden
-  position: fixed
-  zoom: 1
-  &::after
-    content: " uhura "
-    display: block
 
-  p
-    color: #FFF
-    font-weight: 500
-    a
-      color: #FFF
-      text-decoration: underline
-      font-weight: 100
-  .new a
-    font-weight: 500
-
-aside
-  position: fixed
-  overflow: auto
+.slideout-open #menu
   display: block
-  background-color: #3E4651
-  box-shadow: inset -2px 0 3px #222
 
-  li
-    padding: 5px 0 5px 20px
-    a
-      font-weight: 200
-      font-size: 1.1em
-      display: block
+#hamburger-menu
+  text-shadow: none
+  margin: 10px 0 0 10px
 
-aside
-  li
-    overflow: hidden
-    &.new
-      span.title
-        font-weight: 600
-    a
-      margin: 0
-      overflow: hidden
-      width: 100%
-      color: #FFF
-      &:hover, &:hover span.title
+#menu
+  background-color: #1D1F20
+  background-image: linear-gradient(145deg, #1D1F20, #404348)
+  color: darken(#F1714C, 10%)
+  padding-bottom: 20px
+  text-shadow: none
+  overflow-y: auto
+  position: fixed
+  display: none
+  left: 0
+  top: 0
+  bottom: 0
+  right: 0
+  z-index: 0
+  width: 295px
+  overflow-y: auto
+  -webkit-overflow-scrolling: touch
+
+  ul, ol
+    padding: 0
+  ul
+    margin-bottom: 15px
+  ol
+    border-top: 1px solid rgb(63, 63, 63)
+    li a
+      border-top: darken(#1D1F20, 2%) 1px solid
+      border-bottom: lighten(#1D1F20, 20%) 1px solid
+      &:hover
+        background:  lighten(#1D1F20, 10%)
         text-decoration: none
-        color: #CCC
 
-    span
-      margin-right: 5px
-      color: #FFF
-      &.title
-        width: 70%
-        margin: 0
-        display: block
-        float: left
-        white-space: nowrap
-        overflow: hidden
-        text-overflow: ellipsis
-        font-weight: 300
-    i
-      font-weight: 700
-      float: right
-      font-size: 12px
-      border: 1px solid #333
-      border-radius: 100%
-      width: 25px
-      height: 25px
-      text-align: center
-      background-color: darken(#3E4651, 5%)
-      margin: 0 10px 0 0
-
-#channels-lists
-  margin-top: 0
-
-aside
-  header
-    border: 4px solid red
-    margin-bottom: 25px
-    background-color: darken(#3E4651, 5%)
-    &::after
-      content: " "
-      display: block
-      overflow: hidden
-      clear: both
-    h1, h2
-      text-align: center
-      letter-spacing: 1px
-    h2
-      color: #FFF
-    hgroup
-      a
-        background: none
-      width: 125px
-      margin: 0 auto
-      overflow: hidden
-      border-radius: 0 0 2px 2px
-
-aside
-  footer
-    border: 4px solid pink
-    width: 100%
-    text-align: center
-    font-size: 1em
-    padding: 5px 0
-
+    li:first-child a
+      border-top: none
+  a
+    color: #FFF
+    padding: 7px 10px
+    font-size: 14px
+    display: block
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
