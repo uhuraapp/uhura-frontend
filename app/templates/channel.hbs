@@ -1,30 +1,34 @@
 <div id="profile" class="uk-grid" data-uk-grid-margin>
-  <div class="image-subscribe-button uk-width-small-1-1 uk-width-medium-3-10">
+  <div class="image-subscribe-button uk-width-small-1-1 uk-width-medium-4-10">
     <img data-adaptive-background='1' data-layzr="{{model.imageURL}}" data-fallback="assets/channel-placeholder.png" src="assets/channel-placeholder-loading.jpg" />
     {{subscribe-button channel=model}}
   </div>
-  <div class="info uk-width-small-1-1 uk-width-medium-7-10 uk-float-right">
+
+  <div class="info uk-width-small-1-1 uk-width-medium-6-10">
     <h1>{{model.title}}</h1>
     <div class="description">{{model.description}}</div>
   </div>
 
-  <h2 class="uk-width-small-1-1 uk-width-medium-6-10 uk-width-large-7-10">{{t 'titles.episodes'}}</h2>
+  <h2 class="uk-width-small-1-1 uk-width-medium-7-10">{{t 'titles.episodes'}}</h2>
 
-<!--
   {{#if allListenedButton}}
-  <button class='all-listened uk-button uk-width-medium-4-10 uk-width-large-3-10 uk-width-small-1-1 uk-button-danger' {{action 'markAllAsListened'}}>
-    <i class="typcn typcn-tick-outline"></i>
-    {{t 'views.channel.mark_all_as_listened'}}
-  </button>
+  <div class="uk-width-medium-1-1 uk-width-medium-3-10">
+    <button class="uk-button uk-button-danger uk-float-right" {{action 'markAllAsListened'}}>
+      <i class="typcn typcn-tick-outline"></i>
+      {{t 'views.channel.mark_all_as_listened'}}
+    </button>
+  </div>
   {{/if}}
 
-  {{#if removeListenedButton}}
-  <label class="uk-width-1-1 uk-text-right ">
-    {{input type="checkbox" name="removeListened" checked=removeListened}}
-    {{t 'views.channel.remove_listened'}}
-  </label>
-  {{/if}}
--->
+  <div class="uk-width-1-1">
+    {{#if removeListenedButton}}
+      <label class="uk-float-right">
+        {{input type="checkbox" name="removeListened" checked=removeListened}}
+        {{t 'views.channel.remove_listened'}}
+      </label>
+    {{/if}}
+
+  </div>
 
   <div class="uk-width-1-1 episodes-list">
     {{episodes-list episodesFiltered=episodesFiltered episodes=model.episodes store=store channel=model}}
