@@ -3,9 +3,12 @@ import Login from '../services/login';
 
 export default Ember.Component.extend({
   classNames: ['subscribe-button'],
+  __store: function () {
+    return this.container.lookup("store:main");
+  },
   makeSubscription: function () {
     var model = this.get('channel');
-    this.get('targetObject.store').createRecord('subscription', {
+    this.__store().createRecord('subscription', {
       channel_id: model.id,
       channel_url: model.links && model.links[0]
     }).save().then(function(){
@@ -23,7 +26,7 @@ export default Ember.Component.extend({
     },
     unsubscribe: function() {
       var model = this.get('channel');
-      this.get('targetObject.store').find('subscription', model.id).then(function(subscription){
+      this.__store().find('subscription', model.id).then(function(subscription){
         subscription.destroyRecord();
         model.set('subscribed', false);
       });
