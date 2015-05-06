@@ -20,7 +20,7 @@ export default Ember.Component.extend({
       if(this.get('session.isAuthenticated')) {
         this.makeSubscription();
       } else {
-        var login = new Login(this.container);
+        var login = new Login(this.container, true);
         login.start(() => { this.makeSubscription(); });
       }
     },

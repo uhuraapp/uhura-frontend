@@ -2,13 +2,14 @@
 import Ember from 'ember';
 
 export default Ember.Service.extend({
-  init: function (container) {
+  init: function (container, showSpecialMessage) {
+    Ember.$("#login-modal   p").toggle(showSpecialMessage === true);
     this.container = container;
     this._super();
   },
 
-  start: function (callback) {
-    var modal = UIkit.modal("#login-modal", {center: true});
+  start: function (callback, options) {
+    var modal = UIkit.modal("#login-modal", options || {center: true});
     var session = this.container.lookup('simple-auth-session:main');
     session.on('sessionAuthenticationSucceeded', function() {
       modal.hide();
@@ -17,5 +18,6 @@ export default Ember.Service.extend({
     });
 
     modal.show();
+    return modal;
   }
 });
