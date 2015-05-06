@@ -5,6 +5,7 @@ export default Ember.Component.extend({
   tagName: "li",
   classNames: ['episode'],
   classNameBindings: ["isListened", "isDownloaded"],
+  share: true,
   generateEpisodeURL: function () {
     return window.location.origin + this.$("a.more-info").attr('href');
   },
@@ -12,19 +13,21 @@ export default Ember.Component.extend({
     return this.get('episode.title').replace("#", "%23");
   },
   addShare: function () {
-    new Share("#share-button-" + this.get('episode.id'), {
-      url: this.generateEpisodeURL(),
-      description: this.shareDescription(),
-      ui: {
-        flyout: "top left",
-        button_text: ""
-      },
-      networks: {
-        pinterest: {
-          enabled: false
+    if(this.get('share')) {
+      new Share("#share-button-" + this.get('episode.id'), {
+        url: this.generateEpisodeURL(),
+        description: this.shareDescription(),
+        ui: {
+          flyout: "top left",
+          button_text: ""
+        },
+        networks: {
+          pinterest: {
+            enabled: false
+          }
         }
-      }
-    });
+      });
+    }
   }.on('didInsertElement'),
   isListened: function() {
     return this.get('episode.listened');
