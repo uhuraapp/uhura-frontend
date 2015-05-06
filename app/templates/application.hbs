@@ -1,9 +1,27 @@
 {{#if session.isAuthenticated}}
-  {{partial "authenticated"}}
+  {{partial "partials/sidebar"}}
 {{else}}
   {{partial "partials/login"}}
-  {{partial "unauthenticated"}}
+  <header class="home">
+    <hgroup>
+      <h1>
+      {{#link-to 'index'}}
+        Uhura
+      {{/link-to}}
+      </h1>
+    </hgroup>
+  </header>
 {{/if}}
+
+<div id="content" class="uk-animation-fade">
+  {{#if session.isAuthenticated}}
+    <a class="uk-button" id="hamburger-menu" {{action "toggleMenu"}}>
+      <i class="uk-icon-bars"></i>
+      MENU
+    </a>
+  {{/if}}
+  {{outlet}}
+</div>
 
 {{partial "meta/organization"}}
 
