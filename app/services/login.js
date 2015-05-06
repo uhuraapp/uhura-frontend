@@ -11,9 +11,10 @@ export default Ember.Service.extend({
   start: function (callback, options) {
     var modal = UIkit.modal("#login-modal", options || {center: true});
     var session = this.container.lookup('simple-auth-session:main');
-    session.on('sessionAuthenticationSucceeded', function() {
+    session.on('sessionAuthenticationSucceeded', () => {
       modal.hide();
-      Ember.run.later(function() { callback(); }, 200);
+      $(".uk-modal-page").removeClass("uk-modal-page");
+      Ember.run.later( () => { callback(); }, 500);
       session.off('sessionAuthenticationSucceeded');
     });
 
