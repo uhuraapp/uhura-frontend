@@ -15,7 +15,7 @@ export default Ember.Route.extend(ParserController, {
     this._super(controller, model);
   },
 
-  filter: function (data, query) {
-    return data.channels.filterBy('id', query.channel_id)[0];
+  filter: function (channels, query) {
+    return channels.filterBy('id', query.channel_id)[0];
   }
 });

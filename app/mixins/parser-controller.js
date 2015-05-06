@@ -19,7 +19,7 @@ export default Ember.Mixin.create({
   },
 
   filter: function (data) {
-    return data;
+    return {channels: data};
   },
 
   __query: function(transition) {
@@ -28,7 +28,7 @@ export default Ember.Mixin.create({
 
   __request: function (query) {
     return Ember.$.get(this.__resourceURL(), query).then((data) => {
-      return this.filter({channels: data.channels.map(this.createChannelObject)}, query);
+      return this.filter(data.channels.map(this.createChannelObject), query);
     });
   },
 
