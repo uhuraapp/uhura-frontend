@@ -1,6 +1,12 @@
 <nav id="menu">
   <ul>
     <li>
+      {{#link-to 'explore' }}
+        <span class="typcn typcn-cog-outline"></span>
+        {{t "sidebar.explore"}}
+      {{/link-to}}
+    </li>
+    <li>
       {{#link-to 'users.settings' }}
         <span class="typcn typcn-cog-outline"></span>
         {{t "sidebar.settings"}}

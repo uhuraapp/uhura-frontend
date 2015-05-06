@@ -10,7 +10,6 @@ export default Ember.View.extend(LazyImageViewMixin, {
   },
   modelDidChanged: function () {
     this.container.lookup('controller:application').send('closeMenu');
-
   }.observes('controller.model').on('didInsertElement'),
   loadChannelImage: function () {
     Ember.run.later(this, function () {
