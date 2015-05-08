@@ -21,6 +21,7 @@ app.import("bower_components/mediaelement/build/mediaelement-and-player.js");
 app.import("bower_components/jquery.adaptive-backgrounds.js/src/jquery.adaptive-backgrounds.js");
 app.import("bower_components/share-button/build/share.js");
 app.import("bower_components/slideout/dist/slideout.js");
+app.import("bower_components/filer.js/src/filer.js");
 
 app.import("bower_components/mediaelement/build/mediaelementplayer.css");
 
@@ -48,7 +49,6 @@ app.import("bower_components/font-awesome/fonts/fontawesome-webfont.eot", {destD
 // app.import("bower_components/es6-shim/es6-sham.js")
 // app.import("bower_components/es6-shim/es6-shim.js")
 //
-// app.import("bower_components/filer.js/src/filer.js");
 //
 
 //
