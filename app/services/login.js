@@ -13,7 +13,7 @@ export default Ember.Service.extend({
     var session = this.container.lookup('simple-auth-session:main');
     session.on('sessionAuthenticationSucceeded', () => {
       modal.hide();
-      $(".uk-modal-page").removeClass("uk-modal-page");
+      Ember.$(".uk-modal-page").removeClass("uk-modal-page");
       Ember.run.later( () => { callback(); }, 500);
       session.off('sessionAuthenticationSucceeded');
     });
