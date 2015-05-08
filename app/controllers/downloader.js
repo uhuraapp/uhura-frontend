@@ -46,7 +46,12 @@ export default Ember.Controller.extend({
   },
 
   __checkFile: function (episode) {
-    return this.__checkFileSizeIsOK(episode)();
+    // TODO: remove it, always episode should returns Content-Length
+    if(this.__isOnlineOnWifi()){
+      return this.__checkFileSizeIsOK(episode)();
+    } else {
+      return this.__checkFileOnFileSystem(episode)();
+   }
   },
 
   __progressDownloadFn: function (episode) {
@@ -71,6 +76,12 @@ export default Ember.Controller.extend({
         this.filesystem.write(this.storePath() + episode.id, xhr.response).then(resolve, reject);
       });
     };
+  },
+
+  __checkFileOnFileSystem : function (episode) {
+    return () => {
+      return this.filesystem.read(this.storePath() + episode.id);
+    }
   },
 
   __checkFileSizeIsOK: function ( episode) {
@@ -111,5 +122,9 @@ export default Ember.Controller.extend({
 
   __authorizer: function () {
     return this.container.lookup("authorizer:uhura");
+  },
+
+  __isOnlineOnWifi: function () {
+    return !window.cordova; // TODO: implement wifi logic
   }
 });
