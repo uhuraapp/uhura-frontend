@@ -1,4 +1,4 @@
-/* globals $, cordova */
+/* globals $, cordova, UIkit */
 import Ember from 'ember';
 import config from '../config/environment';
 
@@ -8,17 +8,40 @@ export default Ember.Controller.extend({
   episodeLoaded: false,
   loaded: false,
   player: null,
+
   playpause: function (episode) {
     this.set('_locked', true);
     if(this.get('model') && episode.id === this.get('model').id) {
-      var action = this.get('playing') ? 'pause' : 'play';
-      this.get('player').media[action]();
-      this.set('playing', !this.get('playing'));
+      this.__playpause();
     } else {
-      if(this.get('model')) { this.get('model').set('playing', false); }
-      this.set('loaded', false);
-      this.set('model', episode);
+      if(this.canPlay(episode)){
+        this.__play(episode);
+      } else {
+        UIkit.modal.confirm("You don't download this episode. Are you sure you want play the episode?", () => {
+          this.__play(episode);
+        });
+      }
     }
+  },
+
+  canPlay(episode) {
+    if(window.cordova) { // TODO: check if is on Wifi
+      return !!episode.get('downloaded');
+    } else {
+      return true;
+    }
+  },
+
+  __playpause: function () {
+    var action = this.get('playing') ? 'pause' : 'play';
+    this.get('player').media[action]();
+    this.set('playing', !this.get('playing'));
+  },
+
+  __play: function (episode) {
+    if(this.get('model')) { this.get('model').set('playing', false); }
+    this.set('loaded', false);
+    this.set('model', episode);
   },
 
   playerChanges: function () {
