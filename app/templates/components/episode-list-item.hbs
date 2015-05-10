@@ -28,6 +28,7 @@
   </div>
 
   <div class="uk-float-right">
+    {{#if rightActions}}
     {{#if session.isAuthenticated}}
       <button {{action 'listened'}} {{bind-attr data-id=episode.id}} {{bind-attr class=":typcn :icon :listened episode.listened:typcn-tick:typcn-tick-outline"}} {{bind-attr data-listened=episode.listened}}></button>
       {{#if episode.downloading}}
@@ -38,5 +39,6 @@
     {{/if}}
     <button {{action 'share'}} class="typcn icon typcn-export-outline share-button"/>
     <div id="share-button-{{episode.id}}" class="share-button"></div>
+    {{/if}}
   </div>
 </div>

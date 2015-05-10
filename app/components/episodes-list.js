@@ -7,7 +7,7 @@ export default Ember.Component.extend({
   hasMore: true,
   page: 1,
   infiniteScroll: true,
-  hasShare: true,
+  hasRightActions: true,
   actions: {
     fetchMore: function(callback) {
       var promise = Ember.RSVP.Promise.reject();

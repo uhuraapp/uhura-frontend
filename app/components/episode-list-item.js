@@ -5,7 +5,7 @@ export default Ember.Component.extend({
   tagName: "li",
   classNames: ['episode'],
   classNameBindings: ["isListened", "isDownloaded"],
-  share: true,
+  rightActions: true,
   generateEpisodeURL: function () {
     var path = this.$("a.more-info").attr('href').replace("#", "");
     return `http://uhura.io${path}`;
@@ -15,7 +15,7 @@ export default Ember.Component.extend({
     return this.get('episode.title');
   },
   addShare: function () {
-    if(this.get('share')) {
+    if(this.get('rightActions')) {
       if(window.cordova) {
         Ember.$('div.share-button').hide();
       } else {
@@ -43,7 +43,7 @@ export default Ember.Component.extend({
     return this.get('episode.downloaded');
   }.property('episode.downloaded'),
   episodeDidChange: function() {
-    if(this.get('episode')) {
+    if(this.get('episode') && this.get('rightActions')) {
       var downloader = this.container.lookup('controller:downloader');
       downloader.check(this.get('episode'));
     }
