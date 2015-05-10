@@ -36,6 +36,7 @@
         <button {{action 'download'}} {{bind-attr data-id=episode.id}} {{bind-attr class=":typcn :icon episode.downloaded:typcn-trash:typcn-download :download"}}></button>
       {{/if}}
     {{/if}}
+    <button {{action 'share'}} class="typcn icon typcn-export-outline share-button"/>
     <div id="share-button-{{episode.id}}" class="share-button"></div>
   </div>
 </div>

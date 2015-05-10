@@ -7,26 +7,33 @@ export default Ember.Component.extend({
   classNameBindings: ["isListened", "isDownloaded"],
   share: true,
   generateEpisodeURL: function () {
-    return window.location.origin + this.$("a.more-info").attr('href');
+    var path = this.$("a.more-info").attr('href').replace("#", "");
+    return `http://uhura.io${path}`;
   },
-  shareDescription: function () {
-    return this.get('episode.title').replace("#", "%23");
+
+  shareTitle: function () {
+    return this.get('episode.title');
   },
   addShare: function () {
     if(this.get('share')) {
-      new Share("#share-button-" + this.get('episode.id'), {
-        url: this.generateEpisodeURL(),
-        description: this.shareDescription(),
-        ui: {
-          flyout: "top left",
-          button_text: ""
-        },
-        networks: {
-          pinterest: {
-            enabled: false
+      if(window.cordova) {
+        Ember.$('div.share-button').hide();
+      } else {
+        Ember.$('button.share-button').hide();
+        new Share("#share-button-" + this.get('episode.id'), {
+          url: this.generateEpisodeURL(),
+          description: this.shareTitle().replace("#", "%23"),
+          ui: {
+            flyout: "top left",
+            button_text: ""
+          },
+          networks: {
+            pinterest: {
+              enabled: false
+            }
           }
-        }
-      });
+        });
+      }
     }
   }.on('didInsertElement'),
   isListened: function() {
@@ -57,6 +64,13 @@ export default Ember.Component.extend({
     },
     listened: function() {
       this.get('episode').set('makeListened', new Date());
+    },
+    share: function () {
+      window.plugins.socialsharing.share(
+        this.shareTitle(),
+        null,
+        this.get('episode.channel.image_url'),
+        this.generateEpisodeURL());
     }
   }
 });
