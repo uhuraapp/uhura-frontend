@@ -39,6 +39,10 @@
                         {
                             "xml": "<feature name=\"WebSocket\"><param name=\"android-package\" value=\"com.knowledgecode.cordova.websocket.WebSocket\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"SocialSharing\"><param name=\"android-package\" value=\"nl.xservices.plugins.SocialSharing\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -48,7 +52,7 @@
                     "/*": [
                         {
                             "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
-                            "count": 2
+                            "count": 3
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
@@ -87,6 +91,9 @@
             "PACKAGE_NAME": "io.uhuraapp.app"
         },
         "com.knowledgecode.cordova.websocket": {
+            "PACKAGE_NAME": "io.uhura.app"
+        },
+        "nl.x-services.plugins.socialsharing": {
             "PACKAGE_NAME": "io.uhura.app"
         }
     },
