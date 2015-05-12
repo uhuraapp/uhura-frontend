@@ -136,6 +136,6 @@ export default Ember.Controller.extend({
   },
 
   __isOnlineOnWifi () {
-    return !window.cordova; // TODO: implement wifi logic
+    return false; // !window.cordova; // TODO: implement wifi logic
   }
 });
