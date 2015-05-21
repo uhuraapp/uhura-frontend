@@ -7,6 +7,8 @@ export default Ember.View.extend(LazyImageViewMixin, {
       normalizeTextColor: true,
       parent: "#profile"
     });
+
+    $("#profile").fadeIn();
   },
   modelDidChanged: function () {
     this.container.lookup('controller:application').send('closeMenu');

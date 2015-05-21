@@ -38,6 +38,10 @@
     {{content-for 'head-footer'}}
   </head>
   <body>
+    <div id="loading" style="position: absolute; display: block; top: 0;bottom: 0;right: 0;left: 0;z-index: 234;background: rgba(255,255,255,0.8 );color: #000; text-align: center">
+      Loading...
+      <img style="display:block; margin: 15% auto" src="/assets/loading.gif" />
+    </div>
     {{content-for 'body'}}
 
     <script src="assets/vendor.js"></script>
