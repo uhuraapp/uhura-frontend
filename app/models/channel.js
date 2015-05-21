@@ -13,7 +13,7 @@ export default DS.Model.extend({
   to_view: DS.attr(),
   imageURL: function () {
     var url = this.get('image_url');
-    if(url !== "") {
+    if(url !== "" && url.indexOf(IMAGE_HOST) === -1) {
       return IMAGE_HOST + "/resolve?url=" + this.get('image_url');
     }
     return url;
