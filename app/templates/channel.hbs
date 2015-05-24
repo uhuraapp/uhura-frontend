@@ -2,7 +2,7 @@
   <img style="display:block; margin: 15% auto" src="/assets/loading.gif" />
 </div>
 
-<div id="profile" class="uk-grid" data-uk-grid-margin>
+<div id="profile">
   <div class="image-subscribe-button uk-width-small-1-1 uk-width-medium-4-10">
     <img data-adaptive-background='1' data-layzr="{{model.imageURL}}" data-fallback="assets/channel-placeholder.png" src="assets/channel-placeholder-loading.jpg" />
     {{subscribe-button channel=model}}
@@ -17,7 +17,7 @@
 
   {{#if allListenedButton}}
   <div class="uk-width-small-5-10 uk-width-medium-3-10">
-    <button style="width: 100%" class="uk-button uk-button-danger uk-float-right" {{action 'markAllAsListened'}}>
+    <button style="width: 100%" class="button uk-float-right" {{action 'markAllAsListened'}}>
       <i class="typcn typcn-tick-outline"></i>
       {{t 'views.channel.mark_all_as_listened'}}
     </button>
@@ -31,7 +31,6 @@
         {{t 'views.channel.remove_listened'}}
       </label>
     {{/if}}
-
   </div>
 
   <div class="uk-width-1-1 episodes-list">
@@ -42,5 +41,3 @@
     {{model.copyrigth}}
   </div>
 </div>
-
-{{outlet}}

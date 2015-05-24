@@ -1,0 +1,11 @@
+<h3>Subscriptions</h3>
+
+<ul id="subscriptions" class="uk-grid uk-grid-collapse">
+  {{#each subscription in model}}
+    <li class="uk-width-1-3 uk-width-medium-1-5 uk-width-large-1-6">
+      {{#link-to 'channel' subscription.id}}
+        <img src={{subscription.image_url}} />
+      {{/link-to}}
+    </li>
+  {{/each}}
+</ul>

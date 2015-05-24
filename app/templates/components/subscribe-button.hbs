@@ -1,9 +1,9 @@
 {{#if channel.subscribed}}
-<button class="uk-button uk-button-success typcn typcn-tick" {{action 'unsubscribe'}}>
-  {{t 'components.subscribe_button.subscribed'}}
+<button class="button subscribed material-icons" {{action 'unsubscribe'}}>
+done
 </button>
 {{else}}
-<button class="uk-button uk-button-primary typcn typcn-tick-outline" {{action 'subscribe'}}>
-  {{t 'components.subscribe_button.subscribe'}}
+<button class="button material-icons" {{action 'subscribe'}}>
+done
 </button>
 {{/if}}

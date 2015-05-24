@@ -1,10 +1,28 @@
+$navbar-nav-height: 55px
+$navbar-background: #0E1528
+$dropdown-navbar-background: #0E1528
+
 @import 'bower_components/uikit/scss/uikit-mixins'
-@import 'bower_components/uikit/scss/uikit'
+@import 'bower_components/uikit/scss/core/variables'
+@import 'bower_components/uikit/scss/core/base'
+@import 'bower_components/uikit/scss/core/close'
+@import 'bower_components/uikit/scss/core/dropdown'
+@import 'bower_components/uikit/scss/core/grid'
+@import 'bower_components/uikit/scss/core/modal'
+@import 'bower_components/uikit/scss/core/nav'
+@import 'bower_components/uikit/scss/core/navbar'
+@import 'bower_components/uikit/scss/core/panel'
+
 @import "bower_components/typicons/src/font/typicons"
 
-html, body
+@import "material_icons"
+
+html, body 
   min-height: 100%
   background: #f7f7f7
+
+*
+  box-sizing: border-box
 
 html
   background: rgb(247,247,247)
@@ -35,6 +53,8 @@ body
 @import 'settings'
 @import 'sidebar'
 @import 'welcome'
+@import 'navbar'
+@import 'subscriptions'
 
 //@import 'defaults'
 // @import 'slide'
@@ -43,6 +63,7 @@ body
 #content
   position: relative
   z-index: 1
+  overflow: hidden
   &.authenticated
     box-shadow: -5px 0 15px #000
 

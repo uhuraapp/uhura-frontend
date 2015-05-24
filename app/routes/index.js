@@ -7,12 +7,11 @@ export default Ember.Route.extend({
     if (!this.get('session.isAuthenticated')) {
       transition.abort();
       if(window.cordova) {
-        this.transitionTo('login');
+        this.transitionTo('users/subscriptions');
       } else {
         this.transitionTo('explore');
       }
     }
-
     return s;
   }
 });

@@ -11,6 +11,21 @@
       {{t 'components.episode_list_item.play'}}
       {{/if}}
     </button>
+    {{#if session.isAuthenticated}}
+      <button {{action 'listened'}} data-listened={{model.listened}}>
+        Mask as Played
+      </button>
+
+      {{#if episode.downloading}}
+        <img class="downloading" src="assets/loading-download.gif" />
+      {{else}}
+        <button {{action 'download'}}>Download</button>
+      {{/if}}
+    {{/if}}
+
+      <button {{action 'share'}} class="typcn icon typcn-export-outline share-button"/>
+      <div id="share-button-{{episode.id}}" class="share-button"></div>
+
     <div class="description">{{model.description}}</div>
     <button {{action "playpause" bubbles=true}} class="highlight play">
       {{#if model.playing}}

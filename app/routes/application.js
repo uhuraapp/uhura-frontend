@@ -7,14 +7,6 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
     this._super();
     $("#loading").show();
   },
-  model: function(){
-    'use strict';
-    if(this.get('session.isAuthenticated')) {
-      return this.store.find('subscription');
-    } else {
-      return [];
-    }
-  },
   activate: function(){
     var title = "Dashboard - Uhura App";
 

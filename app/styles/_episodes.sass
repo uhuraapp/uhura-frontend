@@ -1,99 +1,114 @@
-=buttons-channel-episode
-  outline: none
-  background: transparent
-  display: block
-  float: left
-  margin: 0
-  font-size: 14px
-  text-transform: uppercase
-  padding: 10px
-  border: 0
-  cursor: pointer
-  line-height: 1.4
-  color: #000
-  &.highlight
-    color: #F44336
-  &.active
-    color: #CCC
-  &.icon
-    font-size: 20px
-    padding: 5px 10px
-
-body.channel-episode
-  .uk-modal-dialog
-    overflow: hidden
-    margin-bottom: 85px
-    h2
-      margin: 0
-    button
-      +buttons-channel-episode
-      padding: 10px 0
-    div.description
-      clear: both
-
+// body.channel-episode
+//   .uk-modal-dialog
+//     overflow: hidden
+//     margin-bottom: 85px
+//     h2
+//       margin: 0
+//     button
+//       +buttons-channel-episode
+//       padding: 10px 0
+//     div.description
+//       clear: both
+//
 ul.episodes
   margin: 0
   padding: 0
   list-style: none
+  border-radius: 3px
   li.episode
-    max-width: 100%
-    box-shadow: 0 0 2px #000
-    margin-bottom: 10px
-    border-radius: 3px
-    background: #FFF
+    &:hover
+      background: #F7F7F7
+    border-bottom: 1px solid #CCC
+    width: 100%
+    padding: 20px
     color: #333
-    text-shadow: none
-    &.is-listened
-      opacity: .5
-    &.is-downloaded
-      box-shadow: 0 0 3px #0C0, 0 1px 1px #0C0
-    .typcn-tick
-      color: green
-
-  h3.title
-    padding: 10px
-    margin: 0
-    font-weight: 500
-    font-size: 18px
-    color: inherit
-    line-height: 1.5
+    display: flex
+    justify-content: space-between
+    font-size: 16px
+    //     margin-bottom: 15px
+    //     padding-bottom: 15px
+    //     text-shadow: none
+    //     &.is-listened
+    //       opacity: .5
+    //     &.is-downloaded
+    //       box-shadow: 0 0 3px #0C0, 0 1px 1px #0C0
+    //     .typcn-tick
+    //       color: green
+    //
+    h3.title
+      margin: 0
+      padding: 0 10px
+      line-height: 1.5
+      font-weight: 700
+      flex: 1 1 auto
+      align-self: center
+      font-weight: normal
+      font-size: 16px
+    a
+      display: block
+      color: #333
+      &:hover
+        text-decoration: none
     time
+      flex: 0 0 auto
+      align-self: center
       font-size: 12px
-      font-style: italic
-      float: right
-      padding: 0 0 0 10px
-      display: block
-      a
-        color: #5F5F5F
 
-  .description
-    padding: 5px 10px 20px 10px
-    border-top: 1px solid #CCC
-
-  .actions
-    border-top: 1px solid #CCC
-    padding: 0 5px
-    &::after
-      content: " "
-      display: block
-      clear: both
-    div.share-button
-      width: 15px
-      .social.left
-        margin-left: -220px
-        margin-top: -60px
-      label
-        background: none
-        padding: 0
-        margin: 0
-    .downloading
-      box-shadow: none
-      float: left
-      margin: 10px 0
-      width: auto
-    button, a, .share-button
-      +buttons-channel-episode
-
+  .button-play-wrapper
+    flex: 0 0 auto
+    align-self: center
+    button
+      border-radius: 50%
+      width: 40px
+      height: 40px
+      border: none
+      background: #F44336
+      color: #FFF
+      cursor: pointer
+      &:hover, &:active
+        outline: none
+//
+//   .actions
+//     padding: 0 5px
+//     &::after
+//       content: " "
+//       display: block
+//       clear: both
+//     div.share-button
+//       width: 15px
+//       .social.left
+//         margin-left: -220px
+//         margin-top: -60px
+//       label
+//         background: none
+//         padding: 0
+//         margin: 0
+//     .downloading
+//       box-shadow: none
+//       float: left
+//       margin: 10px 0
+//       width: auto
+//     button, a, .share-button
+//       +buttons-channel-episode
+//
+// .ab-light
+//   ul.episodes
+//     li.episode
+//       border-bottom: 1px dotted #000
+//     a
+//       color: #000
+//     button.play
+//       background-color: #0E1528
+//
+// .ab-dark
+//   ul.episodes
+//     li.episode
+//       border-bottom: 1px dotted #FFF
+//     a
+//       color: #FFF
+//     button.play
+//       background: #E0E7FA
+//
 //
   p.not_found
     text-align: center

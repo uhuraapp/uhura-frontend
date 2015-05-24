@@ -1,25 +1,50 @@
-{{#if session.isAuthenticated}}
-  {{partial "partials/sidebar"}}
-{{else}}
-  {{partial "partials/login"}}
-  <header class="home">
-    <hgroup>
-      <h1>
-      {{#link-to 'index'}}
-        Uhura
-      {{/link-to}}
-      </h1>
-    </hgroup>
-  </header>
-{{/if}}
+{{outlet 'modal'}}
+{{partial 'partials/login'}}
+
+<nav class="uk-navbar">
+  <ul class="uk-navbar-nav">
+    <li class="uk-parent" data-uk-dropdown>
+      <a class="uk-navbar-toggle"></a>
+      <div class="uk-dropdown uk-dropdown-navbar">
+        <ul class="uk-nav uk-nav-navbar">
+          <li>
+            {{#link-to 'users.subscriptions' }}
+            <span class="typcn typcn-home"></span>
+            {{t "sidebar.subscriptions"}}
+            {{/link-to}}
+          </li>
+          <li>
+            {{#link-to 'explore' }}
+            <span class="typcn typcn-zoom"></span>
+            {{t "sidebar.explore"}}
+            {{/link-to}}
+          </li>
+          <li class="uk-nav-divider"></li>
+          <li>
+            {{#link-to 'users.settings' }}
+            <span class="typcn typcn-cog"></span>
+            {{t "sidebar.settings"}}
+            {{/link-to}}
+          </li>
+          <li>
+            <a {{ action 'invalidateSession' }}>
+              <span class="typcn typcn-power"></span>
+              {{t "sidebar.sign_out"}}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+
+  <div class="uk-navbar-content uk-navbar-center">
+    <h1>
+      {{#link-to "index"}}Uhura App{{/link-to}}
+    </h1>
+  </div>
+</nav>
 
 <div id="content" class="uk-animation-fade">
-  {{#if session.isAuthenticated}}
-    <a class="uk-button" id="hamburger-menu" {{action "toggleMenu"}}>
-      <i class="uk-icon-bars"></i>
-      MENU
-    </a>
-  {{/if}}
   {{outlet}}
 </div>
 
