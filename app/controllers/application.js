@@ -1,12 +1,6 @@
 import Ember from 'ember';
 
 export default Ember.ArrayController.extend({
-  loginChange: function () {
-    Ember.run.scheduleOnce('afterRender', () => {
-      this.send('createMenu');
-    });
-  }.observes('session.isAuthenticated'),
-
   actions : {
     authenticate: function (provider) {
       this.set('loading', true);
