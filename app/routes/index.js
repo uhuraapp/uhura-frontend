@@ -5,9 +5,8 @@ export default Ember.Route.extend({
     var s = this._super(transition);
 
     if (!this.get('session.isAuthenticated')) {
-      transition.abort();
       if(window.cordova) {
-        this.transitionTo('users/subscriptions');
+        this.transitionTo('users.subscriptions');
       } else {
         this.transitionTo('explore');
       }
