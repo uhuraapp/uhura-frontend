@@ -34,6 +34,9 @@ cordova/platforms/android/CordovaLib/ant-gen
 cordova/platforms/android/CordovaLib/bin
 cordova/platforms/android/CordovaLib/gen
 cordova/platforms/android/CordovaLib/local.properties
+cordova/platforms/android/.gradle/
+cordova/platforms/android/CordovaLib/build/
+
 
 # wp8
 cordova/platforms/wp8/bin
@@ -47,3 +50,4 @@ cordova/www
 # ubuntu
 cordova/platforms/ubuntu/www
 cordova/platforms/ubuntu/**/www
+
