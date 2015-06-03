@@ -15,6 +15,7 @@
 
   <h2 class="uk-width-small-5-10 uk-width-medium-7-10">{{t 'titles.episodes'}}</h2>
 
+<!--
   {{#if allListenedButton}}
   <div class="uk-width-small-5-10 uk-width-medium-3-10">
     <button style="width: 100%" class="button uk-float-right" {{action 'markAllAsListened'}}>
@@ -32,6 +33,7 @@
       </label>
     {{/if}}
   </div>
+-->
 
   <div class="uk-width-1-1 episodes-list">
     {{episodes-list episodesFiltered=episodesFiltered episodes=model.episodes store=store channel=model}}
