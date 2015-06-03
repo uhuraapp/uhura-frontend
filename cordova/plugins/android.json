@@ -43,6 +43,10 @@
                         {
                             "xml": "<feature name=\"SocialSharing\"><param name=\"android-package\" value=\"nl.xservices.plugins.SocialSharing\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<preference name=\"webView\" value=\"org.crosswalk.engine.XWalkWebViewEngine\" />",
+                            "count": 1
                         }
                     ]
                 }
@@ -94,6 +98,9 @@
             "PACKAGE_NAME": "io.uhura.app"
         },
         "nl.x-services.plugins.socialsharing": {
+            "PACKAGE_NAME": "io.uhura.app"
+        },
+        "cordova-plugin-crosswalk-webview": {
             "PACKAGE_NAME": "io.uhura.app"
         }
     },

@@ -39,4 +39,5 @@
     <preference name="DisallowOverscroll" value="true" />
     <preference name="Orientation" value="portrait" />
     <preference name="SplashScreenDelay" value="5000" />
+    <preference name="webView" value="org.crosswalk.engine.XWalkWebViewEngine" />
 </widget>
