@@ -99,8 +99,8 @@ export default Ember.View.extend({
     var episodesElements = $('li.episode').get().reverse();
     for (var i = 0; i <= episodesElements.length; i++) {
       var episodeElement = $(episodesElements[i]);
-      if(episodeElement.find('button.typcn-tick').length === 0) {
-        episodeElement.find('.play').click();
+      if(!episodeElement.is(".is-listened")) {
+        episodeElement.find('.button-play-wrapper button').click();
         break;
       }
     }
