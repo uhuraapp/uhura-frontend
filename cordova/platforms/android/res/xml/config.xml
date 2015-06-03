@@ -1,9 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget android-versionCode="5" id="io.uhura.app" version="0.0.4-alpha" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <preference name="loglevel" value="DEBUG" />
-    <feature name="InAppBrowser">
-        <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
-    </feature>
     <feature name="File">
         <param name="android-package" value="org.apache.cordova.file.FileUtils" />
         <param name="onload" value="true" />
@@ -27,6 +24,10 @@
     <feature name="SocialSharing">
         <param name="android-package" value="nl.xservices.plugins.SocialSharing" />
     </feature>
+    <preference name="webView" value="org.crosswalk.engine.XWalkWebViewEngine" />
+    <feature name="InAppBrowser">
+        <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
+    </feature>
     <preference name="android-minSdkVersion" value="15" />
     <name>Uhura</name>
     <description>
@@ -35,9 +36,10 @@
       Duke X
     </author>
     <content src="index.html" />
-    <access origin="*" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="Orientation" value="portrait" />
     <preference name="SplashScreenDelay" value="5000" />
-    <preference name="webView" value="org.crosswalk.engine.XWalkWebViewEngine" />
+    <allow-navigation href="*" />
+    <allow-intent href="*://*.uhura.io/*" />
+    <access origin="*" />
 </widget>

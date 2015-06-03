@@ -9,10 +9,6 @@
                 "parents": {
                     "/*": [
                         {
-                            "xml": "<feature name=\"InAppBrowser\"><param name=\"android-package\" value=\"org.apache.cordova.inappbrowser.InAppBrowser\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"File\"><param name=\"android-package\" value=\"org.apache.cordova.file.FileUtils\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         },
@@ -47,6 +43,10 @@
                         {
                             "xml": "<preference name=\"webView\" value=\"org.crosswalk.engine.XWalkWebViewEngine\" />",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"InAppBrowser\"><param name=\"android-package\" value=\"org.apache.cordova.inappbrowser.InAppBrowser\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -79,9 +79,6 @@
         }
     },
     "installed_plugins": {
-        "org.apache.cordova.inappbrowser": {
-            "PACKAGE_NAME": "io.uhura.app"
-        },
         "org.apache.cordova.file": {
             "PACKAGE_NAME": "io.uhuraapp.app"
         },
@@ -101,6 +98,9 @@
             "PACKAGE_NAME": "io.uhura.app"
         },
         "cordova-plugin-crosswalk-webview": {
+            "PACKAGE_NAME": "io.uhura.app"
+        },
+        "org.apache.cordova.inappbrowser": {
             "PACKAGE_NAME": "io.uhura.app"
         }
     },
