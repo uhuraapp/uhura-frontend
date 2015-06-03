@@ -3,8 +3,8 @@ import Ember from 'ember';
 import ApplicationRouteMixin from 'simple-auth/mixins/application-route-mixin';
 
 export default Ember.Route.extend(ApplicationRouteMixin, {
-  beforeModel() {
-    this._super();
+  beforeModel(transition) {
+    this._super(transition);
     $("#loading").show();
   },
   activate: function(){
