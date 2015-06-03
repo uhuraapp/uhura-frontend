@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /*
        Licensed to the Apache Software Foundation (ASF) under one
        or more contributor license agreements.  See the NOTICE file
@@ -19,7 +17,17 @@
        under the License.
 */
 
-// Coho updates this line:
-var VERSION = "4.0.0";
+package org.apache.cordova;
 
-console.log(VERSION);
+public interface ICordovaCookieManager {
+
+    public void setCookiesEnabled(boolean accept);
+
+    public void setCookie(final String url, final String value);
+
+    public String getCookie(final String url);
+
+    public void clearCookies();
+
+    public void flush();
+};
