@@ -41,10 +41,6 @@
                             "count": 1
                         },
                         {
-                            "xml": "<preference name=\"webView\" value=\"org.crosswalk.engine.XWalkWebViewEngine\" />",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"InAppBrowser\"><param name=\"android-package\" value=\"org.apache.cordova.inappbrowser.InAppBrowser\" /></feature>",
                             "count": 1
                         }
@@ -95,9 +91,6 @@
             "PACKAGE_NAME": "io.uhura.app"
         },
         "nl.x-services.plugins.socialsharing": {
-            "PACKAGE_NAME": "io.uhura.app"
-        },
-        "cordova-plugin-crosswalk-webview": {
             "PACKAGE_NAME": "io.uhura.app"
         },
         "org.apache.cordova.inappbrowser": {

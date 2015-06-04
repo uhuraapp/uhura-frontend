@@ -24,7 +24,6 @@
     <feature name="SocialSharing">
         <param name="android-package" value="nl.xservices.plugins.SocialSharing" />
     </feature>
-    <preference name="webView" value="org.crosswalk.engine.XWalkWebViewEngine" />
     <feature name="InAppBrowser">
         <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
     </feature>
@@ -36,10 +35,8 @@
       Duke X
     </author>
     <content src="index.html" />
+    <access origin="*" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="Orientation" value="portrait" />
     <preference name="SplashScreenDelay" value="5000" />
-    <allow-navigation href="*" />
-    <allow-intent href="*://*.uhura.io/*" />
-    <access origin="*" />
 </widget>
