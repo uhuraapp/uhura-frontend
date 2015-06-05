@@ -16,8 +16,6 @@ ul.episodes
   list-style: none
   border-radius: 3px
   li.episode
-    &:hover
-      background: #F7F7F7
     border-bottom: 1px solid #CCC
     width: 100%
     padding: 20px
@@ -25,16 +23,11 @@ ul.episodes
     display: flex
     justify-content: space-between
     font-size: 16px
-    //     margin-bottom: 15px
-    //     padding-bottom: 15px
-    //     text-shadow: none
+    &:hover
+      background: #F7F7F7
     &.is-listened
-      opacity: .5
-    //     &.is-downloaded
-    //       box-shadow: 0 0 3px #0C0, 0 1px 1px #0C0
-    //     .typcn-tick
-    //       color: green
-    //
+      h3.title, .button-play-wrapper, time, .more-itens button
+        opacity: .5
     h3.title
       margin: 0
       padding: 0 10px
@@ -53,6 +46,48 @@ ul.episodes
       flex: 0 0 auto
       align-self: center
       font-size: 12px
+
+  .more-itens
+    flex: 0 0 auto
+    align-self: center
+    position: relative
+    button
+      text-align: center
+      border: none
+      background: transparent
+      color: #333
+      &:hover, &:active
+        outline: none
+
+  .itens
+    position: absolute
+    background-color: #FFF
+    top: 0
+    right: 0
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37)
+    border-radius: 3px
+    width: 150px
+    z-index: 2
+    opacity: 0
+    transform: scale(0) translateZ(0)
+    transform-origin: top right
+    &.open
+      transform: scale(1) translateZ(0)
+      opacity: 1
+
+    ul
+      margin: 0
+      padding: 10px 0
+      color: #000
+      font-family: normal
+      list-style: none
+      font-size: 15px
+      line-height: 32px
+      li
+        padding: 0 15px
+        &:hover
+          background-color: #CCC
+
 
   .button-play-wrapper
     flex: 0 0 auto

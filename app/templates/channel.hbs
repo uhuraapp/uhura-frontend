@@ -3,14 +3,15 @@
 </div>
 
 <div id="profile">
-  <div class="image-subscribe-button uk-width-small-1-1 uk-width-medium-4-10">
-    <img data-adaptive-background='1' data-layzr="{{model.imageURL}}" data-fallback="assets/channel-placeholder.png" src="assets/channel-placeholder-loading.jpg" />
+  <div class="channel-information">
     {{subscribe-button channel=model}}
-  </div>
 
-  <div class="info uk-width-small-1-1 uk-width-medium-6-10">
-    <h1>{{model.title}}</h1>
-    <div class="description">{{model.description}}</div>
+    <img class="channel-img" data-adaptive-background='1' data-layzr="{{model.imageURL}}" data-fallback="assets/channel-placeholder.png" src="assets/channel-placeholder-loading.jpg" />
+
+    <div class="about">
+      <h1>{{model.title}}</h1>
+      <div class="description">{{model.description}}</div>
+    </div>
   </div>
 
   <h2 class="uk-width-small-5-10 uk-width-medium-7-10">{{t 'titles.episodes'}}</h2>

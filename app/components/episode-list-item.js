@@ -1,4 +1,4 @@
-/* global Share */
+/* global Share, $ */
 import Ember from 'ember';
 
 export default Ember.Component.extend({
@@ -71,6 +71,17 @@ export default Ember.Component.extend({
         null,
         this.get('episode.channel.image_url'),
         this.generateEpisodeURL());
+    },
+    info: function () {
+      $('.itens.open').removeClass('open');
+      this.$('.itens').addClass('open');
+      Ember.run.later(function () {
+        $(document).on('click.out-itens', '*:not(.itens)', function(e) {
+          $('.itens.open').removeClass('open');
+          $(document).off('click.out-itens');
+          e.stopPropagation();
+        });
+      }, 2000);
     }
   }
 });

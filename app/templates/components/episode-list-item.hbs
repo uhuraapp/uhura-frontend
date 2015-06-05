@@ -10,11 +10,29 @@
   {{/link-to}}
 </h3>
 
+
 <time date={{episode.published_at}}>
   {{#link-to 'channel.episode' episode class="more-info"}}
     {{episode.publishedAt}}
   {{/link-to}}
 </time>
+
+<div  class="more-itens">
+  <button class="material-icons" {{action 'info'}}>more_vert</button>
+  <div class="itens">
+    <ul>
+      <li>
+        <button>Mark as Played</button>
+      </li>
+      <li>
+        <button>Share</button>
+      </li>
+      <li>
+        <button>Download</button>
+      </li>
+    </ul>
+  </div>
+</div>
 
 <!--
 {{#if session.isAuthenticated}}

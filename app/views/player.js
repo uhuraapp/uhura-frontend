@@ -3,18 +3,25 @@ import Ember from 'ember';
 
 export default Ember.View.extend({
   CONSIDERED_LISTENED_PERCENT: 95,
-  hasModel: false,
-  miniPlayer: true,
+  hasModel: true,
+  miniPlayer: false,
   templateName: 'player',
-  classNameBindings: ['hasModel::uk-hidden', 'miniPlayer:player-mini:player-full'],
   classNames: ["the-player"],
-  click: function(e) {
-    if(this.__isToggleButton(e)) {  this.set('miniPlayer', !this.get('miniPlayer')); }
-  },
 
   contentDidChange: function() {
     Ember.run(() => { this.__updateAudio(); });
   }.observes('controller.model'),
+
+  // TODO: fix display flex, this code keep player on screen view
+  fixHeigthSize: function () {
+    Ember.run.scheduleOnce('afterRender', function (){
+      var playerHeight = window.innerHeight - document.querySelector("nav").clientHeight;
+      $('.the-player').height(playerHeight);
+      $(document).on('scroll', () => {
+        $('.the-player').css("top", window.pageYOffset);
+      });
+    });
+  }.on('didInsertElement'),
 
   __removePlayer: function (controller) {
     var audioElement = $("audio.audio-element").get(0);

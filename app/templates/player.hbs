@@ -1,14 +1,9 @@
 <div id="player">
-  <a class="close uk-close uk-close-alt"></a>
-  {{#if loaded}}
   <img {{bind-attr src=model.channel.imageURL}} class="channel-img" />
-  <button {{action 'playpause'}} {{bind-attr class=":typcn playing:typcn-media-pause:typcn-media-play :playpause"}}></button>
   <h2>{{model.title}}</h2>
   <h3>{{model.channel.title}}</h3>
-  {{else}}
-  <div class="player-loading"><h2>Please wait...</h2></div>
-  {{/if}}
 
+  {{!-- <button {{action 'playpause'}} {{bind-attr class=":typcn playing:typcn-media-pause:typcn-media-play :playpause"}}></button> --}}
   <div id="wrapper-audio-element" class="player-audio-element">
   </div>
 </div>

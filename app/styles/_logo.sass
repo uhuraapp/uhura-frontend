@@ -5,13 +5,17 @@ header, .uk-navbar
     line-height: inherit
     a
       color: #F44336
-      font-size: 25px
+      font-size: 20px
       font-family: 'Exo 2', sans-serif
       font-weight: 800
       line-height: 35px
       margin: 0
       padding: 0
       letter-spacing: 1px
+      @include respond-to(346px)
+        font-size: 25px
+
+
       &:hover, &:focus, &:active
         text-decoration: none
         color: #F44336

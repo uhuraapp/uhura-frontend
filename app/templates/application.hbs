@@ -44,10 +44,12 @@
   </div>
 </nav>
 
+<div id="container">
 <div id="content" class="uk-animation-fade">
   {{outlet}}
 </div>
 
-{{partial "meta/organization"}}
-
 {{render 'player'}}
+</div>
+
+{{partial "meta/organization"}}
