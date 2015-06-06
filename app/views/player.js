@@ -3,10 +3,10 @@ import Ember from 'ember';
 
 export default Ember.View.extend({
   CONSIDERED_LISTENED_PERCENT: 95,
-  hasModel: true,
-  miniPlayer: false,
+  hasModel: false,
   templateName: 'player',
   classNames: ["the-player"],
+  classNameBindings: ['hasModel'],
 
   contentDidChange: function() {
     Ember.run(() => { this.__updateAudio(); });
@@ -100,7 +100,6 @@ export default Ember.View.extend({
 
   __ended: function () {
     this.get('controller').playerEnded();
-    this.set('miniPlayer', true);
     this.set('hasModel', false);
 
     var episodesElements = $('li.episode').get().reverse();
@@ -111,11 +110,6 @@ export default Ember.View.extend({
         break;
       }
     }
-  },
-
-  __isToggleButton: function (e) {
-    var $target = $(e.target);
-    return ( (this.get('miniPlayer') && !$target.is('.playpause')) || $target.is('.close') ) && this.get('controller.loaded');
   },
 
   __isConsideredListened: function (media) {
