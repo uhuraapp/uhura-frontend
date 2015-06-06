@@ -1,23 +1,12 @@
 .the-player
+  +container-card
   width: 250px
-  background: #FFF
   position: relative
-  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37)
   display: none
   &.has-model
     display: block
-
-  //*
-  //  -webkit-touch-callout: none
-  //  -webkit-user-select: none
-  //  -khtml-user-select: none
-  //    -moz-user-select: none
-  //   -ms-user-select: none
-  //  user-select: none
-  //  &:focus, &:active
-  //    outline: none !important
   h2, h3
-    color: #000
+    color: $primary-text-color
     padding: 0 10px
     margin: 0
     text-align: center
@@ -37,40 +26,6 @@
   button.playpause
     margin: auto
     display: block
-  //
-      h2, h3
-        clear: both
-        width: 100%
-        text-align: center
-        white-space: inherit
-        overflow: none
-        text-overflow: none
-      .playpause
-        display: none
-      .mejs-container
-        background: none
-        margin-top: 15px
-        .mejs-controls
-          background: none
-          div
-        .mejs-playpause-button
-          width: 100%
-          height: auto
-          float: none
-          button
-            width: 34px
-            height: 34px
-            background: transparent url('playpause.png') 0 0 no-repeat
-            margin: 0 auto
-            display: block
-            position: initial
-          &.mejs-pause button
-            background-position: 0 -35px
-        .mejs-time
-          width: 100%
-          padding: 0
-    +respond-to(400px)
-      max-width: 300px
 
 .mejs-container
   background: #FFF
@@ -91,20 +46,15 @@
       cursor: pointer
 
     .mejs-time-total
-      background: #CCC
+      background: $primary-color-light
       width: 100% !important
       margin: 5px 0
 
     .mejs-time-loaded
-      background: #7b7d82
+      background: $divider-color
 
     .mejs-time-current
-      background: #FC6E44
-      background: -webkit-linear-gradient(top, #FC6E44 0%, #ff5105 100%)
-      background: -moz-linear-gradient(top, #FC6E44 0%, #ff5105 100%)
-      background: -o-linear-gradient(top, #FC6E44 0%, #ff5105 100%)
-      background: -ms-linear-gradient(top, #FC6E44 0%, #ff5105 100%)
-      background: linear-gradient(top, #FC6E44 0%, #ff5105 100%)
+      background: $accent-color
 
     .mejs-time-handle
       display: block
@@ -112,19 +62,18 @@
       height: 12px
       border: none
       outline: none
-      background: #ff5722
+      background: darken($accent-color, 20%)
       top: -4px
       border-radius: 100%
 
   .mejs-controls .mejs-volume-button
     display: none
-    border: 1px solid red
     position: static
     right: 0
     top: 0
     .mejs-volume-slider
       .mejs-volume-current, .mejs-volume-handle
-        background: #ff5722
+        // background: #ff5722
       .mejs-volume-handle
         display: block
         border-radius: 10px
@@ -137,4 +86,4 @@
   .mejs-controls .mejs-time
     float: none
     display: block
-    color: #333
+    color: $primary-text-color

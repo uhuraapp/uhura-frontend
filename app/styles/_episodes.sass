@@ -12,33 +12,30 @@
 //
 
 button.playpause
+  +like-a-button
   border-radius: 50%
   width: 40px
   height: 40px
   border: none
-  background: #F44336
-  color: #FFF
+  background: $accent-color
+  color: $primary-color-text
   cursor: pointer
-  &:hover, &:active
-    outline: none
 
 ul.episodes
+  +container-card
   margin: 0
   padding: 0
   list-style: none
-  border-radius: 3px
   li.episode
-    border-bottom: 1px solid #CCC
     width: 100%
     padding: 20px
-    color: #333
     display: flex
     justify-content: space-between
     font-size: 16px
     &:hover
-      background: #F7F7F7
+      background: $primary-color-light
     &.is-listened
-      h3.title, .button-play-wrapper, time, .more-itens button
+      h3.title, .button-play-wrapper, time, .more-itens > button
         opacity: .5
     h3.title
       margin: 0
@@ -51,13 +48,15 @@ ul.episodes
       font-size: 16px
     a
       display: block
-      color: #333
+      color: $primary-text-color
+
       &:hover
         text-decoration: none
     time
       flex: 0 0 auto
       align-self: center
       font-size: 12px
+      margin: 0 10px
 
   .more-itens
     flex: 0 0 auto
@@ -67,9 +66,9 @@ ul.episodes
       text-align: center
       border: none
       background: transparent
-      color: #333
-      &:hover, &:active
-        outline: none
+      height: 40px
+      color: $primary-text-color
+      +like-a-button
 
   .itens
     position: absolute
@@ -90,7 +89,6 @@ ul.episodes
     ul
       margin: 0
       padding: 10px 0
-      color: #000
       font-family: normal
       list-style: none
       font-size: 15px
@@ -98,8 +96,8 @@ ul.episodes
       li
         padding: 0 15px
         &:hover
-          background-color: #CCC
-
+          background: $primary-color-light
+          color: $primary-text-color
 
   .button-play-wrapper
     flex: 0 0 auto

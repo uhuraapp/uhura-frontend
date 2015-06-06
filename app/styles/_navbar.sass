@@ -1,27 +1,30 @@
 body
   margin-top: 55px
   .uk-navbar
-    background: #0E1528
-    color: #FFF
-    box-shadow: 0 1px 1px #000
+    +elevation
+    background: $primary-color
     position: fixed
     width: 100%
     top: 0
     z-index: 5
 
+    .uk-navbar-content
+      height: $navbar-nav-height
+
     h1
       display: inline-block
-      line-height: 44px
+      line-height: $navbar-nav-height
       a
-        text-shadow: 0 0 1px #000
+        display: block
+        height: $navbar-nav-height
 
     .uk-dropdown-navbar
       margin-left: 5px
       padding-top: 0
 
     .uk-navbar-nav li:hover > a, .uk-navbar-nav a
-      background: #0E1528
-      color: #FFF
+      // background: #0E1528
+      // color: #FFF
       text-shadow: none
       line-height: 25px
 
