@@ -29,6 +29,10 @@
 
   #wrapper-audio-element
     padding: 5px 20px
+
+  button.playpause
+    margin: auto
+    display: block
   //
       h2, h3
         clear: both
@@ -64,59 +68,69 @@
     +respond-to(400px)
       max-width: 300px
 
-.mejs-container .mejs-controls
+.mejs-container
   background: #FFF
-  position: static
+  height: auto !important
+  .mejs-controls
+    position: static
+    background: #FFF
+    height: auto
 
-.mejs-button.mejs-playpause-button.mejs-play
-  display: none
+  .mejs-button.mejs-playpause-butto n
+    display: none
 
-.mejs-controls div.mejs-time-rail
-  width: 100% !important
-  span, a
-    height: 3px
-    border-radius: 3px
-    cursor: pointer
-
-  .mejs-time-total
-    background: #CCC
+  .mejs-controls div.mejs-time-rail
     width: 100% !important
-    margin: 5px 0
+    span, a
+      height: 3px
+      border-radius: 3px
+      cursor: pointer
 
-  .mejs-time-loaded
-    background: #7b7d82
+    .mejs-time-total
+      background: #CCC
+      width: 100% !important
+      margin: 5px 0
 
-  .mejs-time-current
-    background: #FC6E44
-    background: -webkit-linear-gradient(top, #FC6E44 0%, #ff5105 100%)
-    background: -moz-linear-gradient(top, #FC6E44 0%, #ff5105 100%)
-    background: -o-linear-gradient(top, #FC6E44 0%, #ff5105 100%)
-    background: -ms-linear-gradient(top, #FC6E44 0%, #ff5105 100%)
-    background: linear-gradient(top, #FC6E44 0%, #ff5105 100%)
+    .mejs-time-loaded
+      background: #7b7d82
 
-  .mejs-time-handle
-    display: block
-    width: 12px
-    height: 12px
-    border: none
-    outline: none
-    background: #ff5722
-    top: -4px
-    border-radius: 100%
+    .mejs-time-current
+      background: #FC6E44
+      background: -webkit-linear-gradient(top, #FC6E44 0%, #ff5105 100%)
+      background: -moz-linear-gradient(top, #FC6E44 0%, #ff5105 100%)
+      background: -o-linear-gradient(top, #FC6E44 0%, #ff5105 100%)
+      background: -ms-linear-gradient(top, #FC6E44 0%, #ff5105 100%)
+      background: linear-gradient(top, #FC6E44 0%, #ff5105 100%)
 
-.mejs-controls .mejs-volume-button
-  border: 1px solid red
-  position: static
-  right: 0
-  top: 0
-  .mejs-volume-slider
-    .mejs-volume-current, .mejs-volume-handle
-      background: #ff5722
-    .mejs-volume-handle
+    .mejs-time-handle
       display: block
-      border-radius: 10px
-      width: 10px
-      top: 0
-      left: 7px
-      right: 7px
-      height: 10px
+      width: 12px
+      height: 12px
+      border: none
+      outline: none
+      background: #ff5722
+      top: -4px
+      border-radius: 100%
+
+  .mejs-controls .mejs-volume-button
+    display: none
+    border: 1px solid red
+    position: static
+    right: 0
+    top: 0
+    .mejs-volume-slider
+      .mejs-volume-current, .mejs-volume-handle
+        background: #ff5722
+      .mejs-volume-handle
+        display: block
+        border-radius: 10px
+        width: 10px
+        top: 0
+        left: 7px
+        right: 7px
+        height: 10px
+
+  .mejs-controls .mejs-time
+    float: none
+    display: block
+    color: #333

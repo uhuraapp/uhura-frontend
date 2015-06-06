@@ -3,7 +3,10 @@
   <h2>{{model.title}}</h2>
   <h3>{{model.channel.title}}</h3>
 
-  {{!-- <button {{action 'playpause'}} {{bind-attr class=":typcn playing:typcn-media-pause:typcn-media-play :playpause"}}></button> --}}
   <div id="wrapper-audio-element" class="player-audio-element">
   </div>
+
+  <button {{action "playpause"}} class="playpause material-icons">
+  {{if model.playing 'pause' 'play_arrow'}}
+</button>
 </div>
