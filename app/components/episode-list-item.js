@@ -6,6 +6,7 @@ export default Ember.Component.extend({
   classNames: ['episode'],
   classNameBindings: ["isPlayed", "isDownloaded"],
   rightActions: true,
+
   generateEpisodeURL: function () {
     var path = (this.$("a.more-info").attr('href')||"").replace("#", "");
     return `http://uhura.io${path}`;
