@@ -5,7 +5,7 @@
 $navbar-nav-height: 55px
 $navbar-background: $primary-color
 
-$max-content-width: 770px
+$max-content-width: 960px
 
 @import 'bower_components/uikit/scss/uikit-mixins'
 @import 'bower_components/uikit/scss/core/variables'
@@ -53,7 +53,6 @@ body
     // color: #3E99A6
 
 
-$max-content-width: 960px
 
 @import 'categories'
 @import 'channel_profile'
@@ -70,11 +69,11 @@ $max-content-width: 960px
 #container
   position: relative
   display: flex
-
+  justify-content: space-around
 
 #content
   max-width: $max-content-width
   position: relative
   z-index: 1
-  flex: 0 0 auto
-  margin: 10px auto
+  flex: 1 1 auto
+  margin: 10px

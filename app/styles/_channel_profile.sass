@@ -1,6 +1,7 @@
 .loading
   display: none
 
+$flex-start-width: 450px
 
 body.channel, body.channel-by-url
   #profile
@@ -12,21 +13,22 @@ body.channel, body.channel-by-url
       position: relative
       z-index: 1
       margin-bottom: 40px
-      @include respond-to($max-content-width)
+      @include respond-to($flex-start-width)
         display: flex
         justify-content: space-between
 
     .about
       display: none
 
-      @include respond-to($max-content-width)
+      @include respond-to($flex-start-width)
         padding: 10px 15px
         flex: 1 1 auto
         display: block
+
     img.channel-img
       width: 100%
       z-index: 2
-      @include respond-to($max-content-width)
+      @include respond-to($flex-start-width)
         flex: 0 0 auto
         position: relative
         width: 264px
