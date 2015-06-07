@@ -4,7 +4,7 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   tagName: "li",
   classNames: ['episode'],
-  classNameBindings: ["isListened", "isDownloaded"],
+  classNameBindings: ["isPlayed", "isDownloaded"],
   rightActions: true,
   generateEpisodeURL: function () {
     var path = this.$("a.more-info").attr('href').replace("#", "");
@@ -14,6 +14,7 @@ export default Ember.Component.extend({
   shareTitle: function () {
     return this.get('episode.title');
   },
+
   addShare: function () {
     if(this.get('rightActions')) {
       if(window.cordova) {
@@ -24,8 +25,9 @@ export default Ember.Component.extend({
           url: this.generateEpisodeURL(),
           description: this.shareTitle().replace("#", "%23"),
           ui: {
-            flyout: "top left",
-            button_text: ""
+            // flyout: "top left",
+            button_text: "Share",
+            button_font: false
           },
           networks: {
             pinterest: {
@@ -36,18 +38,22 @@ export default Ember.Component.extend({
       }
     }
   }.on('didInsertElement'),
-  isListened: function() {
+
+  isPlayed: function() {
     return this.get('episode.listened');
   }.property('episode.listened'),
+
   isDownloaded: function() {
     return this.get('episode.downloaded');
   }.property('episode.downloaded'),
+
   episodeDidChange: function() {
     if(this.get('episode') && this.get('rightActions')) {
       var downloader = this.container.lookup('controller:downloader');
       downloader.check(this.get('episode'));
     }
   }.observes('episode').on('init'),
+
   actions: {
     playpause: function() {
       var player = this.container.lookup('controller:Player');
@@ -62,8 +68,9 @@ export default Ember.Component.extend({
         downloader.start(episode);
       }
     },
-    listened: function() {
+    maskAsPlayed: function() {
       this.get('episode').set('makeListened', new Date());
+      $(".more-itens .itens.open").removeClass('.open');
     },
     share: function () {
       window.plugins.socialsharing.share(
@@ -71,17 +78,18 @@ export default Ember.Component.extend({
         null,
         this.get('episode.channel.image_url'),
         this.generateEpisodeURL());
+      $(".more-itens .itens.open").removeClass('.open');
     },
     info: function () {
       $('.itens.open').removeClass('open');
       this.$('.itens').addClass('open');
       Ember.run.later(function () {
-        $(document).on('click.out-itens', '*:not(.itens)', function(e) {
+        $(document).on('click.out-itens', 'body', function(e) {
           $('.itens.open').removeClass('open');
           $(document).off('click.out-itens');
           e.stopPropagation();
         });
-      }, 2000);
+      }, 500);
     }
   }
 });

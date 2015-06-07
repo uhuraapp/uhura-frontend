@@ -34,7 +34,7 @@ ul.episodes
     font-size: 16px
     &:hover
       background: $primary-color-light
-    &.is-listened
+    &.is-played
       h3.title, .button-play-wrapper, time, .more-itens > button
         opacity: .5
     h3.title
@@ -63,6 +63,8 @@ ul.episodes
     align-self: center
     position: relative
     button
+      font-size: 20px
+      cursor: pointer
       text-align: center
       border: none
       background: transparent
@@ -71,13 +73,14 @@ ul.episodes
       +like-a-button
 
   .itens
+    +elevation(3px)
     position: absolute
     background-color: #FFF
     top: 0
     right: 0
-    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37)
     border-radius: 3px
-    width: 150px
+    overflow: hidden
+    width: 160px
     z-index: 2
     opacity: 0
     transform: scale(0) translateZ(0)
@@ -85,23 +88,33 @@ ul.episodes
     &.open
       transform: scale(1) translateZ(0)
       opacity: 1
-
     ul
       margin: 0
-      padding: 10px 0
+      padding: 0
       font-family: normal
       list-style: none
-      font-size: 15px
       line-height: 32px
       li
-        padding: 0 15px
-        &:hover
-          background: $primary-color-light
-          color: $primary-text-color
+        &:last-child button
+          border-bottom: none
+        button
+          border-bottom: 1px solid $divider-color
+          padding: 0 15px
+          width: 100%
+          text-align: left
+          font-size: 15px
+          cursor: pointer
+          &:hover
+            background: $divider-color
+            color: $primary-text-color
 
   .button-play-wrapper
     flex: 0 0 auto
     align-self: center
+
+  #loading-episodes
+    text-align: center
+    display: block
 
 //
 //   .actions

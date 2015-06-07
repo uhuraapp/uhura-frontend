@@ -23,8 +23,8 @@
   background: #FFF
   border-radius: 2px
 
-=elevation
-  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37)
+=elevation($z: 1px)
+  box-shadow: 0 $z ($z * 4) 0 rgba(0, 0, 0, 0.37)
 
 =like-a-button
   -webkit-touch-callout: none

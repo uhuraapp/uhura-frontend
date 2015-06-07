@@ -10,7 +10,6 @@
   {{/link-to}}
 </h3>
 
-
 <time date={{episode.published_at}}>
   {{#link-to 'channel.episode' episode class="more-info"}}
     {{episode.publishedAt}}
@@ -22,13 +21,19 @@
   <div class="itens">
     <ul>
       <li>
-        <button>Mark as Played</button>
+        <button {{action 'maskAsPlayed'}}>
+          {{#if episode.listened}}
+            Mark as Unplayed
+          {{else}}
+            Mark as Played
+          {{/if}}
+        </button>
       </li>
+      {{!-- <li>
+        <button id="sshare-button-{{episode.id}}">Share</button>
+      </li> --}}
       <li>
-        <button>Share</button>
-      </li>
-      <li>
-        <button>Download</button>
+        <button {{action 'download'}}>Download</button>
       </li>
     </ul>
   </div>
