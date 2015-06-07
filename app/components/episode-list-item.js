@@ -7,12 +7,12 @@ export default Ember.Component.extend({
   classNameBindings: ["isPlayed", "isDownloaded"],
   rightActions: true,
   generateEpisodeURL: function () {
-    var path = this.$("a.more-info").attr('href').replace("#", "");
+    var path = (this.$("a.more-info").attr('href')||"").replace("#", "");
     return `http://uhura.io${path}`;
   },
 
   shareTitle: function () {
-    return this.get('episode.title');
+    return this.get('episode.title') || "";
   },
 
   addShare: function () {

@@ -36,10 +36,10 @@ export default Ember.Controller.extend({
   start (episode) {
     var url = this.__episodeURL(episode);
     window.open(url , '_blank');
-    return
-
-    if(episode.get('downloading')){ return; }
-    this.__checkFile(episode).then(this.downloaded(episode), this.download(episode));
+    return;
+    // 
+    // if(episode.get('downloading')){ return; }
+    // this.__checkFile(episode).then(this.downloaded(episode), this.download(episode));
   },
   check (episode) {
     this.__checkFile(episode).then(this.downloaded(episode), function(){
