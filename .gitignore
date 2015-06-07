@@ -51,3 +51,4 @@ cordova/www
 cordova/platforms/ubuntu/www
 cordova/platforms/ubuntu/**/www
 
+lcov.info
