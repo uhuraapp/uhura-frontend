@@ -6,9 +6,9 @@
     </div>
     <button {{action "playpause" bubbles=true}} class="highlight play">
       {{#if model.playing}}
-      {{t 'components.episode_list_item.pause'}}
+        {{t 'components.episode_list_item.pause'}}
       {{else}}
-      {{t 'components.episode_list_item.play'}}
+        {{t 'components.episode_list_item.play'}}
       {{/if}}
     </button>
     {{#if session.isAuthenticated}}
@@ -23,16 +23,6 @@
       {{/if}}
     {{/if}}
 
-      <button {{action 'share'}} class="typcn icon typcn-export-outline share-button"/>
-      <div id="share-button-{{episode.id}}" class="share-button"></div>
-
     <div class="description">{{model.description}}</div>
-    <button {{action "playpause" bubbles=true}} class="highlight play">
-      {{#if model.playing}}
-      {{t 'components.episode_list_item.pause'}}
-      {{else}}
-      {{t 'components.episode_list_item.play'}}
-      {{/if}}
-    </button>
   </div>
 </div>
