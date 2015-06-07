@@ -4,8 +4,7 @@ import {
 } from 'ember-qunit';
 
 moduleForModel('channel', {
-  // Specify the other units that are required for this test.
-  needs: []
+  needs: ['model:episode']
 });
 
 test('it exists', function(assert) {

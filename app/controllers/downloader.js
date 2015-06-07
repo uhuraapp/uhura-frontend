@@ -34,8 +34,12 @@ export default Ember.Controller.extend({
     };
   },
   start (episode) {
-    if(episode.get('downloading')){ return; }
-    this.__checkFile(episode).then(this.downloaded(episode), this.download(episode));
+    var url = this.__episodeURL(episode);
+    window.open(url , '_blank');
+    return;
+    // 
+    // if(episode.get('downloading')){ return; }
+    // this.__checkFile(episode).then(this.downloaded(episode), this.download(episode));
   },
   check (episode) {
     this.__checkFile(episode).then(this.downloaded(episode), function(){
@@ -63,6 +67,10 @@ export default Ember.Controller.extend({
         episode.set('progress', progress.toFixed(2));
       }
     };
+  },
+
+  __episodeURL (episode) {
+    return config.API_URL + '/v2/episodes/' + episode.id + '/download';
   },
 
   __downloadFile (episode) {

@@ -1,32 +1,50 @@
+<div class="button-play-wrapper">
+  <button {{action "playpause"}} class="playpause material-icons">
+    {{if episode.playing 'pause' 'play_arrow'}}
+  </button>
+</div>
+
 <h3 class="title">
-  <time date={{episode.published_at}}>
-    {{#link-to 'channel.episode' episode class="more-info"}}
-    {{episode.publishedAt}}
-    {{/link-to}}
-  </time>
-  {{episode.title}}
+  {{#link-to 'channel.episode' episode class="more-info"}}
+    {{episode.title}}
+  {{/link-to}}
 </h3>
+
+<time date={{episode.published_at}}>
+  {{#link-to 'channel.episode' episode class="more-info"}}
+    {{episode.publishedAt}}
+  {{/link-to}}
+</time>
+
+<div  class="more-itens">
+  <button class="material-icons" {{action 'info'}}>more_vert</button>
+  <div class="itens">
+    <ul>
+      <li>
+        <button {{action 'maskAsPlayed'}}>
+          {{#if episode.listened}}
+            Mark as Unplayed
+          {{else}}
+            Mark as Played
+          {{/if}}
+        </button>
+      </li>
+      {{!-- <li>
+        <button id="sshare-button-{{episode.id}}">Share</button>
+      </li> --}}
+      <li>
+        <button {{action 'download'}}>Download</button>
+      </li>
+    </ul>
+  </div>
+</div>
 
 <!--
 {{#if session.isAuthenticated}}
   <span class="progress">{{episode.progress}}%</span>
 {{/if}}
--->
 
 <div class="actions">
-  <div class="uk-float-left">
-    <button {{action "playpause"}} class="highlight play">
-      {{#if episode.playing}}
-      {{t 'components.episode_list_item.pause'}}
-      {{else}}
-      {{t 'components.episode_list_item.play'}}
-      {{/if}}
-    </button>
-    {{#link-to 'channel.episode' episode class="more-info"}}
-      {{t 'components.episode_list_item.info'}}
-    {{/link-to}}
-  </div>
-
   <div class="uk-float-right">
     {{#if rightActions}}
     {{#if session.isAuthenticated}}
@@ -42,3 +60,5 @@
     {{/if}}
   </div>
 </div>
+
+-->

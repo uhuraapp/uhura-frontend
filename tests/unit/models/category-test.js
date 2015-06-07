@@ -5,7 +5,7 @@ import {
 
 moduleForModel('category', {
   // Specify the other units that are required for this test.
-  needs: []
+  needs: ['model:channel', 'model:episode']
 });
 
 test('it exists', function(assert) {

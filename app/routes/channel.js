@@ -1,10 +1,9 @@
+/* global $ */
 import Ember from 'ember';
 
 export default Ember.Route.extend({
   beforeModel () {
     $("#profile").fadeOut();
-
-    this.container.lookup('controller:application').send('closeMenu');
   },
   model: function (params) {
     return this.store.find('channel', params.channel_id);

@@ -1,22 +1,21 @@
----
 language: node_js
 node_js:
-  - "0.12"
-
+- '0.12'
 sudo: false
-
 cache:
   directories:
-    - node_modules
-
+  - node_modules
 before_install:
-  - "npm config set spin false"
-  - "npm install -g npm@^2"
-
+- npm config set spin false
+- npm install -g npm@^2
 install:
-  - npm install -g bower
-  - npm install
-  - bower install
-
+- npm install -g bower
+- npm install
+- bower install
 script:
-  - npm test
+- npm test
+after_script:
+- codeclimate < lcov.info
+env:
+  global:
+    secure: IE6qJa5Vn4KlPN/EmjIUACRPJSnb2837kEXmBNlXBHYcRL2dJREQQT47OLOaH+K2B5ubTNn41pCr6grKVu8wQR8zPngm4B19VHdWcKKnojVQ+dvS4encUdgsP1RQlsPrM07h2xf/7pmtFrdyYMkqf4Kvw7Jt9tMBRe30XMfJ2iU=

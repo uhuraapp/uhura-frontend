@@ -6,18 +6,23 @@
     </div>
     <button {{action "playpause" bubbles=true}} class="highlight play">
       {{#if model.playing}}
-      {{t 'components.episode_list_item.pause'}}
+        {{t 'components.episode_list_item.pause'}}
       {{else}}
-      {{t 'components.episode_list_item.play'}}
+        {{t 'components.episode_list_item.play'}}
       {{/if}}
     </button>
+    {{#if session.isAuthenticated}}
+      <button {{action 'listened'}} data-listened={{model.listened}}>
+        Mask as Played
+      </button>
+
+      {{#if episode.downloading}}
+        <img class="downloading" src="assets/loading-download.gif" />
+      {{else}}
+        <button {{action 'download'}}>Download</button>
+      {{/if}}
+    {{/if}}
+
     <div class="description">{{model.description}}</div>
-    <button {{action "playpause" bubbles=true}} class="highlight play">
-      {{#if model.playing}}
-      {{t 'components.episode_list_item.pause'}}
-      {{else}}
-      {{t 'components.episode_list_item.play'}}
-      {{/if}}
-    </button>
   </div>
 </div>

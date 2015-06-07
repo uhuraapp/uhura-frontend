@@ -9,10 +9,6 @@
                 "parents": {
                     "/*": [
                         {
-                            "xml": "<feature name=\"InAppBrowser\"><param name=\"android-package\" value=\"org.apache.cordova.inappbrowser.InAppBrowser\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"File\"><param name=\"android-package\" value=\"org.apache.cordova.file.FileUtils\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         },
@@ -42,6 +38,10 @@
                         },
                         {
                             "xml": "<feature name=\"SocialSharing\"><param name=\"android-package\" value=\"nl.xservices.plugins.SocialSharing\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"InAppBrowser\"><param name=\"android-package\" value=\"org.apache.cordova.inappbrowser.InAppBrowser\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -75,9 +75,6 @@
         }
     },
     "installed_plugins": {
-        "org.apache.cordova.inappbrowser": {
-            "PACKAGE_NAME": "io.uhura.app"
-        },
         "org.apache.cordova.file": {
             "PACKAGE_NAME": "io.uhuraapp.app"
         },
@@ -94,6 +91,9 @@
             "PACKAGE_NAME": "io.uhura.app"
         },
         "nl.x-services.plugins.socialsharing": {
+            "PACKAGE_NAME": "io.uhura.app"
+        },
+        "org.apache.cordova.inappbrowser": {
             "PACKAGE_NAME": "io.uhura.app"
         }
     },

@@ -21,9 +21,9 @@ export default Ember.Component.extend({
 
         // TODO: use meta
         promise = this.store.find("episode", {
-          since: since,
+          since:      since,
           channel_id: this.get('channel.raw_id'),
-          per_page: 20
+          per_page:   20
         });
       }
 

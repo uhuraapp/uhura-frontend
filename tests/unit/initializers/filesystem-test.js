@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { initialize } from '../../../initializers/filesystem';
+import { initialize } from '../../../initializers/filesystem-service';
 import { module, test } from 'qunit';
 
 var container, application;

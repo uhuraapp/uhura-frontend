@@ -1,190 +1,89 @@
 .the-player
-  z-index: 10
-  right: 0
-  padding: 0
-  width: 100%
-  position: fixed
-  bottom: 0
-  // height: 70px
-  *
-    -webkit-touch-callout: none
-    -webkit-user-select: none
-    -khtml-user-select: none
-    -moz-user-select: none
-    -ms-user-select: none
-    user-select: none
-    &:focus, &:active
-      outline: none !important
-
-  .close
-    display: none
-    font-size: 30px
-    width: 32px
-    height: 32px
-    line-height: 32px
-  .player-audio-element
-    display: none
-
-  #player
-    background-color: #3E4651
-    overflow: auto
-    padding: 10px
-    border: 1px solid #F1714C
-    img.channel-img
-      width: 45px
-      height: 45px
-      float: left
-    .playpause
-      float: right
-      padding: 0
-      margin: 0
-      font-size: 35px
-      color: #FFF
-      border: none
-      background: none
-      outline: none
-      height: 45px
-      &::before
-        display: block
-        width: 35px
-        height: 35px
-        margin-bottom: 2px
-    h2, h3
-      color: #FFF
-      white-space: nowrap
-      overflow: hidden
-      text-overflow: ellipsis
-      padding: 0 0 0 5px
-      margin: 0
-      line-height: 20px
-      text-align: left
-      text-shadow: none
-    h2
-      font-weight: bold
-      font-size: 16px
-    h3
-      font-size: 14px
-    .player-loading
-      color: #FFF
-
-  .player-toggle
-    background: #676767
-    border: 0
-    color: #FFF
-    width: 50%
-    font-size: 15px
-    padding: 0
-    margin: 0 auto
-    line-height: 10px
+  +container-card
+  width: 250px
+  position: relative
+  display: none
+  &.has-model
     display: block
-    height: 13px
+  h2, h3
+    color: $primary-text-color
+    padding: 0 10px
+    margin: 0
+    text-align: center
+    line-height: 1
+  h2
+    font-weight: bold
+    font-size: 18px
+    margin-top: 15px
+  h3
+    font-size: 14px
+    margin-top: 5px
+    margin-bottom: 15px
 
-  &.player-full
-    width: 100%
-    height: 100%
-    bottom: 0
-    top: 0
-    right: 0
-    background-color: #3E4651
-    .close
-      position: absolute
-      top: 0
-      right: 0
-      display: block
-    .player-audio-element
-      display: block
-    #player
-      border: none
-      padding: 15px
-      height: 100%
-      img.channel-img
-        width: 100%
-        height: auto
-        float: none
-        margin: 0 auto
-        margin-bottom: 10px
-      h2, h3
-        clear: both
-        width: 100%
-        text-align: center
-        white-space: inherit
-        overflow: none
-        text-overflow: none
-      .playpause
-        display: none
-      .mejs-container
-        background: none
-        margin-top: 15px
-        .mejs-controls
-          background: none
-          div
-        .mejs-playpause-button
-          width: 100%
-          height: auto
-          float: none
-          button
-            width: 34px
-            height: 34px
-            background: transparent url('playpause.png') 0 0 no-repeat
-            margin: 0 auto
-            display: block
-            position: initial
-          &.mejs-pause button
-            background-position: 0 -35px
-        .mejs-time
-          width: 100%
-          padding: 0
-    +respond-to(400px)
-      max-width: 300px
+  #wrapper-audio-element
+    padding: 5px 20px
 
+  button.playpause
+    margin: auto
+    display: block
 
-.mejs-controls div.mejs-time-rail
-  width: 100% !important
-  span, a
-    height: 5px
-    border-radius: 3px
-    cursor: pointer
+.mejs-container
+  background: #FFF
+  height: auto !important
+  .mejs-controls
+    position: static
+    background: #FFF
+    height: auto
 
-  .mejs-time-total
-    background: #565860
+  .mejs-button.mejs-playpause-butto n
+    display: none
+
+  .mejs-controls div.mejs-time-rail
     width: 100% !important
-    margin: 5px 0
+    span, a
+      height: 3px
+      border-radius: 3px
+      cursor: pointer
 
-  .mejs-time-loaded
-    background: #7b7d82
+    .mejs-time-total
+      background: $primary-color-light
+      width: 100% !important
+      margin: 5px 0
 
-  .mejs-time-current
-    background: #FC6E44
-    background: -webkit-linear-gradient(top, #FC6E44 0%, #ff5105 100%)
-    background: -moz-linear-gradient(top, #FC6E44 0%, #ff5105 100%)
-    background: -o-linear-gradient(top, #FC6E44 0%, #ff5105 100%)
-    background: -ms-linear-gradient(top, #FC6E44 0%, #ff5105 100%)
-    background: linear-gradient(top, #FC6E44 0%, #ff5105 100%)
+    .mejs-time-loaded
+      background: $divider-color
 
-  .mejs-time-handle
-    display: block
-    width: 12px
-    height: 12px
-    border: none
-    outline: none
-    background: #ff5722
-    top: -4px
-    box-shadow: 0 0 1px #333
+    .mejs-time-current
+      background: $accent-color
 
-.mejs-controls .mejs-volume-button
-  border: 1px solid red
-  position: absolute
-  right: 0
-  top: 0
-
-  .mejs-volume-slider
-    .mejs-volume-current, .mejs-volume-handle
-      background: #ff5722
-    .mejs-volume-handle
+    .mejs-time-handle
       display: block
-      border-radius: 10px
-      width: 10px
-      top: 0
-      left: 7px
-      right: 7px
-      height: 10px
+      width: 12px
+      height: 12px
+      border: none
+      outline: none
+      background: darken($accent-color, 20%)
+      top: -4px
+      border-radius: 100%
+
+  .mejs-controls .mejs-volume-button
+    display: none
+    position: static
+    right: 0
+    top: 0
+    .mejs-volume-slider
+      .mejs-volume-current, .mejs-volume-handle
+        // background: #ff5722
+      .mejs-volume-handle
+        display: block
+        border-radius: 10px
+        width: 10px
+        top: 0
+        left: 7px
+        right: 7px
+        height: 10px
+
+  .mejs-controls .mejs-time
+    float: none
+    display: block
+    color: $primary-text-color

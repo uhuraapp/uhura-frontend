@@ -31,8 +31,8 @@ module.exports = function(environment) {
     'connect-src': "'self' http://api.uhura.io",
     'media-src': "'self' *",
     'content-src': "'self' *",
-    'font-src': "'self' http://fonts.gstatic.com",
-    'style-src': "'self' 'unsafe-inline' http://fonts.googleapis.com"
+    'font-src': "'self' http://fonts.gstatic.com https://www.sharebutton.co" ,
+    'style-src': "'self' 'unsafe-inline' http://fonts.googleapis.com https://www.sharebutton.co"
   }
 
   ENV.sassOptions = {
