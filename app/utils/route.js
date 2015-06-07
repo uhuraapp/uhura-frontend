@@ -14,4 +14,5 @@ export default function route() {
       return this.routeName.replace(/\./g, '-').dasherize();
     }
   });
+  return true;
 }

@@ -3,8 +3,7 @@ import { module, test } from 'qunit';
 
 module('isUrl');
 
-// Replace this with your real tests.
 test('it works', function(assert) {
-  var result = isUrl();
+  var result = isUrl('http://google.com');
   assert.ok(result);
 });
