@@ -3,14 +3,18 @@
 var options = {
   modulePrefix: 'uhuraapp',
   filter: '//.*uhuraapp/.*/',
-  antifilter: '//.*(tests|template).*/',
+  antifilter: '//.*(tests|template|app-version|in-app-livereload|export-application-global|infinite-scroll|simple-auth|controllers/array|controllers/object|cdv-nav-bar).*/',
   loaderExclusions: [],
   enableCoverage: true,
   cliOptions: {
     reporters: ['lcov'],
     autostart: true,
-    lcovOptions: {
-      outputFile: 'lcov.info'
+    lcovOptions: { outputFile: 'lcov.info' }
+  },
+  lcovOptions: {
+    renamer: function(moduleName){
+      var fileName = moduleName.replace(/^uhuraapp/, 'app') + ".js";
+      return fileName.replace("app/config/", "config/");
     }
   }
 };
