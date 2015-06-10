@@ -50,8 +50,8 @@ export default Ember.Component.extend({
 
   episodeDidChange: function() {
     if(this.get('episode') && this.get('rightActions')) {
-      var downloader = this.container.lookup('controller:downloader');
-      downloader.check(this.get('episode'));
+      // var downloader = this.container.lookup('controller:downloader');
+      // downloader.check(this.get('episode'));
     }
   }.observes('episode').on('init'),
 
