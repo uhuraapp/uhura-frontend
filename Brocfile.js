@@ -9,6 +9,9 @@ var app = new EmberApp({
   fingerprint: {
     exclude: ["uhura120.png", "uhura.png"]
   },
+  babel: {
+    optional: ['es7.decorators']
+  }
 });
 
 app.import("bower_components/uikit/js/uikit.js");

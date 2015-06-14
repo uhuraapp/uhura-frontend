@@ -1,7 +1,5 @@
-{{#each episodesFiltere as |episode|}}
+{{#each episodes as |episode|}}
   {{episode-list-item episode=episode rightActions=hasRightActions}}
-{{else}}
-  <!-- p class="uk-alert uk-alert-warning not_found">{{t 'views.channel.episodes_not_found'}}</p -->
 {{/each}}
 
 {{#infinite-scroll content=episodes hasMore=hasMore}}

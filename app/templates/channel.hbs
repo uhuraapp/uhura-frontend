@@ -1,4 +1,5 @@
-<div class="loading">Loading
+<div class="loading">
+  Loading
   <img style="display:block; margin: 15% auto" src="/assets/loading.gif" />
 </div>
 
@@ -16,28 +17,8 @@
 
   <h2 class="uk-width-small-5-10 uk-width-medium-7-10">{{t 'titles.episodes'}}</h2>
 
-<!--
-  {{#if allListenedButton}}
-  <div class="uk-width-small-5-10 uk-width-medium-3-10">
-    <button style="width: 100%" class="button uk-float-right" {{action 'markAllAsListened'}}>
-      <i class="typcn typcn-tick-outline"></i>
-      {{t 'views.channel.mark_all_as_listened'}}
-    </button>
-  </div>
-  {{/if}}
-
-  <div class="uk-width-1-1">
-    {{#if removeListenedButton}}
-      <label class="uk-float-right remove-listened uk-button uk-button-small">
-        {{input type="checkbox" name="removeListened" checked=removeListened}}
-        {{t 'views.channel.remove_listened'}}
-      </label>
-    {{/if}}
-  </div>
--->
-
   <div class="uk-width-1-1 episodes-list">
-    {{episodes-list episodesFiltered=model.episodes episodes=model.episodes store=store channel=model}}
+    {{episodes-list episodes=model.episodes store=store channel=model}}
   </div>
 
   <div class="footer">

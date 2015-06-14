@@ -1,5 +1,5 @@
-/* global Share, $ */
 import Ember from 'ember';
+import computed from 'ember-computed-decorators';
 
 export default Ember.Component.extend({
   tagName: "li",
@@ -7,87 +7,34 @@ export default Ember.Component.extend({
   classNameBindings: ["isPlayed", "isDownloaded"],
   rightActions: true,
 
-  generateEpisodeURL: function () {
-    var path = (this.$("a.more-info").attr('href')||"").replace("#", "");
-    return `http://uhura.io${path}`;
+  @computed('episode.listened')
+  isPlayed (listened) {
+    return listened;
   },
 
-  shareTitle: function () {
-    return this.get('episode.title') || "";
+  @computed('episode.downloaded')
+  isDownloaded (downloaded) {
+    return downloaded;
   },
-
-  addShare: function () {
-    if(this.get('rightActions')) {
-      if(window.cordova) {
-        Ember.$('div.share-button').hide();
-      } else {
-        Ember.$('button.share-button').hide();
-        new Share("#share-button-" + this.get('episode.id'), {
-          url: this.generateEpisodeURL(),
-          description: this.shareTitle().replace("#", "%23"),
-          ui: {
-            // flyout: "top left",
-            button_text: "Share",
-            button_font: false
-          },
-          networks: {
-            pinterest: {
-              enabled: false
-            }
-          }
-        });
-      }
-    }
-  }.on('didInsertElement'),
-
-  isPlayed: function() {
-    return this.get('episode.listened');
-  }.property('episode.listened'),
-
-  isDownloaded: function() {
-    return this.get('episode.downloaded');
-  }.property('episode.downloaded'),
-
-  episodeDidChange: function() {
-    if(this.get('episode') && this.get('rightActions')) {
-      // var downloader = this.container.lookup('controller:downloader');
-      // downloader.check(this.get('episode'));
-    }
-  }.observes('episode').on('init'),
 
   actions: {
-    playpause: function() {
+    playpause () {
       var player = this.container.lookup('controller:Player');
       player.playpause(this.get('episode'));
     },
-    download: function() {
-      var episode = this.get('episode'),
-          downloader = this.container.lookup('controller:downloader');
-      if(episode.get('downloaded')){
-        downloader.remove(episode);
-      } else {
-        downloader.start(episode);
-      }
-    },
-    maskAsPlayed: function() {
+
+    maskAsPlayed () {
       this.get('episode').set('makeListened', new Date());
-      $(".more-itens .itens.open").removeClass('.open');
+      Ember.$(".more-itens .itens.open").removeClass('.open');
     },
-    share: function () {
-      window.plugins.socialsharing.share(
-        this.shareTitle(),
-        null,
-        this.get('episode.channel.image_url'),
-        this.generateEpisodeURL());
-      $(".more-itens .itens.open").removeClass('.open');
-    },
-    info: function () {
-      $('.itens.open').removeClass('open');
+
+    info () {
+      Ember.$('.itens.open').removeClass('open');
       this.$('.itens').addClass('open');
       Ember.run.later(function () {
-        $(document).on('click.out-itens', 'body', function(e) {
-          $('.itens.open').removeClass('open');
-          $(document).off('click.out-itens');
+        Ember.$(document).on('click.out-itens', 'body', function(e) {
+          Ember.$('.itens.open').removeClass('open');
+          Ember.$(document).off('click.out-itens');
           e.stopPropagation();
         });
       }, 500);
