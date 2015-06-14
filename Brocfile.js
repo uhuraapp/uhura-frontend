@@ -18,9 +18,6 @@ app.import("bower_components/layzr.js/dist/layzr.js");
 app.import("bower_components/moment/min/moment-with-locales.js");
 app.import("bower_components/fastclick/lib/fastclick.js")
 app.import("bower_components/mediaelement/build/mediaelement-and-player.js");
-app.import("bower_components/jquery.adaptive-backgrounds.js/src/jquery.adaptive-backgrounds.js");
-app.import("bower_components/share-button/build/share.js");
-app.import("bower_components/slideout/dist/slideout.js");
 app.import("bower_components/filer.js/src/filer.js");
 
 app.import("bower_components/mediaelement/build/mediaelementplayer.css");
