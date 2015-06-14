@@ -5,15 +5,15 @@
 </div>
 
 <h3 class="title">
-  {{#link-to 'channel.episode' episode class="more-info"}}
+  {{!-- {{#link-to 'channel.episode' episode class="more-info"}} --}}
     {{episode.title}}
-  {{/link-to}}
+  {{!-- {{/link-to}} --}}
 </h3>
 
 <time date={{episode.published_at}}>
-  {{#link-to 'channel.episode' episode class="more-info"}}
+  {{!-- {{#link-to 'channel.episode' episode class="more-info"}} --}}
     {{episode.publishedAt}}
-  {{/link-to}}
+  {{!-- {{/link-to}} --}}
 </time>
 
 <div  class="more-itens">
@@ -30,7 +30,7 @@
         </button>
       </li>
       {{!-- <li>
-        <button id="sshare-button-{{episode.id}}">Share</button>
+        <button id="share-button-{{episode.id}}">Share</button>
       </li> --}}
       <li>
         <button {{action 'download'}}>Download</button>

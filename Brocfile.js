@@ -54,13 +54,7 @@ app.import("bower_components/font-awesome/fonts/fontawesome-webfont.eot", {destD
 //
 // app.import("bower_components/mediaelement/build/flashmediaelement.swf", {destDir: 'assets'});
 // app.import("bower_components/mediaelement/build/silverlightmediaelement.xap", {destDir: 'assets'});
-//
-// app.import("bower_components/mediaelement/build/controls.svg", {destDir: 'assets'});
-// app.import("bower_components/mediaelement/build/controls.fw.png", {destDir: 'assets'});
-// app.import("bower_components/mediaelement/build/controls.png", {destDir: 'assets'});
-// app.import("bower_components/mediaelement/build/controls-wmp.png", {destDir: 'assets'});
-// app.import("bower_components/mediaelement/build/controls-wmp-bg.png", {destDir: 'assets'});
-//
+
 
 var tree = app.toTree();
 

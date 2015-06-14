@@ -1,9 +1,9 @@
 <h3>{{t 'titles.categories'}} </h3>
 <ul id="categories">
-  {{#each category in categories}}
+  {{#each categories as |category|}}
   <li class="">
     <a class="">
-      <img {{bind-attr src=category.thumb_url}} />
+      <img src={{category.thumb_url}} />
       <h3>{{category.name}}</h3>
     </a>
   </li>
