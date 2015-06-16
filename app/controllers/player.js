@@ -85,9 +85,9 @@ export default Ember.Controller.extend({
   },
 
   stoppedAtChanged: function () {
-    if(this.get('session.isAuthenticated')) {
-      var episode = this.get('model'),
-          at = episode.get('stopped_at');
+    var episode = this.get('model');
+    if(this.get('session.isAuthenticated') && episode) {
+      var at = episode.get('stopped_at');
       if(at && !this.get('_locked')) {
         this.set('_locked', true);
         $.ajax({

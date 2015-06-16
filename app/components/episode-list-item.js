@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import computed from 'ember-computed-decorators';
 
 export default Ember.Component.extend({
   tagName: "li",
@@ -7,15 +6,13 @@ export default Ember.Component.extend({
   classNameBindings: ["isPlayed", "isDownloaded"],
   rightActions: true,
 
-  @computed('episode.listened')
-  isPlayed (listened) {
-    return listened;
-  },
+  isPlayed: function () {
+    return this.get('episode.listened');
+  }.property('episode.listened'),
 
-  @computed('episode.downloaded')
-  isDownloaded (downloaded) {
-    return downloaded;
-  },
+  isDownloaded: function (){
+    return this.get('episode.downloaded');
+  }.property('episode.downloaded'),
 
   actions: {
     playpause () {
