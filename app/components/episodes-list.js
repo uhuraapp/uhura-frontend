@@ -19,8 +19,9 @@ export default Ember.Component.extend({
         var date = lastEpisode ? lastEpisode.get('published_at') : 1999;
         var since = moment.utc(date).format();
 
+
         // TODO: use meta
-        promise = this.store.find("episode", {
+        promise = this.get('store').find('episode', {
           since:      since,
           channel_id: this.get('channel.raw_id'),
           per_page:   20
