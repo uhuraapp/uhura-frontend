@@ -52,7 +52,8 @@ export default Ember.Controller.extend({
   }.observes('player'),
 
   playerTimeUpdate: function () {
-    this.get('model').set('makeListened', true);
+    var model = this.get('model');
+    if(model){ model.set('makeListened', true); }
   },
 
   playerLoadedData: function () {
