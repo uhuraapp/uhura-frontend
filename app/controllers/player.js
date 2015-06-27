@@ -2,6 +2,9 @@ import Ember from 'ember';
 // import config from '../config/environment';
 
 export default Ember.Controller.extend({
+  player: Ember.inject.service('player'),
+  episode: Ember.computed.alias('player.current') ,
+
   // _locked: true,
   // playing: false,
   // episodeLoaded: false,

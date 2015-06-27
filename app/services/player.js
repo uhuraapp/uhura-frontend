@@ -1,11 +1,28 @@
+/* global MediaElementPlayer */
+
 import Ember from 'ember';
 
 export default Ember.Service.extend({
   playing: false,
+  current: null,
+  media: null,
 
   playpause (episode) {
     this._swap(episode);
     this._tooglePlaying();
+  },
+
+  createMedia (el) {
+    var media = new MediaElementPlayer(el, {
+      features: ['playpause','progress','volume','duration'],
+      audioVolume: 'vertical',
+      success: Ember.$.proxy(this.successMedia, this)
+    });
+    this.set('media', media);
+  },
+
+  successMedia () {
+
   },
 
   stop () {

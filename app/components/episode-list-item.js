@@ -6,6 +6,8 @@ export default Ember.Component.extend({
   classNameBindings: ["isPlayed", "isDownloaded"],
   rightActions: true,
 
+  player: Ember.inject.service('player'),
+
   isPlayed: function () {
     return this.get('episode.listened');
   }.property('episode.listened'),
@@ -16,8 +18,7 @@ export default Ember.Component.extend({
 
   actions: {
     playpause () {
-      var player = this.container.lookup('controller:Player');
-      player.playpause(this.get('episode'));
+      this.get('player').playpause(this.get('episode'));
     },
 
     maskAsPlayed () {

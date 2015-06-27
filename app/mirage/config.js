@@ -7,8 +7,22 @@ export default function() {
 
   this.namespace = '/v2';
 
+  this.get('/channels/:id', function (db, request) {
+    var id = request.params.id;
+    var channel = db.channels.find(id);
+    var episodes = db.episodes.where({channel_id: id});
+    channel.episodes = episodes.mapProperty('id');
 
-  this.get('/channels/:id', ['channel', 'episodes']);
+    return {
+      channel: channel,
+      episodes: episodes,
+    };
+  });
+  this.get('/episodes', function () {
+    return {
+      episodes: []
+    };
+  });
 }
 
 function parseURL(url) {

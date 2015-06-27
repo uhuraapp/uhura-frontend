@@ -1,14 +1,34 @@
 import Ember from 'ember';
 
 export default Ember.View.extend({
-  // CONSIDERED_LISTENED_PERCENT: 95,
-  // hasModel: false,
-  // classNames: ["the-player"],
-  // classNameBindings: ['hasModel'],
+  player: Ember.inject.service('player'),
+  classNames: ["player-wrapper"],
+  classNameBindings: ['hasModel'],
+  hasModel: Ember.computed.bool('controller.player.current'),
 
-  // contentDidChange: function() {
-  //   // Ember.run(() => { this.__updateAudio(); });
-  // }.observes('controller.model'),
+  // CONSIDERED_LISTENED_PERCENT: 95,
+
+  audioElement () {
+    return Ember.$("#wrapper-audio-element audio");
+  },
+
+  updatePlayer: function () {
+    var source = this.get('controller.episode.source');
+    if(source){
+      this.forceStop();
+      this.audioElement().attr('src', source);
+      this.get('player').createMedia(this.audioElement());
+    }
+  }.observes('controller.episode'),
+
+  forceStop () {
+    var audioElement = this.audioElement().get(0);
+    audioElement.pause(0);
+    audioElement.src = "";
+    audioElement.load();
+  },
+
+
 
   // // TODO: fix display flex, this code keep player on screen view
   // fixHeigthSize: function () {
@@ -21,26 +41,10 @@ export default Ember.View.extend({
   //   });
   // }.on('didInsertElement'),
 
-  // __removePlayer: function (controller) {
-  //   var audioElement = $("audio.audio-element").get(0);
-  //   audioElement.pause(0);
-  //   audioElement.src = "";
-  //   audioElement.load();
-  //
-  //   controller.get('player').setSrc("");
-  //   controller.get('player').remove();
-  //   $('audio.audio-element').remove();
-  // },
+
 
   // __createAudioElement: function (episode) {
-  //   var audioElement = $('<audio></audio>', {
-  //     controls: true,
-  //     id: 'audio-player-' + episode.id,
-  //     width: '100%',
-  //     src: episode.get('source')
-  //   }).addClass('audio-element');
   //
-  //   $('#wrapper-audio-element').append(audioElement);
   // },
 
   // __createPlayer: function (controller, episode) {
