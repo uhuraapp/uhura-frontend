@@ -17,18 +17,20 @@ export default Ember.View.extend({
     if(source){
       this.forceStop();
       this.audioElement().attr('src', source);
-      this.get('player').createMedia(this.audioElement());
+      this.get('player').createMedia(this.audioElement()).play();
     }
   }.observes('controller.episode'),
 
   forceStop () {
     var audioElement = this.audioElement().get(0);
-    audioElement.pause(0);
+    if(audioElement.pause) {
+      audioElement.pause(0);
+    }
     audioElement.src = "";
-    audioElement.load();
+    if(audioElement.load){
+      audioElement.load();
+    }
   },
-
-
 
   // // TODO: fix display flex, this code keep player on screen view
   // fixHeigthSize: function () {

@@ -9,6 +9,10 @@ var application,
 module('Acceptance | episode', {
   beforeEach: function() {
     application = startApp();
+
+    var playerService = application.registry.lookup('service:player');
+    playerService.errorMedia = function () {};
+
     channel = server.create('channel');
     episodes = server.createList('episode', 10, {channel_id: channel.id});
   },

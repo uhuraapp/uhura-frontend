@@ -8,16 +8,18 @@ moduleFor('service:player', 'Unit | Service | player', {
   beforeEach: function() {
     application = startApp();
     window.oldM = window.MediaElementPlayer;
+    window.oldAlert = window.alert;
   },
 
   afterEach: function() {
     Ember.run(application, 'destroy');
     window.MediaElementPlayer = window.oldM;
+    window.alert = window.oldAlert;
   }
 });
 
 test('it exists', function(assert) {
-  var service = this.subject();
+  let service = this.subject();
   assert.ok(service);
 });
 
@@ -46,11 +48,24 @@ test('play/pause a episode', function (assert) {
 });
 
 test('create media element', function (assert) {
-  assert.expect(5);
+  assert.expect(7);
 
-  var service = this.subject();
+  let episode = Ember.Object.create(server.create('episode'));
+  let service = this.subject();
+  service.set('current', episode);
+
   service.successMedia = function () {
-    assert.equal(this, service, 'preserve this');
+    assert.equal(this, service, 'should preserves the this on successMedia');
+  };
+
+  window.alert = function (msg) {
+    assert.equal(msg, "We can play the audio, make sure your browser can play audio/mp3 or if you have the flash 9.0.124 or silverlight 3.0 installed", 'should send message to user about error');
+  };
+
+  service._errorMedia = service.errorMedia;
+  service.errorMedia = function () {
+    assert.equal(this, service, 'should preserves the this on errorMedia');
+    service._errorMedia();
   };
 
   window.MediaElementPlayer = (function () {
@@ -59,13 +74,28 @@ test('create media element', function (assert) {
       assert.deepEqual(options.features, ['playpause', 'progress', 'volume', 'duration'], 'has features');
       assert.equal(options.audioVolume, 'vertical', 'set audioVolume as vertical');
       options.success(); // call success callback
+      options.error(); // call error callback
     }
 
     return MediaElementPlayer;
   })();
 
   service.createMedia("#element-player");
-  var media = service.get('media');
-  var mediaClassName = Object.getPrototypeOf(media).constructor.name;
+
+  let media = service.get('media');
+  let mediaClassName = Object.getPrototypeOf(media).constructor.name;
   assert.equal(mediaClassName, 'MediaElementPlayer', 'set media');
+});
+
+test('stop', function(assert) {
+  let service = this.subject();
+  let episode = Ember.Object.create({playing: true});
+  service.set('current', episode);
+  service.set('playing', false);
+
+  service.stop();
+
+  assert.ok(!service.get('playing'), 'set to not playing');
+  assert.ok(!episode.get('playing'), 'set episode to not playing');
+  assert.equal(service.get('current'), null, 'remove current episode');
 });
