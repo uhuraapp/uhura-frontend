@@ -10,14 +10,20 @@ module('Acceptance | episode', {
   beforeEach: function() {
     application = startApp();
 
-    var playerService = application.registry.lookup('service:player');
-    playerService.errorMedia = function () {};
+    window.oldM = window.MediaElementPlayer;
+    window.MediaElementPlayer = (function () {
+      function MediaElementPlayer(argument) {}
+      MediaElementPlayer.prototype.play = () => {};
+      MediaElementPlayer.prototype.pause = () => {};
+      return MediaElementPlayer;
+    })();
 
     channel = server.create('channel');
     episodes = server.createList('episode', 10, {channel_id: channel.id});
   },
 
   afterEach: function() {
+    window.MediaElementPlayer = window.oldM;
     Ember.run(application, 'destroy');
   }
 });
@@ -27,9 +33,9 @@ test('player | show episode on player container', function(assert) {
 
   andThen(function() {
     assert.equal(currentURL(), `/channels/${channel.id}`);
-
-    click('.episode:first-child .playpause');
   });
+
+  click('.episode:first-child .playpause');
 
   andThen(function () {
     assert.equal(find("#player .channel-title").text(), channel.title);

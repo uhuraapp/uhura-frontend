@@ -22,14 +22,58 @@ export default Ember.Service.extend({
       plugins: ['flash','silverlight'],
       enablePluginDebug: true,
       pluginPath: 'assets/',
-      success: Ember.$.proxy(this.successMedia, this),
-      error:  Ember.$.proxy(this.errorMedia, this)
+      success: this.proxy(this.successMedia),
+      error:  this.proxy(this.errorMedia)
     });
     this.set('media', media);
     return media;
   },
 
-  successMedia () {
+  proxy (method) {
+    return Ember.$.proxy(method, this);
+  },
+
+  successMedia (media) {
+    // TODO: add tests
+    media.addEventListener('timeupdate', this.proxy(this._trackTime));
+    // media.addEventListener('loadeddata', this.proxy(this.__loadedData));
+    media.addEventListener('play',       this.proxy(this._toogleStatus));
+    media.addEventListener('pause',      this.proxy(this._toogleStatus));
+    // media.addEventListener('ended',      this.proxy(this.__ended));
+  },
+
+  _trackTime () {
+  //   var media = this.get('media');
+  //   if(media && this.__isPingTime(media)) {
+  //     var model = this.get('controller').get('model');
+  //     if(model){
+  //       model.set("stopped_at", parseInt(media.currentTime, 10));
+  //     }
+  //   }
+  //
+  //   if(media && this.__isConsideredListened(media)) {
+  //     this.get('controller').playerTimeUpdate();
+  //   }
+  },
+
+  // TODO: add tests
+  _toogleStatus () {
+    if(this._notDestroyed(this._current())) {
+      var currentStatus = this._current().get('playing');
+      this._current().set('playing', !currentStatus);
+
+      if(this._notDestroyed(this)) {
+        this.set('playing', !currentStatus);
+      }
+    } else {
+      if(this._notDestroyed(this)) {
+        this.set('playing', false);
+      }
+    }
+  },
+
+  _notDestroyed (obj) {
+    return obj && !(obj.get('isDestroyed') || obj.get('isDestroying'));
   },
 
   errorMedia () {
@@ -68,7 +112,7 @@ export default Ember.Service.extend({
       }
     }
     var media = this.get('media');
-    if (media) {
+    if (media && media.remove) {
       media.remove();
     }
   },

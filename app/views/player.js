@@ -10,34 +10,13 @@ export default Ember.View.extend({
 
   // TODO: fix display flex, this code keep player on screen view
   fixHeigthSize: function () {
-    Ember.run.scheduleOnce('afterRender', function (){
-      var playerHeight = window.innerHeight - document.querySelector("nav").clientHeight;
-      $('.player-wrapper').height(playerHeight);
-      $(document).on('scroll', () => {
-        $('.player-wrapper').css("top", window.pageYOffset);
-      });
+    Ember.run.scheduleOnce('afterRender', () => {
+      var navHeight = document.querySelector("nav") ? document.querySelector("nav").clientHeight : 0;
+      var playerHeight = window.innerHeight - navHeight;
+      Ember.$('.player-wrapper').height(playerHeight);
+      Ember.$(document).on('scroll', () => Ember.$('.player-wrapper').css("top", window.pageYOffset));
     });
   }.on('didInsertElement'),
-
-
-
-  // __createAudioElement: function (episode) {
-  //
-  // },
-
-  // __createPlayer: function (controller, episode) {
-  //   var player = new MediaElementPlayer('#audio-player-' + episode.id, {
-  //     features: ['playpause','progress','volume', 'current', 'duration'],
-  //     enablePluginDebug: true,
-  //     plugins: ['flash','silverlight'],
-  //     alwaysShowControls: true,
-  //     audioVolume: 'vertical',
-  //     pluginPath: 'assets/',
-  //     success: $.proxy(this.__playerBindEvents, this)
-  //   });
-  //
-  //   controller.set('player', player);
-  // },
 
   // __updateAudio: function () {
   //   var controller = this.get('controller');

@@ -25,14 +25,19 @@ test('it exists', function(assert) {
 });
 
 test('play/pause a episode', function (assert) {
-  Ember.run(() => {
+    window.MediaElementPlayer = (function () {
+      function MediaElementPlayer(argument) {
+      }
+
+      MediaElementPlayer.prototype.play = () => {};
+      MediaElementPlayer.prototype.pause = () => {};
+
+      return MediaElementPlayer;
+    })();
+
     var episode = Ember.Object.create(server.create('episode'));
 
     var service = this.subject();
-    service._audioElement = function () {
-      return Ember.$("<audio></audio>");
-    };
-
     service.playpause(episode);
     assert.equal(episode.get('playing'), true, 'set episode to playing');
     assert.equal(service.get('playing'), true, 'set player status to playing');
@@ -51,7 +56,6 @@ test('play/pause a episode', function (assert) {
     assert.equal(episode.get('playing'), false, 'stop old episode');
     assert.equal(newEpisode.get('playing'), true, 'set new episode to playing');
     assert.equal(service.get('playing'), true, 'set player status to playing');
-  });
 });
 
 test('create media element', function (assert) {
