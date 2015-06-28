@@ -37,8 +37,8 @@ export default Ember.Service.extend({
     // TODO: add tests
     media.addEventListener('timeupdate', this.proxy(this._trackTime));
     // media.addEventListener('loadeddata', this.proxy(this.__loadedData));
-    media.addEventListener('play',       this.proxy(this._toogleStatus));
-    media.addEventListener('pause',      this.proxy(this._toogleStatus));
+    // media.addEventListener('play',       this.proxy(this._toogleStatus));
+    // media.addEventListener('pause',      this.proxy(this._toogleStatus));
     // media.addEventListener('ended',      this.proxy(this.__ended));
   },
 
