@@ -8,16 +8,16 @@ export default Ember.View.extend({
 
   // CONSIDERED_LISTENED_PERCENT: 95,
 
-  // // TODO: fix display flex, this code keep player on screen view
-  // fixHeigthSize: function () {
-  //   Ember.run.scheduleOnce('afterRender', function (){
-  //     var playerHeight = window.innerHeight - document.querySelector("nav").clientHeight;
-  //     $('.the-player').height(playerHeight);
-  //     $(document).on('scroll', () => {
-  //       $('.the-player').css("top", window.pageYOffset);
-  //     });
-  //   });
-  // }.on('didInsertElement'),
+  // TODO: fix display flex, this code keep player on screen view
+  fixHeigthSize: function () {
+    Ember.run.scheduleOnce('afterRender', function (){
+      var playerHeight = window.innerHeight - document.querySelector("nav").clientHeight;
+      $('.player-wrapper').height(playerHeight);
+      $(document).on('scroll', () => {
+        $('.player-wrapper').css("top", window.pageYOffset);
+      });
+    });
+  }.on('didInsertElement'),
 
 
 
