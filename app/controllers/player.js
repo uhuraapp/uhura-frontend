@@ -34,19 +34,6 @@ export default Ember.Controller.extend({
   //   }
   // },
 
-  // __playpause: function () {
-  //   var action = this.get('playing') ? 'pause' : 'play';
-  //   this.get('player').media[action]();
-  //   this.set('playing', !this.get('playing'));
-  // },
-  //
-  // __play: function (episode) {
-  //   if(this.get('model')) { this.get('model').set('playing', false); }
-  //   this.set('loaded', false);
-  //
-  //   this.set('modelx', episode);
-  // },
-
   x: function () {
     var m = this.get('model');
     console.log(m);
@@ -111,8 +98,8 @@ export default Ember.Controller.extend({
   // }.observes('model.stopped_at'),
 
   actions: {
-     playpause: function () {
-       // this.playpause(this.get('model'));
+     playpause (episode) {
+       this.get('player').playpause(episode);
      }
   }
 });
