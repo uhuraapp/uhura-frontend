@@ -9,6 +9,7 @@ moduleFor('service:player', 'Unit | Service | player', {
     application = startApp();
     window.oldM = window.MediaElementPlayer;
     window.oldAlert = window.alert;
+    window.alert = function () {};
   },
 
   afterEach: function() {
@@ -24,27 +25,33 @@ test('it exists', function(assert) {
 });
 
 test('play/pause a episode', function (assert) {
-  var episode = Ember.Object.create(server.create('episode'));
+  Ember.run(() => {
+    var episode = Ember.Object.create(server.create('episode'));
 
-  var service = this.subject();
-  service.playpause(episode);
-  assert.equal(episode.get('playing'), true, 'set episode to playing');
-  assert.equal(service.get('playing'), true, 'set player status to playing');
+    var service = this.subject();
+    service._audioElement = function () {
+      return Ember.$("<audio></audio>");
+    };
 
-  service.playpause(episode);
-  assert.equal(episode.get('playing'), false, 'set episode to not playing');
-  assert.equal(service.get('playing'), false, 'set player status to not playing');
+    service.playpause(episode);
+    assert.equal(episode.get('playing'), true, 'set episode to playing');
+    assert.equal(service.get('playing'), true, 'set player status to playing');
 
-  assert.equal(service.get('current'), episode, 'save current playing episode');
+    service.playpause(episode);
+    assert.equal(episode.get('playing'), false, 'set episode to not playing');
+    assert.equal(service.get('playing'), false, 'set player status to not playing');
 
-  episode.set('playing', true);
+    assert.equal(service.get('current'), episode, 'save current playing episode');
 
-  var newEpisode = Ember.Object.create(server.create('episode'));
+    episode.set('playing', true);
 
-  service.playpause(newEpisode);
-  assert.equal(episode.get('playing'), false, 'stop old episode');
-  assert.equal(newEpisode.get('playing'), true, 'set new episode to playing');
-  assert.equal(service.get('playing'), true, 'set player status to playing');
+    var newEpisode = Ember.Object.create(server.create('episode'));
+
+    service.playpause(newEpisode);
+    assert.equal(episode.get('playing'), false, 'stop old episode');
+    assert.equal(newEpisode.get('playing'), true, 'set new episode to playing');
+    assert.equal(service.get('playing'), true, 'set player status to playing');
+  });
 });
 
 test('create media element', function (assert) {
@@ -71,7 +78,7 @@ test('create media element', function (assert) {
   window.MediaElementPlayer = (function () {
     function MediaElementPlayer (el, options) {
       assert.equal(el, "#element-player", 'get element');
-      assert.deepEqual(options.features, ['playpause', 'progress', 'volume', 'duration'], 'has features');
+      assert.deepEqual(options.features, ['current', 'duration', 'progress', 'volume'], 'has features');
       assert.equal(options.audioVolume, 'vertical', 'set audioVolume as vertical');
       options.success(); // call success callback
       options.error(); // call error callback
@@ -80,7 +87,9 @@ test('create media element', function (assert) {
     return MediaElementPlayer;
   })();
 
-  service.createMedia("#element-player");
+  Ember.run(function () {
+    service.createMedia("#element-player");
+  });
 
   let media = service.get('media');
   let mediaClassName = Object.getPrototypeOf(media).constructor.name;

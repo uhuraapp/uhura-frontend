@@ -68,7 +68,7 @@ export default Ember.Service.extend({
       }
     }
     var media = this.get('media');
-    if(media){
+    if (media) {
       media.remove();
     }
   },
@@ -91,7 +91,7 @@ export default Ember.Service.extend({
     var action = currentStatus ? 'pause' : 'play';
     this._current().set('playing', !currentStatus);
     this.set('playing', !currentStatus);
-    this[`_${action}`]()
+    this[`_${action}`]();
   },
 
   _play () {
