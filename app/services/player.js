@@ -69,24 +69,70 @@ export default Ember.Service.extend({
   //   }
   },
 
-  // _toogleStatus () {
-  //   if(this._notDestroyed(this._current())) {
-  //     var currentStatus = this._current().get('playing');
-  //     this._current().set('playing', !currentStatus);
-  //
-  //     if(this._notDestroyed(this)) {
-  //       this.set('playing', !currentStatus);
+
+// stoppedAtChanged: function () {
+  //   var episode = this.get('model');
+  //   if(this.get('session.isAuthenticated') && episode) {
+  //     var at = episode.get('stopped_at');
+  //     if(at && !this.get('_locked')) {
+  //       this.set('_locked', true);
+  //       $.ajax({
+  //         url: config.API_URL + '/v2/episodes/' + episode.id + '/listen',
+  //         type: "PUT",
+  //         data: { at: at }
+  //       }).always(() => {
+  //         this.set('_locked', false);
+  //       });
   //     }
-  //   } else {
-  //     if(this._notDestroyed(this)) {
-  //       this.set('playing', false);
+  //   }
+  // }.observes('model.stopped_at'),
+
+// CONSIDERED_LISTENED_PERCENT: 95,
+  // __playerTimeUpdate: function () {
+  //   var media = this.get('media');
+  //   if(media && this.__isPingTime(media)) {
+  //     var model = this.get('controller').get('model');
+  //     if(model){
+  //       model.set("stopped_at", parseInt(media.currentTime, 10));
+  //     }
+  //   }
+  //
+  //   if(media && this.__isConsideredListened(media)) {
+  //     this.get('controller').playerTimeUpdate();
+  //   }
+  // },
+  //
+  // __loadedData: function () {
+  //   this.get('controller').playerLoadedData();
+  // },
+  //
+  // __playorpause: function () {
+  //   this.get('controller').playerPlayOrPause();
+  // },
+  //
+  // __ended: function () {
+  //   //this.get('controller').playerEnded();
+  //   //this.set('hasModel', false);
+  //
+  //   var episodesElements = $('li.episode').get().reverse();
+  //   for (var i = 0; i <= episodesElements.length; i++) {
+  //     var episodeElement = $(episodesElements[i]);
+  //     if(!episodeElement.is(".is-listened")) {
+  //       episodeElement.find('.button-play-wrapper button').click();
+  //       break;
   //     }
   //   }
   // },
-
-  // _notDestroyed (obj) {
-  //   return obj && !(obj.get('isDestroyed') || obj.get('isDestroying'));
+  //
+  // __isConsideredListened: function (media) {
+  //   var played = 100 * media.currentTime / media.duration;
+  //   return played > this.CONSIDERED_LISTENED_PERCENT;
   // },
+  //
+  // __isPingTime: function (media) {
+  //   return parseInt(media.currentTime, 10) % 5 === 0;
+  // }
+
 
   errorMedia () {
     var audioURL = this.get('current.source_url');
