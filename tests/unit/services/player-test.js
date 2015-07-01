@@ -121,17 +121,3 @@ test('stop', function(assert) {
   assert.ok(!episode.get('playing'), 'set episode to not playing');
   assert.equal(service.get('current'), null, 'remove current episode');
 });
-
-test('ended', function (assert) {
-  var service = this.subject();
-  var media = mediaMock('ended');
-  let episode = Ember.Object.create({playing: true});
-  service.set('current', episode);
-  service.set('playing', false);
-
-  service.successMedia(media);
-
-  assert.ok(!service.get('playing'), 'set to not playing');
-  assert.ok(!episode.get('playing'), 'set episode to not playing');
-  assert.equal(service.get('current'), null, 'remove current episode');
-});

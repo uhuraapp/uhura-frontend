@@ -43,8 +43,17 @@ export default Ember.Service.extend({
   },
 
   _ended () {
-    this.stop();
+    var episodesElements = Ember.$('li.episode').get().reverse();
+    for (var i = 0; i <= episodesElements.length; i++) {
+       var episodeElement = Ember.$(episodesElements[i]);
+       if(!episodeElement.is(".is-playing")) {
+         episodeElement.find('.playpause').click();
+         break;
+       }
+    }
+
   },
+
 
   trackTime () {
   //   var media = this.get('media');

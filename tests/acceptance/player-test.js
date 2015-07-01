@@ -4,7 +4,8 @@ import startApp from 'uhuraapp/tests/helpers/start-app';
 
 var application,
     channel,
-    episodes;
+    episodes,
+    mediaMock;
 
 module('Acceptance | episode', {
   beforeEach: function() {
@@ -17,7 +18,15 @@ module('Acceptance | episode', {
       MediaElementPlayer.prototype.pause = () => {};
       return MediaElementPlayer;
     })();
-
+    mediaMock = function (_name) {
+      return {
+        addEventListener: function (name, fn) {
+          if(name === _name){
+            fn();
+          }
+        }
+      };
+    };
     channel = server.create('channel');
     episodes = server.createList('episode', 10, {channel_id: channel.id});
   },
@@ -56,5 +65,27 @@ test('player | have player element', function(assert) {
   andThen(function () {
     assert.equal(find("#wrapper-audio-element audio").length, 1);
     assert.equal(find("#wrapper-audio-element audio").attr('src'), episodes[0].source_url);
+  });
+});
+
+test('player | when ended a episode should starts the next', function (assert){
+  var player = application.registry.lookup("service:player");
+
+  visit(`/channels/${channel.id}`);
+
+  andThen(function() {
+    assert.equal(currentURL(), `/channels/${channel.id}`);
+    click('.episode:last .playpause');
+  });
+
+  andThen(function() {
+    let i = episodes.length-1;
+    assert.equal(find("#player .title").text(), episodes[i].title);
+    player.successMedia(mediaMock('ended'));
+  });
+
+  andThen(function () {
+    let i = episodes.length-2;
+    assert.equal(find("#player .title").text(), episodes[i].title);
   });
 });
