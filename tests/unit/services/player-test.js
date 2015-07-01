@@ -3,13 +3,22 @@ import { moduleFor, test } from 'ember-qunit';
 import startApp from 'uhuraapp/tests/helpers/start-app';
 
 var application;
-
+var mediaMock;
 moduleFor('service:player', 'Unit | Service | player', {
   beforeEach: function() {
     application = startApp();
     window.oldM = window.MediaElementPlayer;
     window.oldAlert = window.alert;
     window.alert = function () {};
+    mediaMock = function (_name) {
+      return {
+        addEventListener: function (name, fn) {
+          if(name === _name){
+            fn();
+          }
+        }
+      };
+    };
   },
 
   afterEach: function() {
@@ -25,37 +34,37 @@ test('it exists', function(assert) {
 });
 
 test('play/pause a episode', function (assert) {
-    window.MediaElementPlayer = (function () {
-      function MediaElementPlayer(argument) {
-      }
+  window.MediaElementPlayer = (function () {
+    function MediaElementPlayer(argument) {
+    }
 
-      MediaElementPlayer.prototype.play = () => {};
-      MediaElementPlayer.prototype.pause = () => {};
+    MediaElementPlayer.prototype.play = () => {};
+    MediaElementPlayer.prototype.pause = () => {};
 
-      return MediaElementPlayer;
-    })();
+    return MediaElementPlayer;
+  })();
 
-    var episode = Ember.Object.create(server.create('episode'));
+  var episode = Ember.Object.create(server.create('episode'));
 
-    var service = this.subject();
-    service.playpause(episode);
-    assert.equal(episode.get('playing'), true, 'set episode to playing');
-    assert.equal(service.get('playing'), true, 'set player status to playing');
+  var service = this.subject();
+  service.playpause(episode);
+  assert.equal(episode.get('playing'), true, 'set episode to playing');
+  assert.equal(service.get('playing'), true, 'set player status to playing');
 
-    service.playpause(episode);
-    assert.equal(episode.get('playing'), false, 'set episode to not playing');
-    assert.equal(service.get('playing'), false, 'set player status to not playing');
+  service.playpause(episode);
+  assert.equal(episode.get('playing'), false, 'set episode to not playing');
+  assert.equal(service.get('playing'), false, 'set player status to not playing');
 
-    assert.equal(service.get('current'), episode, 'save current playing episode');
+  assert.equal(service.get('current'), episode, 'save current playing episode');
 
-    episode.set('playing', true);
+  episode.set('playing', true);
 
-    var newEpisode = Ember.Object.create(server.create('episode'));
+  var newEpisode = Ember.Object.create(server.create('episode'));
 
-    service.playpause(newEpisode);
-    assert.equal(episode.get('playing'), false, 'stop old episode');
-    assert.equal(newEpisode.get('playing'), true, 'set new episode to playing');
-    assert.equal(service.get('playing'), true, 'set player status to playing');
+  service.playpause(newEpisode);
+  assert.equal(episode.get('playing'), false, 'stop old episode');
+  assert.equal(newEpisode.get('playing'), true, 'set new episode to playing');
+  assert.equal(service.get('playing'), true, 'set player status to playing');
 });
 
 test('create media element', function (assert) {
@@ -107,6 +116,20 @@ test('stop', function(assert) {
   service.set('playing', false);
 
   service.stop();
+
+  assert.ok(!service.get('playing'), 'set to not playing');
+  assert.ok(!episode.get('playing'), 'set episode to not playing');
+  assert.equal(service.get('current'), null, 'remove current episode');
+});
+
+test('ended', function (assert) {
+  var service = this.subject();
+  var media = mediaMock('ended');
+  let episode = Ember.Object.create({playing: true});
+  service.set('current', episode);
+  service.set('playing', false);
+
+  service.successMedia(media);
 
   assert.ok(!service.get('playing'), 'set to not playing');
   assert.ok(!episode.get('playing'), 'set episode to not playing');

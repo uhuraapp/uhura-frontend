@@ -63,8 +63,8 @@ export default Ember.View.extend({
   // },
   //
   // __ended: function () {
-  //   this.get('controller').playerEnded();
-  //   this.set('hasModel', false);
+  //   //this.get('controller').playerEnded();
+  //   //this.set('hasModel', false);
   //
   //   var episodesElements = $('li.episode').get().reverse();
   //   for (var i = 0; i <= episodesElements.length; i++) {

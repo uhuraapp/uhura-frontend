@@ -22,27 +22,31 @@ export default Ember.Service.extend({
       plugins: ['flash','silverlight'],
       enablePluginDebug: true,
       pluginPath: 'assets/',
-      success: this.proxy(this.successMedia),
-      error:  this.proxy(this.errorMedia)
+      success: this._proxy(this.successMedia),
+      error:  this._proxy(this.errorMedia)
     });
     this.set('media', media);
     return media;
   },
 
-  proxy (method) {
+  _proxy (method) {
     return Ember.$.proxy(method, this);
   },
 
   successMedia (media) {
     // TODO: add tests
-    media.addEventListener('timeupdate', this.proxy(this._trackTime));
+    // media.addEventListener('timeupdate', this._proxy(this.trackTime));
     // media.addEventListener('loadeddata', this.proxy(this.__loadedData));
     // media.addEventListener('play',       this.proxy(this._toogleStatus));
     // media.addEventListener('pause',      this.proxy(this._toogleStatus));
-    // media.addEventListener('ended',      this.proxy(this.__ended));
+    media.addEventListener('ended',      this._proxy(this._ended));
   },
 
-  _trackTime () {
+  _ended () {
+    this.stop();
+  },
+
+  trackTime () {
   //   var media = this.get('media');
   //   if(media && this.__isPingTime(media)) {
   //     var model = this.get('controller').get('model');
@@ -56,25 +60,24 @@ export default Ember.Service.extend({
   //   }
   },
 
-  // TODO: add tests
-  _toogleStatus () {
-    if(this._notDestroyed(this._current())) {
-      var currentStatus = this._current().get('playing');
-      this._current().set('playing', !currentStatus);
+  // _toogleStatus () {
+  //   if(this._notDestroyed(this._current())) {
+  //     var currentStatus = this._current().get('playing');
+  //     this._current().set('playing', !currentStatus);
+  //
+  //     if(this._notDestroyed(this)) {
+  //       this.set('playing', !currentStatus);
+  //     }
+  //   } else {
+  //     if(this._notDestroyed(this)) {
+  //       this.set('playing', false);
+  //     }
+  //   }
+  // },
 
-      if(this._notDestroyed(this)) {
-        this.set('playing', !currentStatus);
-      }
-    } else {
-      if(this._notDestroyed(this)) {
-        this.set('playing', false);
-      }
-    }
-  },
-
-  _notDestroyed (obj) {
-    return obj && !(obj.get('isDestroyed') || obj.get('isDestroying'));
-  },
+  // _notDestroyed (obj) {
+  //   return obj && !(obj.get('isDestroyed') || obj.get('isDestroying'));
+  // },
 
   errorMedia () {
     var audioURL = this.get('current.source_url');

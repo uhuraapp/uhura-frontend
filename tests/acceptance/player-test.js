@@ -44,7 +44,6 @@ test('player | show episode on player container', function(assert) {
   });
 });
 
-
 test('player | have player element', function(assert) {
   visit(`/channels/${channel.id}`);
 

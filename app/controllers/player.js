@@ -61,12 +61,12 @@ export default Ember.Controller.extend({
   //   this.get('model').set('playing', !this.get('model.playing'));
   // },
 
-  // playerEnded: function () {
-  //   this.get('model').set('playing', false);
-  //   this.set('loaded', false);
-  //   this.set('playing', false);
-  //   if(window.cordova){ cordova.plugins.backgroundMode.disable(); }
-  // },
+          // playerEnded: function () {
+          //   this.get('model').set('playing', false);
+          //   this.set('loaded', false);
+          //   this.set('playing', false);
+          //   if(window.cordova){ cordova.plugins.backgroundMode.disable(); }
+          // },
 
   // updateAudio: function () {
   //   if(window.cordova){
