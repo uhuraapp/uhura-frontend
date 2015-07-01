@@ -1,7 +1,23 @@
-# Uhuraapp 
+# Uhuraapp
 
 [![Build Status](https://travis-ci.org/uhuraapp/uhura-dashboard.svg?branch=master)](https://travis-ci.org/uhuraapp/uhura-dashboard)<br />[![Test Coverage](https://codeclimate.com/github/uhuraapp/uhura-dashboard/badges/coverage.svg)](https://codeclimate.com/github/uhuraapp/uhura-dashboard/coverage)<br />[![Code Climate](https://codeclimate.com/github/uhuraapp/uhura-dashboard/badges/gpa.svg)](https://codeclimate.com/github/uhuraapp/uhura-dashboard)<br />[![devDependency Status](https://david-dm.org/uhuraapp/uhura-dashboard/dev-status.svg)](https://david-dm.org/uhuraapp/uhura-dashboard#info=devDependencies) <br />
 ----
+
+## Uhura Issues Flow
+
+<pre>.
+           Issues
+Uservoice   /   \
+     \     /     \
+     #inbox    #bug+#verified   Pull Request
+        \                 \      /
+       #planning  ->  #milestone  -> Deploy -> Production
+          /              /
+    Roadmap       #bug #verified
+                       /
+                    #bug
+</pre>
+
 
 This README outlines the details of collaborating on this Ember application.
 A short introduction of this app could easily go here.
@@ -53,4 +69,3 @@ Specify what it takes to deploy your app.
 * Development Browser Extensions
   * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
   * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
-
