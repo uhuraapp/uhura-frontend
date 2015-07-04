@@ -34,7 +34,7 @@ You will need the following things properly installed on your computer.
 
 ## Installation
 
-* `git clone git@github.com:uhura/uhura-dashboard.git` this repository
+* clone this repository: `git clone git@github.com:uhuraapp/uhura-frontend.git`
 * change into the new directory
 * `npm install`
 * `bower install`
