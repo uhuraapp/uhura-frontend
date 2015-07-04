@@ -7,13 +7,11 @@ cache:
   - node_modules
 before_install:
 - export PATH=/usr/local/phantomjs-2.0.0/bin:$PATH
-- "npm config set spin false"
-- "npm install -g npm@^2"
-- "npm install -g codeclimate-test-reporter"
-
+- npm config set spin false
+- npm install -g npm@^2
+- npm install -g codeclimate-test-reporter
 addons:
   code_climate:
-
 install:
 - npm install -g bower
 - npm install
@@ -24,4 +22,4 @@ after_script:
 - codeclimate < lcov.info
 env:
   global:
-    secure: IE6qJa5Vn4KlPN/EmjIUACRPJSnb2837kEXmBNlXBHYcRL2dJREQQT47OLOaH+K2B5ubTNn41pCr6grKVu8wQR8zPngm4B19VHdWcKKnojVQ+dvS4encUdgsP1RQlsPrM07h2xf/7pmtFrdyYMkqf4Kvw7Jt9tMBRe30XMfJ2iU=
+    secure: H7nvmycAHnnkfRWKveo5mn4cns7sV2lqLSmVB3kD7WsnIY/Dq4hls/trlGjyf9P4TWHplHQOj/XrTOv0LP4lleoQ5OfZ5GtPTBzKpqr16mv8GSeRH0xvfWC4nk71ggK3gz6lpFP4Dv+pnocjWOBm9FYwi1CiSPii19948MlyDFU=
