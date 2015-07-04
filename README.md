@@ -1,6 +1,6 @@
 # Uhuraapp
 
-[![Build Status](https://travis-ci.org/uhuraapp/uhura-dashboard.svg?branch=master)](https://travis-ci.org/uhuraapp/uhura-dashboard)<br />[![Test Coverage](https://codeclimate.com/github/uhuraapp/uhura-dashboard/badges/coverage.svg)](https://codeclimate.com/github/uhuraapp/uhura-dashboard/coverage)<br />[![Code Climate](https://codeclimate.com/github/uhuraapp/uhura-dashboard/badges/gpa.svg)](https://codeclimate.com/github/uhuraapp/uhura-dashboard)<br />[![devDependency Status](https://david-dm.org/uhuraapp/uhura-dashboard/dev-status.svg)](https://david-dm.org/uhuraapp/uhura-dashboard#info=devDependencies) <br />
+[![Build Status](https://travis-ci.org/uhuraapp/uhura-frontend.svg?branch=master)](https://travis-ci.org/uhuraapp/uhura-frontend)<br />[![Test Coverage](https://codeclimate.com/github/uhuraapp/uhura-frontend/badges/coverage.svg)](https://codeclimate.com/github/uhuraapp/uhura-frontend/coverage)<br />[![Code Climate](https://codeclimate.com/github/uhuraapp/uhura-frontend/badges/gpa.svg)](https://codeclimate.com/github/uhuraapp/uhura-frontend)<br />[![devDependency Status](https://david-dm.org/uhuraapp/uhura-frontend/dev-status.svg)](https://david-dm.org/uhuraapp/uhura-frontend#info=devDependencies) <br />
 ----
 
 ## Uhura Issues Flow
