@@ -101,46 +101,18 @@ export default Ember.Service.extend({
     return this._adapter().ajax(url, type, options);
   },
 
-  // __playerTimeUpdate: function () {
-  //   var media = this.get('media');
-  //   if(media && this.__isPingTime(media)) {
-  //     var model = this.get('controller').get('model');
-  //     if(model){
-  //       model.set("stopped_at", parseInt(media.currentTime, 10));
-  //     }
-  //   }
-  //
-  //   if(media && this.__isConsideredListened(media)) {
-  //     this.get('controller').playerTimeUpdate();
-  //   }
-  // },
-  //
-  // __loadedData: function () {
-  //   this.get('controller').playerLoadedData();
-  // },
-  //
-  // __playorpause: function () {
-  //   this.get('controller').playerPlayOrPause();
-  // },
-  //
-  // __ended: function () {
-  //   //this.get('controller').playerEnded();
-  //   //this.set('hasModel', false);
-  // },
-  //
-
   errorMedia () {
     var audioURL = this.get('current.source_url');
     var type = window.mejs.HtmlMediaElementShim.formatType(audioURL);
-    var flashVersion = this.__needPluginVersion('flash');
-    var silverlightVersion = this.__needPluginVersion('silverlight');
+    var flashVersion = this._needPluginVersion('flash');
+    var silverlightVersion = this._needPluginVersion('silverlight');
 
     // TODO: use a notification service
     window.alert(`We can play the audio, make sure your browser can play ${type} or if you have the flash ${flashVersion} or silverlight ${silverlightVersion} installed`);
     Ember.run.scheduleOnce('afterRender', this, 'stop');
   },
 
-  __needPluginVersion (plugin) {
+  _needPluginVersion (plugin) {
     var version = window.mejs.plugins[plugin][0].version;
     // silverlight version sometimes came 3.0.0 and others 3.0
     if(version[version.length - 1] === 0 && version.length === 3) {
