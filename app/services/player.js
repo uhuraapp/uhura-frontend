@@ -27,7 +27,7 @@ export default Ember.Service.extend({
       success: this._proxy(this.successMedia),
       error:  this._proxy(this.errorMedia)
     });
-    this.set('media', media);
+    this.set('mediaPlayer', media);
     return media;
   },
 
@@ -36,10 +36,10 @@ export default Ember.Service.extend({
   },
 
   successMedia (media) {
-    // TODO: add tests
     // media.addEventListener('loadeddata', this.proxy(this.__loadedData));
     // media.addEventListener('play',       this.proxy(this._toogleStatus));
     // media.addEventListener('pause',      this.proxy(this._toogleStatus));
+    this.set('media', media);
     media.addEventListener('ended',      this._proxy(this._ended));
     media.addEventListener('timeupdate', this._proxy(this._trackTime));
   },
@@ -57,16 +57,17 @@ export default Ember.Service.extend({
 
   _trackTime () {
     var media = this.get('media');
-    if(media && this._isTimeToPing(media)) {
-      this._ping(this.get('current'), media.currentTime);
+    let currentTime = parseInt(media.currentTime, 10);
+    if(media && this._isTimeToPing(currentTime)) {
+      this._ping(this.get('current'), currentTime);
     }
     if(media && this._isPlayed(media)) {
       this._played(this.get('current'));
     }
   },
 
-  _isTimeToPing (media) {
-    return parseInt(media.currentTime, 10) % 5 === 0;
+  _isTimeToPing (currentTime) {
+    return currentTime % 5 === 0;
   },
 
   _isPlayed (media) {
@@ -75,6 +76,11 @@ export default Ember.Service.extend({
   },
 
   _ping (episode, currentTime) {
+    if (currentTime === this.get('currentTime')) {
+      return;
+    }
+    this.set('currentTime', currentTime);
+
     let data = {at: currentTime};
     this._request('episode', episode.id, 'listen',
                   'PUT',
@@ -164,11 +170,11 @@ export default Ember.Service.extend({
   },
 
   _play () {
-    this.get('media').play();
+    this.get('mediaPlayer').play();
   },
 
   _pause () {
-    this.get('media').pause();
+    this.get('mediaPlayer').pause();
   },
 
   _swap (episode) {

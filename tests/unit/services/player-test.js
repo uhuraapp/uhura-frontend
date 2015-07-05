@@ -106,7 +106,7 @@ test('create media element', function (assert) {
     service.createMedia("#element-player");
   });
 
-  let media = service.get('media');
+  let media = service.get('mediaPlayer');
   let mediaClassName = Object.getPrototypeOf(media).constructor.name;
   assert.equal(mediaClassName, 'MediaElementPlayer', 'set media');
 });
@@ -125,8 +125,8 @@ test('stop', function(assert) {
 });
 
 test('trackTime', function(assert) {
-  assert.expect(27);
-  
+  assert.expect(28);
+
   let duration = 226;
   let service = this.subject();
   let episode = Ember.Object.create({id: 1, stopped_at: 0, played: false});
@@ -150,10 +150,12 @@ test('trackTime', function(assert) {
       };
     };
 
-    service.set('media', {currentTime: time, duration: duration});
     service.set('current', episode);
 
     let media = mediaMock('timeupdate');
+    media.currentTime = time;
+    media.duration = duration;
+
     service.successMedia(media);
 
     if(!pingTime || !endedTime) {
@@ -167,6 +169,10 @@ test('trackTime', function(assert) {
   }, true);
 
   currentTime(10, function () {
+    assert.equal(episode.get('stopped_at'), 10, 'changes stopped_at');
+  }, true);
+
+  currentTime(10.4, function () {
     assert.equal(episode.get('stopped_at'), 10, 'changes stopped_at');
   }, true);
 
