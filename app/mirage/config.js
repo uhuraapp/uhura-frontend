@@ -23,6 +23,10 @@ export default function() {
       episodes: []
     };
   });
+
+  this.put('/episodes/:id/listen', function () {
+    return {};
+  });
 }
 
 function parseURL(url) {

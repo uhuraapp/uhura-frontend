@@ -5,6 +5,8 @@ import startApp from 'uhuraapp/tests/helpers/start-app';
 var application;
 var mediaMock;
 moduleFor('service:player', 'Unit | Service | player', {
+  needs: ['adapter:application'],
+
   beforeEach: function() {
     application = startApp();
     window.oldM = window.MediaElementPlayer;
@@ -120,4 +122,53 @@ test('stop', function(assert) {
   assert.ok(!service.get('playing'), 'set to not playing');
   assert.ok(!episode.get('playing'), 'set episode to not playing');
   assert.equal(service.get('current'), null, 'remove current episode');
+});
+
+test('trackTime', function(assert) {
+  assert.expect(20);
+  let duration = 200;
+
+  let currentTime = (time, fn) => {
+    let service = this.subject();
+    let episode = Ember.Object.create({id: 1, stopped_at: 0, played: false});
+
+    service.__request = service._request;
+    service._request = function () {
+      assert.equal(arguments[0], 'episode');
+      assert.equal(arguments[1], episode.id);
+      assert.equal(arguments[2], 'listen');
+      assert.equal(arguments[3], 'PUT');
+      assert.equal(arguments[4].data.at, time);
+      return Ember.RSVP.Promise.resolve();
+    };
+
+
+    service.set('media', {currentTime: time, duration: duration});
+    service.set('current', episode);
+
+    let media = mediaMock('timeupdate');
+    service.successMedia(media);
+
+    service._request = service.__request;
+  };
+
+  currentTime(5, function (episode) {
+    assert.equal(episode.get('stopped_at'), 5, 'changes stopped_at');
+  });
+
+  currentTime(12, function (episode) {
+    assert.equal(episode.get('stopped_at'), 0, 'changes stopped_at');
+  });
+
+  currentTime(10, function (episode) {
+    assert.equal(episode.get('stopped_at'), 10, 'changes stopped_at');
+  });
+
+  currentTime(155, function (episode) {
+    assert.equal(episode.get('stopped_at'), 155, 'changes stopped_at');
+  });
+
+  currentTime(duration*95/100, function (service) {
+    assert.equal(service.get('current.played'), true, 'in 95% mark as played');
+  });
 });

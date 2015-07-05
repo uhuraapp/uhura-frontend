@@ -7,6 +7,8 @@ export default Ember.Service.extend({
   current: null,
   media: null,
 
+  PLAYED_PERCENT: 95,
+
   playpause (episode) {
     this._swap(episode);
     this._tooglePlaying();
@@ -35,11 +37,11 @@ export default Ember.Service.extend({
 
   successMedia (media) {
     // TODO: add tests
-    // media.addEventListener('timeupdate', this._proxy(this.trackTime));
     // media.addEventListener('loadeddata', this.proxy(this.__loadedData));
     // media.addEventListener('play',       this.proxy(this._toogleStatus));
     // media.addEventListener('pause',      this.proxy(this._toogleStatus));
     media.addEventListener('ended',      this._proxy(this._ended));
+    media.addEventListener('timeupdate', this._proxy(this._trackTime));
   },
 
   _ended () {
@@ -54,21 +56,45 @@ export default Ember.Service.extend({
 
   },
 
-
-  trackTime () {
-  //   var media = this.get('media');
-  //   if(media && this.__isPingTime(media)) {
-  //     var model = this.get('controller').get('model');
-  //     if(model){
-  //       model.set("stopped_at", parseInt(media.currentTime, 10));
-  //     }
-  //   }
-  //
-  //   if(media && this.__isConsideredListened(media)) {
-  //     this.get('controller').playerTimeUpdate();
-  //   }
+  _trackTime () {
+    var media = this.get('media');
+    if(media && this._isTimeToPing(media)) {
+      this._ping(this.get('current'), media.currentTime);
+    }
+    if(media && this._isPlayed(media)) {
+      this._played(this.get('current'));
+    }
   },
 
+  _isTimeToPing (media) {
+    return parseInt(media.currentTime, 10) % 5 === 0;
+  },
+
+  _isPlayed (media) {
+    var played = 100 * media.currentTime / media.duration;
+    return played >= this.PLAYED_PERCENT;
+  },
+
+  _ping (episode, currentTime) {
+    let data = {at: currentTime};
+    this._request('episode', episode.id, 'listen',
+                  'PUT', {data: data}).then(() => {
+                    episode.set('stopped_at', currentTime);
+                  });
+  },
+
+  _played (episode) {
+    episode.set('played', true);
+  },
+
+  _adapter () {
+    return this.container.lookup('adapter:application');
+  },
+
+  _request (modelName, id, action, type, options) {
+    let url = this._adapter().buildURL(modelName, id) + "/" + action;
+    return this._adapter().ajax(url, type, options);
+  },
 
 // stoppedAtChanged: function () {
   //   var episode = this.get('model');
@@ -87,7 +113,6 @@ export default Ember.Service.extend({
   //   }
   // }.observes('model.stopped_at'),
 
-// CONSIDERED_LISTENED_PERCENT: 95,
   // __playerTimeUpdate: function () {
   //   var media = this.get('media');
   //   if(media && this.__isPingTime(media)) {
@@ -125,12 +150,9 @@ export default Ember.Service.extend({
   // },
   //
   // __isConsideredListened: function (media) {
-  //   var played = 100 * media.currentTime / media.duration;
-  //   return played > this.CONSIDERED_LISTENED_PERCENT;
   // },
   //
   // __isPingTime: function (media) {
-  //   return parseInt(media.currentTime, 10) % 5 === 0;
   // }
 
 
