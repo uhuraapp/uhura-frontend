@@ -19,6 +19,10 @@ module.exports = function(environment) {
     cordova: {
       rebuildOnChange: false,
       emulate: false
+    },
+
+    'ember-cli-mirage': {
+      enabled: environment !== 'development'
     }
   };
 
