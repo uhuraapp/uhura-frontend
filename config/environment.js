@@ -23,6 +23,10 @@ module.exports = function(environment) {
 
     'ember-cli-mirage': {
       enabled: environment !== 'development'
+    },
+
+    rollbar: {
+      accessToken: 'dc69607d27854abfa59a0d1698f03b76'
     }
   };
 
