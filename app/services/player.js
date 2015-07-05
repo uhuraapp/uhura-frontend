@@ -53,7 +53,6 @@ export default Ember.Service.extend({
          break;
        }
     }
-
   },
 
   _trackTime () {
@@ -78,13 +77,19 @@ export default Ember.Service.extend({
   _ping (episode, currentTime) {
     let data = {at: currentTime};
     this._request('episode', episode.id, 'listen',
-                  'PUT', {data: data}).then(() => {
-                    episode.set('stopped_at', currentTime);
-                  });
+                  'PUT',
+                  {data: data}
+                 ).then(() => {
+                   episode.set('stopped_at', currentTime);
+                 });
   },
 
   _played (episode) {
-    episode.set('played', true);
+    this._request('episode', episode.id, 'played',
+                  'POST'
+                 ).then(() => {
+                   episode.set('played', true);
+                 });
   },
 
   _adapter () {
@@ -95,23 +100,6 @@ export default Ember.Service.extend({
     let url = this._adapter().buildURL(modelName, id) + "/" + action;
     return this._adapter().ajax(url, type, options);
   },
-
-// stoppedAtChanged: function () {
-  //   var episode = this.get('model');
-  //   if(this.get('session.isAuthenticated') && episode) {
-  //     var at = episode.get('stopped_at');
-  //     if(at && !this.get('_locked')) {
-  //       this.set('_locked', true);
-  //       $.ajax({
-  //         url: config.API_URL + '/v2/episodes/' + episode.id + '/listen',
-  //         type: "PUT",
-  //         data: { at: at }
-  //       }).always(() => {
-  //         this.set('_locked', false);
-  //       });
-  //     }
-  //   }
-  // }.observes('model.stopped_at'),
 
   // __playerTimeUpdate: function () {
   //   var media = this.get('media');
@@ -138,23 +126,8 @@ export default Ember.Service.extend({
   // __ended: function () {
   //   //this.get('controller').playerEnded();
   //   //this.set('hasModel', false);
-  //
-  //   var episodesElements = $('li.episode').get().reverse();
-  //   for (var i = 0; i <= episodesElements.length; i++) {
-  //     var episodeElement = $(episodesElements[i]);
-  //     if(!episodeElement.is(".is-listened")) {
-  //       episodeElement.find('.button-play-wrapper button').click();
-  //       break;
-  //     }
-  //   }
   // },
   //
-  // __isConsideredListened: function (media) {
-  // },
-  //
-  // __isPingTime: function (media) {
-  // }
-
 
   errorMedia () {
     var audioURL = this.get('current.source_url');

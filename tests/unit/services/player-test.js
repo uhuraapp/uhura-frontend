@@ -125,23 +125,30 @@ test('stop', function(assert) {
 });
 
 test('trackTime', function(assert) {
-  assert.expect(20);
-  let duration = 200;
+  assert.expect(27);
+  
+  let duration = 226;
+  let service = this.subject();
+  let episode = Ember.Object.create({id: 1, stopped_at: 0, played: false});
 
-  let currentTime = (time, fn) => {
-    let service = this.subject();
-    let episode = Ember.Object.create({id: 1, stopped_at: 0, played: false});
-
+  let currentTime = (time, fn, pingTime, endedTime) => {
     service.__request = service._request;
+
     service._request = function () {
       assert.equal(arguments[0], 'episode');
       assert.equal(arguments[1], episode.id);
-      assert.equal(arguments[2], 'listen');
-      assert.equal(arguments[3], 'PUT');
-      assert.equal(arguments[4].data.at, time);
-      return Ember.RSVP.Promise.resolve();
+      assert.equal(arguments[2], endedTime ? 'played' : 'listen');
+      assert.equal(arguments[3], endedTime ? 'POST' : 'PUT');
+      if(!endedTime){
+        assert.equal(arguments[4].data.at, time);
+      }
+      return {
+        then: function (resolve) {
+          resolve();
+          fn();
+        }
+      };
     };
-
 
     service.set('media', {currentTime: time, duration: duration});
     service.set('current', episode);
@@ -149,26 +156,29 @@ test('trackTime', function(assert) {
     let media = mediaMock('timeupdate');
     service.successMedia(media);
 
+    if(!pingTime || !endedTime) {
+      fn();
+    }
     service._request = service.__request;
   };
 
-  currentTime(5, function (episode) {
+  currentTime(5, function () {
     assert.equal(episode.get('stopped_at'), 5, 'changes stopped_at');
-  });
+  }, true);
 
-  currentTime(12, function (episode) {
-    assert.equal(episode.get('stopped_at'), 0, 'changes stopped_at');
-  });
-
-  currentTime(10, function (episode) {
+  currentTime(10, function () {
     assert.equal(episode.get('stopped_at'), 10, 'changes stopped_at');
-  });
+  }, true);
 
-  currentTime(155, function (episode) {
-    assert.equal(episode.get('stopped_at'), 155, 'changes stopped_at');
-  });
+  currentTime(12, function () {
+    assert.equal(episode.get('stopped_at'), 10, 'changes stopped_at');
+  }, false);
 
-  currentTime(duration*95/100, function (service) {
+  currentTime(155, function () {
+     assert.equal(episode.get('stopped_at'), 155, 'changes stopped_at');
+  }, true);
+
+  currentTime(duration*95/100, function () {
     assert.equal(service.get('current.played'), true, 'in 95% mark as played');
-  });
+  }, true, true);
 });
