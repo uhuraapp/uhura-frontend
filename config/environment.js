@@ -36,7 +36,7 @@ module.exports = function(environment) {
   ENV.contentSecurityPolicy = {
     'img-src': "'self' *",
     'default-src': "'self' *",
-    'connect-src': "'self' http://api.uhura.io",
+    'connect-src': "'self' *",
     'media-src': "'self' *",
     'content-src': "'self' *",
     'font-src': "'self' http://fonts.gstatic.com https://www.sharebutton.co" ,
@@ -53,6 +53,9 @@ module.exports = function(environment) {
     ENV.APP.LOG_TRANSITIONS = true;
     ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
+    ENV['ember-cli-mirage'] = {
+      enabled: false
+    }
   }
 
   if (environment === 'test') {

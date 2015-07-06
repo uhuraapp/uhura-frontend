@@ -49,8 +49,8 @@ app.import("bower_components/font-awesome/fonts/fontawesome-webfont.eot", {destD
 //
 
 //
-// app.import("bower_components/mediaelement/build/flashmediaelement.swf", {destDir: 'assets'});
-// app.import("bower_components/mediaelement/build/silverlightmediaelement.xap", {destDir: 'assets'});
+app.import("bower_components/mediaelement/build/flashmediaelement.swf", {destDir: 'assets'});
+app.import("bower_components/mediaelement/build/silverlightmediaelement.xap", {destDir: 'assets'});
 
 
 var tree = app.toTree();

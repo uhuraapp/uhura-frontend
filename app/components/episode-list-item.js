@@ -3,21 +3,18 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   tagName: "li",
   classNames: ['episode'],
-  classNameBindings: ["isPlayed", "isDownloaded"],
+  classNameBindings: ["isPlayed", "isDownloaded", "isPlaying"],
   rightActions: true,
 
-  isPlayed: function () {
-    return this.get('episode.listened');
-  }.property('episode.listened'),
+  player: Ember.inject.service('player'),
 
-  isDownloaded: function (){
-    return this.get('episode.downloaded');
-  }.property('episode.downloaded'),
+  isPlayed: Ember.computed.bool('episode.listened'),
+  isDownloaded: Ember.computed.bool('episode.downloaded'),
+  isPlaying: Ember.computed.bool('episode.playing'),
 
   actions: {
     playpause () {
-      var player = this.container.lookup('controller:Player');
-      player.playpause(this.get('episode'));
+      this.get('player').playpause(this.get('episode'));
     },
 
     maskAsPlayed () {

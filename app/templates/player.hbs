@@ -1,12 +1,13 @@
 <div id="player">
-  <img src={{model.channel.imageURL}} class="channel-img" />
-  <h2>{{model.title}}</h2>
-  <h3>{{model.channel.title}}</h3>
+  <img src={{episode.channel.imageURL}} class="channel-img" />
+  <h2 class="title">{{episode.title}}</h2>
+  <h3 class="channel-title">{{episode.channel.title}}</h3>
 
   <div id="wrapper-audio-element" class="player-audio-element">
+    <audio controls width="100%" class="audio-element"></audio>
   </div>
 
-  <button {{action "playpause"}} class="playpause material-icons">
-    {{if model.playing 'pause' 'play_arrow'}}
+  <button {{action "playpause" episode}} class="playpause material-icons">
+    {{if episode.playing 'pause' 'play_arrow'}}
   </button>
 </div>
