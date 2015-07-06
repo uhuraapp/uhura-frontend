@@ -36,12 +36,12 @@ export default Ember.Service.extend({
   },
 
   successMedia (media) {
-    // media.addEventListener('loadeddata', this.proxy(this.__loadedData));
     // media.addEventListener('play',       this.proxy(this._toogleStatus));
     // media.addEventListener('pause',      this.proxy(this._toogleStatus));
     this.set('media', media);
     media.addEventListener('ended',      this._proxy(this._ended));
     media.addEventListener('timeupdate', this._proxy(this._trackTime));
+    media.addEventListener('loadeddata', this._proxy(this._loadedData));
   },
 
   _ended () {
@@ -61,9 +61,14 @@ export default Ember.Service.extend({
     if(media && this._isTimeToPing(currentTime)) {
       this._ping(this.get('current'), currentTime);
     }
-    if(media && this._isPlayed(media)) {
+    if(media && this._isPlayed(media) && !this.get('current.played')) {
       this._played(this.get('current'));
     }
+  },
+
+  _loadedData () {
+    let time = this._current().get('stopped_at');
+    this.get('mediaPlayer').setCurrentTime(time);
   },
 
   _isTimeToPing (currentTime) {
@@ -142,7 +147,7 @@ export default Ember.Service.extend({
         audioElement.load();
       }
     }
-    var media = this.get('media');
+    var media = this.get('mediaPlayer');
     if (media && media.remove) {
       media.remove();
     }

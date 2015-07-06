@@ -188,3 +188,17 @@ test('trackTime', function(assert) {
     assert.equal(service.get('current.played'), true, 'in 95% mark as played');
   }, true, true);
 });
+
+test('starts from stopped_at', function(assert) {
+  assert.expect(1);
+
+  let service = this.subject();
+  let media = mediaMock('loadeddata');
+  let stoppedAt = 33;
+
+  service.set('mediaPlayer', {
+    setCurrentTime: function(time) { assert.equal(time, stoppedAt); }
+  });
+  service.set('current', Ember.Object.create({stopped_at: stoppedAt}));
+  service.successMedia(media);
+});
