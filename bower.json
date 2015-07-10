@@ -18,7 +18,6 @@
     "typicons": "~2.0.6",
     "font-awesome": "4.3.0",
     "mediaelement": "~2.17.0",
-    "uhura-i18n": "uhuraapp/uhura-i18n#master",
     "ember-simple-auth": "0.7.2",
     "nanoscroller": "~0.8.4",
     "filer.js": "dukex/filer.js#master",
