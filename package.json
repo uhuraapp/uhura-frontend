@@ -34,6 +34,7 @@
     "ember-data": "1.13.5",
     "ember-disable-proxy-controllers": "^1.0.0",
     "ember-export-application-global": "^1.0.2",
+    "ember-i18n": "4.1.1",
     "ember-infinite-scroll": "^0.1.4",
     "broccoli-manifest": "0.0.4",
     "broccoli-merge-trees": "^0.2.1",
