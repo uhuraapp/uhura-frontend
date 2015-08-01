@@ -1,16 +1,4 @@
 import Ember from 'ember';
+import AuthenticatedRouteMixin from 'simple-auth/mixins/authenticated-route-mixin';
 
-export default Ember.Route.extend({
-  beforeModel: function (transition) {
-    var s = this._super(transition);
-
-    if (!this.get('session.isAuthenticated')) {
-      if(window.cordova) {
-        this.transitionTo('users.subscriptions');
-      } else {
-        this.transitionTo('explore');
-      }
-    }
-    return s;
-  }
-});
+export default Ember.Route.extend(AuthenticatedRouteMixin);
