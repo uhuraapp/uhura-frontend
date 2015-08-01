@@ -5,7 +5,8 @@ export default Ember.View.extend({
   didInsertElement: function() {
     this._super();
     Ember.run.scheduleOnce('afterRender', this, () => {
-      $("#loading").fadeOut();
+      document.documentElement.classList.add('mdl-js');
+      componentHandler.upgradeAllRegistered();
     });
   }
 });

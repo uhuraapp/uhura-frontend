@@ -1,11 +1,7 @@
 {{outlet 'modal'}}
 
-<div id="container">
-  <div id="content" class="uk-animation-fade">
-    {{outlet}}
-  </div>
-
-  {{render 'player'}}
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--overlay-drawer-button">
+  {{outlet}}
 </div>
 
 {{partial "meta/organization"}}

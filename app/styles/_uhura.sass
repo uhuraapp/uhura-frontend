@@ -1,79 +1,83 @@
-@import 'material_icons'
-@import 'mixins'
-@import 'palette'
+@import 'material-design-lite'
 
-$navbar-nav-height: 55px
-$navbar-background: $primary-color
+// @import 'material_icons'
+// @import 'mixins'
+// @import 'palette'
+//
+// $navbar-nav-height: 55px
+// $navbar-background: $primary-color
+//
+// $max-content-width: 960px
 
-$max-content-width: 960px
-
-@import 'bower_components/uikit/scss/uikit-mixins'
-@import 'bower_components/uikit/scss/core/variables'
-@import 'bower_components/uikit/scss/core/base'
-@import 'bower_components/uikit/scss/core/close'
-@import 'bower_components/uikit/scss/core/dropdown'
-@import 'bower_components/uikit/scss/core/grid'
-@import 'bower_components/uikit/scss/core/modal'
-@import 'bower_components/uikit/scss/core/nav'
-@import 'bower_components/uikit/scss/core/navbar'
-@import 'bower_components/uikit/scss/core/panel'
-@import 'bower_components/typicons/src/font/typicons'
-
-html, body
-  min-height: 100%
-  background: #F0F4F8
-
-*, *:after, *:before
-  -webkit-box-sizing: border-box
-  -moz-box-sizing: border-box
-  -ms-box-sizing: border-box
-  -o-box-sizing: border-box
-  box-sizing: border-box
-  padding: 0
-  margin: 0
-  transition: all 1s cubic-bezier(0.19, 1, 0.22, 1)
-  -moz-transition: all 1s cubic-bezier(0.19, 1, 0.22, 1)
-  -webkit-transition: all 1s cubic-bezier(0.19, 1, 0.22, 1)
-  -o-transition: all 1s cubic-bezier(0.19, 1, 0.22, 1)
-  -ms-transition: all 1s cubic-bezier(0.19, 1, 0.22, 1)
-
-*
-  box-sizing: border-box
-  font-family: 'Exo 2', sans-serif
-
-body, h1, h2, h3, h4, h6, p
-  font-family: 'Exo 2', sans-serif
-  font-weight: 400
-
-body
-  header
-    text-align: center
-    margin-top: 20px
-  a
-    // color: #3E99A6
-
-
-
-@import 'categories'
-@import 'channel_profile'
-@import 'explore'
-@import 'logo'
-@import 'login_modal'
-@import 'player'
-@import 'settings'
-@import 'sidebar'
-@import 'welcome'
-@import 'navbar'
-@import 'subscriptions'
-
-#container
-  position: relative
-  display: flex
-  justify-content: center
-
-#content
-  max-width: $max-content-width
-  position: relative
-  z-index: 1
-  flex: 1 1 auto
-  margin: 10px
+// @import 'bower_components/uikit/scss/uikit-mixins'
+// @import 'bower_components/uikit/scss/core/variables'
+// @import 'bower_components/uikit/scss/core/base'
+// @import 'bower_components/uikit/scss/core/close'
+// @import 'bower_components/uikit/scss/core/dropdown'
+// @import 'bower_components/uikit/scss/core/grid'
+// @import 'bower_components/uikit/scss/core/modal'
+// @import 'bower_components/uikit/scss/core/nav'
+// @import 'bower_components/uikit/scss/core/navbar'
+// @import 'bower_components/uikit/scss/core/panel'
+// @import 'bower_components/typicons/src/font/typicons'
+//
+// html, body
+//   min-height: 100%
+//   background: #F0F4F8
+//
+// *, *:after, *:before
+//   -webkit-box-sizing: border-box
+//   -moz-box-sizing: border-box
+//   -ms-box-sizing: border-box
+//   -o-box-sizing: border-box
+//   box-sizing: border-box
+//   padding: 0
+//   margin: 0
+//   transition: all 1s cubic-bezier(0.19, 1, 0.22, 1)
+//   -moz-transition: all 1s cubic-bezier(0.19, 1, 0.22, 1)
+//   -webkit-transition: all 1s cubic-bezier(0.19, 1, 0.22, 1)
+//   -o-transition: all 1s cubic-bezier(0.19, 1, 0.22, 1)
+//   -ms-transition: all 1s cubic-bezier(0.19, 1, 0.22, 1)
+//
+// *
+//   box-sizing: border-box
+//   font-family: 'Exo 2', sans-serif
+//
+// body, h1, h2, h3, h4, h6, p
+//   font-family: 'Exo 2', sans-serif
+//   font-weight: 400
+//
+// body
+//   header
+//     text-align: center
+//     margin-top: 20px
+//   a
+//     // color: #3E99A6
+//
+//
+//
+// @import 'categories'
+// @import 'channel_profile'
+// @import 'explore'
+// @import 'logo'
+@import 'login'
+// @import 'player'
+// @import 'settings'
+// @import 'sidebar'
+// @import 'welcome'
+// @import 'navbar'
+// @import 'subscriptions'
+//
+// #container
+//   position: relative
+//   display: flex
+//   justify-content: center
+//
+// #content
+//   max-width: $max-content-width
+//   position: relative
+//   z-index: 1
+//   flex: 1 1 auto
+//   margin: 10px
+.player-wrapper
+  display: none
