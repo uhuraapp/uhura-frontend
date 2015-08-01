@@ -8,27 +8,27 @@ moduleFor('adapter:application', 'ApplicationAdapter', {
 });
 
 test('it exists', function(assert) {
-  var adapter = this.subject();
+  let adapter = this.subject();
   assert.ok(adapter);
 });
 
-test('it has v2 namespace', function (assert) {
-  assert.equal(this.subject().namespace, "v2");
+test('it has v2 namespace', function(assert) {
+  assert.equal(this.subject().namespace, 'v2');
 });
 
-test('it has host', function (assert) {
-  assert.equal(this.subject().host, "http://api.uhura.io");
+test('it has host', function(assert) {
+  assert.equal(this.subject().host, 'http://api.uhura.io');
 });
 
-test('pathForType fix users path', function(assert){
-  var path = (v)=> { return this.subject().pathForType(v); };
-  assert.equal(path("test"),         "tests");
-  assert.equal(path("subscription"), "users/subscriptions");
-  assert.equal(path("suggestion"),   "users/suggestions");
+test('pathForType fix users path', function(assert) {
+  let path = v => this.subject().pathForType(v);
+  assert.equal(path('test'),         'tests');
+  assert.equal(path('subscription'), 'users/subscriptions');
+  assert.equal(path('suggestion'),   'users/suggestions');
 });
 
-test('pathForType fix parser', function(assert){
-  var path = (v)=> { return this.subject().pathForType(v); };
-  assert.equal(path("test"),   "tests");
-  assert.equal(path("parser"), "parser");
+test('pathForType fix parser', function(assert) {
+  let path = v => this.subject().pathForType(v);
+  assert.equal(path('test'),   'tests');
+  assert.equal(path('parser'), 'parser');
 });

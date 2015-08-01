@@ -2,10 +2,10 @@ import Ember from 'ember';
 import { initialize } from '../../../initializers/cache-data';
 import { module, test } from 'qunit';
 
-var container, application;
+let container, application;
 
 module('CacheDataInitializer', {
-  beforeEach: function() {
+  beforeEach () {
     Ember.run(function() {
       application = Ember.Application.create();
       container = application.__container__;

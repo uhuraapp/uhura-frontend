@@ -1,9 +1,9 @@
 import Ember from 'ember';
 import { moduleFor, test } from 'ember-qunit';
 
-var view;
+let view;
 moduleFor('view:player', 'Unit | View | player', {
-  beforeEach: function () {
+  beforeEach () {
     view = this.subject();
     view.append();
   }
@@ -14,8 +14,8 @@ test('it exists', function(assert) {
   assert.ok(view);
   assert.ok(view.$().hasClass('player-wrapper'));
 
-  Ember.run(function () {
-    view.set('controller', {player: {current: true}});
+  Ember.run(function() {
+    view.set('controller', { player: { current: true } });
   });
   assert.ok(view.$().hasClass('has-model'));
 });

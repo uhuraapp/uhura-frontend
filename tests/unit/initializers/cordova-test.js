@@ -2,10 +2,10 @@ import Ember from 'ember';
 import { initialize } from '../../../initializers/cordova';
 import { module, test } from 'qunit';
 
-var container, application;
+let container, application;
 
 module('CordovaInitializer', {
-  beforeEach: function() {
+  beforeEach () {
     Ember.run(function() {
       application = Ember.Application.create();
       container = application.__container__;

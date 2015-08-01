@@ -6,7 +6,7 @@ module('LazyImageViewMixinMixin');
 
 // Replace this with your real tests.
 test('it works', function(assert) {
-  var LazyImageViewMixinObject = Ember.Object.extend(LazyImageViewMixinMixin);
-  var subject = LazyImageViewMixinObject.create();
+  let LazyImageViewMixinObject = Ember.Object.extend(LazyImageViewMixinMixin);
+  let subject = LazyImageViewMixinObject.create();
   assert.ok(subject);
 });

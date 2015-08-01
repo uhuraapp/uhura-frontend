@@ -5,6 +5,6 @@ module('route');
 
 // Replace this with your real tests.
 test('it works', function(assert) {
-  var result = route();
+  let result = route();
   assert.ok(result);
 });

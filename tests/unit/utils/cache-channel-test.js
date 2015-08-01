@@ -5,6 +5,6 @@ module('cacheChannel');
 
 // Replace this with your real tests.
 test('it works', function(assert) {
-  var result = cacheChannel();
+  let result = cacheChannel();
   assert.ok(result);
 });

@@ -9,6 +9,6 @@ moduleFor('route:users/subscriptions', {
 });
 
 test('it exists', function(assert) {
-  var route = this.subject();
+  let route = this.subject();
   assert.ok(route);
 });
