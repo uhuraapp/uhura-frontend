@@ -1,6 +1,6 @@
 /* globals blanket, module */
 
-let options = {
+var options = {
   modulePrefix: 'uhuraapp',
   filter: '//.*uhuraapp/.*/',
   antifilter: '//.*(tests|template|app-version|in-app-livereload|export-application-global|infinite-scroll|simple-auth|controllers/array|controllers/object|cdv-nav-bar).*/',
@@ -13,7 +13,7 @@ let options = {
   },
   lcovOptions: {
     renamer (moduleName) {
-      let fileName = `${moduleName.replace(/^uhuraapp/, 'app')}.js`;
+      var fileName = `${moduleName.replace(/^uhuraapp/, 'app')}.js`;
       return fileName.replace('app/config/', 'config/');
     }
   }
