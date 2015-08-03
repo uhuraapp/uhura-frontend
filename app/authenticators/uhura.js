@@ -46,32 +46,45 @@ export default Base.extend({
       }
     });
   },
-  authenticate: function(provider) {
-    return new Ember.RSVP.Promise( (resolve, reject) => {
-      var loginWindow = window.open(this.__authURLForProvider(provider), '_blank', 'location=no,toolbar=no');
-      window.setTimeout(this.__checkLogin(loginWindow, resolve, reject), 500);
+  authenticate: function(data) {
+    if(data.email && data.password) {
+      return this.request('POST', '/v2/users/sign_in', data)
+    } else if (data.provider) {
+      return new Ember.RSVP.Promise( (resolve, reject) => {
+        var loginWindow = window.open(this.__authURLForProvider(data.provider), '_blank', 'location=no,toolbar=no');
+        window.setTimeout(this.__checkLogin(loginWindow, resolve, reject), 500);
 
-      loginWindow.addEventListener('loadstop', (event) => {
-        if(event.url.indexOf(this.__authURLForProvider(provider) + "/callback") === 0) {
-          loginWindow.close();
-          this.__checkCredentials(resolve, reject);
-        }
+        loginWindow.addEventListener('loadstop', (event) => {
+          if(event.url.indexOf(this.__authURLForProvider(data.provider) + "/callback") === 0) {
+            loginWindow.close();
+            this.__checkCredentials(resolve, reject);
+          }
+        });
       });
-    });
+    }
+
+    return Promise.reject('Error');
   },
   invalidate: function() {
-    return new Ember.RSVP.Promise(function(resolve) {
-      Ember.$.ajax({
-        url: ENV.API_URL + "/v2/user/logout",
-        type: "GET",
-        xhrFields: {
-          withCredentials: true
-        }
-      }).always(function(){
+    return new Ember.RSVP.Promise( (resolve) => {
+      this.request('GET', '/v2/user/logout').always(function(){
         document.cookie = "_session=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
         resolve();
         window.location.reload();
       });
+    });
+  },
+  request (type, path, data) {
+    data = JSON.stringify(data);
+    return Ember.$.ajax({
+      url: ENV.API_URL + path,
+      xhrFields: {
+        withCredentials: true
+      },
+      contentType: 'application/json; charset=utf-8',
+      dataType: 'json',
+      type,
+      data
     });
   }
 });

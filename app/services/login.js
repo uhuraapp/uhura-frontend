@@ -9,6 +9,7 @@ export default Ember.Service.extend({
   },
 
   start: function (callback, options) {
+    debugger
     var modal = UIkit.modal("#login-modal", options || {center: true});
     var session = this.container.lookup('simple-auth-session:main');
     session.on('sessionAuthenticationSucceeded', () => {

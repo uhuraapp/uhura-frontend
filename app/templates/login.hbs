@@ -1,1 +1,27 @@
-Login
+<div id="sign_in" class="mdl-shadow--2dp">
+  <form {{action "authenticate" on="submit"}} autocomplete="false">
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      {{input id="email" type="text" value=email classBinding=":mdl-textfield__input" required=true}}
+      <label class="mdl-textfield__label" for="email">Email</label>
+    </div>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      {{input id="password" type="password" autocomplete="false" value=password classBinding=":mdl-textfield__input" required=true}}
+      <label class="mdl-textfield__label" for="password">Senha</label>
+    </div>
+    <div class="actions">
+      <button class="mdl-button mdl-js-button mdl-button--primary" {{action "authenticate"}}>Entrar</button>
+    </div>
+  </form>
+
+  <div class="connect-services">
+    <a {{action 'authenticate' 'google'}}> <img src="assets/google.png" /> </a>
+    <a {{action 'authenticate' 'facebook'}}> <img src="assets/facebook.png" /> </a>
+  </div>
+  {{#if errorMessage}}
+    <div class="alert alert-danger">
+      <p>
+        {{errorMessage}}
+      </p>
+    </div>
+  {{/if}}
+</div>
