@@ -5,7 +5,7 @@ module.exports = function(environment) {
     modulePrefix: 'uhuraapp',
     environment: environment,
     baseURL: '/',
-    defaultLocationType: 'auto',
+    locationType: 'auto',
     EmberENV: {
       FEATURES: {
       }
