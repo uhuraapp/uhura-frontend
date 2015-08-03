@@ -1,28 +1,36 @@
 {{outlet 'modal'}}
 
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--overlay-drawer-button">
-  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-    <header class="mdl-layout__header">
-      <div class="mdl-layout__header-row">
-         <span class="mdl-layout-title">Subscriptions</span>
-         <div class="mdl-layout-spacer"></div>
-         <nav class="mdl-navigation">
-           {{!-- <a class="mdl-navigation__link" href="">Link</a>
-           <a class="mdl-navigation__link" href="">Link</a>
-           <a class="mdl-navigation__link" href="">Link</a>
-           <a class="mdl-navigation__link" href="">Link</a> --}}
-         </nav>
-       </div>
-     </header>
+  {{#if session.isAuthenticated}}
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+           <span class="mdl-layout-title">Subscriptions</span>
+           <div class="mdl-layout-spacer"></div>
+           <nav class="mdl-navigation">
+             {{!-- <a class="mdl-navigation__link" href="">Link</a>
+             <a class="mdl-navigation__link" href="">Link</a>
+             <a class="mdl-navigation__link" href="">Link</a>
+             <a class="mdl-navigation__link" href="">Link</a> --}}
+           </nav>
+         </div>
+       </header>
 
-    {{render 'partials/menu'}}
+      {{render 'partials/menu'}}
 
+      <main class="mdl-layout__content">
+        <div class="page-content">
+          {{outlet}}
+        </div>
+      </main>
+    </div>
+  {{else}}
     <main class="mdl-layout__content">
       <div class="page-content">
         {{outlet}}
       </div>
     </main>
-  </div>
+  {{/if}}
 </div>
 
 {{partial "meta/organization"}}
