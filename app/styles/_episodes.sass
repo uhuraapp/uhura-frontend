@@ -1,30 +1,19 @@
-// body.channel-episode
-//   .uk-modal-dialog
-//     overflow: hidden
-//     margin-bottom: 85px
-//     h2
-//       margin: 0
-//     button
-//       +buttons-channel-episode
-//       padding: 10px 0
-//     div.description
-//       clear: both
-//
-
 button.playpause
-  +like-a-button
   border-radius: 50%
   width: 40px
   height: 40px
   border: none
-  background: $accent-color
-  color: $primary-color-text
   cursor: pointer
+  // background: $accent-color
+  // color: $primary-color-text
+
+.episodes-list
+  width: 80%
+  margin: 0 auto
 
 ul.episodes
-  +container-card
-  margin: 0
   padding: 0
+  margin: 0
   list-style: none
   li.episode
     width: 100%
@@ -33,7 +22,7 @@ ul.episodes
     justify-content: space-between
     font-size: 16px
     &:hover
-      background: $primary-color-light
+      background: #F7F7F7
     &.is-played
       h3.title, .button-play-wrapper, time, .more-itens > button
         opacity: .5
@@ -48,7 +37,7 @@ ul.episodes
       font-size: 16px
     a
       display: block
-      color: $primary-text-color
+      // color: $primary-text-color
 
       &:hover
         text-decoration: none
@@ -69,11 +58,9 @@ ul.episodes
       border: none
       background: transparent
       height: 40px
-      color: $primary-text-color
-      +like-a-button
+      // color: $primary-text-color
 
   .itens
-    +elevation(3px)
     position: absolute
     background-color: #FFF
     top: 0
@@ -98,15 +85,15 @@ ul.episodes
         &:last-child button
           border-bottom: none
         button
-          border-bottom: 1px solid $divider-color
+          // border-bottom: 1px solid $divider-color
           padding: 0 15px
           width: 100%
           text-align: left
           font-size: 15px
           cursor: pointer
           &:hover
-            background: $divider-color
-            color: $primary-text-color
+            // background: $divider-color
+            // color: $primary-text-color
 
   .button-play-wrapper
     flex: 0 0 auto
@@ -116,7 +103,6 @@ ul.episodes
     text-align: center
     display: block
 
-//
 //   .actions
 //     padding: 0 5px
 //     &::after
@@ -139,38 +125,3 @@ ul.episodes
 //       width: auto
 //     button, a, .share-button
 //       +buttons-channel-episode
-//
-// .ab-light
-//   ul.episodes
-//     li.episode
-//       border-bottom: 1px dotted #000
-//     a
-//       color: #000
-//     button.play
-//       background-color: #0E1528
-//
-// .ab-dark
-//   ul.episodes
-//     li.episode
-//       border-bottom: 1px dotted #FFF
-//     a
-//       color: #FFF
-//     button.play
-//       background: #E0E7FA
-//
-//
-  p.not_found
-    text-align: center
-    font-size: 17px
-    border: 1px solid #e28327
-    border-radius: 3px
-  li.episode
-    position: relative
-
-    .progress
-      background: #DBDBDB
-      position: absolute
-      top: 0
-      right: 0
-
-    .actions

@@ -1,0 +1,68 @@
+$flex-start-width: 450px
+
+body.channel, body.channel-by-url
+  #profile
+    position: relative
+    margin: 20px 0
+    h2
+      @include respond-to($flex-start-width)
+        max-width: 80%
+        margin: 0 auto
+        padding: 0 24px
+        font-size: 18px
+        font-weight: 700
+        line-height: 24px
+        color: #212121
+        height: 35px
+
+    .channel-information
+      width: 100%
+      margin: 0 auto
+      position: relative
+      z-index: 1
+      margin-bottom: 40px
+      @include respond-to($flex-start-width)
+        display: flex
+        max-width: 80%
+        flex-direction: row
+        overflow: initial
+        justify-content: space-between
+
+    .description
+      margin-bottom: 15px
+
+    .about
+      display: none
+      @include respond-to($flex-start-width)
+        padding: 10px 15px
+        flex: 1 1 auto
+        display: block
+
+    img.channel-img
+      width: 100%
+      z-index: 2
+      @include respond-to($flex-start-width)
+        flex: 0 0 auto
+        position: relative
+        width: 264px
+        height: 264px
+
+    .subscribe-button
+      @include respond-to($flex-start-width)
+        max-width: 80%
+        position: relative
+        margin: 0 auto
+        height: 30px
+        overflow: initial
+        z-index: 3
+
+      button
+        @include respond-to($flex-start-width)
+          position: absolute
+          right: 20px
+          bottom: -28px
+        background: #43A047
+        &.subscribed
+          background: #E53935
+
+@import 'episodes'
