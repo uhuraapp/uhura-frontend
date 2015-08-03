@@ -1,11 +1,6 @@
-<div class="loading">
-  Loading
-  <img style="display:block; margin: 15% auto" src="/assets/loading.gif" />
-</div>
-
 <div id="profile">
-  <div class="channel-information">
-    {{subscribe-button channel=model}}
+  {{subscribe-button channel=model}}
+  <div class="channel-information mdl-card mdl-shadow--2dp">
 
     <img class="channel-img" data-adaptive-background='1' data-layzr="{{model.imageURL}}" data-fallback="assets/channel-placeholder.png" src="assets/channel-placeholder-loading.jpg" />
 
@@ -15,9 +10,9 @@
     </div>
   </div>
 
-  <h2 class="uk-width-small-5-10 uk-width-medium-7-10">{{t 'titles.episodes'}}</h2>
+  <h2>Episodes</h2>
 
-  <div class="uk-width-1-1 episodes-list">
+  <div class="episodes-list mdl-card mdl-shadow--2dp">
     {{episodes-list episodes=model.episodes store=store channel=model}}
   </div>
 

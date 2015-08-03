@@ -8,18 +8,18 @@ var Router = Ember.Router.extend({
 Router.map(function() {
 //  this.route('users', function() {
 //    this.route('settings');
-//    this.route('subscriptions');
 //  });
 
-//  this.route('channel',       { path: '/channels/:channel_id' }, function () {
-//    this.route('episode',            { path: '/:episode_id' });
-//  });
+  this.route('channel',       { path: '/channels/:channel_id' }, function () {
+    //    this.route('episode',            { path: '/:episode_id' });
+  });
 
 //  Public route
 //  this.route('channel_by_url', { path: '/c/:channel_id' });
 //  this.route('search_by_url',  { path: '/s' });
 //  this.route('category',       { path: '/category/:category_id' });
 
+  this.route('subscriptions');
   this.route('login');
 //  this.route('explore');
 });

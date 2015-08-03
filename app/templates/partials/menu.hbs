@@ -1,0 +1,13 @@
+<div class="mdl-layout__drawer">
+  <span class="mdl-layout-title">Uhura App</span>
+  <nav class="mdl-navigation">
+    {{#link-to 'subscriptions' class="mdl-navigation__link"}}
+      Subscriptions
+    {{/link-to}}
+    <div class="mdl-layout-spacer"></div>
+    <a {{ action 'invalidateSession' }} class="mdl-navigation__link">
+      <span class="typcn typcn-power-outline"></span>
+      Sign Out
+    </a>
+  </nav>
+</div>

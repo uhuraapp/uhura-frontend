@@ -1,9 +1,9 @@
 {{#if channel.subscribed}}
-<button class="button subscribed material-icons" {{action 'unsubscribe'}}>
-close
-</button>
+  <button {{action 'unsubscribe'}} type="button" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+    <i class="material-icons">close</i>
+  </button>
 {{else}}
-<button class="button material-icons" {{action 'subscribe'}}>
-done
-</button>
+  <button {{action 'subscribe'}} type="button" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+    <i class="material-icons">done</i>
+  </button>
 {{/if}}
