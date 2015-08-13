@@ -1,12 +1,12 @@
-      <div id="subscriptions" class="mdl-grid">
-        {{#each model as |subscription|}}
-          {{#link-to 'channel' subscription.id class="channel-card mdl-card mdl-shadow--2dp mdl-cell mdl-cell--2-col" }}
-              <div class="mdl-card__media">
-                <img src={{subscription.image_url}} />
-              </div>
-              <div class="title mdl-card__supporting-text">
-                {{subscription.title}}
-              </div>
-            {{/link-to}}
-        {{/each}}
-      </div>
+<div id="subscriptions" class="mdl-grid">
+  {{#each model as |subscription|}}
+    {{#link-to 'channel' subscription.id class="channel-card mdl-card mdl-shadow--2dp mdl-cell mdl-cell--2-col" }}
+        <div class="mdl-card__media">
+          <img data-channel-image-id={{subscription.id}} src={{subscription.image_url}} />
+        </div>
+        <div class="title mdl-card__supporting-text">
+          {{subscription.title}}
+        </div>
+      {{/link-to}}
+  {{/each}}
+</div>

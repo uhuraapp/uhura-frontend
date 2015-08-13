@@ -2,7 +2,7 @@
   {{subscribe-button channel=model}}
   <div class="channel-information mdl-card mdl-shadow--2dp">
 
-    <img class="channel-img" data-adaptive-background='1' data-layzr="{{model.imageURL}}" data-fallback="assets/channel-placeholder.png" src="assets/channel-placeholder-loading.jpg" />
+    <img class="channel-img" data-channel-image-id={{model.id}} src={{model.imageURL}} />
 
     <div class="about">
       <h1>{{model.title}}</h1>
