@@ -47,9 +47,7 @@ export default Base.extend({
     });
   },
   authenticate: function(data) {
-    if(data.email && data.password) {
-      return this.request('POST', '/v2/users/sign_in', data)
-    } else if (data.provider) {
+    if (data.provider) {
       return new Ember.RSVP.Promise( (resolve, reject) => {
         var loginWindow = window.open(this.__authURLForProvider(data.provider), '_blank', 'location=no,toolbar=no');
         window.setTimeout(this.__checkLogin(loginWindow, resolve, reject), 500);
@@ -61,6 +59,8 @@ export default Base.extend({
           }
         });
       });
+    } else if (data.email && data.password) {
+      return this.request('POST', '/v2/users/sign_in', data)
     }
 
     return Promise.reject('Error');
