@@ -1,12 +1,17 @@
 <div id="profile">
-  {{subscribe-button channel=model}}
+  {{!-- {{subscribe-button channel=model}} --}}
   <div class="channel-information mdl-card mdl-shadow--2dp">
+    <div class="channel-card-content">
+      <img class="channel-img" data-channel-image-id={{model.id}} src={{model.imageURL}} />
 
-    <img class="channel-img" data-channel-image-id={{model.id}} src={{model.imageURL}} />
-
-    <div class="about">
-      <h1>{{model.title}}</h1>
-      <div class="description">{{model.description}}</div>
+      <div class="about">
+        <h1>{{model.title}}</h1>
+        <div class="description">{{model.description}}</div>
+      </div>
+    </div>
+    <div class="mdl-card__actions mdl-card--border">
+      <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+        Subscribe to channel</a>
     </div>
   </div>
 

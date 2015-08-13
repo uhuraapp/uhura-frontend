@@ -4,6 +4,10 @@ body.channel, body.channel-by-url
   #profile
     position: relative
     margin: 20px 0
+    h1
+      margin: 0
+      font-size: 30px
+
     h2
       @include respond-to($flex-start-width)
         max-width: 80%
@@ -22,14 +26,17 @@ body.channel, body.channel-by-url
       z-index: 1
       margin-bottom: 40px
       @include respond-to($flex-start-width)
-        display: flex
+        .channel-card-content
+          display: flex
+          flex-direction: row
+          justify-content: space-between
+          overflow: initial
         max-width: 80%
-        flex-direction: row
-        overflow: initial
-        justify-content: space-between
 
     .description
       margin-bottom: 15px
+      font-size: 17px
+      line-height: 1.5
 
     .about
       display: none
