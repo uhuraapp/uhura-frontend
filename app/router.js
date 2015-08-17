@@ -12,6 +12,7 @@ Router.map(function() {
 
   this.route('channel',       { path: '/channels/:channel_id' }, function () {
     //    this.route('episode',            { path: '/:episode_id' });
+    this.modal('share-modal', { withParams: ['share'] });
   });
 
 //  Public route

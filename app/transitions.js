@@ -18,4 +18,11 @@ export default function(){
       use: ['toRight', { duration } ]
     })
   );
+
+  this.transition(
+    this.hasClass('share-dialog'),
+    this.toValue(true),
+    this.use('crossFade', {duration}),
+    this.reverse('toLeft', {duration})
+  );
 }

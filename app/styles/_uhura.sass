@@ -25,21 +25,25 @@ html, body
    min-height: 100%
    background: #F0F4F8
    color: #212121
-//
+
+.liquid-modal
+  .liquid-child
+    position: relative
+    z-index: 2
+
+  .lf-dialog
+    border: none
+    padding: 0
+    @extend .mdl-shadow--2dp
+    @extend .mdl-card
+
 // *, *:after, *:before
-//   -webkit-box-sizing: border-box
-//   -moz-box-sizing: border-box
-//   -ms-box-sizing: border-box
-//   -o-box-sizing: border-box
-//   box-sizing: border-box
-//   padding: 0
-//   margin: 0
 //   transition: all 1s cubic-bezier(0.19, 1, 0.22, 1)
 //   -moz-transition: all 1s cubic-bezier(0.19, 1, 0.22, 1)
 //   -webkit-transition: all 1s cubic-bezier(0.19, 1, 0.22, 1)
 //   -o-transition: all 1s cubic-bezier(0.19, 1, 0.22, 1)
 //   -ms-transition: all 1s cubic-bezier(0.19, 1, 0.22, 1)
-//
+
 // *
 //   box-sizing: border-box
 //   font-family: 'Exo 2', sans-serif
