@@ -54,22 +54,24 @@ body.channel, body.channel-by-url
         width: 264px
         height: 264px
 
-    .subscribe-button
-      @include respond-to($flex-start-width)
-        max-width: 80%
-        position: relative
-        margin: 0 auto
-        height: 30px
-        overflow: initial
-        z-index: 3
+    .subscribe-button-component
+      float: left
 
-      button
-        @include respond-to($flex-start-width)
-          position: absolute
-          right: 20px
-          bottom: -28px
-        background: #43A047
-        &.subscribed
-          background: #E53935
+    .subscribe-status
+      width: 80%
+      display: block
+      margin: 0 auto
+      text-align: right
+      text-transform: uppercase
+      font-size: 12px
+      font-weight: 900
+      color: #7A8793
+      text-shadow: 1px 1px 1px #FFF
+
+    .subscribe-button
+      // background: #43A047
+
+    .unsubscribe-button
+      color: #E53935
 
 @import 'episodes'

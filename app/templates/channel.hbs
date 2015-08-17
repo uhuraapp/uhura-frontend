@@ -1,5 +1,5 @@
 <div id="profile">
-  {{!-- {{subscribe-button channel=model}} --}}
+  <span class="subscribe-status">{{if model.subscribed "subscribed" "unsubscribed"}}</span>
   <div class="channel-information mdl-card mdl-shadow--2dp">
     <div class="channel-card-content">
       <img class="channel-img" data-channel-image-id={{model.id}} src={{model.imageURL}} />
@@ -10,8 +10,10 @@
       </div>
     </div>
     <div class="mdl-card__actions mdl-card--border">
-      <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-        Subscribe to channel</a>
+      {{subscribe-button channel=model}}
+      {{#link-to (query-params share="on") tagName="a" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"}}
+        Share
+      {{/link-to}}
     </div>
   </div>
 

@@ -2,7 +2,7 @@ import Ember from 'ember';
 import Login from '../services/login';
 
 export default Ember.Component.extend({
-  classNames: ['subscribe-button'],
+  classNames: ['subscribe-button-component'],
   __store: function () {
     return this.container.lookup("store:main");
   },
