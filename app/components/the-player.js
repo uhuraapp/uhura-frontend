@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-export default Ember.View.extend({
+export default Ember.Component.extend({
   player: Ember.inject.service('player'),
   classNames: ["player-wrapper"],
   classNameBindings: ['hasModel'],
