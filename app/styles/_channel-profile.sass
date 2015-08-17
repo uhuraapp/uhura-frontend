@@ -11,29 +11,31 @@ body.channel, body.channel-by-url
       font-family: "Exo 2"
 
     h2
+      max-width: 95%
       @include respond-to($flex-start-width)
         max-width: 80%
-        margin: 0 auto
         padding: 0 24px
-        font-size: 18px
-        font-weight: 700
-        line-height: 24px
-        color: #212121
-        height: 35px
+      margin: 0 auto
+      font-size: 18px
+      font-weight: 700
+      line-height: 24px
+      color: #212121
+      height: 35px
 
     .channel-information
       width: 100%
+      max-width: 95%
       margin: 0 auto
       position: relative
       z-index: 1
       margin-bottom: 40px
       @include respond-to($flex-start-width)
-        .channel-card-content
-          display: flex
-          flex-direction: row
-          justify-content: space-between
-          overflow: initial
         max-width: 80%
+      .channel-card-content
+        display: flex
+        flex-direction: row
+        justify-content: space-between
+        overflow: initial
 
     .description
       margin-bottom: 15px
@@ -49,6 +51,7 @@ body.channel, body.channel-by-url
 
     img.channel-img
       width: 100%
+      height: auto
       z-index: 2
       @include respond-to($flex-start-width)
         flex: 0 0 auto
@@ -60,7 +63,10 @@ body.channel, body.channel-by-url
       float: left
 
     .subscribe-status
-      width: 80%
+      width: 100%
+      max-width: 95%
+      @include respond-to($flex-start-width)
+        max-width: 80%
       display: block
       margin: 0 auto
       text-align: right

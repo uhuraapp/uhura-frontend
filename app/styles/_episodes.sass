@@ -8,8 +8,11 @@ button.playpause
   // color: $primary-color-text
 
 .episodes-list
-  width: 80%
+  max-width: 95%
+  width: 100%
   margin: 0 auto
+  @include respond-to($flex-start-width)
+    max-width: 80%
 
 ul.episodes
   padding: 0
@@ -17,10 +20,13 @@ ul.episodes
   list-style: none
   li.episode
     width: 100%
-    padding: 20px
     display: flex
     justify-content: space-between
     font-size: 16px
+    padding: 10px 5px
+    border-bottom: 1px solid #CCC
+    @include respond-to($flex-start-width)
+      padding: 20px
     &:hover
       background: #F7F7F7
     &.is-played
