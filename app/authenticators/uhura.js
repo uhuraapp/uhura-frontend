@@ -4,13 +4,13 @@ import Base from 'simple-auth/authenticators/base';
 import ENV from '../config/environment';
 
 export default Base.extend({
-  __authURLForProvider(provider){
-    return ENV.API_URL + "/v2/auth/" + provider;
+  __authURLForProvider(provider) {
+    return `${ENV.API_URL}/v2/auth/${provider}`
   },
   __getUserData() {
     return Ember.$.ajax({
-      url: ENV.API_URL + "/v2/user",
-      type: "GET",
+      url: `${ENV.API_URL}/v2/user`,
+      type: 'GET',
       xhrFields: {
         withCredentials: true
       }
@@ -25,15 +25,15 @@ export default Base.extend({
           window.setTimeout(this.__checkLogin(loginWindow, resolve, reject), 500);
         }
       } catch(e) {
-        Ember.run(function() { reject(e); });
+        Ember.run(() => reject(e));
       }
     };
   },
   __checkCredentials(resolve, reject) {
-    this.__getUserData().then(function(data){
-      Ember.run(function () { resolve(data); });
+    this.__getUserData().then(function(data) {
+      Ember.run(() => resolve(data));
     }, function(xhr) {
-      Ember.run(function (){ reject(xhr.responseJSON || xhr.responseText); });
+      Ember.run(() => reject(xhr.responseJSON || xhr.responseText));
     });
   },
 
