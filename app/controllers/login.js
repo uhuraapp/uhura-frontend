@@ -13,7 +13,7 @@ export default Ember.Controller.extend({
         .authenticate('authenticator:uhura', data)
         .then(() => {
           this.set('loading', false);
-        }).catch((errorMessage) => {
+        }).catch((/* errorMessage */) => {
           this.set('errorMessage', "Could not authenticate");
         });
     }

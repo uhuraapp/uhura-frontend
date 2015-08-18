@@ -7,8 +7,7 @@ export default function(){
     this.use('explode', {
       matchBy: 'data-channel-image-id',
       use: ['flyTo', { duration } ]
-    }
-    , {
+    }, {
       use: ['toLeft', { duration } ]
     }),
     this.reverse('explode', {
