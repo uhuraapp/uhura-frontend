@@ -41,7 +41,6 @@
     "ember-cli-simple-auth": "0.8.0",
     "ember-cli-mirage": "0.1.6",
     "ember-cli-deprecation-workflow": "0.1.4",
-    "ember-cli-blanket": "git://github.com/sglanzer/ember-cli-blanket#master",
     "ember-suave": "1.0.0",
     "liquid-fire": "0.21.2"
   },
