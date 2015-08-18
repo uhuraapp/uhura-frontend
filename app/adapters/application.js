@@ -9,11 +9,11 @@ inflector.uncountable('parser');
 export default DS.RESTAdapter.extend({
   namespace: 'v2',
   host: ENV.API_URL,
-  pathForType: function(type){
-    let prefix = this.__isUserType(type) ? "users/" : "";
+  pathForType(type){
+    let prefix = this.__isUserType(type) ? 'users/' : '';
     return prefix + this._super(type);
   },
-  __isUserType: function(type) {
+  __isUserType(type) {
     return ['subscription', 'suggestion'].indexOf(type) > -1;
   }
 });
