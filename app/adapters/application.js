@@ -2,7 +2,7 @@ import DS from 'ember-data';
 import Ember from 'ember';
 import ENV from '../config/environment';
 
-var { Inflector: { inflector } } = Ember;
+let { Inflector: { inflector } } = Ember;
 
 inflector.uncountable('parser');
 
