@@ -7,14 +7,14 @@ let mediaMock;
 moduleFor('service:player', 'Unit | Service | player', {
   needs: ['adapter:application'],
 
-  beforeEach () {
+  beforeEach() {
     application = startApp();
     window.oldM = window.MediaElementPlayer;
     window.oldAlert = window.alert;
     window.alert = function() {};
     mediaMock = function(_name) {
       return {
-        addEventListener (name, fn) {
+        addEventListener(name, fn) {
           if (name === _name) {
             fn();
           }
@@ -23,7 +23,7 @@ moduleFor('service:player', 'Unit | Service | player', {
     };
   },
 
-  afterEach () {
+  afterEach() {
     Ember.run(application, 'destroy');
     window.MediaElementPlayer = window.oldM;
     window.alert = window.oldAlert;
@@ -143,7 +143,7 @@ test('trackTime', function(assert) {
         assert.equal(arguments[4].data.at, time);
       }
       return {
-        then (resolve) {
+        then(resolve) {
           resolve();
           fn();
         }
@@ -198,7 +198,7 @@ test('starts from stopped_at', function(assert) {
   let stoppedAt = 33;
 
   service.set('mediaPlayer', {
-    setCurrentTime (time) {
+    setCurrentTime(time) {
       assert.equal(time, stoppedAt);
     }
   });
