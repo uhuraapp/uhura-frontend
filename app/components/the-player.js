@@ -6,6 +6,8 @@ export default Ember.Component.extend({
   classNameBindings: ['hasModel'],
   hasModel: Ember.computed.bool('controller.player.current'),
 
+  episode: Ember.computed.alias('player.current'),
+
   fixHeigthSize: function () {
     // TODO: fix display flex, this code keep player on screen view
     Ember.run.scheduleOnce('afterRender', () => {

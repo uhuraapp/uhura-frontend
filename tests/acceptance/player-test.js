@@ -8,19 +8,19 @@ let application,
     mediaMock;
 
 module('Acceptance | episode', {
-  beforeEach () {
+  beforeEach() {
     application = startApp();
 
     window.oldM = window.MediaElementPlayer;
     window.MediaElementPlayer = (function() {
-      function MediaElementPlayer(argument) {}
+      function MediaElementPlayer() {}
       MediaElementPlayer.prototype.play = function() { };
       MediaElementPlayer.prototype.pause = function() { };
       return MediaElementPlayer;
     })();
     mediaMock = function(_name) {
       return {
-        addEventListener (name, fn) {
+        addEventListener(name, fn) {
           if (name === _name) {
             fn();
           }
@@ -31,7 +31,7 @@ module('Acceptance | episode', {
     episodes = server.createList('episode', 10, { channel_id: channel.id });
   },
 
-  afterEach () {
+  afterEach() {
     window.MediaElementPlayer = window.oldM;
     Ember.run(application, 'destroy');
   }
@@ -79,7 +79,7 @@ test('player | when ended a episode should starts the next', function(assert) {
   });
 
   andThen(function() {
-    let i = episodes.length--;
+    let i = episodes.length - 1;
     assert.equal(find('#player .title').text(), episodes[i].title);
     player.successMedia(mediaMock('ended'));
   });

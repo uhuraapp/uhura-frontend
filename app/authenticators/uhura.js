@@ -4,10 +4,10 @@ import Base from 'simple-auth/authenticators/base';
 import ENV from '../config/environment';
 
 export default Base.extend({
-  __authURLForProvider: function(provider){
+  __authURLForProvider(provider){
     return ENV.API_URL + "/v2/auth/" + provider;
   },
-  __getUserData: function() {
+  __getUserData() {
     return Ember.$.ajax({
       url: ENV.API_URL + "/v2/user",
       type: "GET",
@@ -16,7 +16,7 @@ export default Base.extend({
       }
     });
   },
-  __checkLogin: function(loginWindow, resolve, reject) {
+  __checkLogin(loginWindow, resolve, reject) {
     return () => {
       try {
         if (loginWindow.closed) {
@@ -29,7 +29,7 @@ export default Base.extend({
       }
     };
   },
-  __checkCredentials: function(resolve, reject) {
+  __checkCredentials(resolve, reject) {
     this.__getUserData().then(function(data){
       Ember.run(function () { resolve(data); });
     }, function(xhr) {
@@ -37,7 +37,7 @@ export default Base.extend({
     });
   },
 
-  restore: function(properties) {
+  restore(properties) {
     var propertiesObject = Ember.Object.create(properties);
     return new Ember.RSVP.Promise(function(resolve, reject) {
       if (!Ember.isEmpty(propertiesObject.get('token'))) {
@@ -47,7 +47,7 @@ export default Base.extend({
       }
     });
   },
-  authenticate: function(data) {
+  authenticate(data) {
     if (data.provider) {
       return new Ember.RSVP.Promise( (resolve, reject) => {
         var loginWindow = window.open(this.__authURLForProvider(data.provider), '_blank', 'location=no,toolbar=no');
@@ -66,7 +66,7 @@ export default Base.extend({
 
     return Promise.reject('Error');
   },
-  invalidate: function() {
+  invalidate() {
     return new Ember.RSVP.Promise( (resolve) => {
       this.request('GET', '/v2/user/logout').always(function(){
         document.cookie = "_session=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
@@ -75,7 +75,7 @@ export default Base.extend({
       });
     });
   },
-  request (type, path, data) {
+  request(type, path, data) {
     data = JSON.stringify(data);
     return Ember.$.ajax({
       url: ENV.API_URL + path,
