@@ -9,7 +9,7 @@ inflector.uncountable('parser');
 export default DS.RESTAdapter.extend({
   namespace: 'v2',
   host: ENV.API_URL,
-  pathForType(type){
+  pathForType(type) {
     let prefix = this.__isUserType(type) ? 'users/' : '';
     return prefix + this._super(type);
   },

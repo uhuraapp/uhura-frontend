@@ -3,10 +3,10 @@ import Login from '../services/login';
 
 export default Ember.Component.extend({
   classNames: ['subscribe-button-component'],
-  __store: function () {
-    return this.container.lookup("store:main");
+  __store () {
+    return this.container.lookup('store:main');
   },
-  makeSubscription: function () {
+  makeSubscription () {
     var model = this.get('channel');
     this.__store().createRecord('subscription', {
       channel_id: model.id,
@@ -16,7 +16,7 @@ export default Ember.Component.extend({
     });
   },
   actions: {
-    subscribe: function() {
+    subscribe() {
       if(this.get('session.isAuthenticated')) {
         this.makeSubscription();
       } else {
@@ -24,7 +24,7 @@ export default Ember.Component.extend({
         login.start(() => { this.makeSubscription(); });
       }
     },
-    unsubscribe: function() {
+    unsubscribe() {
       var model = this.get('channel');
       this.__store().find('subscription', model.id).then(function(subscription){
         subscription.destroyRecord();

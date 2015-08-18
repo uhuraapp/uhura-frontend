@@ -5,9 +5,6 @@ import {
   test
 } from 'ember-qunit';
 
-import i18n from 'i18n';
-Ember.Handlebars.registerBoundHelper('t', i18n.t);
-
 moduleForComponent('episodes-list', {
   needs: ['component:infinite-scroll']
 });

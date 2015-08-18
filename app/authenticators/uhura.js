@@ -1,11 +1,10 @@
-/* globals Promise */
 import Ember from 'ember';
 import Base from 'simple-auth/authenticators/base';
 import ENV from '../config/environment';
 
 export default Base.extend({
   __authURLForProvider(provider) {
-    return `${ENV.API_URL}/v2/auth/${provider}`
+    return `${ENV.API_URL}/v2/auth/${provider}`;
   },
   __getUserData() {
     return Ember.$.ajax({
@@ -38,8 +37,8 @@ export default Base.extend({
   },
 
   restore(properties) {
-    var propertiesObject = Ember.Object.create(properties);
-    return new Ember.RSVP.Promise(function(resolve, reject) {
+    let propertiesObject = Ember.Object.create(properties);
+    return new Ember.RSVP.Promise((resolve, reject) => {
       if (!Ember.isEmpty(propertiesObject.get('token'))) {
         resolve(properties);
       } else {
@@ -47,14 +46,15 @@ export default Base.extend({
       }
     });
   },
+
   authenticate(data) {
     if (data.provider) {
-      return new Ember.RSVP.Promise( (resolve, reject) => {
-        var loginWindow = window.open(this.__authURLForProvider(data.provider), '_blank', 'location=no,toolbar=no');
+      return new Ember.RSVP.Promise((resolve, reject) => {
+        let loginWindow = window.open(this.__authURLForProvider(data.provider), '_blank', 'location=no,toolbar=no');
         window.setTimeout(this.__checkLogin(loginWindow, resolve, reject), 500);
 
         loginWindow.addEventListener('loadstop', (event) => {
-          if(event.url.indexOf(this.__authURLForProvider(data.provider) + "/callback") === 0) {
+          if (event.url.indexOf(`${this.__authURLForProvider(data.provider)}/callback`) === 0) {
             loginWindow.close();
             this.__checkCredentials(resolve, reject);
           }
@@ -64,17 +64,19 @@ export default Base.extend({
       return this.request('POST', '/v2/users/sign_in', data);
     }
 
-    return Promise.reject('Error');
+    return Ember.RSVP.Promise.reject('Error');
   },
+
   invalidate() {
-    return new Ember.RSVP.Promise( (resolve) => {
-      this.request('GET', '/v2/user/logout').always(function(){
-        document.cookie = "_session=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    return new Ember.RSVP.Promise((resolve) => {
+      this.request('GET', '/v2/user/logout').always(() => {
+        document.cookie = '_session=; expires=Thu, 01 Jan 1970 00:00:00 GMT';
         resolve();
         window.location.reload();
       });
     });
   },
+
   request(type, path, data) {
     data = JSON.stringify(data);
     return Ember.$.ajax({

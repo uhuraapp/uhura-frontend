@@ -37,7 +37,7 @@ test('it exists', function(assert) {
 
 test('play/pause a episode', function(assert) {
   window.MediaElementPlayer = (function() {
-    function MediaElementPlayer(argument) {
+    function MediaElementPlayer() {
     }
 
     MediaElementPlayer.prototype.play = function() {};
