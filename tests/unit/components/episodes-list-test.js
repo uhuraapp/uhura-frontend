@@ -1,5 +1,3 @@
-/* global Ember */
-
 import {
   moduleForComponent,
   test

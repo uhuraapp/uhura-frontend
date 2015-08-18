@@ -3,7 +3,7 @@ import Ember from 'ember';
 import config from '../config/environment';
 
 export default Ember.Controller.extend({
-  downloaded (episode) {
+  downloaded(episode) {
     return () => {
       episode.set('progress', 100);
       episode.set('downloading', false);
@@ -12,20 +12,20 @@ export default Ember.Controller.extend({
       episode.set('source', this.storePath() + this.__episodeFileName(episode));
     };
   },
-  storePath () {
-    if(window.cordova){
+  storePath() {
+    if(window.cordova) {
       return cordova.file.externalDataDirectory || cordova.file.dataDirectory;
     } else {
-      return "/";
+      return '/';
     }
   },
-  download (episode){
+  download(episode){
     return () => {
       episode.set('progress', 0);
       episode.set('downloading', true);
       this.__downloadFile(episode).then(  this.downloaded(episode),
                                           function(err) {
-                                            console.log("Error");
+                                            console.log('Error');
                                             console.dir(err);
                                             console.log(err.stack);
                                             episode.set('progress', 0);
@@ -33,25 +33,25 @@ export default Ember.Controller.extend({
                                        );
     };
   },
-  start (episode) {
+  start(episode) {
     var url = this.__episodeURL(episode);
     window.open(url , '_blank');
     return;
-    // 
+    //
     // if(episode.get('downloading')){ return; }
     // this.__checkFile(episode).then(this.downloaded(episode), this.download(episode));
   },
-  check (episode) {
+  check(episode) {
     this.__checkFile(episode).then(this.downloaded(episode), function(){
       episode.set('progress', 0);
       episode.set('downloading', false);
     });
   },
-  remove (/* episode */) {
+  remove(/* episode */) {
     // TODO: remove episodes
   },
 
-  __checkFile  (episode) {
+  __checkFile(episode) {
     // TODO: remove it, always episode should returns Content-Length
     if(this.__isOnlineOnWifi()){
       return this.__checkFileSizeIsOK(episode)();
@@ -60,7 +60,7 @@ export default Ember.Controller.extend({
    }
   },
 
-  __progressDownloadFn (episode) {
+  __progressDownloadFn(episode) {
     return (event) => {
       if(event.lengthComputable) {
         var progress = (100 * event.loaded) / event.total;
@@ -69,18 +69,18 @@ export default Ember.Controller.extend({
     };
   },
 
-  __episodeURL (episode) {
+  __episodeURL(episode) {
     return config.API_URL + '/v2/episodes/' + episode.id + '/download';
   },
 
-  __downloadFile (episode) {
+  __downloadFile(episode) {
     var assetURL = config.API_URL + '/v2/episodes/' + episode.id + '/download';
-    return this.__request("GET", assetURL, this.__progressDownloadFn(episode))
+    return this.__request('GET', assetURL, this.__progressDownloadFn(episode))
         .then(this.__saveFile(episode))
         .then(this.__checkFileSizeIsOK(episode));
   },
 
-  __saveFile (episode) {
+  __saveFile(episode) {
     return (xhr) => {
       return new Ember.RSVP.Promise( (resolve, reject) => {
         this.filesystem.write(this.__episodeFileName(episode), xhr.response).then(resolve, reject);
@@ -88,27 +88,27 @@ export default Ember.Controller.extend({
     };
   },
 
-  __episodeFileName (episode) {
-    return episode.id + "." + this.__formatType(episode);
+  __episodeFileName(episode) {
+    return episode.id + '.' + this.__formatType(episode);
   },
 
-  __formatType (episode) {
+  __formatType(episode) {
     var _splitted = episode.get('source').split('.');
     return _splitted[_splitted.length-1];
   },
 
-  __checkFileOnFileSystem (episode) {
+  __checkFileOnFileSystem(episode) {
     return () => {
       return this.filesystem.read(this.__episodeFileName(episode));
     };
   },
 
-  __checkFileSizeIsOK (episode) {
+  __checkFileSizeIsOK(episode) {
     return () => {
       var remoteSize,
           remoteURL = config.API_URL + '/v2/episodes/' + episode.id + '/download';
-      return new Ember.RSVP.Promise( (resolve, reject) => {
-        return this.__request("HEAD", remoteURL).then((xhr)=> {
+      return new Ember.RSVP.Promise((resolve, reject) => {
+        return this.__request('HEAD', remoteURL).then((xhr)=> {
           remoteSize = xhr.getResponseHeader('Content-Length');
           return this.filesystem.read(this.__episodeFileName(episode));
         }).then( (file) => {
@@ -122,12 +122,12 @@ export default Ember.Controller.extend({
     };
   },
 
-  __request (method, url, progressFn) {
+  __request(method, url, progressFn) {
     return new Ember.RSVP.Promise((resolve, reject) => {
       var xhr = new XMLHttpRequest();
       xhr.open(method, url, true);
-      xhr.responseType = "blob";
-      xhr.addEventListener("progress", progressFn, false);
+      xhr.responseType = 'blob';
+      xhr.addEventListener('progress', progressFn, false);
       xhr.onreadystatechange = () => {
         if(xhr.readyState === XMLHttpRequest.DONE) {
           if(xhr.status === 200) { resolve(xhr); }
@@ -139,11 +139,11 @@ export default Ember.Controller.extend({
     });
   },
 
-  __authorizer () {
-    return this.container.lookup("authorizer:uhura");
+  __authorizer() {
+    return this.container.lookup('authorizer:uhura');
   },
 
-  __isOnlineOnWifi () {
+  __isOnlineOnWifi() {
     return false; // !window.cordova; // TODO: implement wifi logic
   }
 });
