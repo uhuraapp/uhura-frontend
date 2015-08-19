@@ -22,5 +22,5 @@ test('it renders', function(assert) {
     {{/the-player}}
   `);
 
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.equal(this.$().text().trim(), 'play_arrow');
 });

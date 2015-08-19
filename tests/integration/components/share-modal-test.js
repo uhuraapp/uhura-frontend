@@ -13,14 +13,15 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{share-modal}}`);
 
-  assert.equal(this.$().text().trim(), '');
+  let trim = (el) => el.text().replace(/\n+| /g, '');
 
-  // Template block usage:
+  assert.equal(trim(this.$()), 'ShareClose');
+
   this.render(hbs`
     {{#share-modal}}
       template block text
     {{/share-modal}}
   `);
 
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.equal(trim(this.$()), 'ShareClose');
 });

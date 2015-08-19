@@ -1,6 +1,6 @@
 /* globals blanket, module */
 
-var options = {
+const options = {
   modulePrefix: 'uhuraapp',
   filter: '//.*uhuraapp/.*/',
   antifilter: '//.*(tests|template|app-version|in-app-livereload|export-application-global|infinite-scroll|simple-auth|controllers/array|controllers/object|cdv-nav-bar).*/',
