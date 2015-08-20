@@ -14,7 +14,7 @@ export default Ember.Component.extend({
 
       if (this.get('infiniteScroll')) {
         let episodes = this.get('episodes');
-        let lastEpisode = (episodes.currentState ? episodes.currentState : episodes)[ episodes.length - 1 ];
+        let lastEpisode = episodes.get('lastObject');
         let date = lastEpisode ? lastEpisode.get('published_at') : 1999;
         let since = moment.utc(date).format();
 
