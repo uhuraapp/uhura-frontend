@@ -8,6 +8,14 @@ export default Ember.Component.extend({
 
   episode: Ember.computed.alias('player.current'),
 
+  actions: {
+    playpause() {
+      let player = this.get('player');
+      let episode = this.get('episode');
+      player.playpause(episode);
+    }
+  },
+
   fixHeigthSize() {
     // TODO: fix display flex, this code keep player on screen view
     Ember.run.scheduleOnce('afterRender', () => {
