@@ -8,5 +8,5 @@ export default DS.Model.extend({
   uri:        DS.attr(),
   to_view:    DS.attr(),
   channel_id: DS.attr(),
-  channel_url:DS.attr()
+  channel_url: DS.attr()
 });

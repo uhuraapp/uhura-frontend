@@ -1,11 +1,11 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  actions : {
-    authenticate: function (provider) {
+  actions: {
+    authenticate(provider) {
       let email    = this.get('email');
       let password = this.get('password');
-      var data = {email, password, provider};
+      let data = { email, password, provider };
 
       this.set('errorMessage', false);
 
@@ -14,7 +14,7 @@ export default Ember.Controller.extend({
         .then(() => {
           this.set('loading', false);
         }).catch((/* errorMessage */) => {
-          this.set('errorMessage', "Could not authenticate");
+          this.set('errorMessage', 'Could not authenticate');
         });
     }
   }

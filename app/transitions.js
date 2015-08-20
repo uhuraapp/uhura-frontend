@@ -1,6 +1,6 @@
-var duration = 300;
+const duration = 300;
 
-export default function(){
+export default function() {
   this.transition(
     this.fromRoute('subscriptions'),
     this.toRoute('channel'),
@@ -21,7 +21,7 @@ export default function(){
   this.transition(
     this.hasClass('share-dialog'),
     this.toValue(true),
-    this.use('crossFade', {duration}),
-    this.reverse('toLeft', {duration})
+    this.use('crossFade', { duration }),
+    this.reverse('toLeft', { duration })
   );
 }

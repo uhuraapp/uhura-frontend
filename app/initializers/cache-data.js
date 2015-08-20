@@ -1,5 +1,5 @@
 // import Ember from 'ember';
-export function initialize( container, application ) {
+export function initialize(container, application) {
   application.deferReadiness();
 
   // var store = container.lookup('store:main');
@@ -10,12 +10,12 @@ export function initialize( container, application ) {
   // }).then(function(){
   //  return store.find('subscription');
   // }).then(function(){
-    application.advanceReadiness();
+  application.advanceReadiness();
   // });
 }
 
 export default {
   name: 'cache-data',
-  initialize: initialize,
+  initialize,
   after: 'store'
 };

@@ -3,19 +3,19 @@
 import Ember from 'ember';
 
 export default Ember.Service.extend({
-  index: function () {
+  index() {
     return this.__index || (this.__index = this.__createIndex());
   },
-  add: function(model) {
+  add(model) {
     this.index().add(model);
   },
-  search: function (term) {
+  search(term) {
     return this.index().search(term);
   },
   __index: null,
-  __createIndex: function () {
-    return lunr(function () {
-      this.field('title', {boost: 10});
+  __createIndex() {
+    return lunr(function() {
+      this.field('title', { boost: 10 });
       this.field('description');
       this.ref('id');
     });

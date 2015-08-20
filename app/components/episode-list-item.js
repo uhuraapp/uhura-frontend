@@ -25,7 +25,7 @@ export default Ember.Component.extend({
     info() {
       Ember.$('.itens.open').removeClass('open');
       this.$('.itens').addClass('open');
-      Ember.run.later(function () {
+      Ember.run.later(function() {
         Ember.$(document).on('click.out-itens', 'body', function(e) {
           Ember.$('.itens.open').removeClass('open');
           Ember.$(document).off('click.out-itens');

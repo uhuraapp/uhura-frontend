@@ -2,12 +2,12 @@ import Ember from 'ember';
 import ParserController from '../mixins/parser-controller';
 
 export default Ember.Route.extend(ParserController, {
-  setupController: function (controller, model) {
-    if(!controller.url) {
+  setupController(controller, model) {
+    if (!controller.url) {
       this.transitionTo('explore');
     }
 
-    if(model.uhura_id && model.uhura_id !== "") {
+    if (model.uhura_id && model.uhura_id !== '') {
       this.replaceWith('channel', model.uhura_id);
       return;
     }
@@ -15,7 +15,7 @@ export default Ember.Route.extend(ParserController, {
     this._super(controller, model);
   },
 
-  filter: function (channels, query) {
+  filter(channels, query) {
     return channels.filterBy('id', query.channel_id)[0];
   }
 });

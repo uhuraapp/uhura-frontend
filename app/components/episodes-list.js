@@ -13,9 +13,8 @@ export default Ember.Component.extend({
       let promise = Ember.RSVP.Promise.reject();
 
       if (this.get('infiniteScroll')) {
-        let episodes = this.get('episodes'),
-            lastEpisode = (episodes.currentState ? episodes.currentState : episodes)[ episodes.length - 1 ];
-
+        let episodes = this.get('episodes');
+        let lastEpisode = (episodes.currentState ? episodes.currentState : episodes)[ episodes.length - 1 ];
         let date = lastEpisode ? lastEpisode.get('published_at') : 1999;
         let since = moment.utc(date).format();
 

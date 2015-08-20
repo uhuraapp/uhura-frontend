@@ -12,8 +12,8 @@ const options = {
     lcovOptions: { outputFile: 'lcov.info' }
   },
   lcovOptions: {
-    renamer (moduleName) {
-      var fileName = `${moduleName.replace(/^uhuraapp/, 'app')}.js`;
+    renamer(moduleName) {
+      let fileName = `${moduleName.replace(/^uhuraapp/, 'app')}.js`;
       return fileName.replace('app/config/', 'config/');
     }
   }

@@ -2,15 +2,15 @@ import Ember from 'ember';
 
 export default function route() {
   Ember.Route.reopen({
-    activate: function() {
-      var cssClass = this.cssClass();
+    activate() {
+      let cssClass = this.cssClass();
       Ember.$('body').addClass(cssClass);
       window.scrollTo(0, 0);
     },
-    deactivate: function() {
+    deactivate() {
       Ember.$('body').removeClass(this.cssClass());
     },
-    cssClass: function() {
+    cssClass() {
       return this.routeName.replace(/\./g, '-').dasherize();
     }
   });
