@@ -1,75 +1,93 @@
 .player-wrapper
   display: none
+  box-shadow: 0 -2px 2px 0 rgba(0, 0, 0, 0.14), 0 -3px 1px -2px rgba(0, 0, 0, 0.2), 0 -1px 5px 0 rgba(0, 0, 0, 0.12)
+
   &.has-model
+    @extend .mdl-card
     display: block
     position: fixed
     bottom: 0
     left: 0
     right: 0
-//   +container-card
-//   width: 250px
-//   position: relative
+    z-index: 3
+    width: 100%
+    min-height: 110px
+    height: 110px
 
-//   h2, h3
-//     color: $primary-text-color
-//     padding: 0 10px
-//     margin: 0
-//     text-align: center
-//     line-height: 1
-//   h2
-//     font-weight: bold
-//     font-size: 18px
-//     margin-top: 15px
-//   h3
-//     font-size: 14px
-//     margin-top: 5px
-//     margin-bottom: 15px
-//
-//   #wrapper-audio-element
-//     padding: 5px 20px
-//
-//   button.playpause
-//     margin: auto
-//     display: block
-//
-// .mejs-container
-//   background: #FFF
-//   height: auto !important
-//   .mejs-controls
-//     position: static
-//     background: #FFF
-//     height: auto
-//
-//   .mejs-button.mejs-playpause-butto n
-//     display: none
-//
-//   .mejs-controls div.mejs-time-rail
-//     width: 100% !important
-//     span, a
-//       height: 3px
-//       border-radius: 3px
-//       cursor: pointer
-//
-//     .mejs-time-total
-//       background: $primary-color-light
-//       width: 100% !important
-//       margin: 5px 0
-//
-//     .mejs-time-loaded
-//       background: $divider-color
-//
-//     .mejs-time-current
-//       background: $accent-color
-//
-//     .mejs-time-handle
-//       display: block
-//       width: 12px
-//       height: 12px
-//       border: none
-//       outline: none
-//       background: darken($accent-color, 20%)
-//       top: -4px
-//       border-radius: 100%
+  button.playpause
+    margin: 35px 15px
+
+  #player
+    height: 110px
+    display: flex
+
+  .info
+    display: flex
+    flex-direction: column
+    justify-content: center
+    padding: 5px
+    width: 35%
+
+  h2, h3
+    padding: 0
+    margin: 0px
+    font-size: 15px
+    line-height: 1.5
+
+  h2
+    font-weight: bold
+
+  img
+    flex: 0 0 110px
+
+  #wrapper-audio-element
+    width: auto
+    flex: 1 0 auto
+    padding: 5px
+
+  .mejs-container
+    height: 110px !important
+    .mejs-controls
+      position: static
+      height: 110px
+      background: #FFF
+      div
+        float: none
+
+  .mejs-controls div.mejs-time-rail
+    width: 100% !important
+    span, a
+      height: 3px
+      border-radius: 3px
+      cursor: pointer
+
+    .mejs-time-total
+      width: 100% !important
+      margin: 5px 0
+      background: red
+
+    .mejs-time-loaded
+      background: blue
+
+    .mejs-time-handle
+      display: block
+      width: 12px
+      height: 12px
+      border: none
+      outline: none
+      background: yellow
+      top: -4px
+      border-radius: 100%
+      &:hover
+        width: 20px
+        height: 20px
+        top: -8px
+
+  .mejs-controls .mejs-time
+    display: block
+    color: #000
+
+
 //
 //   .mejs-controls .mejs-volume-button
 //     display: none
@@ -88,7 +106,3 @@
 //         right: 7px
 //         height: 10px
 //
-//   .mejs-controls .mejs-time
-//     float: none
-//     display: block
-//     color: $primary-text-color
