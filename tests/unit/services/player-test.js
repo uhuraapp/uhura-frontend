@@ -131,6 +131,18 @@ test('trackTime', function(assert) {
   let service = this.subject();
   let episode = Ember.Object.create({ id: 1, stopped_at: 0, played: false });
 
+  const promiseMock = function(fn) {
+    return {
+      then(resolve) {
+        resolve();
+        if (fn) {
+          fn();
+        }
+        return promiseMock();
+      }
+    };
+  };
+
   let currentTime = (time, fn, pingTime, endedTime) => {
     service.__request = service._request;
 
@@ -142,12 +154,7 @@ test('trackTime', function(assert) {
       if (!endedTime) {
         assert.equal(arguments[4].data.at, time);
       }
-      return {
-        then(resolve) {
-          resolve();
-          fn();
-        }
-      };
+      return promiseMock(fn);
     };
 
     service.set('current', episode);

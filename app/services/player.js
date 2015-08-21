@@ -62,7 +62,7 @@ export default Ember.Service.extend({
       this._ping(this.get('current'), currentTime);
     }
     if (media && this._isPlayed(media) && !this.get('current.played') && !this._locked) {
-      this._locked = true
+      this._locked = true;
       this._played(this.get('current')).then(() => this._locked = false);
     }
   },
