@@ -48,7 +48,7 @@ export default Ember.Service.extend({
     let episodesElements = Ember.$('li.episode').get().reverse();
     for (let i = 0; i <= episodesElements.length; i++) {
       let episodeElement = Ember.$(episodesElements[i]);
-      if (!episodeElement.is('.is-playing')) {
+      if (!(episodeElement.is('.is-playing') || episodeElement.is('.is-played'))) {
         episodeElement.find('.playpause').click();
         break;
       }
@@ -61,8 +61,9 @@ export default Ember.Service.extend({
     if (media && this._isTimeToPing(currentTime)) {
       this._ping(this.get('current'), currentTime);
     }
-    if (media && this._isPlayed(media) && !this.get('current.played')) {
-      this._played(this.get('current'));
+    if (media && this._isPlayed(media) && !this.get('current.played') && !this._locked) {
+      this._locked = true
+      this._played(this.get('current')).then(() => this._locked = false);
     }
   },
 
@@ -96,7 +97,7 @@ export default Ember.Service.extend({
   },
 
   _played(episode) {
-    this._request('episode', episode.id, 'played',
+    return this._request('episode', episode.id, 'played',
                   'POST'
                  ).then(() => {
                    episode.set('played', true);

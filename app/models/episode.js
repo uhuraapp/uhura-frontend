@@ -11,6 +11,9 @@ export default DS.Model.extend({
   channel_id: DS.attr(),
   channel: DS.belongsTo('channel'),
   listened: DS.attr(),
+  played: computed('listened', function(){
+    return this.get('listened');
+  }),
   published_at: DS.attr('date'),
   stopped_at: DS.attr('number'),
   source: computed('source_url', function() {

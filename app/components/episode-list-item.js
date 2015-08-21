@@ -8,7 +8,7 @@ export default Ember.Component.extend({
 
   player: Ember.inject.service('player'),
 
-  isPlayed: Ember.computed.bool('episode.listened'),
+  isPlayed: Ember.computed.bool('episode.played'),
   isDownloaded: Ember.computed.bool('episode.downloaded'),
   isPlaying: Ember.computed.bool('episode.playing'),
 
