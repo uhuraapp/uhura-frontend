@@ -8,7 +8,7 @@ export default DS.Model.extend({
   image_url: DS.attr('string'),
   description: DS.attr('string'),
   copyrigth: DS.attr('string'),
-  episodes: DS.hasMany('episode'),
+  episodes: DS.hasMany('episode', { async: false }),
   raw_id: DS.attr('string'),
   subscribed: DS.attr(),
   to_view: DS.attr(),
