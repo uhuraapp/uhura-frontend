@@ -20,15 +20,16 @@ export default Ember.Mixin.create({
   channel_url: DS.attr(),
   imageURL: computed('image_url', function() {
     const that = this;
-    new Ember.RSVP.Promise(() => {
-      let image = new Image();
-      image.src = this._realImageUrl();
-      image.onload = function() {
-        if (typeof this.naturalWidth !== 'undefined' && this.naturalWidth !== 0) {
+    let image = new Image();
+    image.src = this._realImageUrl();
+    image.onload = function() {
+      if (typeof this.naturalWidth !== 'undefined' && this.naturalWidth !== 0) {
+        Ember.run(() => {
           that.set('imageURL', this.src);
-        }
-      };
-    });
+        });
+      }
+    };
+
     return '/assets/channel-placeholder.png';
   }),
 
