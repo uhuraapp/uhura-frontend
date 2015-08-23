@@ -33,6 +33,8 @@ env:
   global:
     secure: H7nvmycAHnnkfRWKveo5mn4cns7sV2lqLSmVB3kD7WsnIY/Dq4hls/trlGjyf9P4TWHplHQOj/XrTOv0LP4lleoQ5OfZ5GtPTBzKpqr16mv8GSeRH0xvfWC4nk71ggK3gz6lpFP4Dv+pnocjWOBm9FYwi1CiSPii19948MlyDFU=
 
+sudo: false
+
 matrix:
   allow_failures:
     - node_js: iojs
