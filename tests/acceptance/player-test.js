@@ -81,6 +81,7 @@ test('player | when ended a episode should starts the next', function(assert) {
   andThen(function() {
     let i = episodes.length - 1;
     assert.equal(find('#player .title').text(), episodes[i].title);
+    $('.episode:last').addClass('is-played');
     player.successMedia(mediaMock('ended'));
   });
 

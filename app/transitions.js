@@ -17,7 +17,7 @@ export default function() {
       matchBy: 'data-channel-image-id',
       use: ['flyTo', { duration } ]
     })
-  )
+  );
 
   this.transition(
     this.hasClass('share-dialog'),

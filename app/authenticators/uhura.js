@@ -33,7 +33,7 @@ export default Base.extend({
   __checkCredentials(resolve, reject) {
     this.__getUserData().then(function(data) {
       Ember.run(() => resolve(data));
-    }, function(xhr) {
+    }, function() {
       Ember.run(() => reject('Error: Could authenticate using external service'));
     });
   },
@@ -64,7 +64,7 @@ export default Base.extend({
       });
     } else if (data.email && data.password) {
       return this.request('POST', '/v2/users/sign_in', data).catch(()=> {
-        return Promise.reject('Error: email or password invalid')
+        return Promise.reject('Error: email or password invalid');
       });
     } else if (data.email && !data.password) {
       return Promise.reject('Error: password is required');
@@ -85,7 +85,7 @@ export default Base.extend({
     return () => {
       resolve();
       document.cookie = '_session=; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-      window.location.reload()
+      window.location.reload();
     };
   },
 

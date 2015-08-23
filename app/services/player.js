@@ -49,7 +49,9 @@ export default Ember.Service.extend({
     for (let i = 0; i <= episodesElements.length; i++) {
       let episodeElement = Ember.$(episodesElements[i]);
       if (!(episodeElement.is('.is-playing') || episodeElement.is('.is-played'))) {
-        episodeElement.find('.playpause').click();
+        Ember.run(function() {
+          episodeElement.find('.playpause').click();
+        });
         break;
       }
     }
