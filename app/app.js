@@ -16,4 +16,8 @@ routeUtil();
 
 loadInitializers(App, config.modulePrefix);
 
+
+var image = new Image();
+image.src = '/assets/channel-placeholder.png';
+
 export default App;

@@ -62,6 +62,7 @@ export default Base.extend({
       });
     } else if (data.email && data.password) {
       return this.request('POST', '/v2/users/sign_in', data);
+      return Promise.reject('Error: password is required');
     }
 
     return Ember.RSVP.Promise.reject('Error');
