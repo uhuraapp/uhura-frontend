@@ -1,27 +1,38 @@
-<div id="sign_in" class="mdl-card mdl-shadow--2dp">
-  <form {{action "authenticate" on="submit"}} autocomplete="false">
-    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-      {{input id="email" type="text" value=email classBinding=":mdl-textfield__input" required=true}}
-      <label class="mdl-textfield__label" for="email">Email</label>
-    </div>
-    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-      {{input id="password" type="password" autocomplete="false" value=password classBinding=":mdl-textfield__input" required=true}}
-      <label class="mdl-textfield__label" for="password">Senha</label>
-    </div>
-    <div class="actions">
-      <button class="mdl-button mdl-js-button mdl-button--primary" {{action "authenticate"}}>Entrar</button>
-    </div>
-  </form>
+<div id="sign_in-container">
+  <h1>Uhura</h1>
 
-  <div class="connect-services">
-    <a {{action 'authenticate' 'google'}}> <img src="assets/google.png" /> </a>
-    <a {{action 'authenticate' 'facebook'}}> <img src="assets/facebook.png" /> </a>
-  </div>
-  {{#if errorMessage}}
-    <div class="alert alert-danger">
-      <p>
+  <div id="sign_in" class="mdl-card mdl-shadow--2dp">
+    <form {{action "authenticate" on="submit"}} autocomplete="false">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        {{input id="email" type="text" value=email classBinding=":mdl-textfield__input" }}
+        <label class="mdl-textfield__label" for="email">Email</label>
+      </div>
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        {{input id="password" type="password" autocomplete="false" value=password classBinding=":mdl-textfield__input"}}
+        <label class="mdl-textfield__label" for="password">Senha</label>
+      </div>
+      <div class="actions">
+        <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" {{action "authenticate"}}>Sign In</button>
+      </div>
+    </form>
+
+    {{#if errorMessage}}
+      <p class="error-message">
         {{errorMessage}}
       </p>
+    {{else}}
+      {{#if processing}}
+        <p class="processing">Processing {{processingMessage}}.... </p>
+      {{/if}}
+    {{/if}}
+
+    <div class="connect-services">
+      <button {{action 'authenticate' 'google'}} class="sign-in-button sign-in-button__google mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised">
+        Sign in with Google
+      </button>
+      <button {{action 'authenticate' 'facebook'}} class="sign-in-button sign-in-button__facebook mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised">
+        Sign in with Facebook
+      </button>
     </div>
-  {{/if}}
+  </div>
 </div>

@@ -1,40 +1,85 @@
+#sign_in-container
+  display: flex
+  flex-direction: column
+
+  h1
+    font-weight: 900
+    font-family: "Exo 2"
+    text-align: center
+    color: #FF5722
+    text-shadow: 1px 0px 1px #A5A6A7
+
 #sign_in
   width: 460px
-  position: absolute
-  top: 50%
-  left: 50%
-  margin-left: -230px
-  margin-top: -230px
+  margin: 0 auto
+  margin-top: 3%
 
   form
-    padding: 30px 60px
+    padding: 20px 30px
 
   .mdl-textfield
-      width: 100%
+    width: 100%
 
+  p.error-message, p.processing
+    padding: 5px 10px
+    margin: 0
+    color: #FFF
+  p.error-message
+    background: lighten(red, 20%)
+    border: 1px solid  lighten(red, 10%)
+  p.processing
+    background: lighten(yellow, 30%)
+    border: 1px solid  lighten(yellow, 20%)
+    color: #333
 
-#login-modal
-  margin: 0 auto
-  .uk-modal-dialog
-    max-width: 300px
-    // color: #000
   .connect-services
     text-align: center
-    overflow: hidden
-    margin-top: 10px
-  h3
-    margin: 0 0 5px 0
-    text-align: center
-    font-size: 14px
-    font-weight: 600
-    // color: #000
-    width: 100%
-    display: inline-block
-  p
-    margin: 0 0 7px 0
+    background: #E5E9ED
+    padding: 30px 10px
+    display: flex
+    img
+      max-width: 100%
+
+    button
+      font-family: "Exo 2"
+      font-size: 15px
+      font-weight: 700
+      color: #FFF
+      border: 0
+      padding: 0
+      display: block
+      margin: 0 auto
+      border-radius: 2px
+      padding: 0 10px 0 0
+      line-height: 35px
+      text-transform: none
+      &::before
+        display: block
+        float: left
+        margin: 0 10px 0 0
+        border-radius: 2px 0 0 2px
+        height: 36px
+        width: 36px
+        padding: 5px 0
+
+      &.sign-in-button__facebook
+        background: #3b5998
+        &::before
+          content: url(https://dl.dropboxusercontent.com/u/54149043/CssDeck/fb-icon.png)
+          background: #354f88
+
+      &.sign-in-button__google
+        background: #de4c34
+        &::before
+          content: url(https://dl.dropboxusercontent.com/u/54149043/CssDeck/g-icon.png)
+          background: #ce3e26
+
+
   a
-    display: inline-block
-    max-width: 215px
+    max-width: 210px
+    display: block
+    margin: 0 auto
+
 .loading
   text-align: center
   margin: 0 auto
