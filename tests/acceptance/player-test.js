@@ -7,7 +7,7 @@ let application,
     episodes,
     mediaMock;
 
-module('Acceptance | episode', {
+module('Acceptance | player a episode', {
   beforeEach() {
     application = startApp();
 
@@ -41,14 +41,14 @@ test('player | show episode on player container', function(assert) {
   visit(`/channels/${channel.id}`);
 
   andThen(function() {
-    assert.equal(currentURL(), `/channels/${channel.id}`);
+    assert.equal(currentURL(), `/channels/${channel.id}`, 'check if is on channel page');
   });
 
   click('.episode:first-child .playpause');
 
   andThen(function() {
-    assert.equal(find('#player .channel-title').text(), channel.title);
-    assert.equal(find('#player .title').text(), episodes[0].title);
+    assert.equal(find('#player .channel-title').text(), channel.title, 'check if channel title is on player');
+    assert.equal(find('#player .title').text(), episodes[0].title, 'check if episode title is on player');
     assert.ok(find('.player-wrapper').hasClass('has-model'));
   });
 });

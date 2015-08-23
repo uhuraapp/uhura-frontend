@@ -1,5 +1,3 @@
-/* global MediaElementPlayer */
-
 import Ember from 'ember';
 
 export default Ember.Service.extend({
@@ -17,8 +15,7 @@ export default Ember.Service.extend({
   createMedia(el) {
     let source = this.get('current.source');
     this._audioElement().attr('src', source);
-
-    let media = new MediaElementPlayer(el, {
+    let media = new window.MediaElementPlayer(el, {
       features: ['current', 'duration', 'progress','volume'],
       audioVolume: 'vertical',
       plugins: ['flash','silverlight'],
@@ -49,9 +46,7 @@ export default Ember.Service.extend({
     for (let i = 0; i <= episodesElements.length; i++) {
       let episodeElement = Ember.$(episodesElements[i]);
       if (!(episodeElement.is('.is-playing') || episodeElement.is('.is-played'))) {
-        Ember.run(function() {
-          episodeElement.find('.playpause').click();
-        });
+        episodeElement.find('.playpause').click();
         break;
       }
     }
@@ -77,33 +72,27 @@ export default Ember.Service.extend({
   _isTimeToPing(currentTime) {
     return currentTime % 5 === 0;
   },
-
   _isPlayed(media) {
     let played = 100 * media.currentTime / media.duration;
     return played >= this.PLAYED_PERCENT;
   },
 
-  _ping(episode, currentTime) {
-    if (currentTime === this.get('currentTime')) {
+  _ping(episode, at) {
+    if (at === this.get('currentTime')) {
       return;
     }
-    this.set('currentTime', currentTime);
+    this.set('currentTime', at);
 
-    let data = { at: currentTime };
-    this._request('episode', episode.id, 'listen',
-                  'PUT',
-                  { data }
-                 ).then(() => {
-                   episode.set('stopped_at', currentTime);
-                 });
+    let data = { at };
+    this._request('episode', episode.id, 'listen', 'PUT', { data }).then(() => {
+      episode.set('stopped_at', at);
+    });
   },
 
   _played(episode) {
-    return this._request('episode', episode.id, 'played',
-                  'POST'
-                 ).then(() => {
-                   episode.set('played', true);
-                 });
+    return this._request('episode', episode.id, 'played', 'POST').then(() => {
+      episode.set('played', true);
+    });
   },
 
   _adapter() {
@@ -172,6 +161,7 @@ export default Ember.Service.extend({
   _tooglePlaying() {
     let currentStatus = this._current().get('playing');
     let action = currentStatus ? 'pause' : 'play';
+
     this._current().set('playing', !currentStatus);
     this.set('playing', !currentStatus);
     this[`_${action}`]();

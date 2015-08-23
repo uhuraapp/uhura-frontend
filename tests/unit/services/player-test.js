@@ -185,7 +185,7 @@ test('trackTime', function(assert) {
 
   currentTime(12, function() {
     assert.equal(episode.get('stopped_at'), 10, 'changes stopped_at');
-  }, false);
+  });
 
   currentTime(155, function() {
     assert.equal(episode.get('stopped_at'), 155, 'changes stopped_at');
