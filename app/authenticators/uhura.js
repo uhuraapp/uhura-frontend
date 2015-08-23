@@ -77,12 +77,16 @@ export default Base.extend({
 
   invalidate() {
     return new Promise((resolve) => {
-      this.request('GET', '/v2/user/logout').always(() => {
-        document.cookie = '_session=; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-        resolve();
-        window.location.reload();
-      });
+      this.request('GET', '/v2/users/logout').then(this._logout(resolve), this._logout(resolve));
     });
+  },
+
+  _logout(resolve) {
+    return () => {
+      resolve();
+      document.cookie = '_session=; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+      window.location.reload()
+    };
   },
 
   request(type, path, data) {
