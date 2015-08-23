@@ -1,4 +1,4 @@
-const duration = 300;
+const duration = 450;
 
 export default function() {
   this.transition(
@@ -7,16 +7,17 @@ export default function() {
     this.use('explode', {
       matchBy: 'data-channel-image-id',
       use: ['flyTo', { duration } ]
-    }, {
-      use: ['toLeft', { duration } ]
-    }),
-    this.reverse('explode', {
-      matchBy: 'data-channel-image-id',
-      use: ['flyTo', { duration } ]
-    }, {
-      use: ['toRight', { duration } ]
     })
   );
+
+  this.transition(
+    this.fromRoute('channel'),
+    this.toRoute('subscriptions'),
+    this.use('explode', {
+      matchBy: 'data-channel-image-id',
+      use: ['flyTo', { duration } ]
+    })
+  )
 
   this.transition(
     this.hasClass('share-dialog'),
