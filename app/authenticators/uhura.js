@@ -2,6 +2,8 @@ import Ember from 'ember';
 import Base from 'simple-auth/authenticators/base';
 import ENV from '../config/environment';
 
+let { RSVP: { Promise } } = Ember;
+
 export default Base.extend({
   __authURLForProvider(provider) {
     return `${ENV.API_URL}/v2/auth/${provider}`;
@@ -32,13 +34,13 @@ export default Base.extend({
     this.__getUserData().then(function(data) {
       Ember.run(() => resolve(data));
     }, function(xhr) {
-      Ember.run(() => reject(xhr.responseJSON || xhr.responseText));
+      Ember.run(() => reject('Error: Could authenticate using external service'));
     });
   },
 
   restore(properties) {
     let propertiesObject = Ember.Object.create(properties);
-    return new Ember.RSVP.Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       if (!Ember.isEmpty(propertiesObject.get('token'))) {
         resolve(properties);
       } else {
@@ -49,7 +51,7 @@ export default Base.extend({
 
   authenticate(data) {
     if (data.provider) {
-      return new Ember.RSVP.Promise((resolve, reject) => {
+      return new Promise((resolve, reject) => {
         let loginWindow = window.open(this.__authURLForProvider(data.provider), '_blank', 'location=no,toolbar=no');
         window.setTimeout(this.__checkLogin(loginWindow, resolve, reject), 500);
 
@@ -61,15 +63,20 @@ export default Base.extend({
         });
       });
     } else if (data.email && data.password) {
-      return this.request('POST', '/v2/users/sign_in', data);
+      return this.request('POST', '/v2/users/sign_in', data).catch(()=> {
+        return Promise.reject('Error: email or password invalid')
+      });
+    } else if (data.email && !data.password) {
       return Promise.reject('Error: password is required');
+    } else if (data.password && !data.email) {
+      return Promise.reject('Error: email is required');
     }
 
-    return Ember.RSVP.Promise.reject('Error');
+    return Promise.reject('Error: email and password is required');
   },
 
   invalidate() {
-    return new Ember.RSVP.Promise((resolve) => {
+    return new Promise((resolve) => {
       this.request('GET', '/v2/user/logout').always(() => {
         document.cookie = '_session=; expires=Thu, 01 Jan 1970 00:00:00 GMT';
         resolve();
@@ -80,15 +87,19 @@ export default Base.extend({
 
   request(type, path, data) {
     data = JSON.stringify(data);
-    return Ember.$.ajax({
-      url: ENV.API_URL + path,
-      xhrFields: {
-        withCredentials: true
-      },
-      contentType: 'application/json; charset=utf-8',
-      dataType: 'json',
-      type,
-      data
+    return new Promise((resolve, reject) => {
+      Ember.$.ajax({
+        url: ENV.API_URL + path,
+        xhrFields: {
+          withCredentials: true
+        },
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        type,
+        data,
+        success: resolve,
+        error: reject
+      });
     });
   }
 });
