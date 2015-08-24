@@ -7,6 +7,6 @@ export default Ember.Mixin.create({
   },
   upgradeElements() {
     let elements = document.querySelectorAll('.page-content [class^=mdl]');
-    [].forEach.call(elements, el => componentHandler.upgradeElement(el));
+    [].forEach.call(elements, el => window.componentHandler.upgradeElement(el));
   }
 });
