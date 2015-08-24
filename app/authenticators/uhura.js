@@ -34,7 +34,7 @@ export default Base.extend({
     this.__getUserData().then(function(data) {
       Ember.run(() => resolve(data));
     }, function() {
-      Ember.run(() => reject('Error: Could authenticate using external service'));
+      Ember.run(() => reject('Error: Could not authenticate using external service'));
     });
   },
 
