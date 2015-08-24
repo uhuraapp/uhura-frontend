@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import RoutesAuthenticationMixin from '../../../mixins/routes/authentication';
+import RoutesAuthenticationMixin from '../../../../mixins/routes/authentication';
 import { module, test } from 'qunit';
 
 module('Unit | Mixin | routes/authentication');
