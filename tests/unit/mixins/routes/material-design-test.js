@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import RoutesMaterialDesignMixin from '../../../mixins/routes/material-design';
+import RoutesMaterialDesignMixin from '../../../../mixins/routes/material-design';
 import { module, test } from 'qunit';
 
 module('Unit | Mixin | routes/material design');
