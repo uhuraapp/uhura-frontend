@@ -2,6 +2,6 @@
   {{episode-list-item episode=episode rightActions=hasRightActions}}
 {{/each}}
 
-{{#infinite-scroll content=episodes hasMore=hasMore}}
+{{#infinite-scroll content=episodes hasMore=hasMore scrollable=".mdl-layout__content"}}
   <span id="loading-episodes">Loading...</span>
 {{/infinite-scroll}}
