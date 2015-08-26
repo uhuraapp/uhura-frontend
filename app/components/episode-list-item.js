@@ -17,7 +17,7 @@ export default Ember.Component.extend({
       this.get('player').playpause(this.get('episode'));
     },
 
-    maskAsPlayed() {
+    played() {
       this.get('episode').set('makeListened', new Date());
       Ember.$('.more-itens .itens.open').removeClass('.open');
     },
