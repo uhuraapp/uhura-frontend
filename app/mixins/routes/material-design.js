@@ -6,7 +6,7 @@ export default Ember.Mixin.create({
     this._super(a, b);
   },
   upgradeElements() {
-    let elements = document.querySelectorAll('.page-content [class^=mdl]');
-    [].forEach.call(elements, el => window.componentHandler.upgradeElement(el));
+    window.componentHandler.upgradeDom('MaterialButton');
+    window.componentHandler.upgradeDom('MaterialLayout');
   }
 });
