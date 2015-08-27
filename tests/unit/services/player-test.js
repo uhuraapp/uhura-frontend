@@ -5,7 +5,7 @@ import startApp from 'uhuraapp/tests/helpers/start-app';
 let application;
 let mediaMock;
 moduleFor('service:player', 'Unit | Service | player', {
-  needs: ['adapter:application'],
+  needs: ['adapter:application', 'service:uhura-client'],
 
   beforeEach() {
     application = startApp();
@@ -144,9 +144,9 @@ test('trackTime', function(assert) {
   };
 
   let currentTime = (time, fn, pingTime, endedTime) => {
-    service.__request = service._request;
+    service.get('client').__request = service.get('client').request;
 
-    service._request = function() {
+    service.get('client').request = function() {
       assert.equal(arguments[0], 'episode');
       assert.equal(arguments[1], episode.id);
       assert.equal(arguments[2], endedTime ? 'played' : 'listen');
@@ -168,7 +168,8 @@ test('trackTime', function(assert) {
     if (!pingTime || !endedTime) {
       fn();
     }
-    service._request = service.__request;
+
+    service.get('client').request = service.get('client').__request;
   };
 
   currentTime(5, function() {

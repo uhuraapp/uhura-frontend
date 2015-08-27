@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Service.extend({
+  client: Ember.inject.service('uhura-client'),
+
   playing: false,
   current: null,
   media: null,
@@ -84,24 +86,15 @@ export default Ember.Service.extend({
     this.set('currentTime', at);
 
     let data = { at };
-    this._request('episode', episode.id, 'listen', 'PUT', { data }).then(() => {
+    this.get('client').request('episode', episode.id, 'listen', 'PUT', { data }).then(() => {
       episode.set('stopped_at', at);
     });
   },
 
   _played(episode) {
-    return this._request('episode', episode.id, 'played', 'POST').then(() => {
+    return this.get('client').request('episode', episode.id, 'played', 'POST').then(() => {
       episode.set('played', true);
     });
-  },
-
-  _adapter() {
-    return this.container.lookup('adapter:application');
-  },
-
-  _request(modelName, id, action, type, options) {
-    let url = `${this._adapter().buildURL(modelName, id)}/${action}`;
-    return this._adapter().ajax(url, type, options);
   },
 
   errorMedia() {
