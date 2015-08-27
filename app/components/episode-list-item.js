@@ -25,7 +25,7 @@ export default Ember.Component.extend({
 
       episode.set('played', !isPlayed); // early visual response
 
-      return this.get('client').request('episode', episode.id, 'played', method).catch(() => {
+      this.get('client').request('episode', episode.id, 'played', method).catch(() => {
         episode.set('played', isPlayed); // rollback
       });
 
