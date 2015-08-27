@@ -18,7 +18,6 @@ export default Ember.Component.extend({
     },
 
     played() {
-      this.get('episode').set('makeListened', new Date());
       Ember.$('.more-itens .itens.open').removeClass('.open');
     },
 
