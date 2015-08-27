@@ -7,6 +7,7 @@ export default Ember.Component.extend({
   rightActions: true,
 
   player: Ember.inject.service('player'),
+  client: Ember.inject.service('uhura-client'),
 
   isPlayed: Ember.computed.bool('episode.played'),
   isDownloaded: Ember.computed.bool('episode.downloaded'),
@@ -18,6 +19,16 @@ export default Ember.Component.extend({
     },
 
     played() {
+      let episode = this.get('episode');
+      let isPlayed = !!episode.get('played');
+      let method = isPlayed ? 'DELETE' : 'POST';
+
+      episode.set('played', !isPlayed); // early visual response
+
+      return this.get('client').request('episode', episode.id, 'played', method).catch(() => {
+        episode.set('played', isPlayed); // rollback
+      });
+
       Ember.$('.more-itens .itens.open').removeClass('.open');
     },
 
