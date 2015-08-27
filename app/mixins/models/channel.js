@@ -25,7 +25,9 @@ export default Ember.Mixin.create({
     image.onload = function() {
       if (typeof this.naturalWidth !== 'undefined' && this.naturalWidth !== 0) {
         Ember.run(() => {
-          that.set('imageURL', this.src);
+          if (!that.isDestroyed) {
+            that.set('imageURL', this.src);
+          }
         });
       }
     };

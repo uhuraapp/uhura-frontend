@@ -25,9 +25,9 @@ export default Ember.Component.extend({
           per_page:   20
         }).then(function(response) {
           // Fix error with _internalModel
-          let items = []
+          let items = [];
           response.get('content').forEach(function(internalModel) {
-            items.push({_internalModel: internalModel});
+            items.push({ _internalModel: internalModel });
           });
           response.set('content', items);
           return response;
