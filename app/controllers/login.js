@@ -3,6 +3,9 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   processing: false,
   processingMessage: '',
+
+  session: Ember.inject.service('session'),
+
   actions: {
     authenticate(provider) {
       this.set('processing', true);

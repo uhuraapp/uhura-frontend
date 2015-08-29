@@ -71,7 +71,7 @@ module.exports = function(environment) {
 
   }
 
-  ENV['simple-auth'] = {
+  ENV['ember-simple-auth'] = {
     authorizer: 'authorizer:uhura',
     crossOriginWhitelist: [ENV.API_URL]
   }
