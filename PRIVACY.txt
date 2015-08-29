@@ -1,0 +1,47 @@
+PRIVACY POLICY – UHURA APP
+
+1. INTRODUCTION
+
+This is the privacy policy for Uhura App, our products including, but not limited to, our mobile apps and our various cloud-based services, content and websites ("Products"). Specifically, this policy exists to inform you about the types of information we may receive, how we use that information, the measures we take to safeguard the information we receive, the choices you may make and certain legal rights that you have.
+
+Where we refer to "personal data" in this privacy policy we mean any data that may identify you as an individual.
+
+2. OVERVIEW OF OUR PRIVACY POLICY
+
+We will not sell your personal data to third parties.
+
+We receive different types of information from our Products. We use this data to debug and improve the functionality of our Products.
+
+We may also receive your personal contact information contained in correspondence via our web sites and communications channels. This enables us to offer user support, beta testing communities, surveys, competitions and similar services.
+
+We will collect your email address, you subscriptions and what do listen on our Products to enable services such as personalization, prediction, synchronization and backup. We may use data provided by you to develop and improve our Products.
+
+3. WITHDRAWING CONSENT
+
+You may at any time withdraw your consent for our storage and use of personal data collected by any of our Products by going to the Account section in Uhura Settings. By withdrawing consent your personal data will be destroyed. It is important to note, however, that we will retain any transactional data relating to your purchase of the Products that we make available in order that such purchases can be reclaimed by you, should the need arise in the future. 
+
+4. COMMUNICATING WITH YOU
+
+We collect your email address. We may use this to tell you about our Products from time to time, unless you indicate during registration, via our Products Settings menu or by clicking an “opt out” link in any message that we send you, that you do not wish us to do so.
+
+You may receive occasional notifications on your device alerting you to product updates and features that may be of interest to you. You can disable these notifications in our Products at any time by going to the Settings menu.
+
+5. SHARING YOUR INFORMATION
+
+Except as stated in this privacy policy, we will not share your personal data with any third party unless you have given us permission. We may share anonymized data, where we have removed any personal data, with other parties.
+
+Should you breach the terms and conditions or terms of use relating to any of our Products, or if we are under a duty to disclose any information to comply with a legal obligation, we may be forced to disclose your information to a relevant authority. 
+
+6. ACCESSING YOUR INFORMATION
+
+In order to be transparent about your data, you have a right to access your personal data. If you wish to access this please send a email to support@uhura.io. After check your account, you will receive a document with your stored data.
+
+7. CHANGE OF CONTROL
+
+If we sell or otherwise transfer part or the whole of Uhura or our assets to another organisation (e.g., in the course of a transaction like a merger, acquisition, bankruptcy, dissolution or liquidation), information from or about our users may be among the items sold or transferred.
+
+However this will not affect your rights or our obligations under this privacy policy.
+
+8. POLICY CHANGES
+
+From time to time we may make changes to this privacy policy, which will be posted on our web sites and relevant communications channels. You are advised to check our web sites regularly to view our most recent privacy policy. (We last updated our privacy policy on August 29, 2015, the key changes made are recorded in a change log here.)
