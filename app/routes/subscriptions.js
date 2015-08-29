@@ -4,6 +4,6 @@ import MaterialDesignMixin from '../mixins/routes/material-design';
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, MaterialDesignMixin, {
   model() {
-    return this.store.find('subscription');
+    return this.store.findAll('subscription');
   }
 });
