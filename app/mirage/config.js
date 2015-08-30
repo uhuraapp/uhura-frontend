@@ -11,7 +11,7 @@ export default function() {
     let { id } = request.params;
     let channel = db.channels.find(id);
     let episodes = db.episodes.where({ channel_id: id });
-    channel.episodes = episodes.mapProperty('id');
+    channel.episodes = episodes.mapBy('id');
 
     return {
       channel,

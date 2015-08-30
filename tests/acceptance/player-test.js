@@ -69,7 +69,7 @@ test('player | have player element', function(assert) {
 });
 
 test('player | when ended a episode should starts the next', function(assert) {
-  let player = application.registry.lookup('service:player');
+  const player = application.registry.container().lookup('service:player');
 
   visit(`/channels/${channel.id}`);
 
