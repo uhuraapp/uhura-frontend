@@ -47,12 +47,20 @@ html, body
 img.channel-img
   z-index: 99
 
-// *, *:after, *:before
-//   transition: all 1s cubic-bezier(0.19, 1, 0.22, 1)
-//   -moz-transition: all 1s cubic-bezier(0.19, 1, 0.22, 1)
-//   -webkit-transition: all 1s cubic-bezier(0.19, 1, 0.22, 1)
-//   -o-transition: all 1s cubic-bezier(0.19, 1, 0.22, 1)
-//   -ms-transition: all 1s cubic-bezier(0.19, 1, 0.22, 1)
+.uhura__logo
+  font-weight: 900
+  font-family: "Exo 2"
+  color: #FF5722
+
+.mdl-layout-title.uhura__logo
+  font-size: 30px
+  color: rgb(51, 51, 51)
+  line-height: 2
+
+*, *:after, *:before
+  transition-property: box-shadow, border-radius
+  transition-duration: 1s
+  transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1)
 
 // *
 //   box-sizing: border-box
