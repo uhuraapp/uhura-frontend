@@ -32,7 +32,7 @@ export default Ember.Component.extend({
       Ember.$('.more-itens .itens.open').removeClass('.open');
     },
 
-    info() {
+    more() {
       Ember.$('.itens.open').removeClass('open');
       this.$('.itens').addClass('open');
       Ember.run.later(function() {
@@ -42,6 +42,11 @@ export default Ember.Component.extend({
           e.stopPropagation();
         });
       }, 500);
+    },
+
+    info() {
+      Ember.$('.body.open').removeClass('open');
+      this.$('.body').addClass('open');
     }
   }
 });
