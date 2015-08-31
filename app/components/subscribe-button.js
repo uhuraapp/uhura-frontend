@@ -1,7 +1,9 @@
 import Ember from 'ember';
-import Login from '../services/login';
+
+const { service } = Ember.inject;
 
 export default Ember.Component.extend({
+  session: service('session'),
   classNames: ['subscribe-button-component'],
   __store() {
     return this.container.lookup('store:main');
@@ -9,8 +11,7 @@ export default Ember.Component.extend({
   makeSubscription() {
     let model = this.get('channel');
     this.__store().createRecord('subscription', {
-      channel_id: model.id,
-      channel_url: model.links && model.links[0]
+      channel_id: model.id
     }).save().then(function() {
       model.set('subscribed', true);
     });
@@ -20,10 +21,8 @@ export default Ember.Component.extend({
       if (this.get('session.isAuthenticated')) {
         this.makeSubscription();
       } else {
-        let login = new Login(this.container, true);
-        login.start(() => {
-          this.makeSubscription();
-        });
+        const { container } = this;
+        this.container.lookup('route:application').transitionTo('login');
       }
     },
     unsubscribe() {
