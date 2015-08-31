@@ -24,11 +24,4 @@ test('pathForType fix users path', function(assert) {
   let path = v => this.subject().pathForType(v);
   assert.equal(path('test'),         'tests');
   assert.equal(path('subscription'), 'users/subscriptions');
-  assert.equal(path('suggestion'),   'users/suggestions');
-});
-
-test('pathForType fix parser', function(assert) {
-  let path = v => this.subject().pathForType(v);
-  assert.equal(path('test'),   'tests');
-  assert.equal(path('parser'), 'parser');
 });
