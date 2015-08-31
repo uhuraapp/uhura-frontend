@@ -4,14 +4,13 @@ const { service } = Ember.inject;
 
 export default Ember.Component.extend({
   session: service('session'),
+  store: service('store'),
   classNames: ['subscribe-button-component'],
-  __store() {
-    return this.container.lookup('store:main');
-  },
   makeSubscription() {
     let model = this.get('channel');
-    this.__store().createRecord('subscription', {
-      channel_id: model.id
+    this.get('store').createRecord('subscription', {
+      channel_id: model.id,
+      episodes: []
     }).save().then(function() {
       model.set('subscribed', true);
     });
@@ -21,13 +20,12 @@ export default Ember.Component.extend({
       if (this.get('session.isAuthenticated')) {
         this.makeSubscription();
       } else {
-        const { container } = this;
         this.container.lookup('route:application').transitionTo('login');
       }
     },
     unsubscribe() {
       let model = this.get('channel');
-      this.__store().find('subscription', model.id).then(function(subscription) {
+      this.get('store').find('subscription', model.id).then(function(subscription) {
         subscription.destroyRecord();
         model.set('subscribed', false);
       });
