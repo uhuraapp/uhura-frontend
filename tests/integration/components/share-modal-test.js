@@ -15,7 +15,7 @@ test('it renders', function(assert) {
 
   let trim = (el) => el.text().replace(/\n+| /g, '');
 
-  assert.equal(trim(this.$()), 'ShareClose');
+  assert.equal(trim(this.$()), 'ShareURLClose');
 
   this.render(hbs`
     {{#share-modal}}
@@ -23,5 +23,5 @@ test('it renders', function(assert) {
     {{/share-modal}}
   `);
 
-  assert.equal(trim(this.$()), 'ShareClose');
+  assert.equal(trim(this.$()), 'ShareURLClose');
 });
