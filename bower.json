@@ -23,7 +23,6 @@
     "material-design-lite": "1.0.2"
   },
   "resolutions": {
-    "jquery": ">= 1.7.0 < 2.2.0",
     "ember": "2.0.0"
   }
 }
