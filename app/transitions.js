@@ -22,7 +22,7 @@ export default function() {
   this.transition(
     this.hasClass('share-dialog'),
     this.toValue(true),
-    this.use('crossFade', { duration }),
-    this.reverse('toLeft', { duration })
+    this.use('toUp'),
+    this.reverse('toUp', { duration })
   );
 }
