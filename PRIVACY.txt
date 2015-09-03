@@ -14,7 +14,7 @@ We receive different types of information from our Products. We use this data to
 
 We may also receive your personal contact information contained in correspondence via our web sites and communications channels. This enables us to offer user support, beta testing communities, surveys, competitions and similar services.
 
-We will collect your email address, you subscriptions, and what you listen using our Products to enable services such as personalization, prediction, synchronization and backup. We may use data provided by you to develop and improve our Products.
+We will collect your email address, your subscriptions, and all of the episodes you listen using our Products to enable services such as personalization, prediction, synchronization and backup. We may use data provided by you to develop and improve our Products.
 
 3. WITHDRAWING CONSENT
 
@@ -22,7 +22,7 @@ You may at any time withdraw your consent for our storage and use of personal da
 
 4. COMMUNICATING WITH YOU
 
-We collect your email address. We may use this to tell you about our Products from time to time, unless you indicate during registration, via our Products Settings menu or by clicking an “opt out” link in any message that we send you, that you do not to recive further messages.
+We collect your email address. We may use this to tell you about our Products from time to time, unless you indicate during registration, via our Products Settings menu or by clicking an “opt out” link in any message that we send you, that you do not to receive further messages.
 
 You may receive occasional notifications on your device alerting you to product updates and features that may be of interest to you. You can disable these notifications in our Products at any time by going to the Settings menu.
 
