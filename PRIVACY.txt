@@ -4,7 +4,7 @@ PRIVACY POLICY – UHURA APP
 
 This is the privacy policy for Uhura App, our products including, but not limited to, our mobile apps and our various cloud-based services, content and websites ("Products"). Specifically, this policy exists to inform you about the types of information we may receive, how we use that information, the measures we take to safeguard the information we receive, the choices you may make and certain legal rights that you have.
 
-Where we refer to "personal data" in this privacy policy we mean any data that may identify you as an individual.
+Where "personal data" is refered in this privacy policy we mean any data that may identify you as an individual.
 
 2. OVERVIEW OF OUR PRIVACY POLICY
 
@@ -14,7 +14,7 @@ We receive different types of information from our Products. We use this data to
 
 We may also receive your personal contact information contained in correspondence via our web sites and communications channels. This enables us to offer user support, beta testing communities, surveys, competitions and similar services.
 
-We will collect your email address, you subscriptions and what do listen on our Products to enable services such as personalization, prediction, synchronization and backup. We may use data provided by you to develop and improve our Products.
+We will collect your email address, your subscriptions, and all of the episodes you listen using our Products to enable services such as personalization, prediction, synchronization and backup. We may use data provided by you to develop and improve our Products.
 
 3. WITHDRAWING CONSENT
 
@@ -22,7 +22,7 @@ You may at any time withdraw your consent for our storage and use of personal da
 
 4. COMMUNICATING WITH YOU
 
-We collect your email address. We may use this to tell you about our Products from time to time, unless you indicate during registration, via our Products Settings menu or by clicking an “opt out” link in any message that we send you, that you do not wish us to do so.
+We collect your email address. We may use this to tell you about our Products from time to time, unless you indicate during registration, via our Products Settings menu or by clicking an “opt out” link in any message that we send you, that you do not wish to receive further messages.
 
 You may receive occasional notifications on your device alerting you to product updates and features that may be of interest to you. You can disable these notifications in our Products at any time by going to the Settings menu.
 
@@ -34,7 +34,7 @@ Should you breach the terms and conditions or terms of use relating to any of ou
 
 6. ACCESSING YOUR INFORMATION
 
-In order to be transparent about your data, you have a right to access your personal data. If you wish to access this please send a email to support@uhura.io. After check your account, you will receive a document with your stored data.
+In order to be transparent about your data, you have a right to access your personal data. If you wish to access this please send a email to support@uhura.io. After checking your account, you will receive a document with your stored data.
 
 7. CHANGE OF CONTROL
 
