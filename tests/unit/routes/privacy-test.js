@@ -6,6 +6,6 @@ moduleFor('route:privacy', 'Unit | Route | privacy', {
 });
 
 test('it exists', function(assert) {
-  var route = this.subject();
+  let route = this.subject();
   assert.ok(route);
 });
