@@ -21,8 +21,9 @@ Router.map(function() {
   //  this.route('category',       { path: '/category/:category_id' });
 
   this.route('subscriptions');
-  this.route('login');
   //  this.route('explore');
+  this.route('login');
+  this.route('privacy');
 });
 
 export default Router;

@@ -18,7 +18,7 @@ We will collect your email address, your subscriptions, and all of the episodes 
 
 3. WITHDRAWING CONSENT
 
-You may at any time withdraw your consent for our storage and use of personal data collected by any of our Products by going to the Account section in Uhura Settings. By withdrawing consent your personal data will be destroyed. It is important to note, however, that we will retain any transactional data relating to your purchase of the Products that we make available in order that such purchases can be reclaimed by you, should the need arise in the future. 
+You may at any time withdraw your consent for our storage and use of personal data collected by any of our Products by going to the Account section in Uhura Settings. By withdrawing consent your personal data will be destroyed. It is important to note, however, that we will retain any transactional data relating to your purchase of the Products that we make available in order that such purchases can be reclaimed by you, should the need arise in the future.
 
 4. COMMUNICATING WITH YOU
 
@@ -30,7 +30,7 @@ You may receive occasional notifications on your device alerting you to product 
 
 Except as stated in this privacy policy, we will not share your personal data with any third party unless you have given us permission. We may share anonymized data, where we have removed any personal data, with other parties.
 
-Should you breach the terms and conditions or terms of use relating to any of our Products, or if we are under a duty to disclose any information to comply with a legal obligation, we may be forced to disclose your information to a relevant authority. 
+Should you breach the terms and conditions or terms of use relating to any of our Products, or if we are under a duty to disclose any information to comply with a legal obligation, we may be forced to disclose your information to a relevant authority.
 
 6. ACCESSING YOUR INFORMATION
 
@@ -44,4 +44,4 @@ However this will not affect your rights or our obligations under this privacy p
 
 8. POLICY CHANGES
 
-From time to time we may make changes to this privacy policy, which will be posted on our web sites and relevant communications channels. You are advised to check our web sites regularly to view our most recent privacy policy. (We last updated our privacy policy on August 29, 2015, the key changes made are recorded in a change log here.)
+From time to time we may make changes to this privacy policy, which will be posted on our web sites and relevant communications channels. You are advised to check our web sites regularly to view our most recent privacy policy. (We last updated our privacy policy on Setember 4, 2015, the key changes made are recorded in a change log here.)
