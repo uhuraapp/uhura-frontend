@@ -1,4 +1,4 @@
-#sign_in-container
+#authentication-container
   display: flex
   flex-direction: column
 
@@ -6,7 +6,7 @@
     text-align: center
     text-shadow: 1px 0px 1px #A5A6A7
 
-#sign_in
+#sign_in, #sign_up
   width: 460px
   margin: 0 auto
   margin-top: 3%
@@ -28,6 +28,19 @@
     background: lighten(yellow, 30%)
     border: 1px solid  lighten(yellow, 20%)
     color: #333
+
+  .actions
+    button
+      background: #E5E9ED
+    p
+      float: right
+      padding: 5px 0
+      margin: 0
+    a
+      color: #3F51B5
+      &::after
+        content: "›"
+        font-size: 18px
 
   .connect-services
     text-align: center
@@ -59,13 +72,13 @@
         width: 36px
         padding: 5px 0
 
-      &.sign-in-button__facebook
+      &.sign-in-button__facebook, &.sign-up-button__facebook
         background: #3b5998
         &::before
           content: url(fb-icon.png)
           background: #354f88
 
-      &.sign-in-button__google
+      &.sign-in-button__google, &.sign-up-button__google
         background: #de4c34
         &::before
           content: url(g-icon.png)

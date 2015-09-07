@@ -24,6 +24,7 @@ Router.map(function() {
   //  this.route('explore');
   this.route('login');
   this.route('privacy');
+  this.route('register');
 });
 
 export default Router;

@@ -1,8 +1,12 @@
 <div id="authentication-container">
   <h1 class="uhura__logo">Uhura</h1>
 
-  <div id="sign_in" class="mdl-card mdl-shadow--2dp">
+  <div id="sign_up" class="mdl-card mdl-shadow--2dp">
     <form {{action "authenticate" on="submit"}} autocomplete="false">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        {{input id="name" type="text" value=name classBinding=":mdl-textfield__input" }}
+        <label class="mdl-textfield__label" for="name">Name</label>
+      </div>
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
         {{input id="email" type="text" value=email classBinding=":mdl-textfield__input" }}
         <label class="mdl-textfield__label" for="email">Email</label>
@@ -12,11 +16,12 @@
         <label class="mdl-textfield__label" for="password">Password</label>
       </div>
       <div class="actions">
-        <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" {{action "authenticate"}}>Sign In</button>
+        <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" {{action "register"}}>Sign Up</button>
+
         <p>
-          You're new here?
-          {{#link-to 'register'}}
-            Sign up now
+          Already have a account?
+          {{#link-to 'login'}}
+            Log in now
           {{/link-to}}
         </p>
       </div>
@@ -33,15 +38,15 @@
     {{/if}}
 
     <div class="connect-services">
-      <button {{action 'authenticate' 'google'}} class="sign-in-button sign-in-button__google mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised">
-        Sign in with Google
+      <button {{action 'authenticate' 'google'}} class="sign-up-button sign-up-button__google mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised">
+        Sign up with Google
       </button>
-      <button {{action 'authenticate' 'facebook'}} class="sign-in-button sign-in-button__facebook mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised">
-        Sign in with Facebook
+      <button {{action 'authenticate' 'facebook'}} class="sign-up-button sign-up-button__facebook mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised">
+        Sign up with Facebook
       </button>
     </div>
     <div class="terms">
-      By clicking in 'Sign in' you are agreeing to the
+      By clicking in 'Sign Up' you are agreeing to the
       {{#link-to 'privacy'}}
       Privacy Policy
       {{/link-to}}
