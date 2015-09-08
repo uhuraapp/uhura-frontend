@@ -17,7 +17,7 @@ test('it has v2 namespace', function(assert) {
 });
 
 test('it has host', function(assert) {
-  assert.equal(this.subject().host, 'http://api.uhura.io');
+  assert.equal(this.subject().host, 'https://api.uhura.io');
 });
 
 test('pathForType fix users path', function(assert) {
