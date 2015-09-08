@@ -31,7 +31,7 @@ module.exports = function(environment) {
   };
 
 
-  ENV.API_URL = "http://api.uhura.io"
+  ENV.API_URL = "https://api.uhura.io"
 
   ENV.contentSecurityPolicy = {
     'img-src': "'self' *",
