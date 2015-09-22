@@ -3,8 +3,11 @@ import AuthenticationMixin from '../mixins/controllers/authentication';
 
 export default Ember.Controller.extend(AuthenticationMixin, {
   actions: {
-    authentication(provider) {
-      this.authentication(provider);
+    register() {
+      this.register();
+    },
+    authenticate(provider) {
+      this.authenticate(provider);
     }
   }
 });
