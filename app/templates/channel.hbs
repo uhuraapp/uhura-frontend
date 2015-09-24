@@ -19,7 +19,10 @@
     </div>
   </div>
 
-  <h2>Episodes</h2>
+  <h2>
+    Episodes
+    <a href="mailto:dukekhaos@gmail.com" id="contact_us">Something wrong? tell me!</a>
+  </h2>
 
   <div class="episodes-list mdl-card mdl-shadow--2dp">
     {{episodes-list episodes=model.episodes store=store channel=model}}
@@ -29,3 +32,7 @@
     {{model.copyrigth}}
   </div>
 </div>
+
+<script>
+  UserVoice.push(['addTrigger', '#contact_us', {}]);
+</script>
