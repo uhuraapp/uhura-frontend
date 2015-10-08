@@ -6,6 +6,8 @@ export default Ember.Component.extend({
   classNameBindings: ['hasModel'],
   hasModel: Ember.computed.bool('controller.player.current'),
 
+  autoplay: Ember.computed.alias('controller.player.autoplay'),
+
   episode: Ember.computed.alias('player.current'),
 
   actions: {

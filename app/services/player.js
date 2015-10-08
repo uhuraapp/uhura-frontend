@@ -7,6 +7,8 @@ export default Ember.Service.extend({
   current: null,
   media: null,
 
+  autoplay: true,
+
   PLAYED_PERCENT: 95,
 
   playpause(episode) {
@@ -44,13 +46,17 @@ export default Ember.Service.extend({
   },
 
   _ended() {
-    let episodesElements = Ember.$('li.episode').get().reverse();
-    for (let i = 0; i <= episodesElements.length; i++) {
-      let episodeElement = Ember.$(episodesElements[i]);
-      if (!(episodeElement.is('.is-playing') || episodeElement.is('.is-played'))) {
-        episodeElement.find('.playpause').click();
-        break;
+    if (this.get('autoplay')) {
+      let episodesElements = Ember.$('li.episode').get().reverse();
+      for (let i = 0; i <= episodesElements.length; i++) {
+        let episodeElement = Ember.$(episodesElements[i]);
+        if (!(episodeElement.is('.is-playing') || episodeElement.is('.is-played'))) {
+          episodeElement.find('.playpause').click();
+          break;
+        }
       }
+    } else {
+      this.stop();
     }
   },
 
@@ -74,6 +80,7 @@ export default Ember.Service.extend({
   _isTimeToPing(currentTime) {
     return currentTime % 5 === 0;
   },
+
   _isPlayed(media) {
     let played = 100 * media.currentTime / media.duration;
     return played >= this.PLAYED_PERCENT;

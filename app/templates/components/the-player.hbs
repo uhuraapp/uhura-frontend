@@ -5,12 +5,17 @@
     <h3 class="channel-title">{{episode.channel.title}}</h3>
   </div>
 
+  <label class="mdl-icon-toggle mdl-js-icon-toggle mdl-js-ripple-effect" for="autoplay">
+    {{input checked=autoplay type="checkbox" class="mdl-icon-toggle__input" id="autoplay"}}
+    <i class="mdl-icon-toggle__label material-icons">text_format</i>
+    <p>autoplay</p>
+  </label>
 
   <button {{action "playpause" episode}} class="playpause material-icons">
     {{if episode.playing 'pause' 'play_arrow'}}
   </button>
 
-    <div id="wrapper-audio-element" class="player-audio-element">
+  <div id="wrapper-audio-element" class="player-audio-element">
     <audio controls width="100%" class="audio-element"></audio>
   </div>
 </div>

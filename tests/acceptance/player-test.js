@@ -90,3 +90,27 @@ test('player | when ended a episode should starts the next', function(assert) {
     assert.equal(find('#player .title').text(), episodes[i].title);
   });
 });
+
+test('player | when ended a episode should not starts the next with autoplay off', function(assert) {
+  const player = application.registry.container().lookup('service:player');
+  player.set('autoplay', false);
+
+  visit(`/channels/${channel.id}`);
+
+  andThen(function() {
+    assert.equal(currentURL(), `/channels/${channel.id}`);
+    click('.episode:last .playpause');
+  });
+
+  andThen(function() {
+    let i = episodes.length - 1;
+    assert.equal(find('#player .title').text(), episodes[i].title);
+    $('.episode:last').addClass('is-played');
+    player.successMedia(mediaMock('ended'));
+  });
+
+  andThen(function() {
+    let i = episodes.length - 1;
+    assert.equal(find('#player .title').text(), episodes[i].title);
+  });
+});

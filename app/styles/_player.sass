@@ -28,6 +28,28 @@
     padding: 5px
     width: 35%
 
+  label[for='autoplay']
+    padding: 0
+    position: relative
+    display: block
+    margin: 35px 15px
+    p
+      font-size: 10px
+      margin: 0
+
+  #autoplay
+    margin: 0
+    position: absolute
+    display: flex
+    + i
+      background: #FFF
+      border-radius: 0
+      font-size: 24px
+
+    &:checked + i
+      color: rgb(255, 87, 34)
+      font-weight: bold
+
   h2, h3
     padding: 0
     margin: 0px
