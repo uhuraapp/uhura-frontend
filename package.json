@@ -11,9 +11,9 @@
     "build": "ember build",
     "test": "ember test"
   },
-  "repository": "",
+  "repository": "https://github.com/uhuraapp/uhura-frontend.git",
   "engines": {
-    "node": ">= 0.10.0"
+    "node": "4.1.2"
   },
   "author": "",
   "license": "MIT",
