@@ -13,7 +13,7 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{the-player}}`);
 
-  assert.equal(this.$().text().trim(), 'play_arrow');
+  assert.equal(this.$().find('.playpause').text().trim(), 'play_arrow');
 
   // Template block usage:
   this.render(hbs`
@@ -22,5 +22,5 @@ test('it renders', function(assert) {
     {{/the-player}}
   `);
 
-  assert.equal(this.$().text().trim(), 'play_arrow');
+  assert.equal(this.$().find('.playpause').text().trim(), 'play_arrow');
 });
