@@ -3,7 +3,7 @@ import Ember from 'ember';
 
 let { computed } = Ember;
 
-const IMAGE_HOST = 'http://arcane-forest-5063.herokuapp.com';
+const IMAGE_HOST = 'https://images$x$.uhura.io';
 
 export default Ember.Mixin.create({
   title: DS.attr('string'),
@@ -37,8 +37,10 @@ export default Ember.Mixin.create({
 
   _realImageUrl() {
     let url = this.get('image_url');
-    if (url !== '' && url.indexOf(IMAGE_HOST) === -1) {
-      return `${IMAGE_HOST}/resolve?url=${this.get('image_url')}`;
+    if (url !== '' && url.indexOf('.uhura.io') === -1) {
+      const imageHostIndex = Math.floor(Math.random() * (2 - 1 + 1)) + 1;
+      const imageHost = IMAGE_HOST.replace('$x$', imageHostIndex);
+      return `${imageHost}/resolve?url=${this.get('image_url')}`;
     }
     return url;
   }
