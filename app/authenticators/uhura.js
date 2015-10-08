@@ -33,7 +33,7 @@ export default Base.extend({
   __checkCredentials(resolve, reject) {
     this.__getUserData().then(function(data) {
       Ember.run(() => resolve(data));
-      this._setUser(data)
+      this._setUser(data);
     }, function() {
       Ember.run(() => reject('Error: Could not authenticate using external service'));
     });
@@ -44,7 +44,7 @@ export default Base.extend({
     return new Promise((resolve, reject) => {
       if (!Ember.isEmpty(propertiesObject.get('token'))) {
         resolve(properties);
-        this._setUser(properties)
+        this._setUser(properties);
       } else {
         reject();
       }
@@ -110,12 +110,12 @@ export default Base.extend({
   } ,
 
   _setUser(user) {
-    UserVoice.push(['identify', {
+    window.UserVoice.push(['identify', {
       email:      user.email,
       name:       user.name,
       id:         user.id,
       account: {
-        id: user.id,
+        id: user.id
       }
     }]);
   }
