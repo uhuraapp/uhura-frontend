@@ -66,10 +66,7 @@ module.exports = function(environment) {
   }
 
   ENV['ember-simple-auth'] = {
-    base: {
-      store: 'session-store:local-storage'
-    },
-    authorizer: 'authorizer:uhura',
+    store: 'session-store:local-storage',
     crossOriginWhitelist: [ENV.API_URL]
   }
 

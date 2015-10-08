@@ -4,11 +4,9 @@ import Base from 'ember-simple-auth/authorizers/base';
 const { isEmpty } = Ember;
 
 export default Base.extend({
-  session: Ember.inject.service('session'),
-  authorize(block) {
-    const token = this.get('session.authenticated.token');
-    if (this.get('session.isAuthenticated') && !isEmpty(token)) {
-      block('Authorization', `Token ${token}`);
+  authorize(user, block) {
+    if (user && user.token && !isEmpty(user.token)) {
+      block('Authorization', `Token ${user.token}`);
     }
   }
 });

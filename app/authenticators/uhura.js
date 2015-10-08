@@ -31,7 +31,7 @@ export default Base.extend({
     };
   },
   __checkCredentials(resolve, reject) {
-    this.__getUserData().then(function(data) {
+    this.__getUserData().then((data) => {
       Ember.run(() => resolve(data));
       this._setUser(data);
     }, function() {
