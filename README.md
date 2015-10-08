@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/uhuraapp/uhura-frontend.svg?branch=master)](https://travis-ci.org/uhuraapp/uhura-frontend)<br />[![Test Coverage](https://codeclimate.com/github/uhuraapp/uhura-frontend/badges/coverage.svg)](https://codeclimate.com/github/uhuraapp/uhura-frontend/coverage)<br />[![Code Climate](https://codeclimate.com/github/uhuraapp/uhura-frontend/badges/gpa.svg)](https://codeclimate.com/github/uhuraapp/uhura-frontend)<br />[![devDependency Status](https://david-dm.org/uhuraapp/uhura-frontend/dev-status.svg)](https://david-dm.org/uhuraapp/uhura-frontend#info=devDependencies) <br />
 ----
 
-# PLEASE USE IOJS >= 2.4.0
+# PLEASE USE NODE >= 4.1.0
 
 ## Uhura Issues Flow
 
