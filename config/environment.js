@@ -23,10 +23,6 @@ module.exports = function(environment) {
 
     'ember-cli-mirage': {
       enabled: environment === 'test'
-    },
-
-    rollbar: {
-      accessToken: 'dc69607d27854abfa59a0d1698f03b76'
     }
   };
 
@@ -64,7 +60,9 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-
+    ENV.rollbar = {
+      accessToken: 'dc69607d27854abfa59a0d1698f03b76'
+    }
   }
 
   ENV['ember-simple-auth'] = {

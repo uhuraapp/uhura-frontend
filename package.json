@@ -42,6 +42,7 @@
     "ember-infinite-scroll": "0.2.4",
     "ember-page-title": "2.0.6",
     "ember-suave": "1.0.0",
+    "ember-cli-rollbar": "davewasmer/ember-cli-rollbar#master",
     "liquid-fire": "0.21.2"
   },
   "main": "dist/index.html",
