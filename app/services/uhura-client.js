@@ -5,8 +5,9 @@ export default Ember.Service.extend({
     return this.container.lookup('adapter:application');
   },
 
-  request(modelName, id, action, type, options) {
-    let url = `${this.adapter().buildURL(modelName, id)}/${action}`;
-    return this.adapter().ajax(url, type, options);
+  request(modelName, id = '', action = '', type = 'GET', options = {}) {
+    let url = `${this.adapter().buildURL(modelName, id)}/${action || ''}`;
+    const removeTrailingSlash = (url) => url.replace(/\/$/, "")
+    return this.adapter().ajax(removeTrailingSlash(url), type, options);
   }
 });
