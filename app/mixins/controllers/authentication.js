@@ -7,8 +7,11 @@ export default Ember.Mixin.create({
   processingMessage: '',
 
   session: service('session'),
+  uhura: service('uhura-client'),
 
   register() {
+    const flashMessages = Ember.get(this, 'flashMessages');
+
     this.set('processing', true);
     this.set('errorMessage', false);
 
@@ -20,6 +23,27 @@ export default Ember.Mixin.create({
       this.set('errorMessage', 'Please fill the required fields');
       return;
     }
+
+    const user = { email, password, name }
+    const data = { user }
+
+    const always = () => {
+      this.set('loading', false);
+      this.set('processing', false);
+      this.set('processingMessage', '');
+      this.set('password', '');
+    }
+
+    this.get('uhura')
+      .request('users', null, null, 'POST', { data })
+      .then(() => {
+        debugger
+        flashMessages.success("success!!!!");
+      })
+      .catch((errorMessage) => {
+        debugger
+        this.set('errorMessage', "Errrooorrr");
+      }).then(always, always);
   },
 
   authenticate(provider) {
