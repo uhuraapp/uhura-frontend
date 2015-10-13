@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { isBlank, inject: { service } } = Ember.inject;
+const { isBlank, inject: { service } } = Ember;
 
 export default Ember.Mixin.create({
   processing: false,
