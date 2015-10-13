@@ -16,12 +16,10 @@ export default Ember.Mixin.create({
     let password = this.get('password');
     let name     = this.get('name');
 
-    if(isBlank(email) || isBlank(password) || isBlank(name)) {
-      this.set('errorMessage', "all field is obrigatory");
-      return
+    if (isBlank(email) || isBlank(password) || isBlank(name)) {
+      this.set('errorMessage', 'Please fill the required fields');
+      return;
     }
-    debugger;
-    console.log(email, password, name)
   },
 
   authenticate(provider) {
