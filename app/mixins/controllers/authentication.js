@@ -37,11 +37,9 @@ export default Ember.Mixin.create({
     this.get('uhura')
       .request('users', null, null, 'POST', { data })
       .then(() => {
-        debugger
         flashMessages.success("success!!!!");
       })
       .catch((errorMessage) => {
-        debugger
         this.set('errorMessage', "Errrooorrr");
       }).then(always, always);
   },
