@@ -7,7 +7,7 @@ export default Ember.Service.extend({
 
   request(modelName, id = '', action = '', type = 'GET', options = {}) {
     let url = `${this.adapter().buildURL(modelName, id)}/${action || ''}`;
-    const removeTrailingSlash = (url) => url.replace(/\/$/, "")
+    const removeTrailingSlash = (url) => url.replace(/\/$/, '');
     return this.adapter().ajax(removeTrailingSlash(url), type, options);
   }
 });

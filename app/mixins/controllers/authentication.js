@@ -24,23 +24,23 @@ export default Ember.Mixin.create({
       return;
     }
 
-    const user = { email, password, name }
-    const data = { user }
+    const user = { email, password, name };
+    const data = { user };
 
     const always = () => {
       this.set('loading', false);
       this.set('processing', false);
       this.set('processingMessage', '');
       this.set('password', '');
-    }
+    };
 
     this.get('uhura')
       .request('users', null, null, 'POST', { data })
       .then(() => {
-        flashMessages.success("success!!!!");
-      })
-      .catch((errorMessage) => {
-        this.set('errorMessage', "Errrooorrr");
+        // TODO: transition to login
+        flashMessages.success('success!!!!');
+      }).catch((errorMessage) => {
+        this.set('errorMessage', errorMessage);
       }).then(always, always);
   },
 

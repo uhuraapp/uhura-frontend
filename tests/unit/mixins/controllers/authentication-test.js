@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import ControllersAuthenticationMixin from '../../../mixins/controllers/authentication';
+import ControllersAuthenticationMixin from '../../../../mixins/controllers/authentication';
 import { module, test } from 'qunit';
 
 module('Unit | Mixin | controllers/authentication');
