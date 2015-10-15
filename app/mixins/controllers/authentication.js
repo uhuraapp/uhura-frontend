@@ -10,8 +10,6 @@ export default Ember.Mixin.create({
   uhura: service('uhura-client'),
 
   register() {
-    const flashMessages = Ember.get(this, 'flashMessages');
-
     this.set('processing', true);
     this.set('errorMessage', false);
 
@@ -41,7 +39,7 @@ export default Ember.Mixin.create({
           // this.container.lookup('controller:login').set('processing', true);
           this.transitionToRoute('login');
         }).catch((errorStatus) => {
-          this.set('errorMessage', errorStatus.errors.map(error => error.message).join("\n"));
+          this.set('errorMessage', errorStatus.errors.map(error => error.message).join('\n'));
         }).then(always, always);
   },
 
