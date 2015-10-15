@@ -4,15 +4,15 @@
   <div id="sign_up" class="mdl-card mdl-shadow--2dp">
     <form {{action "authenticate" on="submit"}} autocomplete="false">
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        {{input id="name" type="text" value=name classBinding=":mdl-textfield__input" }}
+        {{input id="name" required="required" type="text" value=name classBinding=":mdl-textfield__input" }}
         <label class="mdl-textfield__label" for="name">Name</label>
       </div>
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        {{input id="email" type="email" value=email classBinding=":mdl-textfield__input" }}
+        {{input id="email" required="required" type="email" value=email classBinding=":mdl-textfield__input" }}
         <label class="mdl-textfield__label" for="email">Email</label>
       </div>
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        {{input id="password" type="password" autocomplete="false" value=password classBinding=":mdl-textfield__input"}}
+        {{input id="password" required="required" type="password" autocomplete="false" value=password classBinding=":mdl-textfield__input"}}
         <label class="mdl-textfield__label" for="password">Password</label>
       </div>
       <div class="actions">
