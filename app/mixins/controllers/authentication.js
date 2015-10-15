@@ -35,13 +35,14 @@ export default Ember.Mixin.create({
     };
 
     this.get('uhura')
-      .request('users', null, null, 'POST', { data })
-      .then(() => {
-        // TODO: transition to login
-        flashMessages.success('success!!!!');
-      }).catch((errorMessage) => {
-        this.set('errorMessage', errorMessage);
-      }).then(always, always);
+        .request('users', null, null, 'POST', { data })
+        .then(() => {
+          // this.container.lookup('controller:login').set('processingMessage', 'your account, confirm your email');
+          // this.container.lookup('controller:login').set('processing', true);
+          this.transitionToRoute('login');
+        }).catch((errorStatus) => {
+          this.set('errorMessage', errorStatus.errors.map(error => error.message).join("\n"));
+        }).then(always, always);
   },
 
   authenticate(provider) {
