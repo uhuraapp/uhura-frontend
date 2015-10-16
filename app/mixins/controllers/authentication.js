@@ -31,6 +31,11 @@ export default Ember.Mixin.create({
       return;
     }
 
+    if (password.length < 6) {
+      this.set('errorMessage', 'Password too short: Minimum amount of characters 6');
+      return;
+    }
+
     const user = { email, password, name };
     const data = { user };
     const xhrFields = { withCredentials: true };
