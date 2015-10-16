@@ -4,9 +4,7 @@ const { isBlank, inject: { service } } = Ember;
 
 const EMAIL_REGEX = new RegExp("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$");
 
-const isValidEmail = (email) => {
-  return EMAIL_REGEX.exec(email) !== null;
-};
+const isValidEmail = (email) => { return EMAIL_REGEX.exec(email) !== null };
 
 export default Ember.Mixin.create({
   processing: false,
@@ -24,12 +22,12 @@ export default Ember.Mixin.create({
     let name     = this.get('name');
 
     if (isBlank(email) || isBlank(password) || isBlank(name)) {
-      this.set('errorMessage', 'Please fill the required fields');
+      this.set('errorMessage', 'Email, Password and Name field is required');
       return;
     }
 
     if (!isValidEmail(email)) {
-      this.set('errorMessage', 'Your email is not valid');
+      this.set('errorMessage', 'Please fill Email field with a valid email address');
       return;
     }
 
