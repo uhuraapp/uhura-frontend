@@ -4,7 +4,9 @@ const { isBlank, inject: { service } } = Ember;
 
 const EMAIL_REGEX = new RegExp("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$");
 
-const isValidEmail = (email) => { return EMAIL_REGEX.exec(email) !== null };
+const isValidEmail = (email) => {
+  return EMAIL_REGEX.exec(email) !== null;
+};
 
 export default Ember.Mixin.create({
   processing: false,
@@ -52,9 +54,9 @@ export default Ember.Mixin.create({
     this.get('uhura')
         .request('users', null, null, 'POST', { data, xhrFields })
         .then(() => {
-          return new Ember.RSVP.Promise(authenticator.checkCredentials.bind(authenticator))
+          return new Ember.RSVP.Promise(authenticator.checkCredentials.bind(authenticator));
         }).then((data) => {
-          this.container.lookup('session:main')._setup('authenticator:uhura', data, true)
+          this.container.lookup('session:main')._setup('authenticator:uhura', data, true);
         }).catch((errorStatus) => {
           this.set('errorMessage', errorStatus.errors.map(error => error.message).join('\n'));
         }).then(always, always);
