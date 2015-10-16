@@ -1,4 +1,4 @@
-<div id="sign_in-container">
+<div id="authentication-container">
   <h1 class="uhura__logo">Uhura</h1>
 
   <div id="sign_in" class="mdl-card mdl-shadow--2dp">
@@ -13,6 +13,12 @@
       </div>
       <div class="actions">
         <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" {{action "authenticate"}}>Sign In</button>
+        <p>
+          You're new here?
+          {{#link-to 'register'}}
+            Sign up now
+          {{/link-to}}
+        </p>
       </div>
     </form>
 

@@ -21,7 +21,7 @@ export default Base.extend({
     return () => {
       try {
         if (loginWindow.closed) {
-          this.__checkCredentials(resolve, reject);
+          this.checkCredentials(resolve, reject);
         } else {
           window.setTimeout(this.__checkLogin(loginWindow, resolve, reject), 500);
         }
@@ -30,7 +30,7 @@ export default Base.extend({
       }
     };
   },
-  __checkCredentials(resolve, reject) {
+  checkCredentials(resolve, reject) {
     this.__getUserData().then((data) => {
       Ember.run(() => resolve(data));
       this._setUser(data);
@@ -60,7 +60,7 @@ export default Base.extend({
         loginWindow.addEventListener('loadstop', (event) => {
           if (event.url.indexOf(`${this.__authURLForProvider(data.provider)}/callback`) === 0) {
             loginWindow.close();
-            this.__checkCredentials(resolve, reject);
+            this.checkCredentials(resolve, reject);
           }
         });
       });
