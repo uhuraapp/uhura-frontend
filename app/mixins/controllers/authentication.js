@@ -35,6 +35,7 @@ export default Ember.Mixin.create({
 
     const user = { email, password, name };
     const data = { user };
+    const xhrFields = { withCredentials: true };
 
     const always = () => {
       this.set('loading', false);
@@ -43,12 +44,14 @@ export default Ember.Mixin.create({
       this.set('password', '');
     };
 
+    const authenticator = this.container.lookup('authenticator:uhura');
+
     this.get('uhura')
-        .request('users', null, null, 'POST', { data })
+        .request('users', null, null, 'POST', { data, xhrFields })
         .then(() => {
-          // this.container.lookup('controller:login').set('processingMessage', 'your account, confirm your email');
-          // this.container.lookup('controller:login').set('processing', true);
-          this.transitionToRoute('login');
+          return new Ember.RSVP.Promise(authenticator.checkCredentials.bind(authenticator))
+        }).then((data) => {
+          this.container.lookup('session:main')._setup('authenticator:uhura', data, true)
         }).catch((errorStatus) => {
           this.set('errorMessage', errorStatus.errors.map(error => error.message).join('\n'));
         }).then(always, always);
