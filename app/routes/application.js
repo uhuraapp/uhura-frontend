@@ -8,6 +8,10 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
   actions: {
     invalidateSession() {
       this.get('session').invalidate();
+    },
+
+    setTitle(title) {
+      this.get('controller').set('title', title);
     }
   }
 });

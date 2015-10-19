@@ -3,29 +3,29 @@
 {{title 'Uhura App'}}
 
 {{#if session.isAuthenticated}}
-<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--overlay-drawer-button">
-  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-    <header class="mdl-layout__header mdl-layout__header--transparent">
-      <div class="mdl-layout__header-row">
-        <span class="mdl-layout-title">Subscriptions {{pageTitleList}}</span>
-        <div class="mdl-layout-spacer"></div>
-        <nav class="mdl-navigation">
-          {{!-- <a class="mdl-navigation__link" href="">Link</a>
-          <a class="mdl-navigation__link" href="">Link</a>
-          <a class="mdl-navigation__link" href="">Link</a>
-          <a class="mdl-navigation__link" href="">Link</a> --}}
-        </nav>
-      </div>
-    </header>
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--overlay-drawer-button">
+  {{render 'partials.menu'}}
 
-    {{render 'partials.menu'}}
 
-    <main class="mdl-layout__content">
-      <div class="page-content">
-        {{liquid-outlet}}
-      </div>
-    </main>
-  </div>
+  <header class="mdl-layout__header mdl-layout__header--transparent">
+    <div class="mdl-layout__header-row">
+      <span class="mdl-layout-title">{{title}}</span>
+      <div class="mdl-layout-spacer"></div>
+      <nav class="mdl-navigation">
+        {{!-- <a class="mdl-navigation__link" href="">Link</a>
+        <a class="mdl-navigation__link" href="">Link</a>
+        <a class="mdl-navigation__link" href="">Link</a>
+        <a class="mdl-navigation__link" href="">Link</a> --}}
+      </nav>
+    </div>
+  </header>
+
+
+  <main class="mdl-layout__content">
+    <div class="page-content">
+      {{liquid-outlet}}
+    </div>
+  </main>
 </div>
 {{else}}
 <div class="mdl-layout mdl-js-layout unlogged">
