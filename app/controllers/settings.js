@@ -5,10 +5,7 @@ export default Ember.Controller.extend({
   name: Ember.computed.alias('session.session.content.name'),
   locale: Ember.computed.alias('session.session.content.locale'),
 
-  locales: ["", "PT", "EN"],
+  locales: ['', 'PT', 'EN'],
 
-  init() {
-    this._super();
-    this.send('setTitle', 'Settings');
-  }
+  title: 'Settings'
 });

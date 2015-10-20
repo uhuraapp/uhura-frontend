@@ -1,7 +1,8 @@
 import Ember from 'ember';
 import MaterialDesignMixin from '../mixins/routes/material-design';
+import TitledMixin from '../mixins/routes/titled';
 
-export default Ember.Route.extend(MaterialDesignMixin, {
+export default Ember.Route.extend(MaterialDesignMixin, TitledMixin, {
   client: Ember.inject.service('uhura-client'),
   actions: {
     save() {
