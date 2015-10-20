@@ -6,10 +6,6 @@ let Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  // this.route('users', function() {
-  //   this.route('settings');
-  // });
-
   this.route('channel',       { path: '/channels/:channel_id' }, function() {
     //    this.route('episode',            { path: '/:episode_id' });
     this.modal('share-modal', { withParams: ['share'] });
@@ -22,9 +18,10 @@ Router.map(function() {
 
   this.route('subscriptions');
   //  this.route('explore');
-  this.route('login');
   this.route('privacy');
+  this.route('login');
   this.route('register');
+  this.route('settings', {});
 });
 
 export default Router;
