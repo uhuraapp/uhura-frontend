@@ -1,1 +1,23 @@
-{{outlet}}
+{{title 'Settings'}}
+
+<div id="settings" class="mdl-grid">
+  <ul>
+    <li class="mdl-card mdl-shadow--2dp">
+      <h3>Profile</h3>
+      <div class="uk-form-select" data-uk-form-select>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          {{input class="mdl-textfield__input" value=name id='name' focus-out="save" }}
+          <label class="mdl-textfield__label" for="name">Your Name</label>
+        </div>
+        <!-- <div class="mdl&#45;textfield mdl&#45;js&#45;textfield"> -->
+        <!--   <label>Language: </label> -->
+        <!--   <select onchange={{action (mut locale) value="target.value"}}> -->
+        <!--     {{#each locales as |localeChoice|}} -->
+        <!--     <option value={{localeChoice}} selected={{eq locale localeChoice}}>{{localeChoice}}</option> -->
+        <!--     {{/each}} -->
+        <!--   </select> -->
+        <!-- </div> -->
+      </div>
+    </li>
+  </ul>
+</div>
