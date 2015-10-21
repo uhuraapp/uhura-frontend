@@ -1,4 +1,4 @@
-#privacy-container
+#privacy-container, #terms-container
   display: flex
   flex-direction: column
 
@@ -6,15 +6,19 @@
     text-align: center
     text-shadow: 1px 0px 1px #A5A6A7
 
-  p, h2, h3
+  p, h2, h3, ol
     font-family: "Exo 2"
     padding: 10px
     font-size: 25px
     line-height: 2
     width: 900px
     margin: 0 auto
+    list-style-position: outside
 
+  ol ol
+    list-style-type:  lower-latin
+    padding: 0 0 0 20px
   h3
     font-weight: 700
-  p
+  p, li
     font-size: 17px
