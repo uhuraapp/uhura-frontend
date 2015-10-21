@@ -2,9 +2,7 @@ import Ember from 'ember';
 import MaterialDesignMixin from '../mixins/routes/material-design';
 import TitledMixin from '../mixins/routes/titled';
 
-
 const { Route, inject } = Ember;
-
 
 export default Route.extend(MaterialDesignMixin, TitledMixin, {
   client: inject.service('uhura-client'),
