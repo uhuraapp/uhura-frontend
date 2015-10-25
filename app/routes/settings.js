@@ -3,11 +3,13 @@ import MaterialDesignMixin from '../mixins/routes/material-design';
 import TitledMixin from '../mixins/routes/titled';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-const { Route, inject } = Ember;
+const { Route, inject: { service }, computed: { alias } } = Ember;
 
 export default Route.extend(AuthenticatedRouteMixin, MaterialDesignMixin, TitledMixin,  {
-  client: inject.service('uhura-client'),
-  notify: inject.service('notify'),
+  client: service('uhura-client'),
+  notify: service('notify'),
+  session: service('session'),
+  sessionStore: alias('session.store'),
 
   actions: {
     save() {
@@ -17,7 +19,8 @@ export default Route.extend(AuthenticatedRouteMixin, MaterialDesignMixin, Titled
       const data = { user };
       this.get('client').request('', 'user', '', 'PUT', { data }).then((user) => {
         this.get('notify').success('Profile updated!');
-        this.container.lookup('session:main')._setup('authenticator:uhura', user, true);
+        user['authenticator'] = 'authenticator:uhura';
+        this.get('sessionStore').persist({authenticated: user});
       });
     }
   }
