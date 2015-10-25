@@ -1,11 +1,18 @@
 import Ember from 'ember';
 
+const { computed: { alias, bool }, inject } = Ember;
+
 export default Ember.Controller.extend({
-  session: Ember.inject.service(),
-  name: Ember.computed.alias('session.session.content.name'),
-  locale: Ember.computed.alias('session.session.content.locale'),
+  session: inject.service(),
+  name:    alias('session.data.authenticated.name'),
+  optin:   bool('session.data.authenticated.optin'),
+  locale:  alias('session.data.authenticated.locale'),
 
   locales: ['', 'PT', 'EN'],
 
-  title: 'Settings'
+  title: 'Settings',
+
+  whenOptinWasChanged: Ember.observer('optin', function() {
+    this.send('save');
+  })
 });

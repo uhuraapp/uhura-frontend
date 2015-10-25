@@ -7,6 +7,7 @@ export default Ember.Mixin.create({
   },
   upgradeElements() {
     window.componentHandler.upgradeDom('MaterialButton');
+    window.componentHandler.upgradeDom('MaterialSwitch');
     window.componentHandler.upgradeDom('MaterialLayout');
     window.componentHandler.upgradeDom('MaterialTextfield');
   }

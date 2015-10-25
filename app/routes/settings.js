@@ -14,8 +14,9 @@ export default Route.extend(AuthenticatedRouteMixin, MaterialDesignMixin, Titled
   actions: {
     save() {
       const name = this.get('controller.name');
+      const optin = this.get('controller.optin');
       const locale = this.get('controller.locale') || 'en';
-      const user = { name, locale };
+      const user = { name, locale, optin };
       const data = { user };
       this.get('client').request('', 'user', '', 'PUT', { data }).then((user) => {
         this.get('notify').success('Profile updated!');
