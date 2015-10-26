@@ -26,6 +26,9 @@ export default Route.extend(AuthenticatedRouteMixin, MaterialDesignMixin, Titled
     },
 
     deleteAccount() {
+      // TODO: confirm account delete
+      // TODO: add a information about how and when data will be delete
+      // TODO: add information how request data
       this.get('client').request('', 'user', '', 'DELETE').then(() => {
         this.get('notify').success('Account deleted!');
         this.get('session').invalidate();
