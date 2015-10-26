@@ -3,33 +3,36 @@
 <div id="settings" class="mdl-grid">
   <ul>
     <li class="mdl-card mdl-shadow--2dp">
-      <h3>Profile</h3>
-      <div class="uk-form-select" data-uk-form-select>
+      <h3>Account</h3>
+      <div class="field">
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
           {{input class="mdl-textfield__input" value=name id='name' focus-out="save" }}
           <label class="mdl-textfield__label" for="name">Your Name</label>
         </div>
       </div>
-      <h3>Notification</h3>
-      <div>
+      <div class="field">
+        <p>Permanently delete my account(all subscriptions and plays)</p>
+        <button {{action 'deleteAccount'}} class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+          DELETE
+        </button>
+      </div>
+    </li>
+    <li class="mdl-card mdl-shadow--2dp">
+      <h3>Notifications</h3>
+      <div class="field">
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1">
-            {{input id="switch-1" key-press="save" type="checkbox" class="mdl-switch__input" checked=optin}}
+          <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="optin">
+            {{input id="optin" type="checkbox" class="mdl-switch__input" checked=optin}}
             <span class="mdl-switch__label">
               Send me the ocasionally newsletter <br />(you can unsubscribe at any time)
             </span>
           </label>
         </div>
-
-        <!-- <div class="mdl&#45;textfield mdl&#45;js&#45;textfield"> -->
-          <!--   <label>Language: </label> -->
-          <!--   <select onchange={{action (mut locale) value="target.value"}}> -->
-            <!--     {{#each locales as |localeChoice|}} -->
-            <!--     <option value={{localeChoice}} selected={{eq locale localeChoice}}>{{localeChoice}}</option> -->
-            <!--     {{/each}} -->
-            <!--   </select> -->
-          <!-- </div> -->
       </div>
     </li>
   </ul>
+
+  <p id="legal-links">
+    {{#link-to 'terms'}}Terms of Service{{/link-to}} - {{#link-to 'privacy'}}Privacy Policy{{/link-to}}
+  </p>
 </div>

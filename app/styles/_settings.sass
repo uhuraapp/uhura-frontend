@@ -1,18 +1,25 @@
 #settings
   justify-content: center
+  flex-direction: column
   h3
     font-size: 25px
     line-height: 1.5
     font-weight: 700
-    margin: 0 0 15px 0
-    padding: 0
+    margin: 0
+    padding: 0 20px
+  div.field
+    padding: 20px
+  div.field:not(:last-child)
+    border-bottom: 1px solid #ececec
   ul
     list-style: none
     width: 500px
+    margin: 0 auto
     li
       width: 500px
-      padding: 20px
+      padding: 20px 0
       background: #FFF
+      margin-bottom: 20px
       input, label
         width: 460px
 
@@ -24,3 +31,9 @@
       button
         width: 115px
         align-self: flex-end
+  #legal-links
+    margin: 0 auto
+    a
+      font-weight: 700
+
+

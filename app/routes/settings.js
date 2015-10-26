@@ -20,8 +20,15 @@ export default Route.extend(AuthenticatedRouteMixin, MaterialDesignMixin, Titled
       const data = { user };
       this.get('client').request('', 'user', '', 'PUT', { data }).then((user) => {
         this.get('notify').success('Profile updated!');
-        user['authenticator'] = 'authenticator:uhura';
-        this.get('sessionStore').persist({authenticated: user});
+        user.authenticator = 'authenticator:uhura';
+        this.get('sessionStore').persist({ authenticated: user });
+      });
+    },
+
+    deleteAccount() {
+      this.get('client').request('', 'user', '', 'DELETE').then(() => {
+        this.get('notify').success('Account deleted!');
+        this.get('session').invalidate();
       });
     }
   }
