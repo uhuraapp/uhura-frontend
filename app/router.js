@@ -21,7 +21,14 @@ Router.map(function() {
   this.route('privacy');
   this.route('login');
   this.route('register');
-  this.route('settings', {});
+  this.route('settings', {}, function() {
+    this.modal('delete-account', {
+      withParams: ['delete-account'],
+      actions: {
+        deleteAccount: 'deleteAccount'
+      }
+    });
+  });
   this.route('terms');
 });
 

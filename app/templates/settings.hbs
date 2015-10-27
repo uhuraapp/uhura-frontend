@@ -12,9 +12,9 @@
       </div>
       <div class="field">
         <p>Permanently delete my account(all subscriptions and plays)</p>
-        <button {{action 'deleteAccount'}} class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+        {{#link-to (query-params delete-account='confirm') class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" tagName='button'}}
           DELETE
-        </button>
+        {{/link-to}}
       </div>
     </li>
     <li class="mdl-card mdl-shadow--2dp">

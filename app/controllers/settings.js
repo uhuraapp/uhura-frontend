@@ -3,6 +3,7 @@ import Ember from 'ember';
 const { computed: { alias, bool }, inject } = Ember;
 
 export default Ember.Controller.extend({
+  queryParams: ['delete-account'],
   session: inject.service(),
   name:    alias('session.data.authenticated.name'),
   optin:   bool('session.data.authenticated.optin'),
