@@ -12,7 +12,7 @@ export default Ember.Mixin.create({
   copyrigth: DS.attr('string'),
   episodes: DS.hasMany('episode', { async: false }),
   raw_id: DS.attr('string'),
-  subscribed: DS.attr(),
+  subscribed: DS.attr('boolean'),
   to_view: DS.attr(),
   url:        DS.attr(),
   uri:        DS.attr(),
