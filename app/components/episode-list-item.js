@@ -1,8 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  tagName: 'li',
-  classNames: ['episode'],
+  classNames: ['episode', 'episode-card'],
   classNameBindings: ['isPlayed', 'isDownloaded', 'isPlaying'],
   rightActions: true,
 

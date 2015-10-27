@@ -7,7 +7,7 @@ let Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('channel',       { path: '/channels/:channel_id' }, function() {
-    //    this.route('episode',            { path: '/:episode_id' });
+    this.route('episode',     { path: '/:episode_id' });
     this.modal('share-modal', { withParams: ['share'] });
   });
 
