@@ -41,6 +41,6 @@ export default Ember.Component.extend({
           e.stopPropagation();
         });
       }, 500);
-    },
+    }
   }
 });
