@@ -1,14 +1,16 @@
 import Ember from 'ember';
 
+const { $ } = Ember;
+
 export default Ember.Route.extend({
-  setupController(a,b){
-    this._super(a,b);
-    Ember.run.scheduleOnce('afterRender', this, 'prepareToClose');
+  setupController(controller, model) {
+    this._super(controller, model);
+    Ember.run.scheduleOnce('afterRender', this, 'prepareToCloseModal');
   },
 
-  prepareToClose() {
-    Ember.$('#episode-modal').on('click', (e) => {
-      if(Ember.$(e.target).is('#episode-modal')) {
+  prepareToCloseModal() {
+    $('#episode-modal').on('click', (e) => {
+      if ($(e.target).is('#episode-modal')) {
         const channelID = this.get('controller.model.channel_id');
         this.transitionTo('channel', channelID);
       }
