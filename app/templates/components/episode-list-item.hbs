@@ -34,6 +34,11 @@
             {{/if}}
           </button>
         </li>
+        <li>
+          {{#link-to 'channel.episode' episode (query-params share-episode="on") tagName="button"}}
+            Share
+          {{/link-to}}
+        </li>
         {{!--
           <li>
           <button {{action 'download'}}>Download</button>
