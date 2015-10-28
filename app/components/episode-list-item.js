@@ -42,10 +42,5 @@ export default Ember.Component.extend({
         });
       }, 500);
     },
-
-    info() {
-      Ember.$('.body.open').removeClass('open');
-      this.$('.body').addClass('open');
-    }
   }
 });

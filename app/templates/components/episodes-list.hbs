@@ -1,5 +1,5 @@
 {{#each episodes as |episode|}}
-  {{episode-list-item episode=episode rightActions=hasRightActions tagName='li'}}
+  {{episode-list-item episode=episode rightActions=hasRightActions tagName='li' hasLink=true}}
 {{/each}}
 
 {{#infinite-scroll content=episodes hasMore=hasMore scrollable=".mdl-layout__content"}}
