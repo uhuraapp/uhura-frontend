@@ -10,7 +10,7 @@ export default Ember.Route.extend(TitledMixin, AuthenticatedRouteMixin, Material
 
   actions: {
     createProfile() {
-      const profile = this.store.createRecord('profile', {})
+      const profile = this.store.createRecord('profile', {});
       profile.save();
     }
   }
