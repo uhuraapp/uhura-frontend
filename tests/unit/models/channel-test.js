@@ -4,7 +4,7 @@ import {
 } from 'ember-qunit';
 
 moduleForModel('channel', {
-  needs: ['model:episode']
+  needs: ['model:episode', 'model:profile']
 });
 
 test('it exists', function(assert) {

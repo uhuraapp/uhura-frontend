@@ -28,6 +28,8 @@ export default function() {
   this.put('/episodes/:id/listen', function() {
     return {};
   });
+
+  this.get('/users/subscriptions');
 }
 
 function parseURL(url) {

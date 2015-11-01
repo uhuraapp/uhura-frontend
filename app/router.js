@@ -32,6 +32,7 @@ Router.map(function() {
     });
   });
   this.route('terms');
+  this.route('profile', { path: '/profiles/:profile_id' });
 });
 
 export default Router;

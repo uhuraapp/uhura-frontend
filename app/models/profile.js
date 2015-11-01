@@ -6,5 +6,6 @@ const { isEmpty, computed } = Ember;
 export default DS.Model.extend({
   hasKey: computed('key', function() {
     return !isEmpty(this.get('id'));
-  })
+  }),
+  channels: DS.hasMany('channel', { async: false })
 });
