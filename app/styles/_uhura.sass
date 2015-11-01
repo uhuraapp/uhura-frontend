@@ -62,6 +62,17 @@ img.channel-img
   transition-duration: 1s
   transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1)
 
+.mdl-layout--fixed-drawer
+  > .mdl-layout__header .mdl-layout__header-row
+    padding: 15px
+  &.is-small-screen
+    > .mdl-layout__header .mdl-layout__header-row
+      padding-left: 65px
+
+@media screen and (max-width: 1024px)
+  .mdl-layout__header .mdl-layout__drawer-button
+    margin: 6px
+
 // *
 //   box-sizing: border-box
 //   font-family: 'Exo 2', sans-serif
