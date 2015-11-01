@@ -9,11 +9,6 @@
 
 
   {{#each model as |subscription|}}
-  {{#link-to 'channel' subscription.id class="mdl-cell mdl-cell--2-col" }}
-  <div class="channel-img__contaniner mdl-shadow--2dp">
-    <img class="channel-img" data-channel-image-id={{subscription.id}} src={{subscription.imageURL}} />
-  </div>
-  <h4>{{subscription.title}}</h4>
-  {{/link-to}}
+    {{channel-card channel=subscription  class="mdl-cell mdl-cell--2-col"}}
   {{/each}}
 </div>
