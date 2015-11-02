@@ -14,7 +14,7 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{channel-card channel=channel}}`);
 
-  assert.equal(this.$().text().trim(), '');
+  assert.equal(this.$().text().trim(), 'Open');
 
   // Template block usage:
   this.render(hbs`
@@ -23,5 +23,5 @@ test('it renders', function(assert) {
     {{/channel-card}}
   `);
 
-  assert.equal(this.$().text().trim(), '');
+  assert.equal(this.$().text().trim(), 'Open');
 });
