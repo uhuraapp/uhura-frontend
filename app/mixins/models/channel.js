@@ -21,8 +21,9 @@ export default Ember.Mixin.create({
   channel_id: DS.attr(),
   channel_url: DS.attr(),
   shortDescription: computed('description', function() {
-    let shortDescription = (this.get('description') || '').substring(0, 150);
-    if (this.get('description').length > shortDescription.length) {
+    let description = this.get('description') || '';
+    let shortDescription = description.substring(0, 150);
+    if (description.length > shortDescription.length) {
       shortDescription += '...';
     }
     return shortDescription;
