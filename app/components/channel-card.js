@@ -8,5 +8,66 @@ export default Ember.LinkComponent.extend({
   didReceiveAttrs() {
     this.attrs.params = ['channel', this.get('channel').id];
     this.attrs.hasBlock = true;
+  },
+
+  didInsertElement() {
+    const $card = this.$();
+
+    $card.find('img').hover(() => {
+      const el = this.__createCardInfo($card);
+      el.addClass('showin');
+      el.fadeIn();
+      Ember.$('body').append(el);
+      this.__fixBottom(el);
+    }, (event) => {
+      if(this.__shouldRemoveCardInfo(event)) {
+        Ember.$(event.relatedTarget).hover(() => {}, this.__hideCardInfo);
+        return;
+      }
+
+      this.__hideCardInfo();
+    });
+  },
+
+  __createCardInfo($card) {
+    const info = $card.find('.channel-card__info');
+    const el = info.clone();
+    const elRect = $card[0].getBoundingClientRect();
+    const { top, left }  = elRect;
+
+    el.css({
+      top: top,
+      left: left,
+      width: elRect.width,
+    });
+
+    return el;
+  },
+
+  __fixBottom(el) {
+    const { top, bottom } = el[0].getBoundingClientRect();
+    if(bottom > window.innerHeight) {
+      const diff = bottom - window.innerHeight + 15;
+      el.css({
+        top: top - diff
+      });
+    }
+  },
+
+  __shouldRemoveCardInfo(event) {
+    const target             = Ember.$(event.relatedTarget);
+    const cardInfoClass      = '.channel-card__info';
+    const isCardInfo         = target.is(cardInfoClass);
+    const isCardInfoChildren = target.parents(cardInfoClass).length > 0;
+    return isCardInfo || isCardInfoChildren;
+  },
+
+
+  __hideCardInfo() {
+    Ember.$('.showin.channel-card__info').fadeOut();
+  },
+
+  willDestroyElement() {
+    this.$().off('mouseenter mouseleave');
   }
 });

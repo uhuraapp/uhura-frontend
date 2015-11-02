@@ -20,6 +20,13 @@ export default Ember.Mixin.create({
   uri:        DS.attr(),
   channel_id: DS.attr(),
   channel_url: DS.attr(),
+  shortDescription: computed('description', function() {
+    let shortDescription = (this.get('description') || '').substring(0, 150);
+    if(this.get('description').length > shortDescription.length) {
+      shortDescription += '...';
+    }
+    return shortDescription;
+  }),
   imageURL: computed('image_url', function() {
     const that = this;
     let image = new Image();
