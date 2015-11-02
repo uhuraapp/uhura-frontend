@@ -5,8 +5,10 @@
   <h4>{{channel.title}}</h4>
 </div>
 
-<div class="channel-card__info  mdl-shadow--2dp" for="channel-{{channel.id}}">
+<div class="channel-card__info mdl-shadow--2dp" for="channel-{{channel.id}}">
   <img class="channel-img" data-channel-image-id={{channel.id}} src={{channel.imageURL}} />
   <h5>{{channel.title}}</h5>
+  {{#link-to 'channel' channel.id class="mdl-button mdl-js-button
+  mdl-js-ripple-effect mdl-button--colored"}}Open{{/link-to}}
   <p>{{channel.shortDescription}}</p>
 </div>
