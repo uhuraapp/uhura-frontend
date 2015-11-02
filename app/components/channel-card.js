@@ -20,7 +20,7 @@ export default Ember.LinkComponent.extend({
       Ember.$('body').append(el);
       this.__fixBottom(el);
     }, (event) => {
-      if(this.__shouldRemoveCardInfo(event)) {
+      if (this.__shouldRemoveCardInfo(event)) {
         Ember.$(event.relatedTarget).hover(() => {}, this.__hideCardInfo);
         return;
       }
@@ -33,20 +33,14 @@ export default Ember.LinkComponent.extend({
     const info = $card.find('.channel-card__info');
     const el = info.clone();
     const elRect = $card[0].getBoundingClientRect();
-    const { top, left }  = elRect;
-
-    el.css({
-      top: top,
-      left: left,
-      width: elRect.width,
-    });
-
+    const { top, left, width }  = elRect;
+    el.css({ top, left, width });
     return el;
   },
 
   __fixBottom(el) {
     const { top, bottom } = el[0].getBoundingClientRect();
-    if(bottom > window.innerHeight) {
+    if (bottom > window.innerHeight) {
       const diff = bottom - window.innerHeight + 15;
       el.css({
         top: top - diff
@@ -61,7 +55,6 @@ export default Ember.LinkComponent.extend({
     const isCardInfoChildren = target.parents(cardInfoClass).length > 0;
     return isCardInfo || isCardInfoChildren;
   },
-
 
   __hideCardInfo() {
     Ember.$('.showin.channel-card__info').fadeOut();
