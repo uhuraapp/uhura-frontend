@@ -20,7 +20,7 @@ export default Ember.LinkComponent.extend({
       Ember.$('body').append(el);
       this.__fixBottom(el);
     }, (event) => {
-      if (this.__shouldRemoveCardInfo(event)) {
+      if (this.__shouldNotRemoveCardInfo(event)) {
         Ember.$(event.relatedTarget).hover(() => {}, this.__hideCardInfo);
         return;
       }
@@ -48,7 +48,7 @@ export default Ember.LinkComponent.extend({
     }
   },
 
-  __shouldRemoveCardInfo(event) {
+  __shouldNotRemoveCardInfo(event) {
     const target             = Ember.$(event.relatedTarget);
     const cardInfoClass      = '.channel-card__info';
     const isCardInfo         = target.is(cardInfoClass);
