@@ -10,7 +10,7 @@ export default Ember.Route.extend(TitledMixin, {
     set(controller, 'title', title);
     set(controller, 'details', `For some reason we can not complete your request,
         We are receiving the follow error: <strong>${details}</strong>.</br /><br />
-        We were notified of the problem and soon we will fix it, <strong>try reloading the page</strong>, if the problem persists please email uhura@support.io`);
+        We were notified of the problem and soon we will fix it, <strong>try reloading the page</strong>, if the problem persists please email support@uhura.io`);
     this._super(controller, adapterError);
   },
 
