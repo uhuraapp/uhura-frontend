@@ -16,6 +16,13 @@
 
   button.playpause
     margin: 35px 15px
+    -webkit-touch-callout: none
+    -webkit-user-select: none
+    -khtml-user-select: none
+    -moz-user-select: none
+    -ms-user-select: none
+    user-select: none
+    outline: 0
 
   #player
     height: 110px
@@ -75,7 +82,6 @@
       user-select: none
       outline: 0
 
-
   .mejs-container
     height: 110px !important
     .mejs-controls
@@ -98,7 +104,18 @@
       background: #FF5722
 
     .mejs-time-loaded
-      background: #444
+      background: rgba(0, 0, 0, 0.3);
+
+    .mejs-time-current
+      background: #FF5722
+      background: rgba(0, 0, 0, 0.3);
+
+    .mejs-time-float
+      height: 20px
+      background: #FF5722
+      border: none
+      border-radius: 5px 5px 15px 15px
+      color: #FFF
 
     .mejs-time-handle
       display: block
@@ -108,7 +125,7 @@
       outline: none
       top: -4px
       border-radius: 100%
-      background: #333
+      background: #FF5722
       &:hover
         width: 20px
         height: 20px
