@@ -7,8 +7,9 @@ export default Ember.Service.extend({
   session: service('session'),
   store: service(),
   client: service('uhura-client'),
+  profileID: null,
 
-  account: Ember.computed('session.data.authenticated.id', function() {
+  account: Ember.computed('session.data.authenticated.id', 'profileID', function() {
     const userId = this.get('session.data.authenticated.id');
     if (!Ember.isEmpty(userId)) {
       return DS.PromiseObject.create({

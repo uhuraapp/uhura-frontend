@@ -3,7 +3,12 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
 import MaterialDesignMixin from '../mixins/routes/material-design';
 import TitledMixin from '../mixins/routes/titled';
 
+const { service } = Ember.inject;
+
 export default Ember.Route.extend(TitledMixin, AuthenticatedRouteMixin, MaterialDesignMixin, {
+
+  account: service('session-account'),
+
   model() {
     return this.store.findAll('subscription');
   },
@@ -11,7 +16,9 @@ export default Ember.Route.extend(TitledMixin, AuthenticatedRouteMixin, Material
   actions: {
     createProfile() {
       const profile = this.store.createRecord('profile', {});
-      profile.save();
+      profile.save().then((data) => {
+        this.get('account').set('profileID', data.get('id'));
+      });
     }
   }
 });
