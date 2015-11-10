@@ -6,7 +6,7 @@ const { set, computed } = Ember;
 export default Ember.Route.extend(TitledMixin, {
   shouldSetTitle: computed(() => false),
   setupController(controller, adapterError) {
-    const { title, details } = this.__error(adapterError.errors);
+    const { title, details } = this.__error(adapterError.message || adapterError.errors);
     set(controller, 'title', title);
     set(controller, 'details', `For some reason we can not complete your request,
         We are receiving the follow error: <strong>${details}</strong>.</br /><br />
@@ -16,9 +16,9 @@ export default Ember.Route.extend(TitledMixin, {
 
   __error(errors) {
     let title = 'We\'re sorry';
-    let details = '';
+    let details = errors;
 
-    if (errors.length === 1) {
+    if (errors && errors.length === 1) {
       const [ error ] = errors;
       details = error.title;
     }
