@@ -17,6 +17,8 @@ Router.map(function() {
     shareRoute(this, ['share-channel']);
   });
 
+  this.route('channel', { path: '/channels/*channel_id' });
+
   this.route('subscriptions');
   this.route('privacy');
   this.route('login');
