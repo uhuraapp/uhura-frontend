@@ -39,11 +39,9 @@
             Share
           {{/link-to}}
         </li>
-        {{!--
-          <li>
+        <li>
           <button {{action 'download'}}>Download</button>
-         </li>
-         --}}
+        </li>
       </ul>
     </div>
   </div>
@@ -53,26 +51,3 @@
   {{{episode.description}}}
 </div>
 
-<!--
-{{#if session.isAuthenticated}}
-  <span class="progress">{{episode.progress}}%</span>
-{{/if}}
-
-<div class="actions">
-  <div class="uk-float-right">
-    {{#if rightActions}}
-    {{#if session.isAuthenticated}}
-      <button {{action 'played'}} {{bind-attr data-id=episode.id}} {{bind-attr class=":typcn :icon :played episode.played:typcn-tick:typcn-tick-outline"}} {{bind-attr data-played=episode.played}}></button>
-      {{#if episode.downloading}}
-        <img class="downloading" src="assets/loading-download.gif" />
-      {{else}}
-        <button {{action 'download'}} {{bind-attr data-id=episode.id}} {{bind-attr class=":typcn :icon episode.downloaded:typcn-trash:typcn-download :download"}}></button>
-      {{/if}}
-    {{/if}}
-    <button {{action 'share'}} class="typcn icon typcn-export-outline share-button"/>
-    <div id="share-button-{{episode.id}}" class="share-button"></div>
-    {{/if}}
-  </div>
-</div>
-
--->

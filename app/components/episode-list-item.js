@@ -9,7 +9,6 @@ export default Ember.Component.extend({
   client: Ember.inject.service('uhura-client'),
 
   isPlayed: Ember.computed.bool('episode.played'),
-  isDownloaded: Ember.computed.bool('episode.downloaded'),
   isPlaying: Ember.computed.bool('episode.playing'),
 
   actions: {
@@ -29,6 +28,12 @@ export default Ember.Component.extend({
       });
 
       Ember.$('.more-itens .itens.open').removeClass('.open');
+    },
+
+    download() {
+      const episodeID = this.get('episode.id');
+      const downloadURL = this.get('client').buildURL('episode', episodeID, 'download');
+      window.open(downloadURL);
     },
 
     more() {
