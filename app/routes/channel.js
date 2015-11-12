@@ -22,10 +22,10 @@ export default Ember.Route.extend(MaterialDesignMixin, TitledMixin, {
 
   setupController(controller, model) {
     this._super(controller, model);
-    set(controller, 'episodesHasLink', !this.__isURL(model.id))
+    set(controller, 'episodesHasLink', !this.__isURL(model.id));
   },
 
   __isURL(id) {
-    return id.match(/http:\/\//)
+    return id.match(/http:\/\//);
   }
 });
