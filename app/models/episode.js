@@ -19,6 +19,10 @@ export default DS.Model.extend({
   source: computed('source_url', function() {
     return this.get('source_url');
   }),
+  persisted: computed('id', function() {
+    // true when the channel id is not a URL
+    return !this.get('channel_id').match(/http:\/\//)
+  }),
   publishedAt: computed('published_at', function() {
     return moment(this.get('published_at')).format('MMM Do YY');
   }),

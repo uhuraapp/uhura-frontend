@@ -2,7 +2,7 @@ import Ember from 'ember';
 import MaterialDesignMixin from '../mixins/routes/material-design';
 import TitledMixin from '../mixins/routes/titled';
 
-const { inject: { service }, computed } = Ember;
+const { inject: { service }, computed, set } = Ember;
 
 export default Ember.Route.extend(MaterialDesignMixin, TitledMixin, {
   session: service('session'),
@@ -18,5 +18,14 @@ export default Ember.Route.extend(MaterialDesignMixin, TitledMixin, {
 
   model(params) {
     return this.store.find('channel', params.channel_id);
+  },
+
+  setupController(controller, model) {
+    this._super(controller, model);
+    set(controller, 'episodesHasLink', !this.__isURL(model.id))
+  },
+
+  __isURL(id) {
+    return id.match(/http:\/\//)
   }
 });
