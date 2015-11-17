@@ -5,15 +5,35 @@ const { service } = Ember.inject;
 export default Ember.Component.extend({
   session: service('session'),
   store: service('store'),
+
   classNames: ['subscribe-button-component'],
+
+  __isURL(id) {
+    return id.match(/http:\/\//);
+  },
+
   makeSubscription() {
     let model = this.get('channel');
-    this.get('store').createRecord('subscription', {
-      channel_id: model.id,
+    let data = {
       episodes: []
-    }).save().then(function() {
-      model.set('subscribed', true);
-    });
+    };
+
+    if (this.__isURL(model.id)) {
+      data.channel_url = model.id;
+    } else {
+      data.channel_id = model.id;
+    }
+
+    this.get('store').createRecord('subscription', data)
+      .save()
+      .then((subscription) => {
+        // FIXME: new channels if missing episodes
+        if (this.__isURL(model.id)) {
+          // FIXME: transition to channel
+          window.location.reload();
+        }
+        model.set('subscribed', true);
+      });
   },
   actions: {
     subscribe() {
