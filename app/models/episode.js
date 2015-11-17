@@ -8,7 +8,7 @@ export default DS.Model.extend({
   title: DS.attr('string'),
   description: DS.attr('string'),
   source_url: DS.attr('string'),
-  channel_id: DS.attr(),
+  channel_id: DS.attr('string'),
   channel: DS.belongsTo('channel'),
   listened: DS.attr(),
   played: computed('listened', function() {

@@ -17,7 +17,15 @@ export default Ember.Route.extend(MaterialDesignMixin, TitledMixin, {
   },
 
   model(params) {
-    return this.store.find('channel', params.channel_id);
+    return this.store.find('channel', params.channel_id).then((channel) => {
+      // When the channel id is a feed url and the channel exists on
+      // Uhura, the API returns the found channel, so the ID will be the
+      // Uhura ID and not the feed url
+      if (params.channel_id !== channel.id) {
+        this.transitionTo('channel', channel.id);
+      }
+      return channel;
+    });
   },
 
   setupController(controller, model) {
