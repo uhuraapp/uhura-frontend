@@ -16,11 +16,16 @@
   </h3>
 
   <time date={{episode.published_at}}>
-    {{#link-to 'channel.episode' episode class="more-info"}}
+    {{#if hasLink}}
+      {{#link-to 'channel.episode' episode class="more-info"}}
+        {{episode.publishedAt}}
+      {{/link-to}}
+    {{else}}
       {{episode.publishedAt}}
-    {{/link-to}}
+    {{/if}}
   </time>
 
+  {{#if episode.persisted}}
   <div  class="more-itens">
     <button class="material-icons" {{action 'more'}}>more_vert</button>
     <div class="itens">
@@ -45,6 +50,7 @@
       </ul>
     </div>
   </div>
+  {{/if}}
 </div>
 
 <div class="body {{if moreInfoOpened 'open'}}">
