@@ -43,7 +43,7 @@
     "ember-notify": "4.2.0",
     "ember-page-title": "2.0.6",
     "ember-simple-auth": "simplabs/ember-simple-auth#master",
-    "ember-suave": "1.0.0",
+    "ember-suave": "1.2.3",
     "ember-truth-helpers": "1.1.0",
     "liquid-fire": "0.21.2"
   },
