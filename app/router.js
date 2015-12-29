@@ -19,7 +19,8 @@ Router.map(function() {
 
   this.route('channel', { path: '/channels/*channel_id' });
 
-  this.route('subscriptions');
+  this.route('subscriptions', function() {
+  });
   this.route('privacy');
   this.route('login');
   this.route('register');
