@@ -14,9 +14,7 @@ export default Ember.Component.extend({
 
   makeSubscription() {
     let model = this.get('channel');
-    let data = {
-      episodes: []
-    };
+    let data = { episodes: [] };
 
     if (this.__isURL(model.id)) {
       data.channel_url = model.id;
@@ -26,7 +24,7 @@ export default Ember.Component.extend({
 
     this.get('store').createRecord('subscription', data)
       .save()
-      .then((subscription) => {
+      .then(() => {
         // FIXME: new channels if missing episodes
         if (this.__isURL(model.id)) {
           // FIXME: transition to channel
@@ -44,10 +42,9 @@ export default Ember.Component.extend({
       }
     },
     unsubscribe() {
-      let model = this.get('channel');
-      this.get('store').find('subscription', model.id).then(function(subscription) {
+      this.get('store').find('subscription', this.get('model').id).then((subscription) => {
         subscription.destroyRecord();
-        model.set('subscribed', false);
+        this.get('channel').set('subscribed', false);
       });
     }
   }

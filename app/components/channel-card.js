@@ -40,7 +40,7 @@ export default Ember.LinkComponent.extend({
   __fixBottom(el) {
     const { top, bottom } = el[0].getBoundingClientRect();
     const diff = bottom - window.innerHeight + 15;
-    return bottom > window.innerHeight ? { top: top - diff } : {}
+    return bottom > window.innerHeight ? { top: top - diff } : {};
   },
 
   __shouldNotRemoveCardInfo(event) {
