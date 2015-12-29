@@ -1,0 +1,23 @@
+<ul id="categories" class="mdl-grid">
+  {{#each categories as |category|}}
+    <li class="category mdl-shadow--2dp mdl-cell mdl-cell--4-col">
+      {{#link-to 'categories.category' category}}
+        <h4>{{category.name}}</h4>
+      {{/link-to}}
+      <ul class="mdl-grid">
+        {{#each category.sixChannels as |channel|}}
+          <li class="category-channel mdl-cell mdl-cell--4-col">
+            {{#link-to 'channel' channel.id}}
+              <img src={{channel.imageURL}} />
+            {{/link-to}}
+          </li>
+        {{/each}}
+      </ul>
+      {{#if category.moreThanSixChannels}}
+        {{#link-to 'categories.category' category class='more'}}
+          See all {{category.channels.length}} channels in {{category.name}} category
+        {{/link-to}}
+      {{/if}}
+    </li>
+  {{/each}}
+</ul>

@@ -20,6 +20,7 @@ Router.map(function() {
   this.route('channel', { path: '/channels/*channel_id' });
 
   this.route('subscriptions', function() {
+    this.route('new');
   });
   this.route('privacy');
   this.route('login');
@@ -29,6 +30,10 @@ Router.map(function() {
   });
   this.route('terms');
   this.route('profile', { path: '/profiles/:profile_id' });
+
+  this.route('categories', function() {
+    this.route('category', { path: '/:id' });
+  });
 });
 
 export default Router;
