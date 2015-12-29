@@ -13,19 +13,18 @@ export default Ember.LinkComponent.extend({
   didInsertElement() {
     const $card = this.$();
 
-    $card.find('img').hover(() => {
+    $card.find('h4').hover(() => {
       const el = this.__createCardInfo($card);
       el.addClass('showin');
       el.fadeIn();
       Ember.$('body').append(el);
-      this.__fixBottom(el);
+      el.css(this.__fixBottom(el));
     }, (event) => {
       if (this.__shouldNotRemoveCardInfo(event)) {
         Ember.$(event.relatedTarget).hover(() => {}, this.__hideCardInfo);
-        return;
+      } else {
+        this.__hideCardInfo();
       }
-
-      this.__hideCardInfo();
     });
   },
 
@@ -40,12 +39,8 @@ export default Ember.LinkComponent.extend({
 
   __fixBottom(el) {
     const { top, bottom } = el[0].getBoundingClientRect();
-    if (bottom > window.innerHeight) {
-      const diff = bottom - window.innerHeight + 15;
-      el.css({
-        top: top - diff
-      });
-    }
+    const diff = bottom - window.innerHeight + 15;
+    return bottom > window.innerHeight ? { top: top - diff } : {}
   },
 
   __shouldNotRemoveCardInfo(event) {
