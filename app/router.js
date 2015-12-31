@@ -10,6 +10,7 @@ const shareRoute = (router, params) => {
 };
 
 Router.map(function() {
+  this.route('home', { path: '/' });
   this.route('channel',       { path: '/channels/:channel_id' }, function() {
     this.route('episode',     { path: '/:episode_id' }, function() {
       shareRoute(this, ['share-episode']);
