@@ -2,7 +2,8 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
 moduleForComponent('layout-unlogged', 'Integration | Component | layout unlogged', {
-  integration: true
+  integration: true,
+  needs: ['component:topbar']
 });
 
 test('it renders', function(assert) {

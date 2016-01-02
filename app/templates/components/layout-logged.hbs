@@ -1,0 +1,26 @@
+{{#if session.isAuthenticated}}
+  {{sidebar-menu invalidateSession="invalidateSession"}}
+{{else}}
+  {{topbar-menu simple=true dark=true invalidateSession="invalidateSession"}}
+{{/if}}
+
+{{#if session.isAuthenticated}}
+<header class="mdl-layout__header mdl-layout__header--transparent">
+  <div class="mdl-layout__header-row">
+    <span class="mdl-layout-title">{{title}}</span>
+    <div class="mdl-layout-spacer"></div>
+    <nav class="mdl-navigation">
+      {{!-- <a class="mdl-navigation__link" href="">Link</a>
+      <a class="mdl-navigation__link" href="">Link</a>
+      <a class="mdl-navigation__link" href="">Link</a>
+      <a class="mdl-navigation__link" href="">Link</a> --}}
+    </nav>
+  </div>
+</header>
+{{/if}}
+
+<main class="mdl-layout__content">
+  <div class="page-content">
+    {{yield}}
+  </div>
+</main>
