@@ -1,3 +1,5 @@
+{{#layout-unlogged}}
+{{#mdl-grid}}
 <div id="authentication-container">
   <div id="sign_in" class="mdl-card mdl-shadow--2dp">
     <form {{action "authenticate" on="submit"}} autocomplete="false">
@@ -14,20 +16,20 @@
         <p>
           You're new here?
           {{#link-to 'register'}}
-            Sign up now
+          Sign up now
           {{/link-to}}
         </p>
       </div>
     </form>
 
     {{#if errorMessage}}
-      <p class="error-message">
-        {{errorMessage}}
-      </p>
+    <p class="error-message">
+      {{errorMessage}}
+    </p>
     {{else}}
-      {{#if processing}}
-        <p class="processing">Processing {{processingMessage}}.... </p>
-      {{/if}}
+    {{#if processing}}
+    <p class="processing">Processing {{processingMessage}}.... </p>
+    {{/if}}
     {{/if}}
 
     <div class="connect-services">
@@ -49,3 +51,5 @@
     </div>
   </div>
 </div>
+{{/mdl-grid}}
+{{/layout-unlogged}}
