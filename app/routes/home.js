@@ -16,9 +16,9 @@ export default Ember.Route.extend({
   fixImageURL(data) {
     const { channels } = data;
     return channels.map((channel) => {
-        channel.imageURL = channel.image_url;
-        return channel;
-      });
+      channel.imageURL = channel.image_url;
+      return channel;
+    });
   },
 
   buildEpisodes() {
