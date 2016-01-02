@@ -53,10 +53,11 @@ img.channel-img
   color: #ff2222
   text-decoration: none
 
+a
+  cursor: pointer
+
 .mdl-layout-title.uhura__logo
-  font-size: 30px
-  color: rgb(51, 51, 51)
-  line-height: 2
+  font-size: 25px
 
 *, *:after, *:before
   transition-property: box-shadow, border-radius
@@ -109,6 +110,7 @@ img.channel-img
 @import 'profile'
 @import 'error'
 @import 'categories-list'
+@import 'topbar'
 //
 // #container
 //   position: relative
@@ -136,30 +138,6 @@ body.home
   p, h2
     color: #FFF
     font-family: "Exo 2"
-
-  #topbar
-    max-width: 1124px
-    margin: 0 auto
-    border-bottom: 2px solid rgba(225, 225, 225, 0.2)
-    box-sizing: border-box
-    overflow: hidden
-    padding: 10px 50px
-
-    > a
-      float: right
-      line-height: 30px
-      color: #FFF
-      text-decoration: underline
-      margin: 0 0 0 10px
-
-  .uhura__logo
-    padding: 0
-    margin: 0
-    text-shadow: none
-    text-align: left
-    font-size: 26px
-    line-height: 30px
-    float: left
 
   .page-content
     max-width: 1124px
