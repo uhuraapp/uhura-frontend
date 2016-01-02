@@ -1,7 +1,7 @@
 <div class="head {{if onlyLink 'only-link'}}">
   <div class="button-play-wrapper">
     {{#if onlyLink}}
-      {{#link-to 'channel.episode' episode.channel_id episode.id tagName="button" class="playpause material-icons"}}
+      {{#link-to 'channel.episode' episode.channel_id episode.id (query-params autoplay=autoplayLink) tagName="button" class="playpause material-icons"}}
         play_arrow
       {{/link-to}}
     {{else}}
@@ -13,7 +13,7 @@
 
   <h3 class="title">
     {{#if hasLink}}
-      {{#link-to 'channel.episode' episode.channel_id episode.id class="more-info"}}
+      {{#link-to 'channel.episode' episode.channel_id episode.id (query-params autoplay=autoplayLink) class="more-info"}}
         {{episode.title}}
       {{/link-to}}
     {{else}}
@@ -23,7 +23,7 @@
 
   <time date={{episode.published_at}}>
     {{#if hasLink}}
-      {{#link-to 'channel.episode'  episode.channel_id episode.id  class="more-info"}}
+      {{#link-to 'channel.episode' episode.channel_id episode.id (query-params autoplay=autoplayLink) class="more-info"}}
         {{episode.publishedAt}}
       {{/link-to}}
     {{else}}

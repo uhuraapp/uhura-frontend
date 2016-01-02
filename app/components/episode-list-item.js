@@ -4,12 +4,20 @@ export default Ember.Component.extend({
   classNames: ['episode', 'episode-card'],
   classNameBindings: ['isPlayed', 'isDownloaded', 'isPlaying'],
   rightActions: true,
+  autoplayLink: false,
+  autoplay: false,
 
   player: Ember.inject.service('player'),
   client: Ember.inject.service('uhura-client'),
 
   isPlayed: Ember.computed.bool('episode.played'),
   isPlaying: Ember.computed.bool('episode.playing'),
+
+  didInitAttrs() {
+    if (this.get('autoplay')) {
+      Ember.run.scheduleOnce('afterRender', this, () => this.send('playpause'));
+    }
+  },
 
   actions: {
     playpause() {
