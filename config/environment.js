@@ -67,7 +67,8 @@ module.exports = function(environment) {
 
   ENV['ember-simple-auth'] = {
     store: 'session-store:local-storage',
-    crossOriginWhitelist: [ENV.API_URL]
+    crossOriginWhitelist: [ENV.API_URL],
+    routeAfterAuthentication: 'subscriptions'
   }
 
   return ENV;
