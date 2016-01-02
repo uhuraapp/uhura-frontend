@@ -2,8 +2,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
 moduleForComponent('layout-logged', 'Integration | Component | layout logged', {
-  integration: true,
-  needs: ['component:topbar']
+  integration: true
 });
 
 test('it renders', function(assert) {

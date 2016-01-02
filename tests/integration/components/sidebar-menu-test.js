@@ -8,19 +8,12 @@ moduleForComponent('sidebar-menu', 'Integration | Component | sidebar menu', {
 test('it renders', function(assert) {
   assert.expect(2);
 
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });
-
   this.render(hbs`{{sidebar-menu}}`);
 
-  assert.equal(this.$().text().trim(), '');
+  const links = [];
+  this.$().find('a').each((_,a) => links.push($(a).text().trim()));
 
-  // Template block usage:
-  this.render(hbs`
-    {{#sidebar-menu}}
-      template block text
-    {{/sidebar-menu}}
-  `);
+  assert.deepEqual(links, ['Subscriptions', 'Settings', 'Sign Out']);
 
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.equal(this.$().find('.mdl-layout-title').text(), 'Uhura');
 });
