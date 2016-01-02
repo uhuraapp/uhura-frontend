@@ -1,15 +1,5 @@
 <main class="mdl-layout__content">
-  <div id="topbar">
-    <h1 class="uhura__logo">{{#link-to 'home'}}Uhura{{/link-to}}</h1>
-    {{#if session.isAuthenticated}}
-    <a {{ action 'invalidateSession' }} class="mdl-navigation__link">
-      Sign Out
-    </a>
-    {{#link-to 'subscriptions' class="login"}}Back to Subscriptions{{/link-to}}
-    {{else}}
-    {{#link-to 'login' class="login"}}Login{{/link-to}}
-    {{/if}}
-  </div>
+  {{topbar-menu simple=simpleTopbar invalidateSession="invalidateSession"}}
 
   <div class="page-content">
     {{yield}}
