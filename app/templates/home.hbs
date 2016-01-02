@@ -2,17 +2,22 @@
 
 {{#layout-unlogged invalidateSession="invalidateSession" simpleTopbar=true }}
 {{#mdl-grid}}
-  <div class="mdl-cell mdl-cell--12-col">
+
+  <h1>Welcome to the best podcast player</h1>
+
+  <div class="features mdl-cell mdl-cell--12-col">
     <h2>Your favorites shows</h2>
     <div class="mdl-sub-grid mdl-grid">
       <p class="mdl-cell mdl-cell--4-col">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
+        Today on our podcast directory we have more than <strong>800 podcast channels</strong>
+        from many countries, in many different languages, and we have <strong>channels
+        about everything</strong>, there are channels about science, language, business,
+        comedy, programming, news, etc. But if you don't find your favorite
+        channels here, you can <strong>easily add more channels</strong>.
+        <br />
+        {{#link-to 'register' tagName="button" class="login mdl-button mdl-js-button mdl-button--raised mdl-button--accent"}}
+          Sign Up For Free
+        {{/link-to}}
       </p>
       <ul class="mdl-cell mdl-cell--8-col" id="top-channels">
         {{#each model.channels as |channel|}}
@@ -23,36 +28,26 @@
       </ul>
     </div>
   </div>
-  <div class=" mdl-cell mdl-cell--12-col">
+  <div class="features mdl-cell mdl-cell--12-col">
     <h2>Listen awesome episodes</h2>
     <div class="mdl-sub-grid mdl-grid">
       <div id="episodes" class="mdl-cell mdl-cell--8-col">
         {{#each model.episodes as |episode|}}
-        {{episode-list-item episode=episode onlyLink=true hasLink=true rightActions=false moreInfoOpened=true}}
+        {{episode-list-item episode=episode autoplayLink=true onlyLink=true hasLink=true rightActions=false moreInfoOpened=true}}
         {{/each}}
       </div>
       <p class="mdl-cell mdl-cell--4-col">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
+        Podcast, in our opinion, is <strong>the best way to discover new worlds</strong>, listening a podcast episode you can learning a different perspective about some subject, be informed about local news, know your next favorite music band or just to laugh about some funny story. Doesn't matter the way or what you listen, a <strong>good podcast episode will help you in some way</strong> and thinking about that we choose good episodes to you listen now, you don't need sign up or fill a form, <strong>just click in play button and enjoy the moment.</strong>
       </p>
-
     </div>
   </div>
-  <div class=" mdl-cell mdl-cell--12-col">
+  <div class="features mdl-cell mdl-cell--12-col">
     <h2>Online Sync</h2>
     <p>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-      occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-      mollit anim id est laborum.
+      Our main goal is to give to you, podcast lover, the possibility to listen your favourite podcast episodes and <strong>keep your play list and subscriptions synchronized</strong> around all your devices. To start now use Uhura, <strong>it's simple and free!</strong>
+      {{#link-to 'register' tagName="button" class="login mdl-button mdl-js-button mdl-button--raised mdl-button--accent"}}
+        Sign Up For Free
+      {{/link-to}}
     </p>
   </div>
 {{/mdl-grid}}
