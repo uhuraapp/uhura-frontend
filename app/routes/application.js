@@ -6,12 +6,9 @@ const { service } = Ember.inject;
 export default Ember.Route.extend(ApplicationRouteMixin, {
   session: service('session'),
   actions: {
+    // TODO: remove it
     invalidateSession() {
       this.get('session').invalidate();
-    },
-
-    setTitle(title) {
-      this.get('controller').set('title', title);
     }
   }
 });

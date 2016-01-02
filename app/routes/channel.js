@@ -1,15 +1,10 @@
 import Ember from 'ember';
 import MaterialDesignMixin from '../mixins/routes/material-design';
-import TitledMixin from '../mixins/routes/titled';
 
 const { inject: { service }, computed, set } = Ember;
 
-export default Ember.Route.extend(MaterialDesignMixin, TitledMixin, {
+export default Ember.Route.extend(MaterialDesignMixin, {
   session: service('session'),
-
-  shouldSetTitle: computed('session.isAuthenticated', function() {
-    return this.get('session.isAuthenticated');
-  }),
 
   beforeModel(transition) {
     this.get('session').set('attemptedTransition', transition);

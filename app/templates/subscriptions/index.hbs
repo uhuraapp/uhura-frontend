@@ -1,3 +1,6 @@
+{{title "Subscriptions"}}
+
+{{#layout-logged invalidateSession="invalidateSession"}}
 <div id="subscriptions" class="mdl-grid">
   <div class="mdl-shadow--2dp mdl-cell mdl-cell--12-col share">
     {{#if account.hasKey}}
@@ -12,3 +15,4 @@
     {{channel-card channel=subscription  class="mdl-cell mdl-cell--2-col"}}
   {{/each}}
 </div>
+{{/layout-logged}}

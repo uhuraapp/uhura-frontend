@@ -1,12 +1,10 @@
 import Ember from 'ember';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import MaterialDesignMixin from '../../mixins/routes/material-design';
-import TitledMixin from '../../mixins/routes/titled';
 
 const { service } = Ember.inject;
 
-export default Ember.Route.extend(TitledMixin, AuthenticatedRouteMixin, MaterialDesignMixin, {
-
+export default Ember.Route.extend(AuthenticatedRouteMixin, MaterialDesignMixin, {
   account: service('session-account'),
 
   model() {

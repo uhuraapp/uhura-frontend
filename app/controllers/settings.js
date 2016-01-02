@@ -11,8 +11,6 @@ export default Ember.Controller.extend({
 
   locales: ['', 'PT', 'EN'],
 
-  title: 'Settings',
-
   whenOptinWasChanged: Ember.observer('optin', function() {
     this.send('save');
   })

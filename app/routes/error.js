@@ -1,10 +1,8 @@
 import Ember from 'ember';
-import TitledMixin from '../mixins/routes/titled';
 
 const { set, computed } = Ember;
 
-export default Ember.Route.extend(TitledMixin, {
-  shouldSetTitle: computed(() => false),
+export default Ember.Route.extend({
   setupController(controller, adapterError) {
     const { title, details } = this.__error(adapterError.message || adapterError.errors);
     set(controller, 'title', title);

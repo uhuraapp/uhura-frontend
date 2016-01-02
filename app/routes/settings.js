@@ -1,11 +1,10 @@
 import Ember from 'ember';
 import MaterialDesignMixin from '../mixins/routes/material-design';
-import TitledMixin from '../mixins/routes/titled';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
 const { Route, inject: { service }, computed: { alias } } = Ember;
 
-export default Route.extend(AuthenticatedRouteMixin, MaterialDesignMixin, TitledMixin,  {
+export default Route.extend(AuthenticatedRouteMixin, MaterialDesignMixin, {
   client: service('uhura-client'),
   notify: service('notify'),
   session: service('session'),
