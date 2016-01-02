@@ -5,8 +5,8 @@ const { inject: { service } } = Ember;
 
 export default Ember.Component.extend(InvalidateSessionMixin, {
   session: service('session'),
-  elementId: 'topbar',
   simple: false,
   dark: false,
+  classNames: ['topbar-menu'],
   classNameBindings: ['simple', 'dark']
 });
