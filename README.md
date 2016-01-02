@@ -5,22 +5,6 @@
 
 # PLEASE USE NODE >= 4.1.0
 
-## Uhura Issues Flow
-
-<pre>.
-           Issues
-Uservoice   /   \
-     \     /     \
-     #inbox    #bug+#verified   Pull Request
-        \                 \      /
-       #planning  ->  #milestone  -> Deploy -> Production
-          /              /
-    Roadmap       #bug #verified
-                       /
-                    #bug
-</pre>
-
-
 This README outlines the details of collaborating on this Ember application.
 A short introduction of this app could easily go here.
 
