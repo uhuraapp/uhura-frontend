@@ -8,7 +8,7 @@ const sessionServiceStub = Ember.Service.extend({
 
 moduleForComponent('topbar-menu', 'Integration | Component | topbar menu', {
   integration: true,
-  beforeEach: function beforeEach() {
+  beforeEach() {
      this.register('service:session', sessionServiceStub);
      this.inject.service('session', { as: 'session' });
    }

@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import MaterialDesignMixin from '../mixins/routes/material-design';
 
-const { inject: { service }, computed, set } = Ember;
+const { inject: { service }, set } = Ember;
 
 export default Ember.Route.extend(MaterialDesignMixin, {
   session: service('session'),

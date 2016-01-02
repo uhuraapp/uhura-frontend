@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { set, computed } = Ember;
+const { set } = Ember;
 
 export default Ember.Route.extend({
   setupController(controller, adapterError) {
