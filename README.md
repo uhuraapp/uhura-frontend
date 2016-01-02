@@ -1,6 +1,23 @@
 # Uhuraapp
 
-[![Build Status](https://travis-ci.org/uhuraapp/uhura-frontend.svg?branch=master)](https://travis-ci.org/uhuraapp/uhura-frontend)<br />[![Test Coverage](https://codeclimate.com/github/uhuraapp/uhura-frontend/badges/coverage.svg)](https://codeclimate.com/github/uhuraapp/uhura-frontend/coverage)<br />[![Code Climate](https://codeclimate.com/github/uhuraapp/uhura-frontend/badges/gpa.svg)](https://codeclimate.com/github/uhuraapp/uhura-frontend)<br />[![devDependency Status](https://david-dm.org/uhuraapp/uhura-frontend/dev-status.svg)](https://david-dm.org/uhuraapp/uhura-frontend#info=devDependencies) <br />
+<div style="display: flex; justify-content: center">
+
+<a style="display:block" href="https://travis-ci.org/uhuraapp/uhura-frontend">
+  <img src="https://travis-ci.org/uhuraapp/uhura-frontend.svg?branch=master" />
+</a>
+
+<a style="display:block" href="https://codeclimate.com/github/uhuraapp/uhura-frontend/coverage">
+  <img src="https://codeclimate.com/github/uhuraapp/uhura-frontend/badges/coverage.svg" />
+</a>
+
+<a style="display:block" href="https://codeclimate.com/github/uhuraapp/uhura-frontend">
+  <img src="https://codeclimate.com/github/uhuraapp/uhura-frontend/badges/gpa.svg" />
+</a>
+
+<a style="display:block" href="https://david-dm.org/uhuraapp/uhura-frontend#info=devDependencies">
+  <img src="https://david-dm.org/uhuraapp/uhura-frontend/dev-status.svg" />
+</a>  
+</div>
 ----
 
 # PLEASE USE NODE >= 4.1.0
