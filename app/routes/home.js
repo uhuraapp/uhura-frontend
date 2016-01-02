@@ -25,13 +25,13 @@ export default Ember.Route.extend({
     return [
       {
         id: 86373,
-        title: 'The Living Room',
+        title: 'The Living Room From Love Radio',
         channel_id: 'loveradio',
         description: 'Diane\'s new neighbors across the way never shut their curtains, and that was the beginning of an intimate, but very one-sided relationship.'
       },
       {
         id: 465197,
-        title: 'How to Become Batman',
+        title: 'How to Become Batman From Invisibilia',
         channel_id: 'invisibilia' ,
         description: 'In "How to Become Batman," Alix and Lulu examine the surprising effect that our expectations can have on the people around us. You\'ll hear how people\'s expectations can influence how well a rat runs a maze. Plus, the story of a man who is blind and says expectations have helped him see. Yes. See. This journey is not without skeptics.'
       }
