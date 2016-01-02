@@ -112,7 +112,8 @@ export default Ember.Service.extend({
 
     // TODO: use a notification service
     window.alert(`We can play the audio, make sure your browser can play ${type} or if you have the flash ${flashVersion} or silverlight ${silverlightVersion} installed`);
-    Ember.run.scheduleOnce('afterRender', this, 'stop');
+    // Ember.run.scheduleOnce('afterRender', this, 'stop');
+    this.stop();
   },
 
   _needPluginVersion(plugin) {
