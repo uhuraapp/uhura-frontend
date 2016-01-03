@@ -1,24 +1,8 @@
 {{title "Find new channels"}}
 
 {{#layout-logged invalidateSession="invalidateSession"}}
-  <div id="search-channel">
-    <form {{action 'search' on='submit'}}>
-      {{input autofocus value=q placeholder="Search for channels"}}
-      <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary" type="submit">Search</button>
-    </form>
-    <span>Type the name or a description, you can also type a feed url</span>
-  </div>
 
-  {{#mdl-grid}}
-    <h3>Channels Found</h3>
-    {{#each model.channels as |channel|}}
-    <div class="mdl-cell mdl-cell--2-col">
-        {{channel-card channel=channel}}
-    </div>
-    {{else}}
-      <p>No channels was found</p>
-    {{/each}}
-  {{/mdl-grid}}
+{{channel-search query=q}}
 
 {{categories-list categories=model.categories}}
 

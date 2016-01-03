@@ -1,0 +1,25 @@
+<div id="search-channel">
+  <form {{action 'search' on='submit'}}>
+    {{input value=query placeholder="Search for channels"}}
+    <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary" type="submit">Search</button>
+  </form>
+  <span>Type the name or a description, you can also type a feed url</span>
+</div>
+
+{{#mdl-grid class="results"}}
+  {{#if search.noResults}}
+    {{#if searching}}
+      Searching...
+    {{else}}
+      No results for "<span>{{query}}</span>".
+    {{/if}}
+  {{/if}}
+
+  {{#unless search.resultsEmpty}}
+    {{#each search.results as |channel|}}
+      <div class="mdl-cell mdl-cell--2-col">
+        {{channel-card channel=channel}}
+      </div>
+    {{/each}}
+  {{/unless}}
+{{/mdl-grid}}
