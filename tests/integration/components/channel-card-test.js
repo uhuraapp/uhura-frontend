@@ -9,19 +9,11 @@ moduleForComponent('channel-card', 'Integration | Component | channel card', {
 test('it renders', function(assert) {
   assert.expect(2);
 
-  const channel = Ember.Object.create({ id: 177 });
+  const channel = Ember.Object.create({ id: 177, title: 'my channel', description: 'test' });
   this.set('channel', channel);
 
   this.render(hbs`{{channel-card channel=channel}}`);
 
-  assert.equal(this.$().text().trim(), 'Open');
-
-  // Template block usage:
-  this.render(hbs`
-    {{#channel-card channel=channel}}
-      template block text
-    {{/channel-card}}
-  `);
-
-  assert.equal(this.$().text().trim(), 'Open');
+  assert.equal(this.$('h4').text().trim(), 'my channel');
+  assert.equal(this.$('p').text().trim(), 'test');
 });

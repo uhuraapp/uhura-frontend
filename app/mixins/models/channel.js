@@ -1,7 +1,6 @@
 import DS from 'ember-data';
 import Ember from 'ember';
 
-let { computed } = Ember;
 export default Ember.Mixin.create({
   title: DS.attr('string'),
   image_url: DS.attr('string'),
@@ -16,13 +15,5 @@ export default Ember.Mixin.create({
   url:        DS.attr(),
   uri:        DS.attr(),
   channel_id: DS.attr(),
-  channel_url: DS.attr(),
-  shortDescription: computed('description', function() {
-    let description = this.get('description') || '';
-    let shortDescription = description.substring(0, 150);
-    if (description.length > shortDescription.length) {
-      shortDescription += '...';
-    }
-    return shortDescription;
-  })
+  channel_url: DS.attr()
 });

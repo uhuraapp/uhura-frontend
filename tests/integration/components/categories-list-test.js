@@ -17,7 +17,7 @@ test('it renders', function(assert) {
     {{categories-list categories=categories x=x}}
   `);
 
-  assert.equal(this.$().text().trim(), '');
+  assert.equal(this.$('h4').text().trim(), '');
 
   this.set('categories', [ category  ]);
 
@@ -25,5 +25,5 @@ test('it renders', function(assert) {
     {{categories-list categories=categories}}
   `);
 
-  assert.equal(this.$().text().trim(), category.get('name'));
+  assert.equal(this.$('h4').text().trim(), category.get('name'));
 });

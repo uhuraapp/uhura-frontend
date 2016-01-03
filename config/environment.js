@@ -26,7 +26,7 @@ module.exports = function(environment) {
     }
   };
 
-
+  // ENV.API_URL = "http://localhost:3000"
   ENV.API_URL = "https://api.uhura.io"
 
   ENV.contentSecurityPolicy = {
