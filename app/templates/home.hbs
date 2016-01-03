@@ -2,8 +2,12 @@
 
 {{#layout-unlogged invalidateSession="invalidateSession" simpleTopbar=true }}
 {{#mdl-grid}}
-
-  <h1>Welcome to the best podcast player</h1>
+  <div class="mdl-cell mdl-cell--12-col" id="welcome">
+    <h1>Welcome to the best podcast player</h1>
+    {{#link-to 'register' tagName="button" class="call-to-action login mdl-button mdl-js-button mdl-button--raised mdl-button--accent"}}
+      Create your account
+    {{/link-to}}
+  </div>
 
   <div class="features mdl-cell mdl-cell--12-col">
     <h2>Your favorites shows</h2>
