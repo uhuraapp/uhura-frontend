@@ -8,16 +8,8 @@ export default Ember.Route.extend({
 
   model() {
     return hash({
-      channels: this.get('client').request('', 'top', 'channels').then(this.fixImageURL),
+      channels: this.get('client').request('', 'top', 'channels').then((data) => data.channels),
       episodes: this.buildEpisodes()
-    });
-  },
-
-  fixImageURL(data) {
-    const { channels } = data;
-    return channels.map((channel) => {
-      channel.imageURL = channel.image_url;
-      return channel;
     });
   },
 

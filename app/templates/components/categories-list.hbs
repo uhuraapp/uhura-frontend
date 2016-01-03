@@ -8,7 +8,7 @@
         {{#each category.sixChannels as |channel|}}
           <li class="category-channel mdl-cell mdl-cell--4-col">
             {{#link-to 'channel' channel.id}}
-              <img src={{channel.imageURL}} />
+              {{channel-lazy-image channel=channel}}
             {{/link-to}}
           </li>
         {{/each}}
