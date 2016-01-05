@@ -5,7 +5,7 @@ module.exports = function(environment) {
     modulePrefix: 'uhuraapp',
     environment: environment,
     baseURL: '/',
-    locationType: 'auto',
+    locationType: process.env.EMBER_CLI_ELECTRON ? 'hash' : 'auto',
     EmberENV: {
       FEATURES: {
       }
@@ -64,6 +64,8 @@ module.exports = function(environment) {
       accessToken: 'dc69607d27854abfa59a0d1698f03b76'
     }
   }
+
+  ENV['platform'] = process.env.EMBER_CLI_ELECTRON ? 'electron' : 'web';
 
   ENV['ember-simple-auth'] = {
     store: 'session-store:local-storage',
