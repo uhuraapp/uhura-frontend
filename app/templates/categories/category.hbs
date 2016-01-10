@@ -1,1 +1,9 @@
-{{outlet}}
+{{title model.name}}
+
+{{#layout-logged invalidateSession="invalidateSession"}}
+<div id="channels" class="mdl-grid">
+  {{#each model.channels as |channel|}}
+    {{channel-card channel=channel  class="mdl-cell mdl-cell--2-col"}}
+  {{/each}}
+</div>
+{{/layout-logged}}

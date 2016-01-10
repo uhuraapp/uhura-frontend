@@ -7,7 +7,7 @@ export default Route.extend({
 
   model() {
     return hash({
-      categories: this.store.findAll('category')
+      categories: this.store.findAll('category', { reload: true })
         .then((data) => data.sortBy('channelsLength'))
         .then((data) => data.reverse()),
     });
