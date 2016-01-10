@@ -16,12 +16,18 @@ export default Ember.Component.extend({
     Ember.run.debounce(this, function() {
       if (this.get('isDestroyed') || this.get('search.isDestroyed') || this.get('search').isDestroyed) {
       } else {
-        // if (this.get('query').length > 2) {
-         this.set('search.searchValue', this.get('query'));
-        // } else if (this.get('query').length === 0) {
-        // this.set('search.searchResults', []);
-        // }
+        if (this.get('query').length > 2) {
+          this.set('search.searchValue', this.get('query'));
+        } else if (this.get('query').length === 0) {
+          this.set('search.searchResults', []);
+        }
       }
    }, 300);
-  })
+  }),
+
+  actions: {
+    search() {
+      this.set('search.searchValue', this.get('query'));
+    }
+  }
 });
