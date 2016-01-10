@@ -35,6 +35,7 @@ Router.map(function() {
   this.route('categories', function() {
     this.route('category', { path: '/:id' });
   });
+  this.route('explore');
 });
 
 export default Router;
