@@ -30,10 +30,22 @@ export default Ember.Component.extend({
     };
   },
 
+  cache(imageURL) {
+    if(imageURL.includes('arcane-forest-5063')) {
+      return
+    }
+
+    const hostIndex = Math.floor(Math.random() * (2 - 1 + 1)) + 1;
+    const imageHost = IMAGE_HOST.replace('$x$', hostIndex);
+
+    const image = new Image()
+    image.src = `${imageHost}/resolve?url=${imageURL}`;
+  },
+
   cachedImageSource: computed('channel.imageURL', 'channel.image_url', function() {
     const imageURL = this.get('channel.imageURL') || this.get('channel.image_url');
 
-    if (isEmpty(imageURL)) {
+    if (isEmpty(imageURL.trim())) {
       return DEFAULT_IMAGE;
     }
 
@@ -42,8 +54,8 @@ export default Ember.Component.extend({
       return imageURL;
     }
 
-    const hostIndex = Math.floor(Math.random() * (2 - 1 + 1)) + 1;
-    const imageHost = IMAGE_HOST.replace('$x$', hostIndex);
-    return `${imageHost}/resolve?url=${imageURL}`;
+    this.cache(imageURL);
+
+    return imageURL;
   })
 });
