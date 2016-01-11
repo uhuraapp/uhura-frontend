@@ -7,7 +7,7 @@ const searchStub = Ember.Service.extend({
 });
 
 const createObjects = () => {
-  const object = (title) => Ember.Object.create({ title, description: '' });
+  const object = (title) => Ember.Object.create({ title, description: '', image_url: '' });
   return [object('Channel 1'), object('Channel 2')];
 };
 

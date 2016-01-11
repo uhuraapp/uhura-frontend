@@ -32,7 +32,7 @@ test('it exists', function(assert) {
     request() {
       const channels = new A();
       channels.pushObject(Ember.Object.create({}));
-      return RSVP.Promise.resolve({ channels: channels });
+      return RSVP.Promise.resolve({ channels });
     }
   });
 

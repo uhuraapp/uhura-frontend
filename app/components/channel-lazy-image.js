@@ -31,14 +31,14 @@ export default Ember.Component.extend({
   },
 
   cache(imageURL) {
-    if(imageURL.includes('arcane-forest-5063')) {
-      return
+    if (imageURL.indexOf('arcane-forest-5063') > -1) {
+      return;
     }
 
     const hostIndex = Math.floor(Math.random() * (2 - 1 + 1)) + 1;
     const imageHost = IMAGE_HOST.replace('$x$', hostIndex);
 
-    const image = new Image()
+    const image = new Image();
     image.src = `${imageHost}/resolve?url=${imageURL}`;
   },
 

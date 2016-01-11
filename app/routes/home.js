@@ -1,17 +1,10 @@
 import Ember from 'ember';
-import ENV from '../config/environment';
 
 const { inject: { service }, RSVP: { hash } } = Ember;
 
 export default Ember.Route.extend({
   client: service('uhura-client'),
   store: service('store'),
-
-  beforeModel() {
-    if(ENV.platform === 'electron') {
-      this.transitionTo('login');
-    }
-  },
 
   model() {
     return hash({

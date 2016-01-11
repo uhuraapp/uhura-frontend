@@ -13,7 +13,7 @@ test('it renders', function(assert) {
   const links = [];
   this.$().find('a').each((_,a) => links.push($(a).text().trim()));
 
-  assert.deepEqual(links, ['Subscriptions', 'Settings', 'Sign Out']);
+  assert.deepEqual(links, ['Subscriptions', 'Explore', 'Settings', 'Sign Out']);
 
   assert.equal(this.$().find('.mdl-layout-title').text(), 'Uhura');
 });

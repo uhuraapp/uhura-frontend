@@ -9,7 +9,7 @@ moduleForComponent('channel-card', 'Integration | Component | channel card', {
 test('it renders', function(assert) {
   assert.expect(2);
 
-  const channel = Ember.Object.create({ id: 177, title: 'my channel', description: 'test' });
+  const channel = Ember.Object.create({ id: 177, title: 'my channel', description: 'test', image_url: '' });
   this.set('channel', channel);
 
   this.render(hbs`{{channel-card channel=channel}}`);

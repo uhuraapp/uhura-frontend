@@ -14,15 +14,14 @@ export default Ember.Component.extend({
 
   queryDidChanged: observer('query', function() {
     Ember.run.debounce(this, function() {
-      if (this.get('isDestroyed') || this.get('search.isDestroyed') || this.get('search').isDestroyed) {
-      } else {
+      if (!this.get('isDestroyed') && !this.get('search.isDestroyed') && !this.get('search').isDestroyed) {
         if (this.get('query').length > 2) {
           this.set('search.searchValue', this.get('query'));
         } else if (this.get('query').length === 0) {
           this.set('search.searchResults', []);
         }
       }
-   }, 300);
+    }, 300);
   }),
 
   actions: {
