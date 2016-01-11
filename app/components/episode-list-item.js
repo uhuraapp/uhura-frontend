@@ -14,7 +14,7 @@ export default Ember.Component.extend({
   isPlaying: Ember.computed.bool('episode.playing'),
 
   didInitAttrs() {
-    if (this.get('autoplay')) {
+    if (this.get('autoplay') === 'true') {
       Ember.run.scheduleOnce('afterRender', this, () => this.send('playpause'));
     }
   },
