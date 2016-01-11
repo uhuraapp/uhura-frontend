@@ -42,9 +42,9 @@ export default Ember.Component.extend({
       }
     },
     unsubscribe() {
-      this.get('store').find('subscription', this.get('model').id).then((subscription) => {
+      this.get('channel').set('subscribed', false);
+      this.get('store').find('subscription', this.get('channel.id')).then((subscription) => {
         subscription.destroyRecord();
-        this.get('channel').set('subscribed', false);
       });
     }
   }

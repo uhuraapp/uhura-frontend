@@ -8,7 +8,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, MaterialDesignMixin, 
   account: service('session-account'),
 
   model() {
-    return this.store.findAll('subscription');
+    return this.store.findAll('subscription', { reload: true });
   },
 
   actions: {
