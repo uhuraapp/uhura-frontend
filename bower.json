@@ -20,7 +20,8 @@
     "pretender": "0.6.0",
     "lodash": "3.7.0",
     "Faker": "2.1.3",
-    "material-design-lite": "1.0.2"
+    "material-design-lite": "1.0.2",
+    "ahoy": "*"
   },
   "resolutions": {
     "ember": "2.0.0"

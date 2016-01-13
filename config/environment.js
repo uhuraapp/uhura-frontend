@@ -73,5 +73,13 @@ module.exports = function(environment) {
     routeAfterAuthentication: 'subscriptions'
   }
 
+  const ahoyServer = process.env.AHOY_ENDPOINT;
+
+  ENV['ahoy'] = {
+    debug: environment === 'development',
+    visitsUrl: `${ahoyServer}/ahoy/visits`,
+    eventsUrl: `${ahoyServer}/ahoy/events`
+  }
+
   return ENV;
 };

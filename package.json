@@ -52,5 +52,8 @@
     "width": 960,
     "height": 600,
     "toolbar": false
+  },
+  "dependencies": {
+    "ember-ahoy": "github:dukex/ember-ahoy"
   }
 }
