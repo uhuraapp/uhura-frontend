@@ -10,23 +10,23 @@ export default Ember.LinkComponent.extend({
     this.attrs.hasBlock = true;
   },
 
-  didInsertElement() {
-    const $card = this.$();
-
-    $card.find('h4').hover(() => {
-      const el = this.__createCardInfo($card);
-      el.addClass('showin');
-      el.fadeIn();
-      Ember.$('body').append(el);
-      el.css(this.__fixBottom(el));
-    }, (event) => {
-      if (this.__shouldNotRemoveCardInfo(event)) {
-        Ember.$(event.relatedTarget).hover(() => {}, this.__hideCardInfo);
-      } else {
-        this.__hideCardInfo();
-      }
-    });
-  },
+  // didInsertElement() {
+  //   const $card = this.$();
+  //
+  //   $card.find('h4').hover(() => {
+  //     const el = this.__createCardInfo($card);
+  //     el.addClass('showin');
+  //     el.fadeIn();
+  //     Ember.$('body').append(el);
+  //     el.css(this.__fixBottom(el));
+  //   }, (event) => {
+  //     if (this.__shouldNotRemoveCardInfo(event)) {
+  //       Ember.$(event.relatedTarget).hover(() => {}, this.__hideCardInfo);
+  //     } else {
+  //       this.__hideCardInfo();
+  //     }
+  //   });
+  // },
 
   __createCardInfo($card) {
     const info = $card.find('.channel-card__info');
