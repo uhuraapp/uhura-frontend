@@ -7,17 +7,12 @@
     <meta name="MobileOptimized" content="320">
     <meta name="HandheldFriendly" content="True">
     <meta name="apple-mobile-web-app-capable" content="yes">
-
     <title>Uhura - The best podcast player</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
     <meta property="og:title" content="Uhura App" />
     <meta property="og:image" content="" />
-
-    <link href='https://fonts.googleapis.com/css?family=Exo+2:400,900italic,800italic,700italic,600italic,500italic,400italic,300italic,200italic,100italic,900,800,700,600,500,300,100,200' rel='stylesheet' type='text/css'>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
 
     {{content-for 'head'}}
 
@@ -26,17 +21,51 @@
 
     {{content-for 'head-footer'}}
 
-    <script>
-      UserVoice=window.UserVoice||[];(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='https://widget.uservoice.com/wskBzcLNnDXVNIU5Zoa4g.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})();
-      UserVoice.push(['autoprompt', {}]);
-    </script>
+    <link href='https://fonts.googleapis.com/css?family=Exo+2:400,900italic,800italic,700italic,600italic,500italic,400italic,300italic,200italic,100italic,900,800,700,600,500,300,100,200' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet">
   </head>
-  <body>
+  <body class="application home">
+    <div id="pre-home">
+      <div class="mdl-layout mdl-js-layout unlogged">
+        <main class="mdl-layout__content">
+          <div class="ember-view topbar-menu simple">
+            <h1 class="uhura__logo">
+              <a href="/" class="ember-view active">Uhura</a>
+            </h1>
+          </div>
+
+          <div class="page-content">
+            <div class="ember-view mdl-grid">
+              <div class="mdl-cell mdl-cell--12-col" id="welcome">
+                <h1>Welcome to the best podcast player</h1>
+                <p style="line-height: 2; color: #FFF; font-size: 40px; margin-bottom: 30px">Loading...</p>
+                <img src="/assets/radio.gif" />
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
     {{content-for 'body'}}
 
     <script src="assets/vendor.js"></script>
     <script src="assets/uhuraapp.js"></script>
 
     {{content-for 'body-footer'}}
+
+    <script>
+      UserVoice=window.UserVoice||[];(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='https://widget.uservoice.com/wskBzcLNnDXVNIU5Zoa4g.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})();
+      UserVoice.push(['autoprompt', {}]);
+    </script>
+
+    <script type="text/javascript">
+      (function() {
+        document.getElementById('pre-home').remove();
+        var body = document.querySelector('body').classList;
+        body.remove('apllication');
+        body.remove('home');
+      })()
+    </script>
   </body>
 </html>

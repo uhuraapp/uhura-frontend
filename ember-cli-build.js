@@ -5,7 +5,7 @@ var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
     fingerprint: {
-      exclude: ['channel-placeholder.png']
+      exclude: ['channel-placeholder.png', 'radio.gif']
     },
     sassOptions: {
       extentions: 'sass'
