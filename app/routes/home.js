@@ -13,6 +13,33 @@ export default Ember.Route.extend({
     });
   },
 
+  deactivate() {
+    $('button, a').off('click.track')
+    return this._super.apply(this, arguments);
+  },
+
+  trackClicks() {
+    $('button, a').on('click.track', (event) => {
+      const target = event.currentTarget;
+      const child = target.firstChild;
+      const properties = {
+        tag: target.tagName,
+        value: (child.wholeText || child.textContent).trim(),
+        classes: Array.from(target.classList)
+                      .map(e => e.indexOf('ember') == -1 ? e : null)
+                      .compact()
+                      .map(e => e.indexOf('mdl') == -1 ? e : null)
+                      .compact()
+      }
+      ahoy.track("home", properties);
+    });
+  },
+
+  renderTemplate() {
+    Ember.run.scheduleOnce('afterRender', this, 'trackClicks');
+    return this._super.apply(this, arguments);
+  },
+
   buildEpisodes() {
     return [
       {
