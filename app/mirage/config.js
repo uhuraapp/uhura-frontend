@@ -5,6 +5,10 @@ export default function() {
     return oldcheckPassthrough.apply(this, [request]);
   };
 
+  this.post('/ahoy/events', function() {
+    return {};
+  });
+
   this.namespace = '/v2';
 
   this.get('/channels/:id', function(db, request) {

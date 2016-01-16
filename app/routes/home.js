@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { inject: { service }, RSVP: { hash } } = Ember;
+const { inject: { service }, RSVP: { hash }, $ } = Ember;
 
 export default Ember.Route.extend({
   client: service('uhura-client'),
@@ -14,7 +14,7 @@ export default Ember.Route.extend({
   },
 
   deactivate() {
-    $('button, a').off('click.track')
+    $('button, a').off('click.track');
     return this._super.apply(this, arguments);
   },
 
@@ -26,12 +26,12 @@ export default Ember.Route.extend({
         tag: target.tagName,
         value: (child.wholeText || child.textContent).trim(),
         classes: Array.from(target.classList)
-                      .map(e => e.indexOf('ember') == -1 ? e : null)
+                      .map(e => e.indexOf('ember') === -1 ? e : null)
                       .compact()
-                      .map(e => e.indexOf('mdl') == -1 ? e : null)
+                      .map(e => e.indexOf('mdl') === -1 ? e : null)
                       .compact()
-      }
-      ahoy.track("home", properties);
+      };
+      window.ahoy.track('home', properties);
     });
   },
 

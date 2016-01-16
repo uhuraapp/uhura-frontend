@@ -38,37 +38,28 @@ module('Acceptance | player a episode', {
 });
 
 test('player | show episode on player container', function(assert) {
+  assert.expect(6);
+
   visit(`/channels/${channel.id}`);
 
   andThen(function() {
     assert.equal(currentURL(), `/channels/${channel.id}`, 'check if is on channel page');
+    click('.episode:first-child .playpause');
   });
-
-  click('.episode:first-child .playpause');
 
   andThen(function() {
     assert.equal(find('#player .channel-title').text(), channel.title, 'check if channel title is on player');
     assert.equal(find('#player .title').text(), episodes[0].title, 'check if episode title is on player');
     assert.ok(find('.player-wrapper').hasClass('has-model'));
-  });
-});
 
-test('player | have player element', function(assert) {
-  visit(`/channels/${channel.id}`);
-
-  andThen(function() {
-    assert.equal(currentURL(), `/channels/${channel.id}`);
-  });
-
-  click('.episode:first-child .playpause');
-
-  andThen(function() {
-    assert.equal(find('#wrapper-audio-element audio').length, 1);
+    assert.equal(find('#wrapper-audio-element audio').length, 1, 'have player element');
     assert.equal(find('#wrapper-audio-element audio').attr('src'), episodes[0].source_url);
   });
 });
 
 test('player | when ended a episode should starts the next', function(assert) {
+  assert.expect(3);
+
   const player = application.registry.container().lookup('service:player');
 
   visit(`/channels/${channel.id}`);
