@@ -1,5 +1,5 @@
 <div id="player">
-  <img src={{episode.channel.imageURL}} class="channel-img" />
+  {{channel-lazy-image channel=channel}}
   <div class="info">
     <h2 class="title">{{episode.title}}</h2>
     <h3 class="channel-title">{{episode.channel.title}}</h3>

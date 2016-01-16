@@ -10,6 +10,8 @@ export default Ember.Component.extend({
 
   episode: Ember.computed.alias('player.current'),
 
+  channel: Ember.computed.readOnly('player.current.channel'),
+
   actions: {
     playpause() {
       let player = this.get('player');

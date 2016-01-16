@@ -15,10 +15,19 @@ export default Ember.Component.extend({
     return this.get('imageURL') || DEFAULT_IMAGE;
   }),
 
-  didInsertElement() {
+  didUpdateAttrs() {
+    this.updateImage();
+  },
+
+  didReceiveAttrs() {
+    this.updateImage();
+  },
+
+  updateImage() {
     const that = this;
+
     let image = new Image();
-    image.src = this.get('cachedImageSource');
+    image.src = this.cachedImageSource();
     image.onload = function() {
       if (typeof this.naturalWidth !== 'undefined' && this.naturalWidth !== 0) {
         Ember.run(() => {
@@ -31,6 +40,7 @@ export default Ember.Component.extend({
   },
 
   cache(imageURL) {
+    // Old cached url domain
     if (imageURL.indexOf('arcane-forest-5063') > -1) {
       return;
     }
@@ -42,8 +52,14 @@ export default Ember.Component.extend({
     image.src = `${imageHost}/resolve?url=${imageURL}`;
   },
 
-  cachedImageSource: computed('channel.imageURL', 'channel.image_url', function() {
-    const imageURL = this.get('channel.imageURL') || this.get('channel.image_url');
+  channelImage() {
+    return this.get('channel.content.image_url') ||
+        this.get('channel.imageURL') ||
+        this.get('channel.image_url') || '';
+  },
+
+  cachedImageSource() {
+    const imageURL = this.channelImage();
 
     if (isEmpty(imageURL.trim())) {
       return DEFAULT_IMAGE;
@@ -57,5 +73,5 @@ export default Ember.Component.extend({
     this.cache(imageURL);
 
     return imageURL;
-  })
+  }
 });
