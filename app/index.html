@@ -61,7 +61,10 @@
 
     <script type="text/javascript">
       (function() {
-        document.getElementById('pre-home').remove();
+        var preHome = document.getElementById('pre-home');
+        if (preHome) {
+          preHome.remove();
+        }
         var body = document.querySelector('body').classList;
         body.remove('apllication');
         body.remove('home');
