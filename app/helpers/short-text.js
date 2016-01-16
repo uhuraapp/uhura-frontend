@@ -1,7 +1,8 @@
 import Ember from 'ember';
 
 export function shortText(params/*, hash*/) {
-  const [ text, maxSize ] = params;
+  let [ text, maxSize ] = params;
+  text = text || '';
   let _shortText = text.substring(0, maxSize);
   if (text.length > _shortText.length) {
     _shortText += '...';

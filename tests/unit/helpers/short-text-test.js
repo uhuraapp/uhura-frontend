@@ -9,4 +9,5 @@ test('it works', function(assert) {
   assert.equal(result, 'Lorem...');
 
   assert.equal(shortText(['Ola', 10]), 'Ola');
+  assert.equal(shortText([null, 10]), '');
 });
