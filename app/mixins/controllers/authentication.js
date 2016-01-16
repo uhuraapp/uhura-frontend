@@ -16,55 +16,37 @@ export default Ember.Mixin.create({
   uhura: service('uhura-client'),
 
   register() {
-    this.set('processing', true);
-    this.set('errorMessage', false);
+    this._processsingState();
 
     let email    = this.get('email');
     let password = this.get('password');
     let name     = this.get('name');
 
-    if (isBlank(email) || isBlank(password) || isBlank(name)) {
-      this.set('errorMessage', 'Email, Password and Name field is required');
-      return;
-    }
+    const [error, errorMessage] = this._makeInputValidation(email, password, name);
 
-    if (!isValidEmail(email)) {
-      this.set('errorMessage', 'Please fill Email field with a valid email address');
-      return;
-    }
-
-    if (password.length < 6) {
-      this.set('errorMessage', 'Password too short: Minimum amount of characters 6');
-      return;
+    if (error) {
+      return this._errorState(errorMessage);
     }
 
     const user = { email, password, name };
     const data = { user };
     const xhrFields = { withCredentials: true };
 
-    const always = () => {
-      this.set('loading', false);
-      this.set('processing', false);
-      this.set('processingMessage', '');
-      this.set('password', '');
-    };
-
     const authenticator = this.container.lookup('authenticator:uhura');
 
     this.get('uhura')
-        .request('users', null, null, 'POST', { data, xhrFields })
-        .then(() => {
-          return new Ember.RSVP.Promise(authenticator.checkCredentials.bind(authenticator));
-        }).then((data) => {
-          this.container.lookup('session:main')._setup('authenticator:uhura', data, true);
-        }).catch((errorStatus) => {
-          this.set('errorMessage', errorStatus.errors.map(error => error.message).join('\n'));
-        }).then(always, always);
+    .request('users', null, null, 'POST', { data, xhrFields })
+    .then(() => {
+      return new Ember.RSVP.Promise(authenticator.checkCredentials.bind(authenticator));
+    }).then((data) => {
+      this.container.lookup('session:main')._setup('authenticator:uhura', data, true);
+    }).catch((errorStatus) => {
+      this._errorState(errorStatus.errors.map(error => error.message).join('\n'));
+    }).then(this._processedState.bind(this), this._processedState.bind(this));
   },
 
   authenticate(provider) {
-    this.set('processing', true);
-    this.set('errorMessage', false);
+    this._processsingState();
 
     let email    = this.get('email');
     let password = this.get('password');
@@ -76,14 +58,40 @@ export default Ember.Mixin.create({
 
     this.get('session')
     .authenticate('authenticator:uhura', data)
-    .then(() => {
-      this.set('loading', false);
-      this.set('processing', false);
-      this.set('processingMessage', '');
-    }).catch((errorMessage) => {
+    .catch((errorMessage) => {
       this.set('errorMessage', errorMessage);
-      this.set('processing', false);
-      this.set('processingMessage', '');
-    });
+    }).then(this._processedState.bind(this), this._processedState.bind(this));
+  },
+
+  _makeInputValidation(email, password, name) {
+    if (isBlank(email) || isBlank(password) || isBlank(name)) {
+      return [true,  'Email, Password and Name field is required'];
+    }
+
+    if (!isValidEmail(email)) {
+      return [true, 'Please fill Email field with a valid email address'];
+    }
+
+    if (password.length < 6) {
+      return [true, 'Password too short: Minimum amount of characters 6'];
+    }
+
+    return [false, ''];
+  },
+
+  _processsingState() {
+    this.set('processing', true);
+    this.set('errorMessage', false);
+  },
+
+  _processedState() {
+    this.set('loading', false);
+    this.set('processing', false);
+    this.set('processingMessage', '');
+    this.set('password', '');
+  },
+
+  _errorState(message) {
+    this.set('errorMessage', message);
   }
 });

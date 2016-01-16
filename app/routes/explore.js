@@ -9,7 +9,7 @@ export default Route.extend({
     return hash({
       categories: this.store.findAll('category', { reload: true })
         .then((data) => data.sortBy('channelsLength'))
-        .then((data) => data.reverse()),
+        .then((data) => data.reverse())
     });
   }
 });
