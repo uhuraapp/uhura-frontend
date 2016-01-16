@@ -1,9 +1,14 @@
 import Ember from 'ember';
 import { moduleFor, test } from 'ember-qunit';
 import startApp from 'uhuraapp/tests/helpers/start-app';
+import sinon from 'sinon';
+
+const { stub } = sinon;
 
 let application;
 let mediaMock;
+let tracker;
+
 moduleFor('service:player', 'Unit | Service | player', {
   needs: ['adapter:application', 'service:uhura-client'],
 
@@ -11,6 +16,7 @@ moduleFor('service:player', 'Unit | Service | player', {
     application = startApp();
     window.oldM = window.MediaElementPlayer;
     window.oldAlert = window.alert;
+    tracker = stub(window.ahoy, 'track');
     window.alert = function() {};
     mediaMock = function(_name) {
       return {
@@ -24,6 +30,7 @@ moduleFor('service:player', 'Unit | Service | player', {
   },
 
   afterEach() {
+    window.ahoy.track.restore();
     Ember.run(application, 'destroy');
     window.MediaElementPlayer = window.oldM;
     window.alert = window.oldAlert;
@@ -52,10 +59,14 @@ test('play/pause a episode', function(assert) {
   service.playpause(episode);
   assert.equal(episode.get('playing'), true, 'set episode to playing');
   assert.equal(service.get('playing'), true, 'set player status to playing');
+  assert.ok(tracker.calledWith('player', { action: 'play' }), 'track play');
+  sinon.assert.callCount(tracker, 1);
 
   service.playpause(episode);
   assert.equal(episode.get('playing'), false, 'set episode to not playing');
   assert.equal(service.get('playing'), false, 'set player status to not playing');
+  assert.ok(tracker.calledWith('player', { action: 'pause' }), 'track pause');
+  sinon.assert.callCount(tracker, 2);
 
   assert.equal(service.get('current'), episode, 'save current playing episode');
 
@@ -122,6 +133,8 @@ test('stop', function(assert) {
   assert.ok(!service.get('playing'), 'set to not playing');
   assert.ok(!episode.get('playing'), 'set episode to not playing');
   assert.equal(service.get('current'), null, 'remove current episode');
+  assert.ok(tracker.calledWith('player', { action: 'stop' }), 'track stop');
+  sinon.assert.callCount(tracker, 1);
 });
 
 test('trackTime', function(assert) {
@@ -199,7 +212,7 @@ test('trackTime', function(assert) {
 });
 
 test('starts from stopped_at', function(assert) {
-  assert.expect(1);
+  assert.expect(2);
 
   let service = this.subject();
   let media = mediaMock('loadeddata');
@@ -208,8 +221,29 @@ test('starts from stopped_at', function(assert) {
   service.set('mediaPlayer', {
     setCurrentTime(time) {
       assert.equal(time, stoppedAt);
+      assert.ok(tracker.calledWith('player', { action: 'loaded', time }), 'track loaded');
+      sinon.assert.callCount(tracker, 1);
     }
   });
   service.set('current', Ember.Object.create({ stopped_at: stoppedAt }));
   service.successMedia(media);
+});
+
+
+test('autoplay tracker', function(assert) {
+  let service = this.subject();
+  service.set('autoplay', false);
+  assert.ok(tracker.calledWith('player', { action: 'autoplay', enabled: false }), 'track autoplay false');
+
+  service.set('autoplay', true);
+  assert.ok(tracker.calledWith('player', { action: 'autoplay', enabled: true }), 'track autoplay true');
+});
+
+test('seek data tracker', function(assert) {
+  let service = this.subject();
+  let media = mediaMock('seeked');
+
+  service.successMedia(media);
+  assert.ok(tracker.calledWith('player', { action: 'seek' }), 'seek loaded');
+  sinon.assert.callCount(tracker, 1);
 });

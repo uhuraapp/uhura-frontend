@@ -1,7 +1,9 @@
 import Ember from 'ember';
 
+const { inject: { service }, $, observer } = Ember;
+
 export default Ember.Service.extend({
-  client: Ember.inject.service('uhura-client'),
+  client: service('uhura-client'),
 
   playing: false,
   current: null,
@@ -10,6 +12,10 @@ export default Ember.Service.extend({
   autoplay: true,
 
   PLAYED_PERCENT: 95,
+
+  observerAutoplay: observer('autoplay', function() {
+    window.ahoy.track('player', { action: 'autoplay', enabled: this.get('autoplay') });
+  }),
 
   playpause(episode) {
     this._swap(episode);
@@ -33,7 +39,7 @@ export default Ember.Service.extend({
   },
 
   _proxy(method) {
-    return Ember.$.proxy(method, this);
+    return $.proxy(method, this);
   },
 
   successMedia(media) {
@@ -43,13 +49,20 @@ export default Ember.Service.extend({
     media.addEventListener('ended',      this._proxy(this._ended));
     media.addEventListener('timeupdate', this._proxy(this._trackTime));
     media.addEventListener('loadeddata', this._proxy(this._loadedData));
+    media.addEventListener('seeked', this._proxy(this._seekedData));
+  },
+
+  _seekedData() {
+    window.ahoy.track('player', { action: 'seek' });
   },
 
   _ended() {
+    window.ahoy.track('player', { action: 'ended' });
+
     if (this.get('autoplay')) {
-      let episodesElements = Ember.$('li.episode').get().reverse();
+      let episodesElements = $('li.episode').get().reverse();
       for (let i = 0; i <= episodesElements.length; i++) {
-        let episodeElement = Ember.$(episodesElements[i]);
+        let episodeElement = $(episodesElements[i]);
         if (!(episodeElement.is('.is-playing') || episodeElement.is('.is-played'))) {
           episodeElement.find('.playpause').click();
           break;
@@ -74,6 +87,8 @@ export default Ember.Service.extend({
 
   _loadedData() {
     let time = this._current().get('stopped_at');
+    window.ahoy.track('player', { action: 'loaded', time });
+
     this.get('mediaPlayer').setCurrentTime(time);
   },
 
@@ -126,7 +141,7 @@ export default Ember.Service.extend({
   },
 
   _audioElement() {
-    return Ember.$('#wrapper-audio-element audio');
+    return $('#wrapper-audio-element audio');
   },
 
   _forceStop() {
@@ -149,6 +164,7 @@ export default Ember.Service.extend({
   stop() {
     if (this._current()) {
       this._current().set('playing', false);
+      window.ahoy.track('player', { action: 'stop' });
     }
     this.set('playing', false);
     this.set('current', null);
@@ -162,6 +178,7 @@ export default Ember.Service.extend({
   _tooglePlaying() {
     let currentStatus = this._current().get('playing');
     let action = currentStatus ? 'pause' : 'play';
+    window.ahoy.track('player', { action });
 
     this._current().set('playing', !currentStatus);
     this.set('playing', !currentStatus);
