@@ -27,7 +27,7 @@ module.exports = function(environment) {
   };
 
   // ENV.API_URL = "http://localhost:3000"
-  ENV.API_URL = "https://api.uhura.io"
+  ENV.API_URL = "https://api.uhura.io";
 
   ENV.contentSecurityPolicy = {
     'img-src': "'self' *",
@@ -37,7 +37,7 @@ module.exports = function(environment) {
     'content-src': "'self' *",
     'font-src': "'self' http://fonts.gstatic.com https://www.sharebutton.co" ,
     'style-src': "'self' 'unsafe-inline' http://fonts.googleapis.com https://www.sharebutton.co"
-  }
+  };
 
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
@@ -62,7 +62,7 @@ module.exports = function(environment) {
   if (environment === 'production') {
     ENV.rollbar = {
       accessToken: 'dc69607d27854abfa59a0d1698f03b76'
-    }
+    };
   }
 
   ENV['platform'] = process.env.EMBER_CLI_ELECTRON ? 'electron' : 'web';
@@ -71,7 +71,7 @@ module.exports = function(environment) {
     store: 'session-store:local-storage',
     crossOriginWhitelist: [ENV.API_URL],
     routeAfterAuthentication: 'subscriptions'
-  }
+  };
 
   const ahoyServer = process.env.AHOY_ENDPOINT || '';
 
@@ -79,7 +79,7 @@ module.exports = function(environment) {
     debug: environment === 'development',
     visitsUrl: `${ahoyServer}/ahoy/visits`,
     eventsUrl: `${ahoyServer}/ahoy/events`
-  }
+  };
 
   return ENV;
 };
