@@ -7,8 +7,8 @@ const { inject: { service } } = Ember;
 export default Ember.Route.extend(ApplicationRouteMixin, AhoyApplicationRouteMiin, {
   session: service('session'),
   actions: {
-    // TODO: remove it
     invalidateSession() {
+      window.ahoy.track('logout', {});
       this.get('session').invalidate();
     }
   }
