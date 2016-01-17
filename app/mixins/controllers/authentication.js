@@ -25,6 +25,7 @@ export default Ember.Mixin.create({
     const [error, errorMessage] = this._makeInputValidation(email, password, name);
 
     if (error) {
+      window.ahoy.track('signup', { error: errorMessage });
       return this._errorState(errorMessage);
     }
 
@@ -39,9 +40,12 @@ export default Ember.Mixin.create({
     .then(() => {
       return new Ember.RSVP.Promise(authenticator.checkCredentials.bind(authenticator));
     }).then((data) => {
+      window.ahoy.track('signup', { error: null });
       this.container.lookup('session:main')._setup('authenticator:uhura', data, true);
-    }).catch((errorStatus) => {
-      this._errorState(errorStatus.errors.map(error => error.message).join('\n'));
+    }).catch((status) => {
+      const error = this._buildErrorMessage(status);
+      window.ahoy.track('signup', { error });
+      this._errorState(error);
     }).then(this._processedState.bind(this), this._processedState.bind(this));
   },
 
@@ -77,6 +81,10 @@ export default Ember.Mixin.create({
     }
 
     return [false, ''];
+  },
+
+  _buildErrorMessage(status) {
+    return status.errors.map(error => error.message).join('\n')
   },
 
   _processsingState() {
