@@ -62,8 +62,11 @@ export default Ember.Mixin.create({
 
     this.get('session')
     .authenticate('authenticator:uhura', data)
-    .catch((errorMessage) => {
+    .then(() => {
+      window.ahoy.track('signin', { error: '', provider })
+    }).catch((errorMessage) => {
       this.set('errorMessage', errorMessage);
+      window.ahoy.track('signin', { error: errorMessage, provider })
     }).then(this._processedState.bind(this), this._processedState.bind(this));
   },
 
