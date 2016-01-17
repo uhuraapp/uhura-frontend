@@ -17,6 +17,7 @@ export default Ember.Component.extend({
       if (!this.get('isDestroyed') && !this.get('search.isDestroyed') && !this.get('search').isDestroyed) {
         if (this.get('query').length > 2) {
           this.set('search.searchValue', this.get('query'));
+          window.ahoy.track('search', { query: this.get('query') });
         } else if (this.get('query').length === 0) {
           this.set('search.searchResults', []);
         }
