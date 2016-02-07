@@ -1,0 +1,24 @@
+{
+  "name": "uhura-frontend",
+  "scripts": {
+  },
+  "env": {
+    "BUILDPACK_URL": {
+      "required": true
+    },
+    "EMBER_CLI_CORDOVA": {
+      "required": true
+    },
+    "REBUILD_ALL": {
+      "required": true
+    }
+  },
+  "addons": [
+    "rollbar"
+  ],
+  "buildpacks": [
+    {
+      "url": "https://github.com/tonycoco/heroku-buildpack-ember-cli.git"
+    }
+  ]
+}
