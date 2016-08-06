@@ -2,15 +2,6 @@
 
 {{#layout-logged invalidateSession="invalidateSession"}}
 <div id="subscriptions" class="mdl-grid">
-  <div class="mdl-shadow--2dp mdl-cell mdl-cell--12-col share">
-    {{#if account.hasKey}}
-    Share your subscriptions list using the follow url {{input value=shareURL readonly=true}}
-    {{else}}
-    Create Profile to share your subscriptions list <button {{action 'createProfile'}}>Create</button>
-    {{/if}}
-  </div>
-
-
   {{#each model as |subscription|}}
     {{channel-card channel=subscription  class="mdl-cell mdl-cell--2-col"}}
   {{/each}}
