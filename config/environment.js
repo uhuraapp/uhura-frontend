@@ -58,6 +58,7 @@ module.exports = function(environment) {
 
     ENV.APP.rootElement = '#ember-testing';
   }
+  ENV.rollbar = false;
 
   if (environment === 'production') {
     ENV.rollbar = {
