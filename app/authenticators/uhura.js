@@ -2,8 +2,6 @@ import Ember from 'ember';
 import Base from 'ember-simple-auth/authenticators/base';
 import ENV from '../config/environment';
 
-let { RSVP: { Promise } } = Ember;
-
 export default Base.extend({
   __authURLForProvider(provider) {
     return `${ENV.API_URL}/v2/auth/${provider}`;
@@ -23,9 +21,9 @@ export default Base.extend({
 
   authenticate(data) {
     if (data.provider) {
-      return new Promise((resolve, reject) => {
+      return new Promise(() => {
         let url = this.__authURLForProvider(data.provider);
-        url = `${url}?redirect_to=${window.location.host}/login`
+        url = `${url}?redirect_to=${window.location.host}/login`;
         window.location = url;
       });
     } else if (data.email && data.password) {
@@ -37,7 +35,7 @@ export default Base.extend({
     } else if (data.password && !data.email) {
       return Promise.reject('Error: email is required');
     } else if (data.token) {
-      return this.request('GET', '/v2/user', data)
+      return this.request('GET', '/v2/user', data);
     }
 
     return Promise.reject('Error: email and password is required');
@@ -58,7 +56,7 @@ export default Base.extend({
   },
 
   request(type, path, data = {}) {
-    data = type == 'POST' ? JSON.stringify(data): data;
+    data = type === 'POST' ? JSON.stringify(data) : data;
     return new Promise((resolve, reject) => {
       Ember.$.ajax({
         url: ENV.API_URL + path,

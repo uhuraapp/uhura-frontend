@@ -13,7 +13,7 @@ export default Ember.Service.extend({
 
   PLAYED_PERCENT: 95,
 
-  observerAutoplay: observer('autoplay', function() {
+  observerAutoplay: observer('autoplay', function _observerAutoplay() {
     window.ahoy.track('player', { action: 'autoplay', enabled: this.get('autoplay') });
   }),
 
