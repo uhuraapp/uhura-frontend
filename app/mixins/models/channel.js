@@ -7,7 +7,6 @@ export default Ember.Mixin.create({
   description: DS.attr('string'),
   copyrigth: DS.attr('string'),
   episodes: DS.hasMany('episode', { async: false }),
-  profile: DS.belongsTo('profile', { async: false }),
   profile_id: DS.attr('string'),
   raw_id: DS.attr('string'),
   subscribed: DS.attr('boolean'),

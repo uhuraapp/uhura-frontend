@@ -16,6 +16,6 @@ export default Ember.Mixin.create(MaterialDesignMixin, {
   },
 
   authenticationViaToken(token) {
-    this.get('session').authenticate('authenticator:uhura', { token: token });
+    this.get('session').authenticate('authenticator:uhura', { token });
   }
 });
