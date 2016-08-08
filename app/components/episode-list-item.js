@@ -25,13 +25,15 @@ export default Ember.Component.extend({
     },
 
     played() {
-      let episode = this.get('episode');
-      let isPlayed = !!episode.get('played');
-      let method = isPlayed ? 'DELETE' : 'POST';
+      const episode = this.get('episode');
+      const isPlayed = !!episode.get('played');
+      const method = isPlayed ? 'DELETE' : 'POST';
+      const episodeEndpoint = `channels/${episode.get('channel_id')}/episode`;
+
 
       episode.set('played', !isPlayed); // early visual response
 
-      this.get('client').request('episode', episode.id, 'played', method).catch(() => {
+      this.get('client').request(episodeEndpoint, episode.id, 'played', method).catch(() => {
         episode.set('played', isPlayed); // rollback
       });
 
