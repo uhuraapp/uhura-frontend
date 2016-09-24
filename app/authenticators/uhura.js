@@ -23,7 +23,7 @@ export default Base.extend({
     if (data.provider) {
       return new Promise(() => {
         let url = this.__authURLForProvider(data.provider);
-        url = `${url}?redirect_to=${window.location.host}/login`;
+        url = `${url}?redirect_to=${window.location.href}`;
         window.location = url;
       });
     } else if (data.email && data.password) {
