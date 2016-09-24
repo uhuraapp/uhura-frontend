@@ -28,12 +28,10 @@ export default Ember.Component.extend({
       const episode = this.get('episode');
       const isPlayed = !!episode.get('played');
       const method = isPlayed ? 'DELETE' : 'POST';
-      const episodeEndpoint = `channels/${episode.get('channel_id')}/episode`;
-
 
       episode.set('played', !isPlayed); // early visual response
 
-      this.get('client').request(episodeEndpoint, episode.id, 'played', method).catch(() => {
+      this.get('client').request(this._episodeEndpoint(), episode.id, 'played', method).catch(() => {
         episode.set('played', isPlayed); // rollback
       });
 
@@ -42,7 +40,8 @@ export default Ember.Component.extend({
 
     download() {
       const episodeID = this.get('episode.id');
-      const downloadURL = this.get('client').buildURL('episode', episodeID, 'download');
+
+      const downloadURL = this.get('client').buildURL(this._episodeEndpoint(), episodeID, 'download');
       window.open(downloadURL);
     },
 
@@ -56,6 +55,11 @@ export default Ember.Component.extend({
           e.stopPropagation();
         });
       }, 500);
-    }
+    },
+  },
+
+  _episodeEndpoint() {
+    const episode = this.get('episode');
+    return `channels/${episode.get('channel_id')}/episode`;
   }
 });
