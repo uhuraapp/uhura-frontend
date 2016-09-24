@@ -4,8 +4,7 @@ import MaterialDesignMixin from './material-design';
 export default Ember.Mixin.create(MaterialDesignMixin, {
   session: Ember.inject.service('session'),
   beforeModel(transition) {
-
-    if(transition.queryParams.token) {
+    if (transition.queryParams.token) {
       this.authenticationViaToken(transition.queryParams.token);
     }
 
