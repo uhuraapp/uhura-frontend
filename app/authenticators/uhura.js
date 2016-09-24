@@ -2,41 +2,9 @@ import Ember from 'ember';
 import Base from 'ember-simple-auth/authenticators/base';
 import ENV from '../config/environment';
 
-let { RSVP: { Promise } } = Ember;
-
 export default Base.extend({
   __authURLForProvider(provider) {
     return `${ENV.API_URL}/v2/auth/${provider}`;
-  },
-  __getUserData() {
-    return Ember.$.ajax({
-      url: `${ENV.API_URL}/v2/user`,
-      type: 'GET',
-      xhrFields: {
-        withCredentials: true
-      }
-    });
-  },
-  __checkLogin(loginWindow, resolve, reject) {
-    return () => {
-      try {
-        if (loginWindow.closed) {
-          this.checkCredentials(resolve, reject);
-        } else {
-          window.setTimeout(this.__checkLogin(loginWindow, resolve, reject), 500);
-        }
-      } catch(e) {
-        Ember.run(() => reject(e));
-      }
-    };
-  },
-  checkCredentials(resolve, reject) {
-    this.__getUserData().then((data) => {
-      Ember.run(() => resolve(data));
-      this._setUser(data);
-    }, function() {
-      Ember.run(() => reject('Error: Could not authenticate using external service'));
-    });
   },
 
   restore(properties) {
@@ -53,16 +21,10 @@ export default Base.extend({
 
   authenticate(data) {
     if (data.provider) {
-      return new Promise((resolve, reject) => {
-        let loginWindow = window.open(this.__authURLForProvider(data.provider), '_blank', 'location=no,toolbar=no');
-        window.setTimeout(this.__checkLogin(loginWindow, resolve, reject), 500);
-
-        loginWindow.addEventListener('loadstop', (event) => {
-          if (event.url.indexOf(`${this.__authURLForProvider(data.provider)}/callback`) === 0) {
-            loginWindow.close();
-            this.checkCredentials(resolve, reject);
-          }
-        });
+      return new Promise(() => {
+        let url = this.__authURLForProvider(data.provider);
+        url = `${url}?redirect_to=${window.location.href}`;
+        window.location = url;
       });
     } else if (data.email && data.password) {
       return this.request('POST', '/v2/users/sign_in', data).catch(()=> {
@@ -72,6 +34,8 @@ export default Base.extend({
       return Promise.reject('Error: password is required');
     } else if (data.password && !data.email) {
       return Promise.reject('Error: email is required');
+    } else if (data.token) {
+      return this.request('GET', '/v2/user', data);
     }
 
     return Promise.reject('Error: email and password is required');
@@ -91,14 +55,11 @@ export default Base.extend({
     };
   },
 
-  request(type, path, data) {
-    data = JSON.stringify(data);
+  request(type, path, data = {}) {
+    data = type === 'POST' ? JSON.stringify(data) : data;
     return new Promise((resolve, reject) => {
       Ember.$.ajax({
         url: ENV.API_URL + path,
-        xhrFields: {
-          withCredentials: true
-        },
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         type,

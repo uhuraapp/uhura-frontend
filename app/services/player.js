@@ -13,7 +13,7 @@ export default Ember.Service.extend({
 
   PLAYED_PERCENT: 95,
 
-  observerAutoplay: observer('autoplay', function() {
+  observerAutoplay: observer('autoplay', function _observerAutoplay() {
     window.ahoy.track('player', { action: 'autoplay', enabled: this.get('autoplay') });
   }),
 
@@ -105,10 +105,12 @@ export default Ember.Service.extend({
     if (at === this.get('currentTime')) {
       return;
     }
+    const episodeEndpoint = `channels/${episode.get('channel_id')}/episode`;
+    let data = { at };
+
     this.set('currentTime', at);
 
-    let data = { at };
-    this.get('client').request('episode', episode.id, 'listen', 'PUT', { data }).then(() => {
+    this.get('client').request(episodeEndpoint, episode.id, 'listen', 'PUT', { data }).then(() => {
       episode.set('stopped_at', at);
     });
   },

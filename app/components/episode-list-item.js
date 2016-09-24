@@ -25,13 +25,13 @@ export default Ember.Component.extend({
     },
 
     played() {
-      let episode = this.get('episode');
-      let isPlayed = !!episode.get('played');
-      let method = isPlayed ? 'DELETE' : 'POST';
+      const episode = this.get('episode');
+      const isPlayed = !!episode.get('played');
+      const method = isPlayed ? 'DELETE' : 'POST';
 
       episode.set('played', !isPlayed); // early visual response
 
-      this.get('client').request('episode', episode.id, 'played', method).catch(() => {
+      this.get('client').request(this._episodeEndpoint(), episode.id, 'played', method).catch(() => {
         episode.set('played', isPlayed); // rollback
       });
 
@@ -40,20 +40,26 @@ export default Ember.Component.extend({
 
     download() {
       const episodeID = this.get('episode.id');
-      const downloadURL = this.get('client').buildURL('episode', episodeID, 'download');
+
+      const downloadURL = this.get('client').buildURL(this._episodeEndpoint(), episodeID, 'download');
       window.open(downloadURL);
     },
 
     more() {
       Ember.$('.itens.open').removeClass('open');
       this.$('.itens').addClass('open');
-      Ember.run.later(function() {
-        Ember.$(document).on('click.out-itens', 'body', function(e) {
+      Ember.run.later(function _later() {
+        Ember.$(document).on('click.out-itens', 'body', function _clickOutItens(e) {
           Ember.$('.itens.open').removeClass('open');
           Ember.$(document).off('click.out-itens');
           e.stopPropagation();
         });
       }, 500);
-    }
+    },
+  },
+
+  _episodeEndpoint() {
+    const episode = this.get('episode');
+    return `channels/${episode.get('channel_id')}/episode`;
   }
 });

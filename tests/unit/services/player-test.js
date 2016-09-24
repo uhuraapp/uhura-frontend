@@ -229,7 +229,6 @@ test('starts from stopped_at', function(assert) {
   service.successMedia(media);
 });
 
-
 test('autoplay tracker', function(assert) {
   let service = this.subject();
   service.set('autoplay', false);

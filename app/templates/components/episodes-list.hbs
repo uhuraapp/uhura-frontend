@@ -1,7 +1,3 @@
 {{#each episodes as |episode|}}
   {{episode-list-item episode=episode rightActions=hasRightActions tagName='li' hasLink=episodeHasLink}}
 {{/each}}
-
-{{#infinite-scroll content=episodes hasMore=hasMore scrollable=".mdl-layout__content"}}
-  <span id="loading-episodes">Loading...</span>
-{{/infinite-scroll}}
